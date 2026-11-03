@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEAVORA - Mobile Login</title>
+<title>SEAVORA - OTP Login</title>
 <style>
 * { box-sizing: border-box; }
 body {
@@ -15,111 +15,61 @@ body {
   justify-content: center;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background: linear-gradient(145deg, #eaf2ff, #f8faff);
-  color: #17345c;
+  background: linear-gradient(145deg, #101c3a, #263f70);
 }
-.container {
+.card {
   width: 100%;
   max-width: 420px;
+  padding: 28px;
   background: white;
-  padding: 30px 22px;
   border-radius: 20px;
-  box-shadow: 0 5px 22px #123b6818;
   text-align: center;
+  color: #17345c;
 }
-h1 {
-  margin: 0;
-  letter-spacing: 4px;
-  color: #123b68;
-}
-.tagline {
-  color: #64748b;
-  margin-bottom: 30px;
-}
-h2 { color: #173b70; }
-p { color: #64748b; line-height: 1.5; }
-label {
-  display: block;
-  text-align: left;
-  font-weight: bold;
-  margin: 20px 0 8px;
-}
+h1 { letter-spacing: 4px; }
 input {
   width: 100%;
-  padding: 15px;
-  border: 1px solid #cbd5e1;
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid #ccd5df;
   border-radius: 10px;
-  font-size: 17px;
+  font-size: 16px;
 }
 button {
   width: 100%;
-  padding: 15px;
-  margin-top: 18px;
-  border: none;
+  padding: 14px;
+  margin-top: 12px;
+  border: 0;
   border-radius: 10px;
-  background: #123b68;
+  background: #2457d6;
   color: white;
   font-size: 16px;
   font-weight: bold;
-  cursor: pointer;
 }
-.secondary {
-  background: #e8f1ff;
-  color: #123b68;
-}
-#status {
-  margin-top: 18px;
-  font-weight: bold;
-  color: #17633c;
-}
-.note {
-  font-size: 12px;
-  margin-top: 25px;
-}
+#status { color: #2457d6; }
 </style>
 </head>
 <body>
-
-<div class="container">
+<div class="card">
   <h1>SEAVORA</h1>
-  <p class="tagline">One App, Endless Possibilities!</p>
-
-  <h2>Mobile Verification</h2>
-  <p>Enter your mobile number to continue safely.</p>
+  <h2>Mobile OTP Verification</h2>
+  <p>Enter your mobile number to continue.</p>
 
   <form onsubmit="sendOTP(event)">
-    <label for="phone">Mobile Number</label>
-    <input
-      id="phone"
-      type="tel"
-      inputmode="numeric"
-      maxlength="10"
-      placeholder="Enter 10-digit mobile number"
-      required
-    >
+    <input id="phone" type="tel"
+      inputmode="numeric" maxlength="10"
+      placeholder="10-digit mobile number" required>
     <button type="submit">Continue</button>
   </form>
 
   <div id="otpSection" hidden>
-    <label for="otp">Enter OTP</label>
-    <input
-      id="otp"
-      type="text"
-      inputmode="numeric"
-      maxlength="6"
-      placeholder="Enter 6-digit OTP"
-    >
+    <input id="otp" type="text"
+      inputmode="numeric" maxlength="6"
+      placeholder="Enter OTP">
     <button onclick="verifyOTP()">Verify OTP</button>
   </div>
 
-  <p id="status" role="status"></p>
-
-  <button class="secondary" onclick="goBack()">Back to Language Selection</button>
-
-  <p class="note">
-    Your mobile number will not be shown to other Random Chat users.
-    Never share your OTP with anyone.
-  </p>
+  <p id="status"></p>
 </div>
 
 <script>
@@ -130,24 +80,19 @@ function sendOTP(event) {
 
   if (!/^[6-9][0-9]{9}$/.test(phone)) {
     document.getElementById("status").textContent =
-      "Please enter a valid 10-digit Indian mobile number.";
+      "Enter a valid 10-digit Indian mobile number.";
     return;
   }
 
   document.getElementById("otpSection").hidden = false;
   document.getElementById("status").textContent =
-    "Demo only: OTP sending is not connected yet.";
+    "Demo only: SMS OTP service is not connected yet.";
 }
 
 function verifyOTP() {
   document.getElementById("status").textContent =
-    "Real OTP verification is not connected yet. Please connect an OTP service.";
-}
-
-function goBack() {
-  window.location.href = "index.html";
+    "Real OTP verification is not connected yet.";
 }
 </script>
-
 </body>
 </html>
