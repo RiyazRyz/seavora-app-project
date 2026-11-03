@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b68">
+<title>SEAVORA - Home</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5fb;
+  color: #17345c;
+}
+
+header {
+  background: #123b68;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  letter-spacing: 4px;
+  font-size: 28px;
+}
+
+header p {
+  margin: 7px 0 0;
+  color: #dbeafe;
+  font-size: 13px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.top button {
+  background: white;
+  border: 1px solid #d5dfed;
+  border-radius: 10px;
+  padding: 10px 13px;
+  color: #17345c;
+  font-size: 18px;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 10px 16px 30px;
+}
+
+h2 { margin-bottom: 8px; }
+
+.welcome {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px #0000000d;
+}
+
+.search {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccd7e5;
+  border-radius: 12px;
+  font-size: 16px;
+  margin: 10px 0 22px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.tile {
+  background: white;
+  padding: 20px 8px;
+  text-align: center;
+  border-radius: 14px;
+  border: 1px solid #e0e7f0;
+  box-shadow: 0 2px 7px #0000000b;
+  text-decoration: none;
+  color: #17345c;
+  font-weight: bold;
+}
+
+.tile span {
+  display: block;
+  font-size: 31px;
+  margin-bottom: 10px;
+}
+
+.scam {
+  background: #18243b;
+  color: #ffd65a;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.scam p {
+  display: inline-block;
+  margin: 0;
+  animation: move 14s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
+}
+
+.help {
+  position: fixed;
+  right: 15px;
+  bottom: 18px;
+  background: #2457d6;
+  color: white;
+  border: 0;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 25px;
+  box-shadow: 0 3px 12px #0003;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #718096;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SEAVORA</h1>
+  <p>One App, Endless Possibilities!</p>
+</header>
+
+<div class="top">
+  <button onclick="showNotice('Notifications')">🔔</button>
+  <button onclick="showNotice('Profile')">👤</button>
+</div>
+
+<main>
+
+  <section class="welcome">
+    <h2>Welcome to SEAVORA!</h2>
+    <p>Your world. Your language. Your possibilities.</p>
+  </section>
+
+  <input class="search" type="search"
+    placeholder="🔍 Search SEAVORA..."
+    oninput="searchTiles(this.value)">
+
+  <div class="scam">
+    <p>⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️</p>
+  </div>
+
+  <h2>Main Services</h2>
+
+  <div class="grid" id="serviceGrid">
+
+    <a class="tile" href="#" onclick="openService(event,'Education')">
+      <span>🎓</span>Education
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Jobs')">
+      <span>💼</span>Jobs
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Shopping')">
+      <span>🛍️</span>Shopping
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'AI Assistant')">
+      <span>🤖</span>AI Assistant
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Browser')">
+      <span>🌐</span>Browser
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Random Chat')">
+      <span>💬</span>Random Chat
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Parcel Safety')">
+      <span>📦</span>Parcel Safety
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Local Services')">
+      <span>📍</span>Local Services
+    </a>
+
+    <a class="tile" href="#" onclick="openService(event,'Safety & Help')">
+      <span>🛡️</span>Safety & Help
+    </a>
+
+  </div>
+
+  <p id="message" style="text-align:center;font-weight:bold;"></p>
+
+</main>
+
+<button class="help" onclick="showNotice('Help Center')"
+  aria-label="Help Center">🎧</button>
+
+<footer>SEAVORA © 2026</footer>
+
+<script>
+function showNotice(name) {
+  document.getElementById("message").textContent =
+    name + " service will be connected during development.";
+}
+
+function openService(event, name) {
+  event.preventDefault();
+  document.getElementById("message").textContent =
+    name + " page is coming soon.";
+}
+
+function searchTiles(value) {
+  const tiles = document.querySelectorAll(".tile");
+  tiles.forEach(tile => {
+    tile.style.display =
+      tile.textContent.toLowerCase().includes(value.toLowerCase())
+      ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
