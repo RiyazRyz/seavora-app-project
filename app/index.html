@@ -162,27 +162,24 @@
 
   </main>
 
-  <script>
-    function continueApp() {
-      const language =
-        document.getElementById("language").value;
+  <<script>
+  function continueApp() {
+    const language = document.getElementById("language").value;
 
-      localStorage.setItem("seavoraLanguage", language);
+    localStorage.setItem("seavoraLanguage", language);
+    localStorage.setItem("seavoraNextAction", "home");
 
-      document.getElementById("message").textContent =
-        "Selected language: " + language +
-        ". Next: Mobile verification.";
-    }
+    window.location.href = "otp.html";
+  }
 
-    function randomChat() {
-      const language =
-        document.getElementById("language").value;
+  function randomChat() {
+    const language = document.getElementById("language").value;
 
-      localStorage.setItem("seavoraLanguage", language);
+    localStorage.setItem("seavoraLanguage", language);
+    localStorage.setItem("seavoraNextAction", "randomChat");
 
-      document.getElementById("message").textContent =
-        "Random Chat requires mobile OTP verification.";
-    }
-  </script>
+    window.location.href = "otp.html";
+  }
+</script>
 </body>
 </html>
