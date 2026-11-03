@@ -196,9 +196,9 @@ footer {
       <span>🌐</span>Browser
     </a>
 
-    <a class="tile" href="#" onclick="openService(event,'Random Chat')">
-      <span>💬</span>Random Chat
-    </a>
+    <a class="tile" href="#" onclick="openRandomChat(event)">
+  <span>💬</span>Random Chat
+</a>
 
     <a class="tile" href="#" onclick="openService(event,'Parcel Safety')">
       <span>📦</span>Parcel Safety
@@ -242,8 +242,11 @@ function searchTiles(value) {
       tile.textContent.toLowerCase().includes(value.toLowerCase())
       ? "block" : "none";
   });
+}function openRandomChat(event) {
+  event.preventDefault();
+  localStorage.setItem("seavoraNextAction", "randomChat");
+  window.location.href = "otp.html";
 }
 </script>
-
 </body>
 </html>
