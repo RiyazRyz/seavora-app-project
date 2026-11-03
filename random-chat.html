@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101c3a">
+<title>SEAVORA - Random Chat</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(145deg, #101c3a, #263f70);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 430px;
+  text-align: center;
+}
+
+.brand {
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.card {
+  margin-top: 25px;
+  background: white;
+  color: #17345c;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px #0004;
+}
+
+.chat-status {
+  background: #eaf0ff;
+  color: #2348a0;
+  padding: 18px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2457d6;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.back {
+  background: #eaf0ff;
+  color: #2348a0;
+}
+
+.note {
+  font-size: 12px;
+  color: #68758b;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+
+  <div class="brand">SEAVORA</div>
+  <p>One App, Endless Possibilities!</p>
+
+  <section class="card">
+    <h2>💬 Random Chat</h2>
+
+    <div class="chat-status" id="status">
+      Welcome to SEAVORA Random Chat!
+    </div>
+
+    <p>
+      Meet new people and make friends
+      in your selected language.
+    </p>
+
+    <button onclick="findPartner()">
+      🔍 Find a Chat Partner
+    </button>
+
+    <button class="back" onclick="goHome()">
+      ← Back to Home
+    </button>
+
+    <div class="note">
+      This is currently a demonstration page.
+      Real-time chat, matching, moderation,
+      block and report services will be connected
+      during backend development.
+      <br><br>
+      Never share your OTP, password,
+      bank details or personal information.
+    </div>
+  </section>
+
+</main>
+
+<script>
+function findPartner() {
+  document.getElementById("status").textContent =
+    "No chat partners available in this demo yet.";
+}
+
+function goHome() {
+  window.location.href = "home.html";
+}
+</script>
+
+</body>
+</html>
