@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEAVORA - Project Market</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5fb;
+  color: #17345c;
+}
+
+header {
+  background: #123b68;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 18px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 13px;
+  box-shadow: 0 2px 7px #0001;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #2457d6;
+  color: white;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccd7e5;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+a { color: #2457d6; }
+
+.note {
+  background: #fff4d6;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SEAVORA</h1>
+  <p>Handmade Projects & Components Market</p>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>🎨 Handmade Projects</h2>
+  <p>School, College, Science Exhibition and Festival handmade projects.</p>
+
+  <button onclick="searchItems('Handmade school college science exhibition projects for sale')">
+    Browse Handmade Projects
+  </button>
+</div>
+
+<div class="card">
+  <h2>🛒 Readymade Handmade Projects</h2>
+  <p>Find completed handmade projects available for purchase.</p>
+
+  <button onclick="searchItems('Handmade school college projects buy online India')">
+    Find Projects to Buy
+  </button>
+</div>
+
+<div class="card">
+  <h2>⚙️ Project Components</h2>
+
+  <button onclick="searchItems('DC motors for school college projects')">Motors</button>
+  <button onclick="searchItems('IC integrated circuits for electronics projects')">IC</button>
+  <button onclick="searchItems('Rechargeable batteries for electronics projects')">Battery</button>
+  <button onclick="searchItems('Sensors for electronics projects')">Sensors</button>
+  <button onclick="searchItems('Resistors capacitors LEDs wires circuit boards')">Other Components</button>
+</div>
+
+<div class="card">
+  <h2>📦 Sell Your Handmade Project</h2>
+  <p>Seller registration and project listing will be connected during development.</p>
+
+  <input type="text" id="seller" placeholder="Seller Name">
+  <input type="text" id="projectName" placeholder="Project Name">
+  <input type="number" id="price" placeholder="Project Price (₹)">
+  <textarea id="description" placeholder="Project Description"></textarea>
+
+  <button onclick="submitProject()">Submit Project</button>
+  <p id="status"></p>
+</div>
+
+<div class="note">
+  ⚠️ Before buying, verify the seller, project details, price and delivery terms. Do not pay unknown sellers in advance.
+</div>
+
+<p><a href="home.html">← Back to Home</a></p>
+
+</main>
+
+<script>
+function searchItems(query) {
+  window.open(
+    "https://www.google.com/search?tbm=shop&q=" +
+    encodeURIComponent(query),
+    "_blank"
+  );
+}
+
+function submitProject() {
+  const seller = document.getElementById("seller").value.trim();
+  const project = document.getElementById("projectName").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const description = document.getElementById("description").value.trim();
+
+  if (!seller || !project || !price || !description) {
+    document.getElementById("status").textContent =
+      "Please fill in all details.";
+    return;
+  }
+
+  document.getElementById("status").textContent =
+    "Demo only: Seller registration and project listing are not connected yet.";
+}
+</script>
+
+</body>
+</html>
