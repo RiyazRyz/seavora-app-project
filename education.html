@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b68">
+<title>SEAVORA - Education</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5fb;
+  color: #17345c;
+}
+
+header {
+  background: #123b68;
+  color: white;
+  padding: 22px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  letter-spacing: 4px;
+}
+
+header p {
+  margin-bottom: 0;
+  color: #dbeafe;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 20px 16px 35px;
+}
+
+.back {
+  display: inline-block;
+  padding: 10px 14px;
+  background: #e3edff;
+  color: #123b68;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+h2 { color: #123b68; }
+
+select, input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0 16px;
+  border: 1px solid #ccd7e5;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  margin: 13px 0;
+  border-radius: 14px;
+  border: 1px solid #e0e7f0;
+  box-shadow: 0 2px 7px #0000000b;
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #173b70;
+}
+
+.card p {
+  color: #596a82;
+  line-height: 1.5;
+}
+
+.link {
+  display: inline-block;
+  background: #2457d6;
+  color: white;
+  text-decoration: none;
+  padding: 11px 15px;
+  border-radius: 9px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.notice {
+  background: #fff6dc;
+  color: #74520b;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  color: #718096;
+  padding: 20px;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SEAVORA</h1>
+  <p>Education & Exam Information</p>
+</header>
+
+<main>
+
+<a class="back" href="home.html">← Back to Home</a>
+
+<h2>🎓 Education Centre</h2>
+<p>Find exam information and official learning resources.</p>
+
+<label for="state">Select State / Union Territory</label>
+<select id="state">
+  <option value="">Select your state</option>
+  <option>Andhra Pradesh</option>
+  <option>Arunachal Pradesh</option>
+  <option>Assam</option>
+  <option>Bihar</option>
+  <option>Chhattisgarh</option>
+  <option>Goa</option>
+  <option>Gujarat</option>
+  <option>Haryana</option>
+  <option>Himachal Pradesh</option>
+  <option>Jharkhand</option>
+  <option>Karnataka</option>
+  <option>Kerala</option>
+  <option>Madhya Pradesh</option>
+  <option>Maharashtra</option>
+  <option>Manipur</option>
+  <option>Meghalaya</option>
+  <option>Mizoram</option>
+  <option>Nagaland</option>
+  <option>Odisha</option>
+  <option>Punjab</option>
+  <option>Rajasthan</option>
+  <option>Sikkim</option>
+  <option>Tamil Nadu</option>
+  <option>Telangana</option>
+  <option>Tripura</option>
+  <option>Uttar Pradesh</option>
+  <option>Uttarakhand</option>
+  <option>West Bengal</option>
+  <option>Andaman and Nicobar Islands</option>
+  <option>Chandigarh</option>
+  <option>Dadra and Nagar Haveli and Daman and Diu</option>
+  <option>Delhi</option>
+  <option>Jammu and Kashmir</option>
+  <option>Ladakh</option>
+  <option>Lakshadweep</option>
+  <option>Puducherry</option>
+</select>
+
+<label for="examSearch">Search Exams</label>
+<input id="examSearch" type="search"
+  placeholder="Search UPSC, TNPSC, SSC..."
+  oninput="filterExams()">
+
+<h2>Popular Examinations</h2>
+
+<div id="examList">
+
+  <section class="card">
+    <h3>🇮🇳 UPSC</h3>
+    <p>Civil Services, IAS, IPS, IFS and other Union Public Service Commission examinations.</p>
+    <a class="link" href="https://upsc.gov.in/" target="_blank" rel="noopener">Official UPSC Website ↗</a>
+  </section>
+
+  <section class="card">
+    <h3>📘 TNPSC</h3>
+    <p>Tamil Nadu Group 1, Group 2, Group 2A, Group 4 and other state examinations.</p>
+    <a class="link" href="https://www.tnpsc.gov.in/" target="_blank" rel="noopener">Official TNPSC Website ↗</a>
+  </section>
+
+  <section class="card">
+    <h3>📝 SSC</h3>
+    <p>SSC CGL, CHSL, MTS, GD and other Staff Selection Commission examinations.</p>
+    <a class="link" href="https://ssc.gov.in/" target="_blank" rel="noopener">Official SSC Website ↗</a>
+  </section>
+
+  <section class="card">
+    <h3>🚆 Railway Recruitment</h3>
+    <p>Railway recruitment notifications and examination information.</p>
+    <a class="link" href="https://indianrailways.gov.in/" target="_blank" rel="noopener">Official Indian Railways Website ↗</a>
+  </section>
+
+  <section class="card">
+    <h3>🏦 Banking Exams</h3>
+    <p>Banking recruitment and examination information.</p>
+    <a class="link" href="https://www.ibps.in/" target="_blank" rel="noopener">Official IBPS Website ↗</a>
+  </section>
+
+</div>
+
+<h2>📚 Study Resources</h2>
+
+<section class="card">
+  <h3>Syllabus & Exam Pattern</h3>
+  <p>Find syllabus and examination patterns from the relevant official exam authority.</p>
+</section>
+
+<section class="card">
+  <h3>Previous Question Papers</h3>
+  <p>Look for previous question papers published by official examination authorities.</p>
+</section>
+
+<section class="card">
+  <h3>Model Questions & Practice</h3>
+  <p>Prepare with practice questions and revision materials.</p>
+</section>
+
+<section class="card">
+  <h3>🔔 Exam Notifications</h3>
+  <p>Check official websites for application dates, hall tickets, exam dates and results.</p>
+</section>
+
+<div class="notice">
+  ⚠️ Always verify exam dates, eligibility, fees and notifications on the official website. SEAVORA does not guarantee recruitment or examination results.
+</div>
+
+<p id="message"></p>
+
+</main>
+
+<footer>SEAVORA © 2026</footer>
+
+<script>
+function filterExams() {
+  const search = document.getElementById("examSearch")
+    .value.toLowerCase();
+
+  const cards = document.querySelectorAll("#examList .card");
+
+  cards.forEach(card => {
+    card.style.display =
+      card.textContent.toLowerCase().includes(search)
+      ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
