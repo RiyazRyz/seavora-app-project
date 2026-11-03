@@ -72,6 +72,7 @@ button {
   <p id="status"></p>
 </div>
 
+
 <script>
 function sendOTP(event) {
   event.preventDefault();
@@ -86,12 +87,18 @@ function sendOTP(event) {
 
   document.getElementById("otpSection").hidden = false;
   document.getElementById("status").textContent =
-    "Demo only: SMS OTP service is not connected yet.";
+    "Demo OTP: Use 123456 to test.";
 }
 
 function verifyOTP() {
-  document.getElementById("status").textContent =
-    "Real OTP verification is not connected yet.";
+  const otp = document.getElementById("otp").value.trim();
+
+  if (otp === "123456") {
+    window.location.href = "home.html";
+  } else {
+    document.getElementById("status").textContent =
+      "Incorrect demo OTP. Please try again.";
+  }
 }
 </script>
 </body>
