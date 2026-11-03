@@ -94,7 +94,13 @@ function verifyOTP() {
   const otp = document.getElementById("otp").value.trim();
 
   if (otp === "123456") {
-    window.location.href = "home.html";
+    const action = localStorage.getItem("seavoraNextAction");
+
+    if (action === "randomChat") {
+      window.location.href = "random-chat.html";
+    } else {
+      window.location.href = "home.html";
+    }
   } else {
     document.getElementById("status").textContent =
       "Incorrect demo OTP. Please try again.";
