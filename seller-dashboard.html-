@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEAVORA - Seller Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5fb;
+  color: #17345c;
+}
+header {
+  background: #123b68;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+main {
+  max-width: 700px;
+  margin: auto;
+  padding: 18px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 7px #0001;
+}
+.project {
+  border: 1px solid #dce4ef;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 9px;
+}
+.status {
+  color: #b7791f;
+  font-weight: bold;
+}
+button {
+  padding: 10px 16px;
+  margin: 6px 5px 0 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+.edit-btn {
+  background: #1769aa;
+}
+.delete-btn {
+  background: #c62828;
+}
+button:disabled {
+  opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SEAVORA</h1>
+  <p>Seller Dashboard</p>
+</header>
+
+<main>
+  <div class="card">
+    <h2>My Projects</h2>
+    <p id="message">Loading your projects...</p>
+    <p id="userInfo">Checking account...</p>
+    <div id="projectList"></div>
+  </div>
+
+  <p><a href="project-market.html">← Back to Project Market</a></p>
+  <p><a href="home.html">← Back to Home</a></p>
+</main>
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain: "seavora-5be21.firebaseapp.com",
+  projectId: "seavora-5be21",
+  storageBucket: "seavora-5be21.firebasestorage.app",
+  messagingSenderId: "41187328725",
+  appId: "1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId: "G-PDY0RZRDDH"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const message = document.getElementById("message");
+const projectList = document.getElementById("projectList");
+const userInfo = document.getElementById("userInfo");
+
+let currentUser = null;
+
+
+// Wait for Firebase login
+function waitForUser() {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (user) => {
+        unsubscribe();
+
+        try {
+          if (user) {
+            resolve(user);
+          } else {
+            const result = await signInAnonymously(auth);
+            resolve(result.user);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      },
+      reject
+    );
+  });
+}
+
+
+// Load seller projects
+async function loadProjects() {
+  try {
+    const projectsQuery = query(
+      collection(db, "projects"),
+      where("sellerUid", "==", currentUser.uid)
+    );
+
+    const result = await getDocs(projectsQuery);
+
+    projectList.innerHTML = "";
+
+    if (result.empty) {
+      message.textContent = "No projects found.";
+      return;
+    }
+
+    message.textContent =
+      result.size + " project(s) found.";
+
+    result.forEach((projectDoc) => {
+      const data = projectDoc.data();
+
+      const card = document.createElement("div");
+      card.className = "project";
+
+      const name = document.createElement("h3");
+      name.textContent =
+        data.projectName || "Untitled project";
+
+      const price = document.createElement("p");
+      price.textContent = "Price: ₹" + data.price;
+
+      const description = document.createElement("p");
+      description.textContent = data.description || "";
+
+      const seller = document.createElement("p");
+      seller.textContent =
+        "Seller: " + (data.sellerName || "");
+
+      const status = document.createElement("p");
+      status.className = "status";
+      status.textContent =
+        "Status: " + (data.status || "pending");
+
+      const editButton = document.createElement("button");
+      editButton.className = "edit-btn";
+      editButton.textContent = "Edit Project";
+
+      editButton.addEventListener("click", () => {
+        editProject(projectDoc.id, data, editButton);
+      });
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-btn";
+      deleteButton.textContent = "Delete Project";
+
+      deleteButton.addEventListener("click", () => {
+        deleteProject(projectDoc.id, deleteButton);
+      });
+
+      card.append(
+        name,
+        price,
+        description,
+        seller,
+        status,
+        editButton,
+        deleteButton
+      );
+
+      projectList.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error(error);
+    message.textContent =
+      "Unable to load projects: " + error.message;
+  }
+}
+
+
+// Edit project
+async function editProject(projectId, data, button) {
+
+  const projectName = prompt(
+    "Enter Project Name:",
+    data.projectName || ""
+  );
+
+  if (projectName === null) return;
+
+  const priceText = prompt(
+    "Enter Project Price:",
+    String(data.price)
+  );
+
+  if (priceText === null) return;
+
+  const description = prompt(
+    "Enter Project Description:",
+    data.description || ""
+  );
+
+  if (description === null) return;
+
+  const sellerName = prompt(
+    "Enter Seller Name:",
+    data.sellerName || ""
+  );
+
+  if (sellerName === null) return;
+
+  const price = Number(priceText);
+
+  if (
+    !projectName.trim() ||
+    !sellerName.trim() ||
+    !description.trim() ||
+    !Number.isFinite(price) ||
+    price <= 0
+  ) {
+    alert("Please enter valid project details and price.");
+    return;
+  }
+
+  try {
+    button.disabled = true;
+
+    await updateDoc(
+      doc(db, "projects", projectId),
+      {
+        projectName: projectName.trim(),
+        price: price,
+        description: description.trim(),
+        sellerName: sellerName.trim()
+      }
+    );
+
+    alert("Project updated successfully!");
+    await loadProjects();
+
+  } catch (error) {
+    console.error(error);
+    alert("Update failed: " + error.message);
+    button.disabled = false;
+  }
+}
+
+
+// Delete project
+async function deleteProject(projectId, button) {
+
+  const confirmed = confirm(
+    "Are you sure you want to delete this project?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    button.disabled = true;
+
+    await deleteDoc(
+      doc(db, "projects", projectId)
+    );
+
+    alert("Project deleted successfully!");
+    await loadProjects();
+
+  } catch (error) {
+    console.error(error);
+    alert("Delete failed: " + error.message);
+    button.disabled = false;
+  }
+}
+
+
+// Start dashboard
+try {
+  currentUser = await waitForUser();
+
+  userInfo.textContent =
+    "Email: " +
+    (currentUser.email || "Anonymous") +
+    " | UID: " +
+    currentUser.uid;
+
+  await loadProjects();
+
+} catch (error) {
+  console.error(error);
+  message.textContent =
+    "Login error: " + error.message;
+}
+
+</script>
+
+</body>
+</html>
