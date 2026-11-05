@@ -153,13 +153,7 @@ window.adminLogout = async function () {
 
       container.appendChild(card);
     });
-
-    status.textContent = snapshot.size + " projects found.";
-  } catch (error) {
-    status.textContent = "Error: " + error.message;
-  }
-}
-
+    
         snapshot.forEach((item) => {
           const p = item.data();
           const card = document.createElement("div");
