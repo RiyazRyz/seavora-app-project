@@ -308,8 +308,20 @@ window.submitProject = async function() {
 document.getElementById("projectName").value = "";
 document.getElementById("price").value = "";
 document.getElementById("description").value = "";
+ document.getElementById("seller").value = "";
+document.getElementById("projectName").value = "";
+document.getElementById("price").value = "";
+document.getElementById("description").value = "";
+ document.getElementById("projectPhoto").value = "";
+document.getElementById("projectVideo").value = "";
+
+document.getElementById("photoPreview").removeAttribute("src");
+document.getElementById("photoPreview").style.display = "none";
+
+document.getElementById("videoPreview").removeAttribute("src");
+document.getElementById("videoPreview").style.display = "none";
   } catch (error) {
-    console.error(error);
+     console.error(error);
     status.textContent =
       "Save failed: " + error.message;
   }
