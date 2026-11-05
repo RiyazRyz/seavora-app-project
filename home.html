@@ -247,12 +247,6 @@ function showNotice(name) {
     name + " service will be connected during development.";
 }
 
-function openService(event, name) {
-  event.preventDefault();
-  document.getElementById("message").textContent =
-    name + " page is coming soon.";
-}
-
 function searchTiles(value) {
   const tiles = document.querySelectorAll(".tile");
   tiles.forEach(tile => {
@@ -260,10 +254,6 @@ function searchTiles(value) {
       tile.textContent.toLowerCase().includes(value.toLowerCase())
       ? "block" : "none";
   });
-}function openRandomChat(event) {
-  event.preventDefault();
-  localStorage.setItem("ryzonNextAction", "randomChat");
-  window.location.href = "otp.html";
 }
 </script>
 </body>
