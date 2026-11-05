@@ -164,7 +164,23 @@ alert("Login button working");
     status.textContent = "Error: " + error.message;
   }
 }
-async function changeStatus(id, newStatus) {
+window.resetAdminPassword = async function () {
+  const email = document.getElementById("adminEmail").value.trim();
+  const status = document.getElementById("resetStatus");
+
+  if (!email) {
+    status.textContent = "Enter your admin email first.";
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    status.textContent = "Password reset link sent to your email.";
+  } catch (error) {
+    status.textContent = "Reset failed: " + error.message;
+  }
+};
+    async function changeStatus(id, newStatus) {
   if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
     alert("Admin login required.");
     return;
