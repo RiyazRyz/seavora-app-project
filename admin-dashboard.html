@@ -102,29 +102,63 @@ window.adminLogout = async function () {
   document.getElementById("loginStatus").textContent = "Logged out.";
 };
 
-async function loadProjects() {
+ async function loadProjects() {
+  const container = document.getElementById("projects");
+  const status = document.getElementById("status");
 
-    }
-
-    loginStatus.textContent = "Admin login successful.";
-    await loadProjects();
-  } catch (error) {
-    loginStatus.textContent = "Login failed: " + error.message;
+  if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
+    status.textContent = "Please login as admin.";
+    return;
   }
-};
 
-window.adminLogout = async function () {
-  await signOut(auth);
-  document.getElementById("projects").innerHTML = "";
-  document.getElementById("status").textContent = "Please login as admin.";
-  document.getElementById("loginStatus").textContent = "Logged out.";
-};
-      const container = document.getElementById("projects");
-      const status = document.getElementById("status");
+  try {
+    const snapshot = await getDocs(collection(db, "projects"));
+    container.innerHTML = "";
 
-      try {
-        const snapshot = await getDocs(collection(db, "projects"));
-        container.innerHTML = "";
+    snapshot.forEach((item) => {
+      const p = item.data();
+      const card = document.createElement("div");
+      card.className = "project";
+
+      const title = document.createElement("h3");
+      title.textContent = p.projectName || "Unnamed Project";
+
+      const seller = document.createElement("p");
+      seller.textContent = "Seller: " + (p.sellerName || "");
+
+      const price = document.createElement("p");
+      price.textContent = "Price: ₹" + (p.price ?? "");
+
+      const description = document.createElement("p");
+      description.textContent = p.description || "";
+
+      const state = document.createElement("p");
+      state.textContent = "Status: " + (p.status || "pending");
+
+      card.append(title, seller, price, description, state);
+
+      if (p.status === "pending") {
+        const approve = document.createElement("button");
+        approve.className = "approve";
+        approve.textContent = "Approve";
+        approve.onclick = () => changeStatus(item.id, "approved");
+
+        const reject = document.createElement("button");
+        reject.className = "reject";
+        reject.textContent = "Reject";
+        reject.onclick = () => changeStatus(item.id, "rejected");
+
+        card.append(approve, reject);
+      }
+
+      container.appendChild(card);
+    });
+
+    status.textContent = snapshot.size + " projects found.";
+  } catch (error) {
+    status.textContent = "Error: " + error.message;
+  }
+}
 
         snapshot.forEach((item) => {
           const p = item.data();
