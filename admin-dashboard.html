@@ -159,6 +159,20 @@ window.adminLogout = async function () {
     status.textContent = "Error: " + error.message;
   }
 }
+async function changeStatus(id, newStatus) {
+  if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
+    alert("Admin login required.");
+    return;
+  }
+
+  try {
+    await updateDoc(doc(db, "projects", id), { status: newStatus });
+    alert("Project status updated!");
+    await loadProjects();
+  } catch (error) {
+    alert("Update failed: " + error.message);
+  }
+}
   </script>
 
 </body>
