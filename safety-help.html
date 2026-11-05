@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Safety & Help</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    .emergency {
+      background: #fee2e2;
+      border: 1px solid #ef4444;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 7px;
+      background: #172554;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .emergency button {
+      background: #b91c1c;
+    }
+    a {
+      color: #0759c7;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>Safety & Emergency Help</h2>
+  <p>Your safety matters</p>
+</header>
+
+<div class="card emergency">
+  <h2>🚨 Emergency Help - India</h2>
+  <p>For immediate emergency assistance, call 112.</p>
+  <button onclick="callEmergency()">Call Emergency 112</button>
+  <p>Use this only for genuine emergencies.</p>
+</div>
+
+<div class="card">
+  <h2>Important Helpline Numbers</h2>
+  <p>Emergency Response: <a href="tel:112">112</a></p>
+  <p>Women Helpline: <a href="tel:181">181</a></p>
+  <p>Child Helpline: <a href="tel:1098">1098</a></p>
+  <p>Cyber Crime Helpline: <a href="tel:1930">1930</a></p>
+  <p>National Cyber Crime Portal:
+    <a href="https://cybercrime.gov.in/" target="_blank">
+      Visit Website
+    </a>
+  </p>
+</div>
+
+<div class="card">
+  <h2>Online Safety Tips</h2>
+  <ul>
+    <li>Never share your OTP or password.</li>
+    <li>Avoid unknown payment links.</li>
+    <li>Do not share private information with strangers.</li>
+    <li>Verify a person's identity before sending money.</li>
+    <li>Report suspicious online activity.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Need Help?</h2>
+  <p>For emergency assistance, contact the appropriate official helpline.</p>
+  <a href="https://112.gov.in/" target="_blank">
+    Official 112 Emergency Website
+  </a>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function callEmergency() {
+  if (confirm("Do you want to call emergency number 112?")) {
+    window.location.href = "tel:112";
+  }
+}
+</script>
+
+</body>
+</html>
