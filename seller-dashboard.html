@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEAVORA - Seller Dashboard</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5fb;
+  color: #17345c;
+}
+header {
+  background: #123b68;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+main {
+  max-width: 700px;
+  margin: auto;
+  padding: 18px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 7px #0001;
+}
+.project {
+  border: 1px solid #dce4ef;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 9px;
+}
+.status {
+  color: #b7791f;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SEAVORA</h1>
+  <p>Seller Dashboard</p>
+</header>
+
+<main>
+  <div class="card">
+    <h2>My Projects</h2>
+    <p id="message">Loading your projects...</p>
+    <div id="projectList"></div>
+  </div>
+
+  <p><a href="project-market.html">← Back to Project Market</a></p>
+  <p><a href="home.html">← Back to Home</a></p>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {
+  getAuth,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain: "seavora-5be21.firebaseapp.com",
+  projectId: "seavora-5be21",
+  storageBucket: "seavora-5be21.firebasestorage.app",
+  messagingSenderId: "41187328725",
+  appId: "1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId: "G-PDY0RZRDDH"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const message = document.getElementById("message");
+const projectList = document.getElementById("projectList");
+
+try {
+  const login = await signInAnonymously(auth);
+  const user = login.user;
+
+  const projectsQuery = query(
+    collection(db, "projects"),
+    where("sellerUid", "==", user.uid)
+  );
+
+  const result = await getDocs(projectsQuery);
+
+  projectList.innerHTML = "";
+
+  if (result.empty) {
+    message.textContent = "No projects found for this session.";
+  } else {
+    message.textContent = result.size + " project(s) found.";
+
+    result.forEach((doc) => {
+      const data = doc.data();
+
+      const card = document.createElement("div");
+      card.className = "project";
+
+      const name = document.createElement("h3");
+      name.textContent = data.projectName || "Untitled project";
+
+      const price = document.createElement("p");
+      price.textContent = "Price: ₹" + data.price;
+
+      const description = document.createElement("p");
+      description.textContent = data.description || "";
+
+      const status = document.createElement("p");
+      status.className = "status";
+      status.textContent = "Status: " + (data.status || "pending");
+
+      card.append(name, price, description, status);
+      projectList.appendChild(card);
+    });
+  }
+} catch (error) {
+  console.error(error);
+  message.textContent = "Unable to load projects: " + error.message;
+}
+</script>
+
+</body>
+</html>
