@@ -103,10 +103,6 @@ window.adminLogout = async function () {
 };
 
 async function loadProjects() {
- 
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
-  const loginStatus = document.getElementById("loginStatus");
 
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
