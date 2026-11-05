@@ -43,7 +43,7 @@ placeholder="Admin Email">
 <input type="password" id="adminPassword"
 placeholder="Admin Password">
 
-loginStatus.textContent = "Admin login successful."; document.getElementById("logoutButton").hidden = false;
+
 <button id="logoutButton" onclick="adminLogout()" hidden>Logout</button>
 <p id="loginStatus"></p>
   <p id="status">Loading projects...</p>
@@ -87,7 +87,7 @@ window.adminLogin = async function () {
       return;
     }
 
-    loginStatus.textContent = "Admin login successful.";
+    loginStatus.textContent = "Admin login successful."; document.getElementById("logoutButton").hidden = false;
     await loadProjects();
   } catch (error) {
     loginStatus.textContent = "Login failed: " + error.message;
