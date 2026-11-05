@@ -21,7 +21,24 @@ const translations = {
     mainServices: "Main Services",
     projectIdeas: "Project Ideas",
     projectMarket: "Project Market",
-    scamAlert: "⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️"
+    scamAlert: "⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️",
+
+    jobsTitle: "Jobs & Career",
+    jobsDescription: "Find job opportunities and career resources",
+    searchJobs: "Search Jobs",
+    jobPlaceholder: "Enter job name or keyword",
+    allCategories: "All Categories",
+    governmentJobs: "Government Jobs",
+    privateJobs: "Private Jobs",
+    itJobs: "IT Jobs",
+    bankingJobs: "Banking Jobs",
+    searchButton: "Search",
+    governmentDescription: "Explore official government recruitment notifications.",
+    bankingDescription: "Check official banking recruitment websites.",
+    privateDescription: "Search for private-sector and technology jobs.",
+    jobSearch: "Job Search",
+    jobSearchHelp: "Choose a category and enter a keyword to search.",
+    searchingFor: "Searching for:"
   },
 
   ta: {
@@ -43,7 +60,24 @@ const translations = {
     mainServices: "முக்கிய சேவைகள்",
     projectIdeas: "திட்ட யோசனைகள்",
     projectMarket: "திட்டச் சந்தை",
-    scamAlert: "⚠️ மோசடி எச்சரிக்கை: OTP, UPI PIN அல்லது வங்கி விவரங்களை யாரிடமும் பகிர வேண்டாம். பணம் செலுத்தும் முன் சரிபார்க்கவும். ⚠️"
+    scamAlert: "⚠️ மோசடி எச்சரிக்கை: OTP, UPI PIN அல்லது வங்கி விவரங்களை யாரிடமும் பகிர வேண்டாம். பணம் செலுத்தும் முன் சரிபார்க்கவும். ⚠️",
+
+    jobsTitle: "வேலைவாய்ப்புகள் மற்றும் தொழில்",
+    jobsDescription: "வேலை வாய்ப்புகள் மற்றும் தொழில் தகவல்களைக் கண்டறியுங்கள்",
+    searchJobs: "வேலை தேடல்",
+    jobPlaceholder: "வேலைப் பெயர் அல்லது முக்கியச் சொல்லை உள்ளிடுங்கள்",
+    allCategories: "அனைத்து பிரிவுகள்",
+    governmentJobs: "அரசு வேலைகள்",
+    privateJobs: "தனியார் வேலைகள்",
+    itJobs: "IT வேலைகள்",
+    bankingJobs: "வங்கி வேலைகள்",
+    searchButton: "தேடு",
+    governmentDescription: "அரசு வேலைவாய்ப்பு அறிவிப்புகளைப் பாருங்கள்.",
+    bankingDescription: "வங்கி வேலைவாய்ப்பு இணையதளங்களைப் பாருங்கள்.",
+    privateDescription: "தனியார் மற்றும் தொழில்நுட்ப வேலைகளைத் தேடுங்கள்.",
+    jobSearch: "வேலை தேடல்",
+    jobSearchHelp: "பிரிவைத் தேர்ந்தெடுத்து முக்கியச் சொல்லை உள்ளிட்டு தேடுங்கள்.",
+    searchingFor: "தேடுவது:"
   }
 };
 
@@ -79,6 +113,7 @@ function applyRYZONLanguage() {
 }
 
 document.addEventListener("DOMContentLoaded", applyRYZONLanguage);
+
 window.addEventListener("storage", function(event) {
   if (event.key === RYZON_LANG_KEY) {
     applyRYZONLanguage();
