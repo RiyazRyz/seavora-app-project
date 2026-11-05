@@ -304,6 +304,10 @@ window.submitProject = async function() {
     });
 
     status.textContent = "Project details saved successfully!";
+ document.getElementById("sellerName").value = "";
+document.getElementById("projectName").value = "";
+document.getElementById("price").value = "";
+document.getElementById("description").value = "";
   } catch (error) {
     console.error(error);
     status.textContent =
