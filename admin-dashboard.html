@@ -74,7 +74,7 @@ measurementId: "G-PDY0RZRDDH"
     const db = getFirestore(app);
     const auth = getAuth(app);
     const ADMIN_UID = "30G6RAmoyJVZsz2rBXEhqdXtVXR2";
-
+    let allProjects = [];
 window.toggleAdminAuth = async function () {
   const button = document.getElementById("authButton");
   const loginStatus = document.getElementById("loginStatus");
