@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - AI Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    textarea {
+      min-height: 120px;
+      border: 1px solid #bbb;
+      resize: vertical;
+    }
+    button {
+      background: #172554;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #answer {
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>AI Assistant</h2>
+  <p>Your smart assistant for everyday questions</p>
+</header>
+
+<div class="card">
+  <h2>Ask a Question</h2>
+  <textarea id="question"
+    placeholder="Type your question here..."></textarea>
+  <button onclick="askAssistant()">Submit Question</button>
+</div>
+
+<div class="card">
+  <h2>Response</h2>
+  <p id="answer">Your response will appear here.</p>
+</div>
+
+<div class="card">
+  <h2>What can RYZON AI help with?</h2>
+  <ul>
+    <li>Learning and education</li>
+    <li>Writing and translation</li>
+    <li>General knowledge</li>
+    <li>Ideas and planning</li>
+    <li>Technology guidance</li>
+  </ul>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function askAssistant() {
+  const question = document.getElementById("question").value.trim();
+  const answer = document.getElementById("answer");
+
+  if (!question) {
+    answer.textContent = "Please enter your question.";
+    return;
+  }
+
+  answer.textContent =
+    "AI service is not connected yet. Your question: " + question +
+    "\n\nAn AI API must be securely connected to provide real answers.";
+}
+</script>
+
+</body>
+</html>
