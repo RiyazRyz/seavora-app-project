@@ -72,33 +72,37 @@ measurementId: "G-PDY0RZRDDH"
     const auth = getAuth(app);
     const ADMIN_UID = "30G6RAmoyJVZsz2rBXEhqdXtVXR2";
 
-window.adminLogin = async function () {
+window.toggleAdminAuth = async function () {
+  const button = document.getElementById("authButton");
+  const loginStatus = document.getElementById("loginStatus");
+
+  if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
+    await signOut(auth);
+    button.textContent = "Login";
+    document.getElementById("projects").innerHTML = "";
+    document.getElementById("status").textContent = "Please login as admin.";
+    loginStatus.textContent = "Logged out.";
+    return;
+  }
+
   const email = document.getElementById("adminEmail").value.trim();
   const password = document.getElementById("adminPassword").value;
-  const loginStatus = document.getElementById("loginStatus");
 
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
 
     if (result.user.uid !== ADMIN_UID) {
       await signOut(auth);
-      loginStatus.textContent = "This account is not authorized as admin.";
+      loginStatus.textContent = "Not authorized as admin.";
       return;
     }
 
-    loginStatus.textContent = "Admin login successful."; document.getElementById("logoutButton").hidden = false;
+    button.textContent = "Logout";
+    loginStatus.textContent = "Admin login successful.";
     await loadProjects();
   } catch (error) {
     loginStatus.textContent = "Login failed: " + error.message;
   }
-};
-
-window.adminLogout = async function () {
-  await signOut(auth);
-  document.getElementById("logoutButton").hidden = true;
-  document.getElementById("projects").innerHTML = "";
-  document.getElementById("status").textContent = "Please login as admin.";
-  document.getElementById("loginStatus").textContent = "Logged out.";
 };
 
  async function loadProjects() {
