@@ -192,7 +192,53 @@ onAuthStateChanged(auth, async (user) => {
       "Login error: " + error.message;
   }
 });
-window.searchItems = function(query) {
+window.registerSeller = async function() {
+  const email = document.getElementById("sellerEmail").value.trim();
+  const password = document.getElementById("sellerPassword").value;
+  const accountStatus = document.getElementById("accountStatus");
+
+  if (!email || password.length < 6) {
+    accountStatus.textContent =
+      "Enter a valid email and password (minimum 6 characters).";
+    return;
+  }
+
+  try {
+    if (!currentUser) {
+      accountStatus.textContent = "Please wait. Account is loading.";
+      return;
+    }
+
+    if (!currentUser.isAnonymous) {
+      accountStatus.textContent = "You already have a permanent account. Please use Login.";
+      return;
+    }
+
+    const credential = EmailAuthProvider.credential(email, password);
+    const result = await linkWithCredential(currentUser, credential);
+
+    currentUser = result.user;
+    accountStatus.textContent =
+      "Seller account created successfully!";
+  } catch (error) {
+    accountStatus.textContent = "Registration failed: " + error.message;
+  }
+};
+
+window.loginSeller = async function() {
+  const email = document.getElementById("sellerEmail").value.trim();
+  const password = document.getElementById("sellerPassword").value;
+  const accountStatus = document.getElementById("accountStatus");
+
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    currentUser = result.user;
+    accountStatus.textContent = "Seller login successful!";
+  } catch (error) {
+    accountStatus.textContent = "Login failed: " + error.message;
+  }
+};
+  window.searchItems = function(query) {
   window.open(
     "https://www.google.com/search?tbm=shop&q=" +
     encodeURIComponent(query),
