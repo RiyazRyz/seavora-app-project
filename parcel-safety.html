@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Parcel Safety</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    input {
+      border: 1px solid #bbb;
+    }
+    button {
+      background: #172554;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>Parcel Safety</h2>
+  <p>Stay alert when receiving parcels</p>
+</header>
+
+<div class="card">
+  <h2>Parcel Safety Checklist</h2>
+  <ul>
+    <li>Check the sender and delivery details.</li>
+    <li>Do not share OTP with unknown callers.</li>
+    <li>Never scan unknown QR codes for refunds.</li>
+    <li>Do not pay unexpected delivery charges through suspicious links.</li>
+    <li>Check the package condition before accepting it.</li>
+    <li>Report suspicious parcels to the delivery company.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Suspicious Parcel Report Notes</h2>
+  <input type="text" id="tracking"
+    placeholder="Enter tracking number (optional)">
+  <input type="text" id="courier"
+    placeholder="Courier company (optional)">
+  <input type="text" id="issue"
+    placeholder="Describe the suspicious activity">
+  <button onclick="saveNotes()">Save Notes on This Device</button>
+  <p id="result"></p>
+</div>
+
+<div class="card">
+  <h2>Need Help?</h2>
+  <p>For cyber financial fraud in India, call 1930 promptly.</p>
+  <p>For emergencies, call 112.</p>
+  <a href="https://cybercrime.gov.in/" target="_blank">
+    National Cyber Crime Portal
+  </a>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function saveNotes() {
+  const tracking = document.getElementById("tracking").value.trim();
+  const courier = document.getElementById("courier").value.trim();
+  const issue = document.getElementById("issue").value.trim();
+
+  if (!issue) {
+    document.getElementById("result").textContent =
+      "Please describe the issue.";
+    return;
+  }
+
+  const note = {
+    tracking: tracking,
+    courier: courier,
+    issue: issue,
+    date: new Date().toLocaleString()
+  };
+
+  try {
+    const notes = JSON.parse(
+      localStorage.getItem("ryzonParcelNotes") || "[]"
+    );
+    notes.push(note);
+    localStorage.setItem("ryzonParcelNotes", JSON.stringify(notes));
+
+    document.getElementById("result").textContent =
+      "Notes saved on this device.";
+  } catch (error) {
+    document.getElementById("result").textContent =
+      "Unable to save notes on this device.";
+  }
+}
+</script>
+
+</body>
+</html>
