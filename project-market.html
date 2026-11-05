@@ -139,9 +139,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import {
   getAuth,
-  signInAnonymously
+  signInAnonymously,
+  onAuthStateChanged,
+  EmailAuthProvider,
+  linkWithCredential,
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
   authDomain: "seavora-5be21.firebaseapp.com",
