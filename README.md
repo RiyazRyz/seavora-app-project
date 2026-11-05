@@ -1,4 +1,4 @@
-# # RYZON
+# RYZON
 
 ### One App, Endless Possibilities!
 
