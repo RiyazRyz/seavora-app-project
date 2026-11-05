@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Local Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+    }
+    button {
+      background: #172554;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .service {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>Local Services</h2>
+  <p>Find useful services around your area</p>
+</header>
+
+<div class="card">
+  <h2>Find a Service</h2>
+  <input type="text" id="location"
+    placeholder="Enter your city or area">
+  <select id="service">
+    <option value="">Select a service</option>
+    <option value="Electrician">Electrician</option>
+    <option value="Plumber">Plumber</option>
+    <option value="Carpenter">Carpenter</option>
+    <option value="Mechanic">Mechanic</option>
+    <option value="Home Cleaning">Home Cleaning</option>
+    <option value="Mobile Repair">Mobile Repair</option>
+    <option value="Computer Repair">Computer Repair</option>
+    <option value="Tutor">Tutor</option>
+  </select>
+  <button onclick="searchService()">Search Services</button>
+</div>
+
+<div class="card">
+  <h2>Available Service Categories</h2>
+  <div class="service">🔧 Electrician</div>
+  <div class="service">🚰 Plumber</div>
+  <div class="service">🪚 Carpenter</div>
+  <div class="service">🚗 Vehicle Mechanic</div>
+  <div class="service">🧹 Home Cleaning</div>
+  <div class="service">📱 Mobile Repair</div>
+  <div class="service">💻 Computer Repair</div>
+  <div class="service">📚 Tutor</div>
+</div>
+
+<div class="card">
+  <h2>Search Result</h2>
+  <p id="result">Select a service to search.</p>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function searchService() {
+  const location = document.getElementById("location").value.trim();
+  const service = document.getElementById("service").value;
+  const result = document.getElementById("result");
+
+  if (!location || !service) {
+    result.textContent = "Please enter your area and select a service.";
+    return;
+  }
+
+  const query = service + " near " + location;
+
+  result.textContent = "Searching for: " + query;
+
+  window.open(
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(query),
+    "_blank"
+  );
+}
+</script>
+
+</body>
+</html>
