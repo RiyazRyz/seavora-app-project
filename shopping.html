@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Shopping</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+    }
+    button {
+      background: #172554;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #0759c7;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>Shopping</h2>
+  <p>Explore products and online shopping</p>
+</header>
+
+<div class="card">
+  <h2>Search Products</h2>
+  <input type="text" id="productSearch"
+    placeholder="Enter product name">
+  <select id="category">
+    <option value="">All Categories</option>
+    <option value="Mobiles">Mobiles</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Fashion">Fashion</option>
+    <option value="Home Appliances">Home Appliances</option>
+    <option value="Books">Books</option>
+    <option value="Beauty">Beauty</option>
+  </select>
+  <button onclick="searchProduct()">Search Products</button>
+</div>
+
+<div class="card">
+  <h2>Popular Shopping Websites</h2>
+  <p>Visit these shopping platforms to explore products.</p>
+  <a href="https://www.amazon.in/" target="_blank">Amazon India</a><br>
+  <a href="https://www.flipkart.com/" target="_blank">Flipkart</a><br>
+  <a href="https://www.myntra.com/" target="_blank">Myntra</a><br>
+  <a href="https://www.meesho.com/" target="_blank">Meesho</a><br>
+  <a href="https://www.ajio.com/" target="_blank">AJIO</a>
+</div>
+
+<div class="card">
+  <h2>Shopping Categories</h2>
+  <p>Mobiles • Electronics • Fashion • Home • Books • Beauty</p>
+</div>
+
+<div class="card">
+  <h2>Search Result</h2>
+  <p id="result">Enter a product name to begin.</p>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function searchProduct() {
+  const product = document.getElementById("productSearch").value.trim();
+  const category = document.getElementById("category").value;
+
+  if (!product && !category) {
+    document.getElementById("result").textContent =
+      "Please enter a product name or select a category.";
+    return;
+  }
+
+  const query = (product + " " + category).trim();
+
+  document.getElementById("result").textContent =
+    "Searching for: " + query;
+
+  window.open(
+    "https://www.google.com/search?tbm=shop&q=" +
+    encodeURIComponent(query),
+    "_blank"
+  );
+}
+</script>
+
+</body>
+</html>
