@@ -2,8 +2,7 @@
 
 ### One App, Endless Possibilities!
 
-SEAVORA is a multilingual Indian Super App designed to connect people with opportunities and essential services.
-
+RYZON is a multilingual Indian Super App designed to connect people with opportunities and essential services.
 ## Main Features
 
 - Language Selection – 22 Indian Languages
