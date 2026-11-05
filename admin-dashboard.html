@@ -56,7 +56,9 @@ placeholder="Admin Password">
     import {
       getFirestore, collection, getDocs, doc, updateDoc
     } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
+import {
+  getAuth, signInWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
     const firebaseConfig = {
 apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
 authDomain: "seavora-5be21.firebaseapp.com",
