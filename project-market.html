@@ -161,16 +161,20 @@ const auth = getAuth(app);
 
 let currentUser = null;
 
-signInAnonymously(auth)
-  .then((result) => {
-    currentUser = result.user;
-  })
-  .catch((error) => {
+onAuthStateChanged(auth, async (user) => {
+  try {
+    if (user) {
+      currentUser = user;
+    } else {
+      const result = await signInAnonymously(auth);
+      currentUser = result.user;
+    }
+  } catch (error) {
     console.error(error);
     document.getElementById("status").textContent =
       "Login error: " + error.message;
-  });
-
+  }
+});
 window.searchItems = function(query) {
   window.open(
     "https://www.google.com/search?tbm=shop&q=" +
