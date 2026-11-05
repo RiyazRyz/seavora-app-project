@@ -20,7 +20,7 @@ const translations = {
     search: "🔍 Search RYZON...",
     mainServices: "Main Services",
     projectIdeas: "Project Ideas",
-    projectMarket: "Project Market",
+    projectMarket: "திட்டச் சந்தை",
     scamAlert: "⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️"
   },
 
