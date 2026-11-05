@@ -201,6 +201,19 @@ function displayProjects(projectList) {
     alert("Update failed: " + error.message);
   }
 }
+document.getElementById("projectSearch").addEventListener("input", (event) => {
+  const query = event.target.value.trim().toLowerCase();
+
+  const filtered = allProjects.filter((project) =>
+    (project.projectName || "").toLowerCase().includes(query) ||
+    (project.sellerName || "").toLowerCase().includes(query)
+  );
+
+  displayProjects(filtered);
+
+  document.getElementById("status").textContent =
+    filtered.length + " matching projects found.";
+});
   </script>
 
 </body>
