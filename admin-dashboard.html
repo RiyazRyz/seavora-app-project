@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEAVORA Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { color: #123b50; }
+    .project {
+      background: white;
+      padding: 16px;
+      margin: 12px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px #ddd;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .approve { background: #16834a; color: white; }
+    .reject { background: #c93636; color: white; }
+    #status { color: #123b50; }
+  </style>
+</head>
+<body>
+
+  <h1>SEAVORA Admin Dashboard</h1>
+  <p>Project Approval Panel</p>
+  <p id="status">Loading projects...</p>
+  <div id="projects"></div>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getFirestore, collection, getDocs, doc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      // உங்கள் project-market.html-ல் உள்ள அதே Firebase config-ஐ இங்கே இடவும்.
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadProjects() {
+      const container = document.getElementById("projects");
+      const status = document.getElementById("status");
+
+      try {
+        const snapshot = await getDocs(collection(db, "projects"));
+        container.innerHTML = "";
+
+        snapshot.forEach((item) => {
+          const p = item.data();
+          const card = document.createElement("div");
+          card.className = "project";
+
+          const title = document.createElement("h3");
+          title.textContent = p.projectName || "Unnamed Project";
+
+          const seller = document.createElement("p");
+          seller.textContent = "Seller: " + (p.sellerName || "");
+
+          const price = document.createElement("p");
+          price.textContent = "Price: ₹" + (p.price ?? "");
+
+          const description = document.createElement("p");
+          description.textContent = p.description || "";
+
+          const state = document.createElement("p");
+          state.textContent = "Status: " + (p.status || "pending");
+
+          card.append(title, seller, price, description, state);
+
+          if (p.status === "pending") {
+            const approve = document.createElement("button");
+            approve.className = "approve";
+            approve.textContent = "Approve";
+            approve.onclick = () => changeStatus(item.id, "approved");
+
+            const reject = document.createElement("button");
+            reject.className = "reject";
+            reject.textContent = "Reject";
+            reject.onclick = () => changeStatus(item.id, "rejected");
+
+            card.append(approve, reject);
+          }
+
+          container.appendChild(card);
+        });
+
+        status.textContent = snapshot.size + " projects found.";
+      } catch (error) {
+        status.textContent = "Error: " + error.message;
+      }
+    }
+
+    async function changeStatus(id, newStatus) {
+      try {
+        await updateDoc(doc(db, "projects", id), { status: newStatus });
+        alert("Project status updated!");
+        loadProjects();
+      } catch (error) {
+        alert("Update failed: " + error.message);
+      }
+    }
+
+    loadProjects();
+  </script>
+
+</body>
+</html>
