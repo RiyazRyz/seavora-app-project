@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Jobs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 18px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    h2 { color: #172554; }
+    a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #0759c7;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+    }
+    button {
+      background: #172554;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2 style="color:white;">Jobs & Career</h2>
+  <p>Find job opportunities and career resources</p>
+</header>
+
+<div class="card">
+  <h2>Search Jobs</h2>
+  <input type="text" id="jobSearch" placeholder="Enter job name or keyword">
+  <select id="jobCategory">
+    <option value="all">All Categories</option>
+    <option value="government">Government Jobs</option>
+    <option value="private">Private Jobs</option>
+    <option value="it">IT Jobs</option>
+    <option value="banking">Banking Jobs</option>
+  </select>
+  <button onclick="searchJobs()">Search</button>
+</div>
+
+<div class="card">
+  <h2>Government Jobs</h2>
+  <p>Explore official government recruitment notifications.</p>
+  <a href="https://www.upsc.gov.in/" target="_blank">UPSC Official Website</a><br>
+  <a href="https://www.tnpsc.gov.in/" target="_blank">TNPSC Official Website</a><br>
+  <a href="https://ssc.gov.in/" target="_blank">SSC Official Website</a><br>
+  <a href="https://www.rrbcdg.gov.in/" target="_blank">Railway Recruitment</a>
+</div>
+
+<div class="card">
+  <h2>Banking Jobs</h2>
+  <p>Check official banking recruitment websites.</p>
+  <a href="https://www.ibps.in/" target="_blank">IBPS Official Website</a><br>
+  <a href="https://sbi.co.in/web/careers" target="_blank">SBI Careers</a>
+</div>
+
+<div class="card">
+  <h2>Private & IT Jobs</h2>
+  <p>Search for private-sector and technology jobs.</p>
+  <a href="https://www.naukri.com/" target="_blank">Naukri</a><br>
+  <a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a><br>
+  <a href="https://www.ncs.gov.in/" target="_blank">National Career Service</a>
+</div>
+
+<div class="card">
+  <h2>Job Search</h2>
+  <p id="result">Choose a category and enter a keyword to search.</p>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function searchJobs() {
+  const keyword = document.getElementById("jobSearch").value.trim();
+  const category = document.getElementById("jobCategory").value;
+
+  let query = keyword || "latest jobs";
+
+  if (category !== "all") {
+    query += " " + category + " jobs";
+  }
+
+  document.getElementById("result").textContent =
+    "Searching for: " + query;
+
+  window.open(
+    "https://www.google.com/search?q=" + encodeURIComponent(query),
+    "_blank"
+  );
+}
+</script>
+
+</body>
+</html>
