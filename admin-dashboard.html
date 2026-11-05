@@ -71,7 +71,7 @@ measurementId: "G-PDY0RZRDDH"
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
+    const auth = getAuth(app);
     async function loadProjects() {
       const container = document.getElementById("projects");
       const status = document.getElementById("status");
