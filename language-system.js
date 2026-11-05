@@ -79,3 +79,8 @@ function applyRYZONLanguage() {
 }
 
 document.addEventListener("DOMContentLoaded", applyRYZONLanguage);
+window.addEventListener("storage", function(event) {
+  if (event.key === RYZON_LANG_KEY) {
+    applyRYZONLanguage();
+  }
+});
