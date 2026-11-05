@@ -111,6 +111,7 @@ try {
     }
   });
 });
+  userInfo.textContent = "Email: " + (user.email || "Anonymous") + " | UID: " + user.uid;
   const projectsQuery = query(
     collection(db, "projects"),
     where("sellerUid", "==", user.uid)
