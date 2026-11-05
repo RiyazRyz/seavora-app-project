@@ -104,8 +104,25 @@ a { color: #2457d6; }
   <button onclick="searchItems('Resistors capacitors LEDs wires circuit boards')">Other Components</button>
 </div>
 
-<div class="card">
+<div class="card"> 
   <h2>📦 Sell Your Handmade Project</h2>
+<h3>Seller Account</h3>
+
+<input type="email" id="sellerEmail"
+placeholder="Email Address">
+
+<input type="password" id="sellerPassword"
+placeholder="Password (Minimum 6 characters)">
+
+<button onclick="registerSeller()">
+Create Seller Account
+</button>
+
+<button onclick="loginSeller()">
+Login to Seller Account
+</button>
+
+<p id="accountStatus"></p>
   <p>Seller registration and project listing will be connected during development.</p>
 
   <input type="text" id="seller" placeholder="Seller Name">
