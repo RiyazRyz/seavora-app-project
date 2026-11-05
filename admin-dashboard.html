@@ -127,8 +127,7 @@ window.toggleAdminAuth = async function () {
 
   try {
     const snapshot = await getDocs(collection(db, "projects"));
-
-    allProjects = snapshot.docs.map((item) => ({
+    allProjects = snapshot.docs.map(item => ({
       id: item.id,
       ...item.data()
     }));
