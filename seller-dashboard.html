@@ -92,9 +92,24 @@ const message = document.getElementById("message");
 const projectList = document.getElementById("projectList");
 
 try {
-  const login = await signInAnonymously(auth);
-  const user = login.user;
+  const user = await new Promise((resolve, reject) => {
+  let unsubscribe = () => {};
 
+  unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    unsubscribe();
+
+    try {
+      if (currentUser) {
+        resolve(currentUser);
+      } else {
+        const login = await signInAnonymously(auth);
+        resolve(login.user);
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+});
   const projectsQuery = query(
     collection(db, "projects"),
     where("sellerUid", "==", user.uid)
