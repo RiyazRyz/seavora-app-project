@@ -96,6 +96,7 @@ window.adminLogin = async function () {
 
 window.adminLogout = async function () {
   await signOut(auth);
+  document.getElementById("logoutButton").hidden = true;
   document.getElementById("projects").innerHTML = "";
   document.getElementById("status").textContent = "Please login as admin.";
   document.getElementById("loginStatus").textContent = "Logged out.";
