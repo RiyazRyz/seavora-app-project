@@ -118,6 +118,7 @@ window.toggleAdminAuth = async function () {
 
   try {
     async function loadProjects() {
+  coasync function loadProjects() {
   const status = document.getElementById("status");
 
   if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
@@ -131,7 +132,6 @@ window.toggleAdminAuth = async function () {
       id: item.id,
       ...item.data()
     }));
-
     displayProjects(allProjects);
     status.textContent = allProjects.length + " projects found.";
   } catch (error) {
