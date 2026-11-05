@@ -128,15 +128,55 @@ a { color: #2457d6; }
 
 </main>
 
-<script>
-function searchItems(query) {
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {
+  getAuth,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain: "seavora-5be21.firebaseapp.com",
+  projectId: "seavora-5be21",
+  storageBucket: "seavora-5be21.firebasestorage.app",
+  messagingSenderId: "41187328725",
+  appId: "1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId: "G-PDY0RZRDDH"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let currentUser = null;
+
+signInAnonymously(auth)
+  .then((result) => {
+    currentUser = result.user;
+  })
+  .catch((error) => {
+    console.error(error);
+    document.getElementById("status").textContent =
+      "Login error: " + error.message;
+  });
+
+window.searchItems = function(query) {
   window.open(
     "https://www.google.com/search?tbm=shop&q=" +
     encodeURIComponent(query),
     "_blank"
   );
-}
-document.getElementById("projectPhoto").addEventListener("change", function () {
+};
+
+document.getElementById("projectPhoto").addEventListener("change", function() {
   const file = this.files[0];
   const preview = document.getElementById("photoPreview");
 
@@ -149,7 +189,7 @@ document.getElementById("projectPhoto").addEventListener("change", function () {
   }
 });
 
-document.getElementById("projectVideo").addEventListener("change", function () {
+document.getElementById("projectVideo").addEventListener("change", function() {
   const file = this.files[0];
   const preview = document.getElementById("videoPreview");
 
@@ -161,22 +201,47 @@ document.getElementById("projectVideo").addEventListener("change", function () {
     preview.style.display = "none";
   }
 });
-function submitProject() {
+
+window.submitProject = async function() {
   const seller = document.getElementById("seller").value.trim();
   const project = document.getElementById("projectName").value.trim();
-  const price = document.getElementById("price").value.trim();
+  const price = Number(document.getElementById("price").value);
   const description = document.getElementById("description").value.trim();
+  const status = document.getElementById("status");
 
-  if (!seller || !project || !price || !description) {
-    document.getElementById("status").textContent =
-      "Please fill in all details.";
+  if (!seller || !project || !description ||
+      !Number.isFinite(price) || price <= 0) {
+    status.textContent = "Please enter valid project details.";
     return;
   }
 
-  document.getElementById("status").textContent =
-    "Demo only: Seller registration and project listing are not connected yet.";
-}
+  if (!currentUser) {
+    status.textContent = "Please wait. Login is loading.";
+    return;
+  }
+
+  status.textContent = "Saving project...";
+
+  try {
+    await addDoc(collection(db, "projects"), {
+      sellerName: seller,
+      projectName: project,
+      price: price,
+      description: description,
+      sellerUid: currentUser.uid,
+      status: "pending",
+      createdAt: serverTimestamp()
+    });
+
+    status.textContent = "Project details saved successfully!";
+  } catch (error) {
+    console.error(error);
+    status.textContent =
+      "Save failed: " + error.message;
+  }
+};
 </script>
+
 
 </body>
 </html>
