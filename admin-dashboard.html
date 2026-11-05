@@ -77,7 +77,6 @@ measurementId: "G-PDY0RZRDDH"
 window.toggleAdminAuth = async function () {
   const button = document.getElementById("authButton");
   const loginStatus = document.getElementById("loginStatus");
-alert("Login button working");
   if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
     await signOut(auth);
     button.textContent = "Login";
