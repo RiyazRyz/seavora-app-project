@@ -117,49 +117,24 @@ window.toggleAdminAuth = async function () {
   }
 
   try {
+    async function loadProjects() {
+  const status = document.getElementById("status");
+
+  if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
+    status.textContent = "Please login as admin.";
+    return;
+  }
+
+  try {
     const snapshot = await getDocs(collection(db, "projects"));
-    container.innerHTML = "";
 
-    snapshot.forEach((item) => {
-      const p = item.data();
-      const card = document.createElement("div");
-      card.className = "project";
+    allProjects = snapshot.docs.map((item) => ({
+      id: item.id,
+      ...item.data()
+    }));
 
-      const title = document.createElement("h3");
-      title.textContent = p.projectName || "Unnamed Project";
-
-      const seller = document.createElement("p");
-      seller.textContent = "Seller: " + (p.sellerName || "");
-
-      const price = document.createElement("p");
-      price.textContent = "Price: ₹" + (p.price ?? "");
-
-      const description = document.createElement("p");
-      description.textContent = p.description || "";
-
-      const state = document.createElement("p");
-      state.textContent = "Status: " + (p.status || "pending");
-
-      card.append(title, seller, price, description, state);
-
-      if (p.status === "pending") {
-        const approve = document.createElement("button");
-        approve.className = "approve";
-        approve.textContent = "Approve";
-        approve.onclick = () => changeStatus(item.id, "approved");
-
-        const reject = document.createElement("button");
-        reject.className = "reject";
-        reject.textContent = "Reject";
-        reject.onclick = () => changeStatus(item.id, "rejected");
-
-        card.append(approve, reject);
-      }
-
-      container.appendChild(card);
-    });
-
-    status.textContent = snapshot.size + " projects found.";
+    displayProjects(allProjects);
+    status.textContent = allProjects.length + " projects found.";
   } catch (error) {
     status.textContent = "Error: " + error.message;
   }
