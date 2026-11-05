@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RYZON - Premium</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f5f9;
+      color: #222;
+    }
+    header {
+      background: #172554;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      border-radius: 12px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #00000015;
+    }
+    .price {
+      font-size: 28px;
+      font-weight: bold;
+      color: #172554;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      background: #172554;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>RYZON</h1>
+  <h2>Premium Membership</h2>
+  <p>Explore more possibilities with RYZON</p>
+</header>
+
+<div class="card">
+  <h2>Free Plan</h2>
+  <p class="price">₹0</p>
+  <ul>
+    <li>Access to available basic features</li>
+    <li>Explore education and job resources</li>
+    <li>Browse shopping links</li>
+  </ul>
+  <button onclick="showPlan('Free')">Current Plan</button>
+</div>
+
+<div class="card">
+  <h2>RYZON Premium</h2>
+  <p class="price">Coming Soon</p>
+  <ul>
+    <li>Planned premium features</li>
+    <li>Enhanced app experience</li>
+    <li>Additional tools and services</li>
+    <li>Future exclusive benefits</li>
+  </ul>
+  <button onclick="showPlan('Premium')">Notify Me - Coming Soon</button>
+</div>
+
+<div class="card">
+  <h2>Membership Information</h2>
+  <p>Premium plans, pricing and benefits will be announced after development.</p>
+  <p>No payment is collected on this page.</p>
+  <p id="message"></p>
+</div>
+
+<footer>
+  RYZON © 2026
+</footer>
+
+<script>
+function showPlan(plan) {
+  const message = document.getElementById("message");
+
+  if (plan === "Free") {
+    message.textContent = "You are viewing the free plan.";
+  } else {
+    message.textContent =
+      "RYZON Premium is not available yet. Payment and subscription services are not connected.";
+  }
+}
+</script>
+
+</body>
+</html>
