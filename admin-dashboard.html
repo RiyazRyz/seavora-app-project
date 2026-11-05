@@ -116,23 +116,7 @@ window.adminLogout = async function () {
     container.innerHTML = "";
 
     snapshot.forEach((item) => {
-      const p = item.data();
-      const card = document.createElement("div");
-      card.className = "project";
-
-      const title = document.createElement("h3");
-      title.textContent = p.projectName || "Unnamed Project";
-
-      const seller = document.createElement("p");
-      seller.textContent = "Seller: " + (p.sellerName || "");
-
-      const price = document.createElement("p");
-      price.textContent = "Price: ₹" + (p.price ?? "");
-
-      const description = document.createElement("p");
-      description.textContent = p.description || "";
-
-      const state = document.createElement("p");
+      
       state.textContent = "Status: " + (p.status || "pending");
 
       card.append(title, seller, price, description, state);
