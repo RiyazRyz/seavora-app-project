@@ -94,7 +94,7 @@ function verifyOTP() {
   const otp = document.getElementById("otp").value.trim();
 
   if (otp === "123456") {
-    const action = localStorage.getItem("seavoraNextAction");
+    const action = localStorage.getItem("ryzonNextAction");
 
     if (action === "randomChat") {
       window.location.href = "random-chat.html";
