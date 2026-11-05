@@ -104,13 +104,6 @@ window.adminLogout = async function () {
 
 async function loadProjects() {
 
-  try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-
-    if (result.user.uid !== ADMIN_UID) {
-      await signOut(auth);
-      loginStatus.textContent = "This account is not authorized as admin.";
-      return;
     }
 
     loginStatus.textContent = "Admin login successful.";
