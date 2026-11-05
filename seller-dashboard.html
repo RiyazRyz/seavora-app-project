@@ -91,7 +91,7 @@ const auth = getAuth(app);
 
 const message = document.getElementById("message");
 const projectList = document.getElementById("projectList");
-
+const userInfo = document.getElementById("userInfo");
 try {
   const user = await new Promise((resolve, reject) => {
   let unsubscribe = () => {};
