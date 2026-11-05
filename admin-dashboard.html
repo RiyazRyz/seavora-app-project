@@ -145,6 +145,48 @@ window.resetAdminPassword = async function () {
     status.textContent = "Reset failed: " + error.message;
   }
 };
+function displayProjects(projectList) {
+  const container = document.getElementById("projects");
+  container.innerHTML = "";
+
+  projectList.forEach((p) => {
+    const card = document.createElement("div");
+    card.className = "project";
+
+    const title = document.createElement("h3");
+    title.textContent = p.projectName || "Unnamed Project";
+
+    const seller = document.createElement("p");
+    seller.textContent = "Seller: " + (p.sellerName || "");
+
+    const price = document.createElement("p");
+    price.textContent = "Price: ₹" + (p.price ?? "");
+
+    const description = document.createElement("p");
+    description.textContent = p.description || "";
+
+    const state = document.createElement("p");
+    state.textContent = "Status: " + (p.status || "pending");
+
+    card.append(title, seller, price, description, state);
+
+    if (p.status === "pending") {
+      const approve = document.createElement("button");
+      approve.className = "approve";
+      approve.textContent = "Approve";
+      approve.onclick = () => changeStatus(p.id, "approved");
+
+      const reject = document.createElement("button");
+      reject.className = "reject";
+      reject.textContent = "Reject";
+      reject.onclick = () => changeStatus(p.id, "rejected");
+
+      card.append(approve, reject);
+    }
+
+    container.appendChild(card);
+  });
+}
     async function changeStatus(id, newStatus) {
   if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
     alert("Admin login required.");
