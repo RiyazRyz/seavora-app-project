@@ -5,10 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101c3a">
+
 <title>RYZON - Random Chat</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -61,6 +64,7 @@ button {
   color: white;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .back {
@@ -78,12 +82,15 @@ button {
 </head>
 
 <body>
+
 <main class="container">
 
   <div class="brand">RYZON</div>
+
   <p>One App, Endless Possibilities!</p>
 
   <section class="card">
+
     <h2>💬 Random Chat</h2>
 
     <div class="chat-status" id="status">
@@ -106,12 +113,14 @@ button {
     <div class="note">
       This is currently a demonstration page.
       Real-time chat, matching, moderation,
-      block and report services will be connected
-      during backend development.
+      block and report services are not connected yet.
+
       <br><br>
+
       Never share your OTP, password,
       bank details or personal information.
     </div>
+
   </section>
 
 </main>
@@ -123,7 +132,7 @@ function findPartner() {
 }
 
 function goHome() {
-  window.location.href = "otp.html";
+  window.location.href = "home.html";
 }
 </script>
 
