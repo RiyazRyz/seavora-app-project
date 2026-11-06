@@ -227,7 +227,9 @@ function phoneValid(phone){
  return /^\+[1-9]\d{7,14}$/.test(phone);
 }
 
-window.showPanel = function(panel){
+window.addEventListener("DOMContentLoaded", () => {
+  showPanel("password");
+});
  ["otp","password","signup"].forEach(name=>{
   $(name+"Panel").classList.toggle("hidden",name!==panel);
   $(name+"Tab").classList.toggle("active",name===panel);
