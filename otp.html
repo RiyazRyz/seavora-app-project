@@ -16,58 +16,144 @@ href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;font-family:Arial,sans-serif;
- background:#f1f5fb;color:#17345c;min-height:100vh
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f1f5fb;
+ color:#17345c;
+ min-height:100vh;
 }
+
 header{
- background:#123b68;color:white;text-align:center;padding:22px
+ background:#123b68;
+ color:white;
+ text-align:center;
+ padding:22px;
 }
+
 header h1{margin:0;letter-spacing:4px}
 header p{color:#dbeafe;font-size:13px}
-.top{display:flex;justify-content:flex-end;padding:14px}
+
+.top{
+ display:flex;
+ justify-content:flex-end;
+ padding:14px;
+}
+
 .top button{
- background:white;border:1px solid #d5dfed;
- border-radius:10px;padding:10px 13px;color:#17345c;
- font-size:16px;cursor:pointer
+ background:white;
+ border:1px solid #d5dfed;
+ border-radius:10px;
+ padding:10px 13px;
+ color:#17345c;
+ font-size:16px;
+ cursor:pointer;
 }
-.container{max-width:440px;margin:25px auto;padding:20px}
+
+.container{
+ max-width:440px;
+ margin:25px auto;
+ padding:20px;
+}
+
 .card{
- background:white;padding:25px 20px;border-radius:16px;
- box-shadow:0 3px 12px #00000012
+ background:white;
+ padding:25px 20px;
+ border-radius:16px;
+ box-shadow:0 3px 12px #00000012;
 }
+
 h2{text-align:center;margin-top:0}
-.description{text-align:center;color:#718096;font-size:14px}
-.tabs{display:flex;gap:8px;margin:22px 0}
+
+.description{
+ text-align:center;
+ color:#718096;
+ font-size:14px;
+}
+
+.tabs{
+ display:flex;
+ gap:8px;
+ margin:22px 0;
+}
+
 .tabs button{
- flex:1;padding:12px 5px;border:1px solid #ccd7e5;
- background:#f1f5fb;color:#17345c;border-radius:9px;
- cursor:pointer;font-size:14px
+ flex:1;
+ padding:12px 5px;
+ border:1px solid #ccd7e5;
+ background:#f1f5fb;
+ color:#17345c;
+ border-radius:9px;
+ cursor:pointer;
+ font-size:14px;
 }
-.tabs button.active{background:#123b68;color:white}
+
+.tabs button.active{
+ background:#123b68;
+ color:white;
+}
+
 input{
- width:100%;padding:14px;margin:9px 0 16px;
- border:1px solid #ccd7e5;border-radius:9px;font-size:16px
+ width:100%;
+ padding:14px;
+ margin:9px 0 16px;
+ border:1px solid #ccd7e5;
+ border-radius:9px;
+ font-size:16px;
 }
-.iti{width:100%;margin:9px 0 16px}
-.iti input{width:100%;margin:0}
+
+.iti{
+ width:100%;
+ margin:9px 0 16px;
+}
+
+.iti input{
+ width:100%;
+ margin:0;
+}
+
 .action{
- width:100%;padding:14px;border:none;border-radius:9px;
- background:#2457d6;color:white;font-size:16px;
- font-weight:bold;cursor:pointer
+ width:100%;
+ padding:14px;
+ border:none;
+ border-radius:9px;
+ background:#2457d6;
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
 }
+
 .secondary{
- width:100%;padding:12px;border:1px solid #ccd7e5;
- border-radius:9px;background:white;color:#17345c;
- margin-top:10px;cursor:pointer
+ width:100%;
+ padding:12px;
+ border:1px solid #ccd7e5;
+ border-radius:9px;
+ background:white;
+ color:#17345c;
+ margin-top:10px;
+ cursor:pointer;
 }
+
 .message{
- text-align:center;font-size:14px;margin-top:15px;
- font-weight:bold;overflow-wrap:anywhere
+ text-align:center;
+ font-size:14px;
+ margin-top:15px;
+ font-weight:bold;
+ overflow-wrap:anywhere;
 }
+
 .hidden{display:none}
+
 #signupRecaptcha{margin:12px 0}
-footer{text-align:center;color:#718096;font-size:12px;padding:20px}
+
+footer{
+ text-align:center;
+ color:#718096;
+ font-size:12px;
+ padding:20px;
+}
 </style>
 </head>
 
@@ -80,7 +166,9 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
 
 <div class="top">
  <button data-ryzon-language-toggle
- onclick="toggleRYZONLanguage()">🌐 English</button>
+ onclick="toggleRYZONLanguage()">
+ 🌐 English
+ </button>
 </div>
 
 <div class="container">
@@ -90,20 +178,38 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
 <p class="description">Secure Login or Create Account</p>
 
 <div class="tabs">
- <button id="otpTab" onclick="showPanel('otp')">OTP Login</button>
- <button id="passwordTab" onclick="showPanel('password')">Password</button>
- <button id="signupTab" onclick="showPanel('signup')">Sign Up</button>
+ <button id="otpTab" onclick="showPanel('otp')">
+ OTP Login
+ </button>
+
+ <button id="passwordTab" onclick="showPanel('password')">
+ Password
+ </button>
+
+ <button id="signupTab" onclick="showPanel('signup')">
+ Sign Up
+ </button>
 </div>
 
 <!-- OTP LOGIN -->
+
 <div id="otpPanel" class="hidden">
- <p class="description">OTP-only Login is temporarily unavailable.</p>
+
+ <p class="description">
+ OTP-only Login is temporarily unavailable.
+ </p>
+
  <input id="otpPhone" type="tel"
  placeholder="Mobile number" autocomplete="tel">
- <button class="action" onclick="sendOTP()">Send SMS OTP</button>
+
+ <button class="action" onclick="sendOTP()">
+ Send SMS OTP
+ </button>
+
 </div>
 
 <!-- PASSWORD LOGIN -->
+
 <div id="passwordPanel" class="hidden">
 
  <input id="loginEmail" type="email"
@@ -123,9 +229,11 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
  <button class="secondary" onclick="resetPassword()">
  Forgot Password?
  </button>
+
 </div>
 
 <!-- SIGN UP -->
+
 <div id="signupPanel" class="hidden">
 
  <p class="description">
@@ -148,6 +256,7 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
  </button>
 
  <div id="signupVerifyArea" class="hidden">
+
   <input id="signupCode" type="text"
   inputmode="numeric" maxlength="6"
   placeholder="Enter SMS OTP">
@@ -155,7 +264,9 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
   <button class="action" onclick="verifySignupPhone()">
   Verify Mobile Number
   </button>
+
  </div>
+
 </div>
 
 <p id="message" class="message"></p>
@@ -228,10 +339,19 @@ function validEmail(email){
 }
 
 window.showPanel = function(panel){
+
  ["otp","password","signup"].forEach(name=>{
-  $(name+"Panel").classList.toggle("hidden",name!==panel);
-  $(name+"Tab").classList.toggle("active",name===panel);
+
+  $(name+"Panel").classList.toggle(
+   "hidden",name!==panel
+  );
+
+  $(name+"Tab").classList.toggle(
+   "active",name===panel
+  );
+
  });
+
  message("");
 };
 
@@ -239,7 +359,18 @@ window.addEventListener("DOMContentLoaded",()=>{
  showPanel("password");
 });
 
+// OTP LOGIN TEMPORARILY DISABLED
+
+window.sendOTP = async function(){
+
+ message(
+  "OTP Login is temporarily unavailable. Please use Password Login."
+ );
+
+};
+
 // reCAPTCHA
+
 async function makeVerifier(containerId){
 
  if(signupVerifier){
@@ -257,17 +388,14 @@ async function makeVerifier(containerId){
  );
 
  signupVerifier = verifier;
+
  await verifier.render();
 
  return verifier;
 }
 
-// OTP LOGIN TEMPORARILY DISABLED
-window.sendOTP = async function(){
- message("OTP Login is temporarily unavailable. Please use Password Login.");
-};
+// SIGN UP
 
-// SIGN UP AND RECOVER EXISTING ACCOUNT
 window.createAccount = async function(){
 
  const email = $("signupEmail").value.trim();
@@ -312,7 +440,6 @@ window.createAccount = async function(){
     throw error;
    }
 
-   // Recover an account created during an earlier failed signup
    const credential = await signInWithEmailAndPassword(
     auth,email,password
    );
@@ -325,16 +452,21 @@ window.createAccount = async function(){
   await user.reload();
 
   if(!user.emailVerified){
+
    try{
+
     await sendEmailVerification(user);
+
    }catch(emailError){
+
     if(emailError.code !== "auth/too-many-requests"){
      throw emailError;
     }
+
    }
+
   }
 
-  // Check whether phone is already linked
   const phoneAlreadyLinked = user.providerData.some(
    provider => provider.providerId === "phone"
   );
@@ -376,6 +508,7 @@ window.createAccount = async function(){
 };
 
 // VERIFY PHONE
+
 window.verifySignupPhone = async function(){
 
  const code = $("signupCode").value.trim();
@@ -392,13 +525,19 @@ window.verifySignupPhone = async function(){
   await result.user.reload();
 
   if(!result.user.emailVerified){
+
    try{
+
     await sendEmailVerification(result.user);
+
    }catch(error){
+
     if(error.code !== "auth/too-many-requests"){
      throw error;
     }
+
    }
+
   }
 
   await signOut(auth);
@@ -427,7 +566,23 @@ window.verifySignupPhone = async function(){
 
 };
 
+// DESTINATION AFTER LOGIN
+
+function getLoginDestination(){
+
+ const nextAction = sessionStorage.getItem("ryzonNextAction");
+
+ sessionStorage.removeItem("ryzonNextAction");
+
+ if(nextAction === "randomChat"){
+  return "random-chat.html";
+ }
+
+ return "home.html";
+}
+
 // PASSWORD LOGIN
+
 window.passwordLogin = async function(){
 
  const email = $("loginEmail").value.trim();
@@ -449,6 +604,7 @@ window.passwordLogin = async function(){
   if(!result.user.emailVerified){
 
    try{
+
     await sendEmailVerification(result.user);
 
     message(
@@ -468,8 +624,12 @@ window.passwordLogin = async function(){
 
   message("Login successful!","green");
 
+  const destination = getLoginDestination();
+
   setTimeout(()=>{
-   window.location.href = "home.html";
+
+   window.location.replace(destination);
+
   },900);
 
  }catch(error){
@@ -481,6 +641,7 @@ window.passwordLogin = async function(){
 };
 
 // RESEND VERIFICATION EMAIL
+
 window.resendVerification = async function(){
 
  const email = $("loginEmail").value.trim();
@@ -500,8 +661,11 @@ window.resendVerification = async function(){
   await result.user.reload();
 
   if(result.user.emailVerified){
+
    await signOut(auth);
+
    message("Your email is already verified. You can login.");
+
    return;
   }
 
@@ -527,6 +691,7 @@ window.resendVerification = async function(){
 };
 
 // PASSWORD RESET
+
 window.resetPassword = async function(){
 
  const email = $("loginEmail").value.trim();
