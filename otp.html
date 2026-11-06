@@ -248,7 +248,8 @@ function message(text, color="red"){
 }
 
 function phoneValid(){
- return signupPhoneInput.isValidNumber();
+ const phone = signupPhoneInput.getNumber();
+ return /^\+[1-9]\d{7,14}$/.test(phone);
 }
 
 window.showPanel = function(panel){
