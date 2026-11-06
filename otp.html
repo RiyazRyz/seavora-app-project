@@ -4,7 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b35">
   <title>RYZON - Secure Login</title>
+
+  <!-- Country Picker CSS -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
+
+  <!-- Country Picker JS -->
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
   <style>
     * { box-sizing: border-box; }
@@ -67,6 +75,22 @@
       background: #f7fbff;
       color: #102030;
       font-size: 15px;
+    }
+
+    /* Country Picker */
+    .iti {
+      width: 100%;
+      margin: 8px 0;
+    }
+
+    .iti input {
+      width: 100%;
+      margin: 0;
+    }
+
+    .iti__country-list {
+      color: #102030;
+      max-width: 300px;
     }
 
     button {
@@ -142,19 +166,18 @@
 
     <section id="authSection">
       <input id="email" type="email" placeholder="Email Address"
-             autocomplete="email">
+        autocomplete="email">
 
       <input id="password" type="password" placeholder="Password"
-             autocomplete="current-password">
+        autocomplete="current-password">
 
       <div id="signupFields" style="display:none">
         <input id="confirmPassword" type="password"
-               placeholder="Confirm Password"
-               autocomplete="new-password">
+          placeholder="Confirm Password" autocomplete="new-password">
 
         <input id="phone" type="tel"
-               placeholder="Mobile Number (Example: +919876543210)"
-               autocomplete="tel">
+          placeholder="Mobile Number" autocomplete="tel">
+
         <p class="note">
           Sign Up செய்த பிறகு Email-ஐ verify செய்ய வேண்டும்.
           அதன்பிறகு Mobile OTP சரிபார்க்கப்படும்.
@@ -180,20 +203,26 @@
 
     <section id="phoneSection">
       <p><b>Mobile Number Verification</b></p>
+
       <input id="loginPhone" type="tel"
-             placeholder="Mobile Number (Example: +919876543210)">
+        placeholder="Mobile Number" autocomplete="tel">
+
       <p class="note">
-        Country code உடன் எண்ணை உள்ளிடுங்கள்.
-        உதாரணம்: +919876543210
+        உங்கள் நாட்டைத் தானாகக் கண்டறிந்து Country Code தேர்வு செய்யப்படும்.
+        தேவைப்பட்டால் Flag அழுத்தி நாட்டை மாற்றலாம்.
       </p>
+
       <div id="recaptcha-container"></div>
+
       <button id="sendOtpButton" type="button">Send OTP</button>
     </section>
 
     <section id="otpSection">
       <input id="otpCode" type="text" inputmode="numeric"
-             placeholder="Enter SMS OTP" maxlength="6">
+        placeholder="Enter SMS OTP" maxlength="6">
+
       <button id="verifyOtpButton" type="button">Verify OTP</button>
+
       <button id="resendOtpButton" class="secondary" type="button">
         Resend OTP
       </button>
@@ -238,6 +267,52 @@
 
     const $ = id => document.getElementById(id);
 
+    // Automatic Country Detection
+    const countryOptions = {
+      initialCountry: "auto",
+      separateDialCode: true,
+      nationalMode: true,
+      geoIpLookup: function(callback) {
+        fetch("https://ipapi.co/json/")
+          .then(response => response.json())
+          .then(data => {
+            callback(
+              data && data.country_code
+                ? data.country_code.toLowerCase()
+                : "in"
+            );
+          })
+          .catch(() => callback("in"));
+      },
+      loadUtils: () => import(
+        "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"
+      )
+    };
+
+    // Country Picker for Sign Up
+    const signupPhonePicker = window.intlTelInput(
+      $("phone"),
+      { ...countryOptions }
+    );
+
+    // Country Picker for OTP Verification
+    const loginPhonePicker = window.intlTelInput(
+      $("loginPhone"),
+      { ...countryOptions }
+    );
+
+    async function getValidPhone(picker) {
+      await picker.promise;
+
+      if (!picker.isValidNumber()) {
+        throw new Error(
+          "தேர்ந்தெடுத்த நாட்டிற்கு சரியான Mobile Number உள்ளிடுங்கள்."
+        );
+      }
+
+      return picker.getNumber();
+    }
+
     function showMessage(text, success = false) {
       const box = $("message");
       box.textContent = text;
@@ -251,6 +326,7 @@
 
     function setBusy(button, busy, text) {
       button.disabled = busy;
+
       if (busy) {
         button.dataset.oldText = button.textContent;
         button.textContent = text || "Please wait...";
@@ -263,20 +339,36 @@
       const code = error?.code || "";
 
       const messages = {
-        "auth/email-already-in-use": "இந்த Email ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
-        "auth/invalid-email": "சரியான Email முகவரியை உள்ளிடுங்கள்.",
-        "auth/weak-password": "Password குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.",
-        "auth/invalid-credential": "Email அல்லது Password தவறாக உள்ளது.",
-        "auth/user-not-found": "இந்த Email-க்கு Account இல்லை.",
-        "auth/wrong-password": "Password தவறாக உள்ளது.",
-        "auth/too-many-requests": "பலமுறை முயற்சி செய்யப்பட்டுள்ளது. சிறிது நேரம் கழித்து முயற்சிக்கவும்.",
-        "auth/invalid-phone-number": "சரியான Country Code உடன் Mobile Number உள்ளிடுங்கள்.",
-        "auth/phone-number-already-exists": "இந்த Mobile Number ஏற்கெனவே மற்றொரு Account-ல் உள்ளது.",
-        "auth/credential-already-in-use": "இந்த Mobile Number ஏற்கெனவே மற்றொரு Account-ல் இணைக்கப்பட்டுள்ளது.",
-        "auth/quota-exceeded": "SMS OTP வரம்பு முடிந்துள்ளது. பின்னர் முயற்சிக்கவும்.",
-        "auth/billing-not-enabled": "Firebase Phone Authentication-க்கு Billing அமைப்பு தேவைப்படலாம்.",
-        "auth/code-expired": "OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
-        "auth/invalid-verification-code": "OTP தவறாக உள்ளது."
+        "auth/email-already-in-use":
+          "இந்த Email ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
+        "auth/invalid-email":
+          "சரியான Email முகவரியை உள்ளிடுங்கள்.",
+        "auth/weak-password":
+          "Password குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.",
+        "auth/invalid-credential":
+          "Email அல்லது Password தவறாக உள்ளது.",
+        "auth/user-not-found":
+          "இந்த Email-க்கு Account இல்லை.",
+        "auth/wrong-password":
+          "Password தவறாக உள்ளது.",
+        "auth/too-many-requests":
+          "பலமுறை முயற்சி செய்யப்பட்டுள்ளது. சிறிது நேரம் கழித்து முயற்சிக்கவும்.",
+        "auth/invalid-phone-number":
+          "சரியான Country Code உடன் Mobile Number உள்ளிடுங்கள்.",
+        "auth/phone-number-already-exists":
+          "இந்த Mobile Number ஏற்கெனவே மற்றொரு Account-ல் உள்ளது.",
+        "auth/credential-already-in-use":
+          "இந்த Mobile Number ஏற்கெனவே மற்றொரு Account-ல் இணைக்கப்பட்டுள்ளது.",
+        "auth/quota-exceeded":
+          "SMS OTP வரம்பு முடிந்துள்ளது. பின்னர் முயற்சிக்கவும்.",
+        "auth/billing-not-enabled":
+          "Firebase Phone Authentication-க்கு Billing அமைப்பு தேவைப்படலாம்.",
+        "auth/code-expired":
+          "OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
+        "auth/invalid-verification-code":
+          "OTP தவறாக உள்ளது.",
+        "auth/operation-not-allowed":
+          "இந்த நாட்டிற்கு Firebase SMS Region Policy-ல் அனுமதி வழங்கப்படவில்லை."
       };
 
       showMessage(messages[code] || (error?.message || "ஏதோ பிழை ஏற்பட்டுள்ளது."));
@@ -301,10 +393,6 @@
       return user.providerData.find(p => p.providerId === "phone");
     }
 
-    function normalizePhone(value) {
-      return value.replace(/[\s()-]/g, "");
-    }
-
     async function continueSecurityCheck() {
       const user = auth.currentUser;
 
@@ -318,17 +406,24 @@
       if (!user.emailVerified) {
         await sendEmailVerification(user);
         showEmailVerification();
-        showMessage("Email Verification Link மீண்டும் அனுப்பப்பட்டுள்ளது.", true);
+        showMessage(
+          "Email Verification Link மீண்டும் அனுப்பப்பட்டுள்ளது.",
+          true
+        );
         return;
       }
 
       const linkedPhone = getPhoneProvider(user);
 
       if (linkedPhone) {
-        const entered = normalizePhone($("loginPhone").value);
+        const entered = $("loginPhone").value.trim()
+          ? await getValidPhone(loginPhonePicker)
+          : "";
 
         if (entered && entered !== linkedPhone.phoneNumber) {
-          showMessage("இந்த Account-ல் ஏற்கெனவே வேறு Mobile Number இணைக்கப்பட்டுள்ளது.");
+          showMessage(
+            "இந்த Account-ல் ஏற்கெனவே வேறு Mobile Number இணைக்கப்பட்டுள்ளது."
+          );
           showPhoneSection();
           return;
         }
@@ -338,7 +433,10 @@
       }
 
       showPhoneSection();
-      showMessage("Email சரிபார்க்கப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.", true);
+      showMessage(
+        "Email சரிபார்க்கப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.",
+        true
+      );
     }
 
     function goToDestination() {
@@ -346,9 +444,14 @@
       sessionStorage.removeItem("ryzonNextAction");
 
       const destination =
-        nextAction === "randomChat" ? "random-chat.html" : "home.html";
+        nextAction === "randomChat"
+          ? "random-chat.html"
+          : "home.html";
 
-      showMessage("Verification வெற்றிகரமாக முடிந்தது. செல்கிறது...", true);
+      showMessage(
+        "Verification வெற்றிகரமாக முடிந்தது. செல்கிறது...",
+        true
+      );
 
       setTimeout(() => {
         window.location.replace(destination);
@@ -392,17 +495,13 @@
       try {
         if (mode === "signup") {
           const confirmPassword = $("confirmPassword").value;
-          const phone = normalizePhone($("phone").value);
 
           if (password !== confirmPassword) {
             showMessage("இரண்டு Password-களும் ஒன்றாக இல்லை.");
             return;
           }
 
-          if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-            showMessage("சரியான Mobile Number-ஐ Country Code உடன் உள்ளிடுங்கள். உதாரணம்: +919876543210");
-            return;
-          }
+          const phone = await getValidPhone(signupPhonePicker);
 
           const result = await createUserWithEmailAndPassword(
             auth, email, password
@@ -410,8 +509,10 @@
 
           await sendEmailVerification(result.user);
 
-          $("loginPhone").value = phone;
+          loginPhonePicker.setNumber(phone);
+
           showEmailVerification();
+
           showMessage(
             "Account உருவாக்கப்பட்டது. Email-ஐ Verify செய்து, பிறகு கீழே உள்ள பொத்தானை அழுத்துங்கள்.",
             true
@@ -425,7 +526,7 @@
           const linkedPhone = getPhoneProvider(result.user);
 
           if (linkedPhone) {
-            $("loginPhone").value = linkedPhone.phoneNumber;
+            loginPhonePicker.setNumber(linkedPhone.phoneNumber);
           }
 
           await continueSecurityCheck();
@@ -444,14 +545,18 @@
 
       try {
         if (!auth.currentUser) {
-          showMessage("Email Verify செய்த பிறகு மீண்டும் Login செய்யுங்கள்.");
+          showMessage(
+            "Email Verify செய்த பிறகு மீண்டும் Login செய்யுங்கள்."
+          );
           return;
         }
 
         await reload(auth.currentUser);
 
         if (!auth.currentUser.emailVerified) {
-          showMessage("Email இன்னும் Verify ஆகவில்லை. Email-ல் உள்ள Link-ஐ அழுத்துங்கள்.");
+          showMessage(
+            "Email இன்னும் Verify ஆகவில்லை. Email-ல் உள்ள Link-ஐ அழுத்துங்கள்."
+          );
           return;
         }
 
@@ -466,10 +571,13 @@
 
     async function sendPhoneOtp() {
       const button = $("sendOtpButton");
-      const phone = normalizePhone($("loginPhone").value);
 
-      if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-        showMessage("சரியான Mobile Number-ஐ Country Code உடன் உள்ளிடுங்கள்.");
+      let phone;
+
+      try {
+        phone = await getValidPhone(loginPhonePicker);
+      } catch (error) {
+        showMessage(error.message);
         return;
       }
 
@@ -484,7 +592,9 @@
         if (linkedPhone.phoneNumber === phone) {
           goToDestination();
         } else {
-          showMessage("இந்த Account-ல் வேறு Mobile Number ஏற்கெனவே இணைக்கப்பட்டுள்ளது.");
+          showMessage(
+            "இந்த Account-ல் வேறு Mobile Number ஏற்கெனவே இணைக்கப்பட்டுள்ளது."
+          );
         }
         return;
       }
@@ -512,7 +622,11 @@
         );
 
         $("otpSection").style.display = "block";
-        showMessage("SMS OTP அனுப்பப்பட்டுள்ளது. உங்கள் Mobile-ல் வந்த OTP-ஐ உள்ளிடுங்கள்.", true);
+
+        showMessage(
+          "SMS OTP அனுப்பப்பட்டுள்ளது. உங்கள் Mobile-ல் வந்த OTP-ஐ உள்ளிடுங்கள்.",
+          true
+        );
 
       } catch (error) {
         friendlyError(error);
@@ -547,7 +661,9 @@
         await reload(auth.currentUser);
 
         if (!getPhoneProvider(auth.currentUser)) {
-          throw new Error("Mobile Number இணைக்கப்படவில்லை. மீண்டும் முயற்சிக்கவும்.");
+          throw new Error(
+            "Mobile Number இணைக்கப்படவில்லை. மீண்டும் முயற்சிக்கவும்."
+          );
         }
 
         goToDestination();
@@ -563,13 +679,18 @@
       const email = $("email").value.trim();
 
       if (!email) {
-        showMessage("Password Reset Link பெற முதலில் Email உள்ளிடுங்கள்.");
+        showMessage(
+          "Password Reset Link பெற முதலில் Email உள்ளிடுங்கள்."
+        );
         return;
       }
 
       try {
         await sendPasswordResetEmail(auth, email);
-        showMessage("Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.", true);
+        showMessage(
+          "Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",
+          true
+        );
       } catch (error) {
         friendlyError(error);
       }
