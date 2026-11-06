@@ -307,7 +307,7 @@ window.sendOTP = async function(){
 };
 
 // VERIFY OTP LOGIN
-window.verifyOTP = async function(){
+ 
  const code=$("otpCode").value.trim();
 
  if(!otpConfirmation || !/^\d{6}$/.test(code)){
