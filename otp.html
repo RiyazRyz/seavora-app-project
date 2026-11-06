@@ -4,719 +4,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#123b68">
-<title>RYZON - Login</title>
-
-<script src="language-system.js"></script>
-
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
-
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
+<meta name="theme-color" content="#101c3a">
+<title>RYZON - One App, Endless Possibilities</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5fb;
- color:#17345c;
- min-height:100vh;
+* {
+  box-sizing: border-box;
 }
 
-header{
- background:#123b68;
- color:white;
- text-align:center;
- padding:22px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(145deg, #101c3a, #263f70);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-header h1{margin:0;letter-spacing:4px}
-header p{color:#dbeafe;font-size:13px}
-
-.top{
- display:flex;
- justify-content:flex-end;
- padding:14px;
+.container {
+  width: 100%;
+  max-width: 430px;
+  text-align: center;
 }
 
-.top button{
- background:white;
- border:1px solid #d5dfed;
- border-radius:10px;
- padding:10px 13px;
- color:#17345c;
- font-size:16px;
- cursor:pointer;
+.brand {
+  font-size: 38px;
+  font-weight: bold;
+  letter-spacing: 4px;
 }
 
-.container{
- max-width:440px;
- margin:25px auto;
- padding:20px;
+.tagline {
+  color: #cbd8f5;
+  margin: 8px 0 35px;
 }
 
-.card{
- background:white;
- padding:25px 20px;
- border-radius:16px;
- box-shadow:0 3px 12px #00000012;
+.card {
+  background: white;
+  color: #172440;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 12px 35px #0004;
 }
 
-h2{text-align:center;margin-top:0}
-
-.description{
- text-align:center;
- color:#718096;
- font-size:14px;
+select,
+button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-top: 12px;
 }
 
-.tabs{
- display:flex;
- gap:8px;
- margin:22px 0;
+select {
+  border: 1px solid #ccd3df;
+  background: white;
 }
 
-.tabs button{
- flex:1;
- padding:12px 5px;
- border:1px solid #ccd7e5;
- background:#f1f5fb;
- color:#17345c;
- border-radius:9px;
- cursor:pointer;
- font-size:14px;
+button {
+  border: 0;
+  background: #2457d6;
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
+  cursor: pointer;
 }
 
-.tabs button.active{
- background:#123b68;
- color:white;
+.random {
+  background: #eaf0ff;
+  color: #2348a0;
+  margin-top: 18px;
 }
 
-input{
- width:100%;
- padding:14px;
- margin:9px 0 16px;
- border:1px solid #ccd7e5;
- border-radius:9px;
- font-size:16px;
+.note {
+  font-size: 12px;
+  color: #68758b;
+  margin-top: 18px;
+  line-height: 1.6;
 }
 
-.iti{
- width:100%;
- margin:9px 0 16px;
-}
-
-.iti input{
- width:100%;
- margin:0;
-}
-
-.action{
- width:100%;
- padding:14px;
- border:none;
- border-radius:9px;
- background:#2457d6;
- color:white;
- font-size:16px;
- font-weight:bold;
- cursor:pointer;
-}
-
-.secondary{
- width:100%;
- padding:12px;
- border:1px solid #ccd7e5;
- border-radius:9px;
- background:white;
- color:#17345c;
- margin-top:10px;
- cursor:pointer;
-}
-
-.message{
- text-align:center;
- font-size:14px;
- margin-top:15px;
- font-weight:bold;
- overflow-wrap:anywhere;
-}
-
-.hidden{display:none}
-
-#signupRecaptcha{margin:12px 0}
-
-footer{
- text-align:center;
- color:#718096;
- font-size:12px;
- padding:20px;
+footer {
+  color: #cbd8f5;
+  font-size: 12px;
+  margin-top: 25px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
- <h1>RYZON</h1>
- <p>One App, Endless Possibilities!</p>
-</header>
+<main class="container">
 
-<div class="top">
- <button data-ryzon-language-toggle
- onclick="toggleRYZONLanguage()">
- 🌐 English
- </button>
-</div>
+  <div class="brand">RYZON</div>
 
-<div class="container">
-<div class="card">
+  <div class="tagline">
+    One App, Endless Possibilities!
+  </div>
 
-<h2>Welcome to RYZON</h2>
-<p class="description">Secure Login or Create Account</p>
+  <section class="card">
 
-<div class="tabs">
- <button id="otpTab" onclick="showPanel('otp')">
- OTP Login
- </button>
+    <h2>Select Your Language</h2>
 
- <button id="passwordTab" onclick="showPanel('password')">
- Password
- </button>
+    <p>உங்கள் மொழியைத் தேர்வு செய்யுங்கள்</p>
 
- <button id="signupTab" onclick="showPanel('signup')">
- Sign Up
- </button>
-</div>
+    <select id="language">
 
-<!-- OTP LOGIN -->
+      <option value="English">English</option>
+      <option value="தமிழ்">தமிழ்</option>
+      <option value="हिन्दी">हिन्दी</option>
+      <option value="বাংলা">বাংলা</option>
+      <option value="తెలుగు">తెలుగు</option>
+      <option value="मराठी">मराठी</option>
+      <option value="ગુજરાતી">ગુજરાતી</option>
+      <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
+      <option value="മലയാളം">മലയാളം</option>
+      <option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
+      <option value="ଓଡ଼ିଆ">ଓଡ଼ିଆ</option>
+      <option value="অসমীয়া">অসমীয়া</option>
+      <option value="اردو">اردو</option>
+      <option value="संस्कृतम्">संस्कृतम्</option>
+      <option value="कोंकणी">कोंकणी</option>
+      <option value="मैथिली">मैथिली</option>
+      <option value="डोगरी">डोगरी</option>
+      <option value="नेपाली">नेपाली</option>
+      <option value="سنڌي">سنڌي</option>
+      <option value="کٲشُر">کٲشُر</option>
+      <option value="মৈতৈলোন্">মৈতৈলোন্</option>
+      <option value="बड़ो">बड़ो</option>
+      <option value="ᱥᱟᱱᱛᱟᱲᱤ">ᱥᱟᱱᱛᱟᱲᱤ</option>
 
-<div id="otpPanel" class="hidden">
+    </select>
 
- <p class="description">
- OTP-only Login is temporarily unavailable.
- </p>
+    <button onclick="continueApp()">
+      Continue →
+    </button>
 
- <input id="otpPhone" type="tel"
- placeholder="Mobile number" autocomplete="tel">
+    <button class="random" onclick="randomChat()">
+      💬 Random Chat
+    </button>
 
- <button class="action" onclick="sendOTP()">
- Send SMS OTP
- </button>
+    <div class="note">
+      Random Chat requires account login.
+      Real-time chat matching is still under development.
+    </div>
 
-</div>
+  </section>
 
-<!-- PASSWORD LOGIN -->
+  <footer>
+    © RYZON | One App, Endless Possibilities
+  </footer>
 
-<div id="passwordPanel" class="hidden">
+</main>
 
- <input id="loginEmail" type="email"
- placeholder="Email address" autocomplete="email">
+<script>
 
- <input id="loginPassword" type="password"
- placeholder="Password" autocomplete="current-password">
+function continueApp() {
 
- <button class="action" onclick="passwordLogin()">
- Login with Password
- </button>
+  const language =
+    document.getElementById("language").value;
 
- <button class="secondary" onclick="resendVerification()">
- Resend Verification Email
- </button>
+  localStorage.setItem("ryzonLanguage", language);
 
- <button class="secondary" onclick="resetPassword()">
- Forgot Password?
- </button>
+  sessionStorage.setItem("ryzonNextAction", "home");
 
-</div>
-
-<!-- SIGN UP -->
-
-<div id="signupPanel" class="hidden">
-
- <p class="description">
- Create one account with Email and Mobile Number
- </p>
-
- <input id="signupEmail" type="email"
- placeholder="Email address" autocomplete="email">
-
- <input id="signupPhone" type="tel"
- placeholder="Mobile number" autocomplete="tel">
-
- <input id="signupPassword" type="password"
- placeholder="Create password" autocomplete="new-password">
-
- <div id="signupRecaptcha"></div>
-
- <button class="action" onclick="createAccount()">
- Create Account & Verify Mobile
- </button>
-
- <div id="signupVerifyArea" class="hidden">
-
-  <input id="signupCode" type="text"
-  inputmode="numeric" maxlength="6"
-  placeholder="Enter SMS OTP">
-
-  <button class="action" onclick="verifySignupPhone()">
-  Verify Mobile Number
-  </button>
-
- </div>
-
-</div>
-
-<p id="message" class="message"></p>
-
-</div>
-</div>
-
-<footer>RYZON © 2026</footer>
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
-import {
- getAuth,
- RecaptchaVerifier,
- linkWithPhoneNumber,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- sendEmailVerification,
- sendPasswordResetEmail,
- signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-const firebaseConfig = {
- apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
- authDomain: "seavora-5be21.firebaseapp.com",
- projectId: "seavora-5be21",
- storageBucket: "seavora-5be21.firebasestorage.app",
- messagingSenderId: "41187328725",
- appId: "1:41187328725:web:07ca55487383bc5798d85c",
- measurementId: "G-PDY0RZRDDH"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-let signupConfirmation = null;
-let signupVerifier = null;
-let signupUser = null;
-
-const $ = id => document.getElementById(id);
-
-const phoneOptions = {
- initialCountry: "in",
- separateDialCode: true,
- nationalMode: true,
- loadUtils: () => import(
-  "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"
- )
-};
-
-const otpPhoneInput = window.intlTelInput(
- $("otpPhone"), {...phoneOptions}
-);
-
-const signupPhoneInput = window.intlTelInput(
- $("signupPhone"), {...phoneOptions}
-);
-
-function message(text,color="red"){
- $("message").textContent = text;
- $("message").style.color = color;
+  window.location.href = "otp.html";
 }
 
-function validEmail(email){
- return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+function randomChat() {
+
+  const language =
+    document.getElementById("language").value;
+
+  localStorage.setItem("ryzonLanguage", language);
+
+  sessionStorage.setItem("ryzonNextAction", "randomChat");
+
+  window.location.href = "otp.html";
 }
-
-window.showPanel = function(panel){
-
- ["otp","password","signup"].forEach(name=>{
-
-  $(name+"Panel").classList.toggle(
-   "hidden",name!==panel
-  );
-
-  $(name+"Tab").classList.toggle(
-   "active",name===panel
-  );
-
- });
-
- message("");
-};
-
-window.addEventListener("DOMContentLoaded",()=>{
- showPanel("password");
-});
-
-// OTP LOGIN TEMPORARILY DISABLED
-
-window.sendOTP = async function(){
-
- message(
-  "OTP Login is temporarily unavailable. Please use Password Login."
- );
-
-};
-
-// reCAPTCHA
-
-async function makeVerifier(containerId){
-
- if(signupVerifier){
-  signupVerifier.clear();
-  signupVerifier = null;
- }
-
- const container = $(containerId);
- container.innerHTML = "";
-
- const verifier = new RecaptchaVerifier(
-  auth,
-  container,
-  {size:"normal"}
- );
-
- signupVerifier = verifier;
-
- await verifier.render();
-
- return verifier;
-}
-
-// SIGN UP
-
-window.createAccount = async function(){
-
- const email = $("signupEmail").value.trim();
- const password = $("signupPassword").value;
-
- try{
-
-  await signupPhoneInput.promise;
-
-  const phone = signupPhoneInput.getNumber();
-
-  if(!validEmail(email)){
-   message("Enter a valid email address.");
-   return;
-  }
-
-  if(!signupPhoneInput.isValidNumber()){
-   message("Enter a valid mobile number for the selected country.");
-   return;
-  }
-
-  if(password.length < 8){
-   message("Password must contain at least 8 characters.");
-   return;
-  }
-
-  message("Checking account...","blue");
-
-  let user;
-
-  try{
-
-   const credential = await createUserWithEmailAndPassword(
-    auth,email,password
-   );
-
-   user = credential.user;
-
-  }catch(error){
-
-   if(error.code !== "auth/email-already-in-use"){
-    throw error;
-   }
-
-   const credential = await signInWithEmailAndPassword(
-    auth,email,password
-   );
-
-   user = credential.user;
-  }
-
-  signupUser = user;
-
-  await user.reload();
-
-  if(!user.emailVerified){
-
-   try{
-
-    await sendEmailVerification(user);
-
-   }catch(emailError){
-
-    if(emailError.code !== "auth/too-many-requests"){
-     throw emailError;
-    }
-
-   }
-
-  }
-
-  const phoneAlreadyLinked = user.providerData.some(
-   provider => provider.providerId === "phone"
-  );
-
-  if(phoneAlreadyLinked){
-
-   await signOut(auth);
-   signupUser = null;
-
-   message(
-    "Your mobile number is already linked. Check your email verification and use Password Login.",
-    "green"
-   );
-
-   return;
-  }
-
-  message("Preparing mobile verification...","blue");
-
-  const verifier = await makeVerifier("signupRecaptcha");
-
-  signupConfirmation = await linkWithPhoneNumber(
-   user,phone,verifier
-  );
-
-  $("signupVerifyArea").classList.remove("hidden");
-
-  message(
-   "SMS OTP sent. Enter the OTP. Check your email for verification too.",
-   "green"
-  );
-
- }catch(error){
-
-  message("Sign Up Error: " + error.message);
-
- }
-
-};
-
-// VERIFY PHONE
-
-window.verifySignupPhone = async function(){
-
- const code = $("signupCode").value.trim();
-
- if(!signupConfirmation || !/^\d{6}$/.test(code)){
-  message("Enter the 6-digit OTP.");
-  return;
- }
-
- try{
-
-  const result = await signupConfirmation.confirm(code);
-
-  await result.user.reload();
-
-  if(!result.user.emailVerified){
-
-   try{
-
-    await sendEmailVerification(result.user);
-
-   }catch(error){
-
-    if(error.code !== "auth/too-many-requests"){
-     throw error;
-    }
-
-   }
-
-  }
-
-  await signOut(auth);
-
-  signupUser = null;
-  signupConfirmation = null;
-
-  if(signupVerifier){
-   signupVerifier.clear();
-   signupVerifier = null;
-  }
-
-  $("signupVerifyArea").classList.add("hidden");
-  $("signupCode").value = "";
-
-  message(
-   "Mobile verified! Check your email and click the verification link before login.",
-   "green"
-  );
-
- }catch(error){
-
-  message("Verification Error: " + error.message);
-
- }
-
-};
-
-// DESTINATION AFTER LOGIN
-
-function getLoginDestination(){
-
- const nextAction = sessionStorage.getItem("ryzonNextAction");
-
- sessionStorage.removeItem("ryzonNextAction");
-
- if(nextAction === "randomChat"){
-  return "random-chat.html";
- }
-
- return "home.html";
-}
-
-// PASSWORD LOGIN
-
-window.passwordLogin = async function(){
-
- const email = $("loginEmail").value.trim();
- const password = $("loginPassword").value;
-
- if(!validEmail(email) || !password){
-  message("Enter a valid email and password.");
-  return;
- }
-
- try{
-
-  const result = await signInWithEmailAndPassword(
-   auth,email,password
-  );
-
-  await result.user.reload();
-
-  if(!result.user.emailVerified){
-
-   try{
-
-    await sendEmailVerification(result.user);
-
-    message(
-     "Verification email sent again. Check your inbox and spam folder.",
-     "green"
-    );
-
-   }catch(error){
-
-    message("Email sending error: " + error.message);
-
-   }
-
-   await signOut(auth);
-   return;
-  }
-
-  message("Login successful!","green");
-
-  const destination = getLoginDestination();
-
-  setTimeout(()=>{
-
-   window.location.replace(destination);
-
-  },900);
-
- }catch(error){
-
-  message("Login Error: " + error.message);
-
- }
-
-};
-
-// RESEND VERIFICATION EMAIL
-
-window.resendVerification = async function(){
-
- const email = $("loginEmail").value.trim();
- const password = $("loginPassword").value;
-
- if(!validEmail(email) || !password){
-  message("Enter your registered email and password first.");
-  return;
- }
-
- try{
-
-  const result = await signInWithEmailAndPassword(
-   auth,email,password
-  );
-
-  await result.user.reload();
-
-  if(result.user.emailVerified){
-
-   await signOut(auth);
-
-   message("Your email is already verified. You can login.");
-
-   return;
-  }
-
-  await sendEmailVerification(result.user);
-
-  await signOut(auth);
-
-  message(
-   "Verification email sent. Check your inbox and spam folder.",
-   "green"
-  );
-
- }catch(error){
-
-  if(auth.currentUser){
-   await signOut(auth);
-  }
-
-  message("Email sending error: " + error.message);
-
- }
-
-};
-
-// PASSWORD RESET
-
-window.resetPassword = async function(){
-
- const email = $("loginEmail").value.trim();
-
- if(!validEmail(email)){
-  message("Enter a valid email address first.");
-  return;
- }
-
- try{
-
-  await sendPasswordResetEmail(auth,email);
-
-  message(
-   "If the account is registered, a password reset email will be sent.",
-   "green"
-  );
-
- }catch(error){
-
-  message("Password reset error: " + error.message);
-
- }
-
-};
 
 </script>
 
