@@ -8,7 +8,9 @@
 <title>RYZON - Home</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -50,6 +52,7 @@ header p {
   padding: 10px 13px;
   color: #17345c;
   font-size: 18px;
+  cursor: pointer;
 }
 
 main {
@@ -58,7 +61,9 @@ main {
   padding: 10px 16px 30px;
 }
 
-h2 { margin-bottom: 8px; }
+h2 {
+  margin-bottom: 8px;
+}
 
 .welcome {
   background: white;
@@ -118,8 +123,12 @@ h2 { margin-bottom: 8px; }
 }
 
 @keyframes move {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100vw); }
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100vw);
+  }
 }
 
 .help {
@@ -134,6 +143,7 @@ h2 { margin-bottom: 8px; }
   height: 55px;
   font-size: 25px;
   box-shadow: 0 3px 12px #0003;
+  cursor: pointer;
 }
 
 footer {
@@ -142,7 +152,15 @@ footer {
   color: #718096;
   font-size: 12px;
 }
+
+@media (max-width: 360px) {
+  .top button {
+    padding: 9px 10px;
+    font-size: 15px;
+  }
+}
 </style>
+
 <script src="language-system.js"></script>
 </head>
 
@@ -154,92 +172,115 @@ footer {
 </header>
 
 <div class="top">
-  <button onclick="showNotice('Notifications')">🔔</button>
-  <button onclick="showNotice('Profile')">👤</button>
-  <button data-ryzon-language-toggle onclick="toggleRYZONLanguage()">
-  🌐 English
-</button>
+  <button onclick="showNotice('Notifications')"
+    aria-label="Notifications">🔔</button>
+
+  <button onclick="showNotice('Profile')"
+    aria-label="Profile">👤</button>
+
+  <button
+    data-ryzon-language-toggle
+    onclick="toggleRYZONLanguage()">
+    🌐 English
+  </button>
 </div>
 
 <main>
 
   <section class="welcome">
-    <h2 data-ryzon-text="welcome">Welcome to RYZON!</h2>
-    <p data-ryzon-text="tagline">Your world. Your language. Your possibilities.</p>
+    <h2 data-ryzon-text="welcome">
+      Welcome to RYZON!
+    </h2>
+
+    <p data-ryzon-text="tagline">
+      Your world. Your language. Your possibilities.
+    </p>
   </section>
 
-  <input class="search" type="search"
-    placeholder="🔍 Search RYZON..." data-ryzon-placeholder="search"
+  <input
+    class="search"
+    type="search"
+    placeholder="🔍 Search RYZON..."
+    data-ryzon-placeholder="search"
     oninput="searchTiles(this.value)">
 
   <div class="scam">
-    <p data-ryzon-text="scamAlert">⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️</p>
+    <p data-ryzon-text="scamAlert">
+      ⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details.
+      Verify before you pay. ⚠️
+    </p>
   </div>
 
-  <h2 data-ryzon-text="mainServices">Main Services</h2>
+  <h2 data-ryzon-text="mainServices">
+    Main Services
+  </h2>
 
+  <div class="grid" id="serviceGrid">
 
-<div class="grid" id="serviceGrid">
+    <a class="tile" href="project-ideas.html">
+      <span>🎓</span>
+      <span data-ryzon-text="education">Education</span>
+    </a>
 
-  <a class="tile" href="project-ideas.html">
-    <span>🎓</span><span data-ryzon-text="education">Education</span>
-  </a>
+    <a class="tile" href="jobs.html">
+      <span>💼</span>
+      <span data-ryzon-text="jobs">Jobs</span>
+    </a>
 
-  <a class="tile" href="jobs.html">
-  <span>💼</span>
-  <span data-ryzon-text="jobs">Jobs</span>
-</a>
-  <a class="tile" href="shopping.html">
-  <span>🛍️</span>
-  <span data-ryzon-text="shopping">Shopping</span>
-</a>
+    <a class="tile" href="shopping.html">
+      <span>🛍️</span>
+      <span data-ryzon-text="shopping">Shopping</span>
+    </a>
 
-  <a class="tile" href="ai-assistant.html">
-  <span>🤖</span>
-  <span data-ryzon-text="ai">AI Assistant</span>
-</a>
+    <a class="tile" href="ai-assistant.html">
+      <span>🤖</span>
+      <span data-ryzon-text="ai">AI Assistant</span>
+    </a>
 
-  <a class="tile" href="browser.html">
-  <span>🌐</span>
-  <span data-ryzon-text="browser">Browser</span>
-</a>
+    <a class="tile" href="browser.html">
+      <span>🌐</span>
+      <span data-ryzon-text="browser">Browser</span>
+    </a>
 
-  <a class="tile" href="parcel-safety.html">
-  <span>📦</span>
-  <span data-ryzon-text="parcelSafety">Parcel Safety</span>
-</a>
-  
-  <a class="tile" href="local-services.html">
-  <span>📍</span>
-  <span data-ryzon-text="localServices">Local Services</span>
-</a>
+    <a class="tile" href="parcel-safety.html">
+      <span>📦</span>
+      <span data-ryzon-text="parcelSafety">Parcel Safety</span>
+    </a>
 
-  <a class="tile" href="safety-help.html">
-  <span>🛡️</span>
-  <span data-ryzon-text="safetyHelp">Safety & Help</span>
-</a>
+    <a class="tile" href="local-services.html">
+      <span>📍</span>
+      <span data-ryzon-text="localServices">Local Services</span>
+    </a>
 
-  <a class="tile" href="premium.html">
-  <span>⭐</span>
-  <span data-ryzon-text="premium">Premium</span>
-</a>
+    <a class="tile" href="safety-help.html">
+      <span>🛡️</span>
+      <span data-ryzon-text="safetyHelp">Safety &amp; Help</span>
+    </a>
 
-  <a class="tile" href="language.html">
-  <span>🌐</span>
-  <span data-ryzon-text="language">Language</span>
-</a>
+    <a class="tile" href="premium.html">
+      <span>⭐</span>
+      <span data-ryzon-text="premium">Premium</span>
+    </a>
 
-</div>
+    <a class="tile" href="language.html">
+      <span>🌐</span>
+      <span data-ryzon-text="language">Language</span>
+    </a>
 
+  </div>
 
   <p id="message" style="text-align:center;font-weight:bold;"></p>
-<footer>RYZON © 2026</footer>
+
+  <footer>RYZON © 2026</footer>
+
 </main>
 
-<button class="help" onclick="showNotice('Help Center')"
-  aria-label="Help Center">🎧</button>
-
-
+<button
+  class="help"
+  onclick="showNotice('Help Center')"
+  aria-label="Help Center">
+  🎧
+</button>
 
 <script>
 function showNotice(name) {
@@ -249,16 +290,15 @@ function showNotice(name) {
 
 function searchTiles(value) {
   const tiles = document.querySelectorAll(".tile");
+
   tiles.forEach(tile => {
     tile.style.display =
       tile.textContent.toLowerCase().includes(value.toLowerCase())
-      ? "block" : "none";
+        ? "block"
+        : "none";
   });
 }
 </script>
-<button data-ryzon-language-toggle onclick="toggleRYZONLanguage()">
-  🌐 English
-</button>
 
 </body>
 </html>
