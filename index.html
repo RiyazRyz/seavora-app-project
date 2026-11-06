@@ -77,19 +77,26 @@ Actual OTP service will be connected during development.
 <footer>© RYZON | One App, Endless Possibilities</footer>
 </main>
 
+
 <script>
-function continueApp(){
-const language=document.getElementById("language").value;
-localStorage.setItem("ryzonLanguage",language);
-localStorage.setItem("ryzonNextAction","home");
-window.location.href="otp.html";
+function continueApp() {
+  const language = document.getElementById("language").value;
+
+  localStorage.setItem("ryzonLanguage", language);
+  sessionStorage.setItem("ryzonNextAction", "home");
+
+  window.location.assign("./otp.html");
 }
-function randomChat(){
-const language=document.getElementById("language").value;
-localStorage.setItem("ryzonLanguage",language);
-localStorage.setItem("ryzonNextAction","randomChat");
-window.location.href="otp.html";
+
+function randomChat() {
+  const language = document.getElementById("language").value;
+
+  localStorage.setItem("ryzonLanguage", language);
+  sessionStorage.setItem("ryzonNextAction", "randomChat");
+
+  window.location.assign("./otp.html");
 }
 </script>
+
 </body>
 </html>
