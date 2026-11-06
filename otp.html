@@ -186,17 +186,15 @@ from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
  getAuth,
  RecaptchaVerifier,
- signInWithPhoneNumber,
  linkWithPhoneNumber,
  createUserWithEmailAndPassword,
  signInWithEmailAndPassword,
  sendEmailVerification,
  sendPasswordResetEmail,
- signOut,
+ signOut
 }
 from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-// YOUR EXISTING FIREBASE CONFIG
 const firebaseConfig = {
  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
  authDomain: "seavora-5be21.firebaseapp.com",
@@ -210,9 +208,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-let otpConfirmation = null;
 let signupConfirmation = null;
-let otpVerifier = null;
 let signupVerifier = null;
 let signupUser = null;
 
@@ -228,126 +224,82 @@ function phoneValid(phone){
 }
 
 window.showPanel = function(panel){
-  ["otp","password","signup"].forEach(name=>{
-    $(name+"Panel").classList.toggle("hidden",name!==panel);
-    $(name+"Tab").classList.toggle("active",name!== "otp" && name===panel);
-  });
-  message("");
+
+ ["otp","password","signup"].forEach(name=>{
+
+  $(name+"Panel").classList.toggle(
+   "hidden",
+   name !== panel
+  );
+
+  $(name+"Tab").classList.toggle(
+   "active",
+   name === panel
+  );
+
+ });
+
+ message("");
 };
 
-window.addEventListener("DOMContentLoaded", () => {
-  showPanel("otp");
+window.addEventListener("DOMContentLoaded",()=>{
+ showPanel("password");
 });
 
-async function makeVerifier(containerId) {
-  const container = document.getElementById(containerId);
+async function makeVerifier(containerId){
 
-  if (!container) {
-    throw new Error("reCAPTCHA container not found");
-  }
+ const container = $(containerId);
 
-  if (containerId === "otpRecaptcha" && otpVerifier) {
-    otpVerifier.clear();
-    otpVerifier = null;
-  }
+ if(!container){
+  throw new Error("reCAPTCHA container not found");
+ }
 
-  if (containerId === "signupRecaptcha" && signupVerifier) {
-    signupVerifier.clear();
-    signupVerifier = null;
-  }
+ if(signupVerifier){
+  signupVerifier.clear();
+  signupVerifier = null;
+ }
 
-  container.innerHTML = "";
+ container.innerHTML = "";
 
-  const verifier = new RecaptchaVerifier(
-    auth,
-    container,
-    {
-      size: "normal"
-    }
-  );
+ const verifier = new RecaptchaVerifier(
+  auth,
+  container,
+  {size:"normal"}
+ );
 
-  await verifier.render();
+ await verifier.render();
 
-  if (containerId === "otpRecaptcha") {
-    otpVerifier = verifier;
-  } else {
-    signupVerifier = verifier;
-  }
+ signupVerifier = verifier;
 
-  return verifier;
+ return verifier;
 }
 
-// SEND REAL SMS OTP
+// OTP LOGIN - TEMPORARILY DISABLED FOR ACCOUNT SAFETY
 window.sendOTP = async function(){
- const phone=$("otpPhone").value.trim();
 
- if(!phoneValid(phone)){
-  message("Enter a valid number with country code. Example: +919876543210");
-  return;
- }
+ message(
+  "OTP-only Login is temporarily unavailable. Please use Email + Password Login.",
+  "red"
+ );
 
- try{
-  message("Preparing secure verification...","blue");
-
-  const verifier=await makeVerifier("otpRecaptcha");
-  otpConfirmation=await signInWithPhoneNumber(
-   auth,phone,verifier
-  );
-
-  $("otpVerifyArea").classList.remove("hidden");
-  message("SMS OTP sent. Check your phone.","green");
-
- }catch(error){
-  message("OTP Error: "+error.message);
-  if(otpVerifier){
-   otpVerifier.clear();
-   otpVerifier=null;
-  }
- }
 };
 
-// VERIFY OTP LOGIN
- 
- const code=$("otpCode").value.trim();
+// VERIFY OTP - TEMPORARILY DISABLED
+window.verifyOTP = async function(){
 
- if(!otpConfirmation || !/^\d{6}$/.test(code)){
-  message("Enter the 6-digit OTP.");
-  return;
- }
+ message(
+  "Please use Email + Password Login until secure OTP Login is configured.",
+  "red"
+ );
 
- try{
-  const result=await otpConfirmation.confirm(code);
-  const user=result.user;
-
-  // Only accounts linked to a verified email are accepted.
-  if(!user.email){
-   await signOut(auth);
-   message("This mobile number is not linked to an email account. Please Sign Up first.");
-   return;
-}
-
-  if(!user.emailVerified){
-   await signOut(auth);
-   message("Please verify your email first using the verification link.");
-   return;
-  }
-
-  message("Login successful!","green");
-
-  setTimeout(()=>{
-   window.location.href="home.html";
-  },900);
-
- }catch(error){
-  message("OTP verification failed: "+error.message);
- }
 };
 
 // CREATE EMAIL + PHONE ACCOUNT
 window.createAccount = async function(){
- const email=$("signupEmail").value.trim();
- const phone=$("signupPhone").value.trim();
- const password=$("signupPassword").value;
+
+ const email = $("signupEmail").value.trim();
+ const phone = $("signupPhone").value.trim();
+ const password = $("signupPassword").value;
 
  if(!email || !email.includes("@")){
   message("Enter a valid email address.");
@@ -359,36 +311,50 @@ window.createAccount = async function(){
   return;
  }
 
- if(password.length<8){
+ if(password.length < 8){
   message("Password must contain at least 8 characters.");
   return;
  }
 
  try{
+
   message("Creating your account...","blue");
 
-  const credential=await createUserWithEmailAndPassword(
-   auth,email,password
+  const credential = await createUserWithEmailAndPassword(
+   auth,
+   email,
+   password
   );
 
-  signupUser=credential.user;
+  signupUser = credential.user;
 
-  const verifier=await makeVerifier("signupRecaptcha");
-  signupConfirmation=await linkWithPhoneNumber(
-   signupUser,phone,verifier
+  const verifier = await makeVerifier("signupRecaptcha");
+
+  signupConfirmation = await linkWithPhoneNumber(
+   signupUser,
+   phone,
+   verifier
   );
 
   $("signupVerifyArea").classList.remove("hidden");
-  message("SMS sent. Enter OTP to link your mobile number.","green");
+
+  message(
+   "SMS OTP sent. Enter the OTP to link your mobile number.",
+   "green"
+  );
 
  }catch(error){
-  message("Sign Up Error: "+error.message);
+
+  message("Sign Up Error: " + error.message);
+
  }
+
 };
 
-// LINK PHONE OTP TO SAME EMAIL ACCOUNT
+// VERIFY AND LINK PHONE NUMBER
 window.verifySignupPhone = async function(){
- const code=$("signupCode").value.trim();
+
+ const code = $("signupCode").value.trim();
 
  if(!signupConfirmation || !/^\d{6}$/.test(code)){
   message("Enter the 6-digit OTP.");
@@ -396,27 +362,36 @@ window.verifySignupPhone = async function(){
  }
 
  try{
-  const result=await signupConfirmation.confirm(code);
+
+  const result = await signupConfirmation.confirm(code);
 
   await sendEmailVerification(result.user);
+
   await signOut(auth);
+
+  signupUser = null;
+  signupConfirmation = null;
+
+  $("signupVerifyArea").classList.add("hidden");
 
   message(
    "Mobile verified! Check your email and click the verification link. Then login.",
    "green"
   );
 
-  $("signupVerifyArea").classList.add("hidden");
-
  }catch(error){
-  message("Verification Error: "+error.message);
+
+  message("Verification Error: " + error.message);
+
  }
+
 };
 
 // EMAIL + PASSWORD LOGIN
 window.passwordLogin = async function(){
- const email=$("loginEmail").value.trim();
- const password=$("loginPassword").value;
+
+ const email = $("loginEmail").value.trim();
+ const password = $("loginPassword").value;
 
  if(!email || !password){
   message("Enter email and password.");
@@ -424,32 +399,44 @@ window.passwordLogin = async function(){
  }
 
  try{
-  const result=await signInWithEmailAndPassword(
-   auth,email,password
+
+  const result = await signInWithEmailAndPassword(
+   auth,
+   email,
+   password
   );
 
   await result.user.reload();
 
   if(!result.user.emailVerified){
+
    await signOut(auth);
-   message("Please verify your email before login.");
+
+   message(
+    "Please verify your email before login."
+   );
+
    return;
   }
 
   message("Login successful!","green");
 
   setTimeout(()=>{
-   window.location.href="home.html";
+   window.location.href = "home.html";
   },900);
 
  }catch(error){
-  message("Login Error: "+error.message);
+
+  message("Login Error: " + error.message);
+
  }
+
 };
 
 // PASSWORD RESET
 window.resetPassword = async function(){
- const email=$("loginEmail").value.trim();
+
+ const email = $("loginEmail").value.trim();
 
  if(!email){
   message("Enter your email address first.");
@@ -457,13 +444,25 @@ window.resetPassword = async function(){
  }
 
  try{
+
   await sendPasswordResetEmail(auth,email);
-  message("If the account is registered, a password reset email will be sent.","green");
+
+  message(
+   "If the account is registered, a password reset email will be sent.",
+   "green"
+  );
+
  }catch(error){
-  message("Password reset error: "+error.message);
+
+  message(
+   "Password reset error: " + error.message
+  );
+
  }
+
 };
 
 </script>
+
 </body>
 </html>
