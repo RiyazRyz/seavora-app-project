@@ -7,9 +7,28 @@
 <meta name="theme-color" content="#123b68">
 <title>RYZON - Home</title>
 
+<script src="language-system.js"></script>
+
 <style>
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+html:not(.auth-ready) body {
+  visibility: hidden;
+}
+
+html:not(.auth-ready)::before {
+  content: "Checking secure login...";
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5fb;
+  color: #17345c;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  visibility: visible;
+  z-index: 9999;
 }
 
 body {
@@ -61,9 +80,7 @@ main {
   padding: 10px 16px 30px;
 }
 
-h2 {
-  margin-bottom: 8px;
-}
+h2 { margin-bottom: 8px; }
 
 .welcome {
   background: white;
@@ -123,12 +140,8 @@ h2 {
 }
 
 @keyframes move {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100vw);
-  }
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
 }
 
 .help {
@@ -160,8 +173,6 @@ footer {
   }
 }
 </style>
-
-<script src="language-system.js"></script>
 </head>
 
 <body>
@@ -298,6 +309,55 @@ function searchTiles(value) {
         : "none";
   });
 }
+</script>
+
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain: "seavora-5be21.firebaseapp.com",
+  projectId: "seavora-5be21",
+  storageBucket: "seavora-5be21.firebasestorage.app",
+  messagingSenderId: "41187328725",
+  appId: "1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId: "G-PDY0RZRDDH"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.replace("otp.html");
+    return;
+  }
+
+  try {
+    await user.reload();
+
+    if (!user.email || !user.emailVerified) {
+      await signOut(auth);
+      window.location.replace("otp.html");
+      return;
+    }
+
+    document.documentElement.classList.add("auth-ready");
+
+  } catch (error) {
+    console.error("Authentication check failed:", error);
+    await signOut(auth);
+    window.location.replace("otp.html");
+  }
+});
 </script>
 
 </body>
