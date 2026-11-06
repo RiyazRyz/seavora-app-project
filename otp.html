@@ -224,7 +224,23 @@ let signupVerifier = null;
 let signupUser = null;
 
 const $ = id => document.getElementById(id);
+const otpPhoneInput = window.intlTelInput(
+ $("otpPhone"),
+ {
+  initialCountry: "in",
+  separateDialCode: true,
+  nationalMode: true
+ }
+);
 
+const signupPhoneInput = window.intlTelInput(
+ $("signupPhone"),
+ {
+  initialCountry: "in",
+  separateDialCode: true,
+  nationalMode: true
+ }
+);
 function message(text, color="red"){
  $("message").textContent = text;
  $("message").style.color = color;
