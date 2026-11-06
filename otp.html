@@ -121,10 +121,6 @@ input {
   cursor: pointer;
 }
 
-.action:disabled {
-  opacity: 0.6;
-}
-
 .message {
   text-align: center;
   font-size: 14px;
@@ -173,20 +169,31 @@ footer {
 <div class="container">
   <div class="card">
 
-    <h2 data-ryzon-text="loginTitle">Welcome to RYZON</h2>
+    <h2 data-ryzon-text="loginTitle">
+      Welcome to RYZON
+    </h2>
 
     <p class="description" data-ryzon-text="loginDescription">
       Login or create your account
     </p>
 
     <div class="tabs">
-      <button id="loginTab" class="active" onclick="showLogin()">
+
+      <button
+        id="loginTab"
+        class="active"
+        data-ryzon-text="login"
+        onclick="showLogin()">
         Login
       </button>
 
-      <button id="signupTab" onclick="showSignup()">
+      <button
+        id="signupTab"
+        data-ryzon-text="signUp"
+        onclick="showSignup()">
         Sign Up
       </button>
+
     </div>
 
     <div id="accountSection">
@@ -195,10 +202,13 @@ footer {
         type="tel"
         id="phone"
         maxlength="10"
+        inputmode="numeric"
         placeholder="Enter 10-digit mobile number"
         data-ryzon-placeholder="phonePlaceholder">
 
-      <button class="action" onclick="sendDemoOTP()"
+      <button
+        class="action"
+        onclick="sendDemoOTP()"
         data-ryzon-text="sendOtp">
         Continue with OTP
       </button>
@@ -219,7 +229,9 @@ footer {
         placeholder="Enter 6-digit OTP"
         data-ryzon-placeholder="otpPlaceholder">
 
-      <button class="action" onclick="verifyOTP()"
+      <button
+        class="action"
+        onclick="verifyOTP()"
         data-ryzon-text="verifyOtp">
         Verify OTP
       </button>
@@ -243,10 +255,18 @@ footer {
 let accountType = "login";
 let generatedOTP = "123456";
 
-function getPageLanguage() {
+function currentLanguage() {
   return typeof getRYZONLanguage === "function"
     ? getRYZONLanguage()
     : "en";
+}
+
+function showMessage(key, color) {
+  const dictionary = translations[currentLanguage()];
+  const message = document.getElementById("message");
+
+  message.textContent = dictionary[key] || key;
+  message.style.color = color;
 }
 
 function showLogin() {
@@ -275,14 +295,9 @@ function showSignup() {
 
 function sendDemoOTP() {
   const phone = document.getElementById("phone").value.trim();
-  const language = getPageLanguage();
-  const message = document.getElementById("message");
 
   if (!/^[6-9]\d{9}$/.test(phone)) {
-    message.style.color = "red";
-    message.textContent = language === "ta"
-      ? "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடுங்கள்."
-      : "Please enter a valid 10-digit mobile number.";
+    showMessage("invalidPhone", "red");
     return;
   }
 
@@ -291,32 +306,25 @@ function sendDemoOTP() {
   document.getElementById("accountSection").classList.add("hidden");
   document.getElementById("otpSection").classList.remove("hidden");
 
-  message.style.color = "green";
-  message.textContent = language === "ta"
-    ? "Demo OTP தயார். கீழே 123456 உள்ளிடுங்கள்."
-    : "Demo OTP is ready. Enter 123456 below.";
+  showMessage("demoReady", "green");
 }
 
 function verifyOTP() {
   const enteredOTP = document.getElementById("otp").value.trim();
-  const language = getPageLanguage();
-  const message = document.getElementById("message");
 
   if (enteredOTP !== generatedOTP) {
-    message.style.color = "red";
-    message.textContent = language === "ta"
-      ? "தவறான OTP. மீண்டும் முயற்சிக்கவும்."
-      : "Incorrect OTP. Please try again.";
+    showMessage("wrongOtp", "red");
     return;
   }
 
   localStorage.setItem("ryzonVerified", "true");
-  localStorage.setItem("ryzonPhone", document.getElementById("phone").value.trim());
 
-  message.style.color = "green";
-  message.textContent = language === "ta"
-    ? "சரிபார்ப்பு வெற்றிகரமாக முடிந்தது!"
-    : "Verification successful!";
+  localStorage.setItem(
+    "ryzonPhone",
+    document.getElementById("phone").value.trim()
+  );
+
+  showMessage("success", "green");
 
   setTimeout(function() {
     window.location.href = "home.html";
