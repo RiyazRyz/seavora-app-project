@@ -1,5 +1,6 @@
 
 const RYZON_LANG_KEY = "ryzonLanguage";
+const RYZON_TEMP_LANG_KEY = "ryzonTemporaryEnglish";
 
 const translations = {
   en: {
@@ -79,11 +80,25 @@ const translations = {
   }
 };
 
-function getRYZONLanguage() {
-  const savedLanguage = localStorage.getItem(RYZON_LANG_KEY);
-  return translations[savedLanguage] ? savedLanguage : "en";
+// Get saved primary language
+function getRYZONPrimaryLanguage() {
+  const saved = localStorage.getItem(RYZON_LANG_KEY);
+  return translations[saved] ? saved : "en";
 }
 
+// Get currently active language
+function getRYZONLanguage() {
+  const primary = getRYZONPrimaryLanguage();
+  const temporary = localStorage.getItem(RYZON_TEMP_LANG_KEY);
+
+  if (temporary === "true") {
+    return primary === "ta" ? "en" : "ta";
+  }
+
+  return primary;
+}
+
+// Save preferred language
 function setRYZONLanguage(language) {
   if (!translations[language]) {
     alert("This language is not supported yet.");
@@ -91,9 +106,26 @@ function setRYZONLanguage(language) {
   }
 
   localStorage.setItem(RYZON_LANG_KEY, language);
+  localStorage.removeItem(RYZON_TEMP_LANG_KEY);
+
   applyRYZONLanguage();
 }
 
+// Toggle between Tamil and English
+function toggleRYZONLanguage() {
+  const primary = getRYZONPrimaryLanguage();
+  const temporary = localStorage.getItem(RYZON_TEMP_LANG_KEY);
+
+  if (temporary === "true") {
+    localStorage.removeItem(RYZON_TEMP_LANG_KEY);
+  } else {
+    localStorage.setItem(RYZON_TEMP_LANG_KEY, "true");
+  }
+
+  applyRYZONLanguage();
+}
+
+// Apply translations
 function applyRYZONLanguage() {
   const language = getRYZONLanguage();
   const dictionary = translations[language];
@@ -115,12 +147,23 @@ function applyRYZONLanguage() {
       element.placeholder = dictionary[key];
     }
   });
+
+  // Show the opposite language on the toggle button
+  document.querySelectorAll("[data-ryzon-language-toggle]").forEach(button => {
+    button.textContent =
+      getRYZONLanguage() === "ta" ? "🌐 English" : "🌐 தமிழ்";
+  });
 }
 
+// Apply language when page loads
 document.addEventListener("DOMContentLoaded", applyRYZONLanguage);
 
+// Update language across tabs
 window.addEventListener("storage", function(event) {
-  if (event.key === RYZON_LANG_KEY) {
+  if (
+    event.key === RYZON_LANG_KEY ||
+    event.key === RYZON_TEMP_LANG_KEY
+  ) {
     applyRYZONLanguage();
   }
 });
