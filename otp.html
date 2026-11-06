@@ -247,8 +247,8 @@ function message(text, color="red"){
  $("message").style.color = color;
 }
 
-function phoneValid(phone){
- return /^\+[1-9]\d{7,14}$/.test(phone);
+function phoneValid(){
+ return signupPhoneInput.isValidNumber();
 }
 
 window.showPanel = function(panel){
