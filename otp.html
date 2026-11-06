@@ -262,7 +262,11 @@ function currentLanguage() {
 }
 
 function showMessage(key, color) {
-  const dictionary = translations[currentLanguage()];
+  const dictionary =
+    typeof translations !== "undefined"
+      ? translations[currentLanguage()] || {}
+      : {};
+
   const message = document.getElementById("message");
 
   message.textContent = dictionary[key] || key;
