@@ -236,27 +236,42 @@ window.showPanel = function(panel){
  message("");
 };
 
-function makeVerifier(containerId){
- const old = containerId==="otpRecaptcha"
-  ? otpVerifier : signupVerifier;
+async function makeVerifier(containerId) {
+  const container = document.getElementById(containerId);
 
- if(old){
-  old.clear();
- }
+  if (!container) {
+    throw new Error("reCAPTCHA container not found");
+  }
 
- const verifier = new RecaptchaVerifier(
-  auth,
-  containerId,
-  {size:"normal"}
- );
+  if (containerId === "otpRecaptcha" && otpVerifier) {
+    otpVerifier.clear();
+    otpVerifier = null;
+  }
 
- if(containerId==="otpRecaptcha"){
-  otpVerifier=verifier;
- }else{
-  signupVerifier=verifier;
- }
+  if (containerId === "signupRecaptcha" && signupVerifier) {
+    signupVerifier.clear();
+    signupVerifier = null;
+  }
 
- return verifier;
+  container.innerHTML = "";
+
+  const verifier = new RecaptchaVerifier(
+    auth,
+    container,
+    {
+      size: "normal"
+    }
+  );
+
+  await verifier.render();
+
+  if (containerId === "otpRecaptcha") {
+    otpVerifier = verifier;
+  } else {
+    signupVerifier = verifier;
+  }
+
+  return verifier;
 }
 
 // SEND REAL SMS OTP
