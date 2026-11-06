@@ -22,7 +22,6 @@ const translations = {
     projectIdeas: "Project Ideas",
     projectMarket: "Project Market",
     scamAlert: "⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️",
-
     jobsTitle: "Jobs & Career",
     jobsDescription: "Find job opportunities and career resources",
     searchJobs: "Search Jobs",
@@ -61,7 +60,6 @@ const translations = {
     projectIdeas: "திட்ட யோசனைகள்",
     projectMarket: "திட்டச் சந்தை",
     scamAlert: "⚠️ மோசடி எச்சரிக்கை: OTP, UPI PIN அல்லது வங்கி விவரங்களை யாரிடமும் பகிர வேண்டாம். பணம் செலுத்தும் முன் சரிபார்க்கவும். ⚠️",
-
     jobsTitle: "வேலைவாய்ப்புகள் மற்றும் தொழில்",
     jobsDescription: "வேலை வாய்ப்புகள் மற்றும் தொழில் தகவல்களைக் கண்டறியுங்கள்",
     searchJobs: "வேலை தேடல்",
@@ -82,32 +80,38 @@ const translations = {
 };
 
 function getRYZONLanguage() {
-  return localStorage.getItem(RYZON_LANG_KEY) || "en";
+  const savedLanguage = localStorage.getItem(RYZON_LANG_KEY);
+  return translations[savedLanguage] ? savedLanguage : "en";
 }
 
 function setRYZONLanguage(language) {
-  if (!translations[language]) return;
-  const languageCode = language === "Tamil" ? "ta" : "en";
-localStorage.setItem("ryzonLanguage", languageCode);
+  if (!translations[language]) {
+    alert("This language is not supported yet.");
+    return;
+  }
+
+  localStorage.setItem(RYZON_LANG_KEY, language);
   applyRYZONLanguage();
 }
 
 function applyRYZONLanguage() {
   const language = getRYZONLanguage();
-  const dictionary = translations[language] || translations.en;
+  const dictionary = translations[language];
 
   document.documentElement.lang = language;
 
   document.querySelectorAll("[data-ryzon-text]").forEach(element => {
     const key = element.getAttribute("data-ryzon-text");
-    if (dictionary[key]) {
+
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
       element.textContent = dictionary[key];
     }
   });
 
   document.querySelectorAll("[data-ryzon-placeholder]").forEach(element => {
     const key = element.getAttribute("data-ryzon-placeholder");
-    if (dictionary[key]) {
+
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
       element.placeholder = dictionary[key];
     }
   });
