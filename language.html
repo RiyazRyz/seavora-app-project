@@ -2,66 +2,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RYZON - Language Selection</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#172554">
+<title>RYZON - Language Selection</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f2f5f9;
-      color: #222;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header {
-      background: #172554;
-      color: white;
-      text-align: center;
-      padding: 22px;
-      border-radius: 12px;
-    }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f2f5f9;
+  color: #222;
+  min-height: 100vh;
+}
 
-    .card {
-      background: white;
-      padding: 18px;
-      margin: 15px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #00000015;
-    }
+header {
+  background: #172554;
+  color: white;
+  text-align: center;
+  padding: 22px;
+  border-radius: 12px;
+}
 
-    select, button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 12px;
-      border-radius: 7px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
+header h1 {
+  letter-spacing: 4px;
+  margin-top: 0;
+}
 
-    select {
-      border: 1px solid #bbb;
-    }
+header h2 {
+  margin-bottom: 8px;
+}
 
-    button {
-      background: #172554;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+header p {
+  color: #dbeafe;
+  font-size: 14px;
+}
 
-    #message {
-      font-weight: bold;
-      text-align: center;
-    }
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 480px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #00000015;
+}
 
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #666;
-    }
-  </style>
+select, button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+select {
+  border: 1px solid #bbb;
+  background: white;
+}
+
+button {
+  background: #172554;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#message {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+  font-size: 13px;
+}
+</style>
 </head>
 
 <body>
@@ -73,6 +102,7 @@
 </header>
 
 <div class="card">
+
   <h2>Available Languages</h2>
 
   <select id="language">
@@ -102,8 +132,12 @@
     <option value="en">English</option>
   </select>
 
-  <button onclick="continueApp()">Continue</button>
+  <button id="continueButton" onclick="continueApp()">
+    Continue
+  </button>
+
   <p id="message"></p>
+
 </div>
 
 <footer>
@@ -114,16 +148,32 @@
 function continueApp() {
   const language = document.getElementById("language").value;
   const message = document.getElementById("message");
+  const button = document.getElementById("continueButton");
 
   if (!language) {
+    message.style.color = "red";
     message.textContent = "Please select a language.";
     return;
   }
 
+  // Save the user's primary language
   localStorage.setItem("ryzonLanguage", language);
-  localStorage.setItem("ryzonNextAction", "home");
 
-  window.location.href = "home.html";
+  // Clear any temporary language switch
+  localStorage.removeItem("ryzonTemporaryEnglish");
+
+  // Mark the next page as login
+  localStorage.setItem("ryzonNextAction", "login");
+
+  message.style.color = "green";
+  message.textContent = "Language selected. Opening login page...";
+
+  button.disabled = true;
+
+  // Go to Login / Sign Up / OTP page
+  setTimeout(function() {
+    window.location.href = "otp.html";
+  }, 400);
 }
 </script>
 
