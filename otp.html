@@ -227,14 +227,17 @@ function phoneValid(phone){
  return /^\+[1-9]\d{7,14}$/.test(phone);
 }
 
+window.showPanel = function(panel){
+  ["otp","password","signup"].forEach(name=>{
+    $(name+"Panel").classList.toggle("hidden",name!==panel);
+    $(name+"Tab").classList.toggle("active",name!== "otp" && name===panel);
+  });
+  message("");
+};
+
 window.addEventListener("DOMContentLoaded", () => {
   showPanel("password");
 });
- ["otp","password","signup"].forEach(name=>{
-  $(name+"Panel").classList.toggle("hidden",name!==panel);
-  $(name+"Tab").classList.toggle("active",name===panel);
- });
- message("");
 };
 
 async function makeVerifier(containerId) {
