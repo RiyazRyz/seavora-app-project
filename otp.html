@@ -49,14 +49,8 @@ input{
  width:100%;padding:14px;margin:9px 0 16px;
  border:1px solid #ccd7e5;border-radius:9px;font-size:16px
 }
-.iti{
- width:100%;
- margin:9px 0 16px;
-}
-.iti input{
- width:100%;
- margin:0;
-}
+.iti{width:100%;margin:9px 0 16px}
+.iti input{width:100%;margin:0}
 .action{
  width:100%;padding:14px;border:none;border-radius:9px;
  background:#2457d6;color:white;font-size:16px;
@@ -103,22 +97,10 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
 
 <!-- OTP LOGIN -->
 <div id="otpPanel" class="hidden">
- <p class="description">Enter your registered mobile number</p>
-
+ <p class="description">OTP-only Login is temporarily unavailable.</p>
  <input id="otpPhone" type="tel"
  placeholder="Mobile number" autocomplete="tel">
-
- <div id="otpRecaptcha"></div>
-
  <button class="action" onclick="sendOTP()">Send SMS OTP</button>
-
- <div id="otpVerifyArea" class="hidden">
-  <input id="otpCode" type="text"
-  inputmode="numeric" maxlength="6"
-  placeholder="Enter 6-digit OTP">
-
-  <button class="action" onclick="verifyOTP()">Verify OTP</button>
- </div>
 </div>
 
 <!-- PASSWORD LOGIN -->
@@ -132,6 +114,10 @@ footer{text-align:center;color:#718096;font-size:12px;padding:20px}
 
  <button class="action" onclick="passwordLogin()">
  Login with Password
+ </button>
+
+ <button class="secondary" onclick="resendVerification()">
+ Resend Verification Email
  </button>
 
  <button class="secondary" onclick="resetPassword()">
@@ -215,7 +201,6 @@ let signupUser = null;
 
 const $ = id => document.getElementById(id);
 
-// Phone input setup
 const phoneOptions = {
  initialCountry: "in",
  separateDialCode: true,
@@ -226,11 +211,11 @@ const phoneOptions = {
 };
 
 const otpPhoneInput = window.intlTelInput(
- $("otpPhone"), phoneOptions
+ $("otpPhone"), {...phoneOptions}
 );
 
 const signupPhoneInput = window.intlTelInput(
- $("signupPhone"), phoneOptions
+ $("signupPhone"), {...phoneOptions}
 );
 
 function message(text,color="red"){
@@ -238,17 +223,15 @@ function message(text,color="red"){
  $("message").style.color = color;
 }
 
-function phoneValid(){
- return signupPhoneInput.isValidNumber();
+function validEmail(email){
+ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 window.showPanel = function(panel){
-
  ["otp","password","signup"].forEach(name=>{
   $(name+"Panel").classList.toggle("hidden",name!==panel);
   $(name+"Tab").classList.toggle("active",name===panel);
  });
-
  message("");
 };
 
@@ -273,30 +256,21 @@ async function makeVerifier(containerId){
   {size:"normal"}
  );
 
+ signupVerifier = verifier;
  await verifier.render();
 
- signupVerifier = verifier;
  return verifier;
 }
 
 // OTP LOGIN TEMPORARILY DISABLED
 window.sendOTP = async function(){
- message(
-  "OTP-only Login is temporarily unavailable. Please use Email + Password Login."
- );
+ message("OTP Login is temporarily unavailable. Please use Password Login.");
 };
 
-window.verifyOTP = async function(){
- message(
-  "Please use Email + Password Login until secure OTP Login is configured."
- );
-};
-
-// SIGN UP
+// SIGN UP AND RECOVER EXISTING ACCOUNT
 window.createAccount = async function(){
 
  const email = $("signupEmail").value.trim();
- console.log("Signup Email:", email);
  const password = $("signupPassword").value;
 
  try{
@@ -305,12 +279,12 @@ window.createAccount = async function(){
 
   const phone = signupPhoneInput.getNumber();
 
-  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+  if(!validEmail(email)){
    message("Enter a valid email address.");
    return;
   }
 
-  if(!phoneValid()){
+  if(!signupPhoneInput.isValidNumber()){
    message("Enter a valid mobile number for the selected country.");
    return;
   }
@@ -320,25 +294,78 @@ window.createAccount = async function(){
    return;
   }
 
-  message("Creating your account...","blue");
+  message("Checking account...","blue");
 
-  const credential = await createUserWithEmailAndPassword(
-   auth,email,password
+  let user;
+
+  try{
+
+   const credential = await createUserWithEmailAndPassword(
+    auth,email,password
+   );
+
+   user = credential.user;
+
+  }catch(error){
+
+   if(error.code !== "auth/email-already-in-use"){
+    throw error;
+   }
+
+   // Recover an account created during an earlier failed signup
+   const credential = await signInWithEmailAndPassword(
+    auth,email,password
+   );
+
+   user = credential.user;
+  }
+
+  signupUser = user;
+
+  await user.reload();
+
+  if(!user.emailVerified){
+   try{
+    await sendEmailVerification(user);
+   }catch(emailError){
+    if(emailError.code !== "auth/too-many-requests"){
+     throw emailError;
+    }
+   }
+  }
+
+  // Check whether phone is already linked
+  const phoneAlreadyLinked = user.providerData.some(
+   provider => provider.providerId === "phone"
   );
 
-  signupUser = credential.user;
-  await sendEmailVerification(signupUser);
+  if(phoneAlreadyLinked){
+
+   await signOut(auth);
+   signupUser = null;
+
+   message(
+    "Your mobile number is already linked. Check your email verification and use Password Login.",
+    "green"
+   );
+
+   return;
+  }
+
+  message("Preparing mobile verification...","blue");
+
   const verifier = await makeVerifier("signupRecaptcha");
 
   signupConfirmation = await linkWithPhoneNumber(
-   signupUser,
-   phone,
-   verifier
+   user,phone,verifier
   );
 
   $("signupVerifyArea").classList.remove("hidden");
 
-  message("SMS OTP sent. Enter the OTP to verify your mobile number.","green");
+  message(
+   "SMS OTP sent. Enter the OTP. Check your email for verification too.",
+   "green"
+  );
 
  }catch(error){
 
@@ -362,16 +389,33 @@ window.verifySignupPhone = async function(){
 
   const result = await signupConfirmation.confirm(code);
 
-  await sendEmailVerification(result.user);
+  await result.user.reload();
+
+  if(!result.user.emailVerified){
+   try{
+    await sendEmailVerification(result.user);
+   }catch(error){
+    if(error.code !== "auth/too-many-requests"){
+     throw error;
+    }
+   }
+  }
+
   await signOut(auth);
 
   signupUser = null;
   signupConfirmation = null;
 
+  if(signupVerifier){
+   signupVerifier.clear();
+   signupVerifier = null;
+  }
+
   $("signupVerifyArea").classList.add("hidden");
+  $("signupCode").value = "";
 
   message(
-   "Mobile verified! Check your email and click the verification link. Then login.",
+   "Mobile verified! Check your email and click the verification link before login.",
    "green"
   );
 
@@ -389,8 +433,8 @@ window.passwordLogin = async function(){
  const email = $("loginEmail").value.trim();
  const password = $("loginPassword").value;
 
- if(!email || !password){
-  message("Enter email and password.");
+ if(!validEmail(email) || !password){
+  message("Enter a valid email and password.");
   return;
  }
 
@@ -403,8 +447,22 @@ window.passwordLogin = async function(){
   await result.user.reload();
 
   if(!result.user.emailVerified){
+
+   try{
+    await sendEmailVerification(result.user);
+
+    message(
+     "Verification email sent again. Check your inbox and spam folder.",
+     "green"
+    );
+
+   }catch(error){
+
+    message("Email sending error: " + error.message);
+
+   }
+
    await signOut(auth);
-   message("Please verify your email before login.");
    return;
   }
 
@@ -422,13 +480,59 @@ window.passwordLogin = async function(){
 
 };
 
+// RESEND VERIFICATION EMAIL
+window.resendVerification = async function(){
+
+ const email = $("loginEmail").value.trim();
+ const password = $("loginPassword").value;
+
+ if(!validEmail(email) || !password){
+  message("Enter your registered email and password first.");
+  return;
+ }
+
+ try{
+
+  const result = await signInWithEmailAndPassword(
+   auth,email,password
+  );
+
+  await result.user.reload();
+
+  if(result.user.emailVerified){
+   await signOut(auth);
+   message("Your email is already verified. You can login.");
+   return;
+  }
+
+  await sendEmailVerification(result.user);
+
+  await signOut(auth);
+
+  message(
+   "Verification email sent. Check your inbox and spam folder.",
+   "green"
+  );
+
+ }catch(error){
+
+  if(auth.currentUser){
+   await signOut(auth);
+  }
+
+  message("Email sending error: " + error.message);
+
+ }
+
+};
+
 // PASSWORD RESET
 window.resetPassword = async function(){
 
  const email = $("loginEmail").value.trim();
 
- if(!email){
-  message("Enter your email address first.");
+ if(!validEmail(email)){
+  message("Enter a valid email address first.");
   return;
  }
 
