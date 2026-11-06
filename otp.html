@@ -318,10 +318,10 @@ window.verifyOTP = async function(){
 
   // Only accounts linked to a verified email are accepted.
   if(!user.email){
-   await deleteUser(user);
+   await signOut(auth);
    message("This mobile number is not linked to an email account. Please Sign Up first.");
    return;
-  }
+}
 
   if(!user.emailVerified){
    await signOut(auth);
