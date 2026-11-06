@@ -370,8 +370,7 @@ window.createAccount = async function(){
 
   signupUser=credential.user;
 
-  const verifier=await makeVerifier("otpRecaptcha");
-
+  const verifier=await makeVerifier("signupRecaptcha");
   signupConfirmation=await linkWithPhoneNumber(
    signupUser,phone,verifier
   );
