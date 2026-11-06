@@ -4,6 +4,7 @@ const RYZON_TEMP_LANG_KEY = "ryzonTemporaryEnglish";
 
 const translations = {
   en: {
+    // Home
     home: "Home",
     jobs: "Jobs",
     shopping: "Shopping",
@@ -23,6 +24,8 @@ const translations = {
     projectIdeas: "Project Ideas",
     projectMarket: "Project Market",
     scamAlert: "⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay. ⚠️",
+
+    // Jobs
     jobsTitle: "Jobs & Career",
     jobsDescription: "Find job opportunities and career resources",
     searchJobs: "Search Jobs",
@@ -38,10 +41,32 @@ const translations = {
     privateDescription: "Search for private-sector and technology jobs.",
     jobSearch: "Job Search",
     jobSearchHelp: "Choose a category and enter a keyword to search.",
-    searchingFor: "Searching for:"
+    searchingFor: "Searching for:",
+
+    // Login and OTP
+    loginTitle: "Welcome to RYZON",
+    loginDescription: "Login or create your account",
+    login: "Login",
+    signUp: "Sign Up",
+    phonePlaceholder: "Enter 10-digit mobile number",
+    sendOtp: "Continue with OTP",
+    otpDescription: "Enter the demo OTP to continue",
+    otpPlaceholder: "Enter 6-digit OTP",
+    verifyOtp: "Verify OTP",
+    demoOtp: "Demo OTP: 123456 (SMS is not connected)",
+
+    // Messages
+    invalidPhone: "Please enter a valid 10-digit mobile number.",
+    demoReady: "Demo OTP is ready. Enter 123456 below.",
+    wrongOtp: "Incorrect OTP. Please try again.",
+    success: "Verification successful!",
+    notificationNotice: "Notifications service will be connected during development.",
+    profileNotice: "Profile service will be connected during development.",
+    helpNotice: "Help Center service will be connected during development."
   },
 
   ta: {
+    // Home
     home: "முகப்பு",
     jobs: "வேலைவாய்ப்புகள்",
     shopping: "ஷாப்பிங்",
@@ -61,6 +86,8 @@ const translations = {
     projectIdeas: "திட்ட யோசனைகள்",
     projectMarket: "திட்டச் சந்தை",
     scamAlert: "⚠️ மோசடி எச்சரிக்கை: OTP, UPI PIN அல்லது வங்கி விவரங்களை யாரிடமும் பகிர வேண்டாம். பணம் செலுத்தும் முன் சரிபார்க்கவும். ⚠️",
+
+    // Jobs
     jobsTitle: "வேலைவாய்ப்புகள் மற்றும் தொழில்",
     jobsDescription: "வேலை வாய்ப்புகள் மற்றும் தொழில் தகவல்களைக் கண்டறியுங்கள்",
     searchJobs: "வேலை தேடல்",
@@ -76,7 +103,28 @@ const translations = {
     privateDescription: "தனியார் மற்றும் தொழில்நுட்ப வேலைகளைத் தேடுங்கள்.",
     jobSearch: "வேலை தேடல்",
     jobSearchHelp: "பிரிவைத் தேர்ந்தெடுத்து முக்கியச் சொல்லை உள்ளிட்டு தேடுங்கள்.",
-    searchingFor: "தேடுவது:"
+    searchingFor: "தேடுவது:",
+
+    // Login and OTP
+    loginTitle: "RYZON-க்கு உங்களை வரவேற்கிறோம்",
+    loginDescription: "உள்நுழையுங்கள் அல்லது கணக்கை உருவாக்குங்கள்",
+    login: "உள்நுழைவு",
+    signUp: "புதிய கணக்கு",
+    phonePlaceholder: "10 இலக்க மொபைல் எண்ணை உள்ளிடுங்கள்",
+    sendOtp: "OTP மூலம் தொடரவும்",
+    otpDescription: "தொடர Demo OTP-ஐ உள்ளிடுங்கள்",
+    otpPlaceholder: "6 இலக்க OTP-ஐ உள்ளிடுங்கள்",
+    verifyOtp: "OTP சரிபார்க்கவும்",
+    demoOtp: "Demo OTP: 123456 (SMS வசதி இணைக்கப்படவில்லை)",
+
+    // Messages
+    invalidPhone: "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடுங்கள்.",
+    demoReady: "Demo OTP தயார். கீழே 123456 உள்ளிடுங்கள்.",
+    wrongOtp: "தவறான OTP. மீண்டும் முயற்சிக்கவும்.",
+    success: "சரிபார்ப்பு வெற்றிகரமாக முடிந்தது!",
+    notificationNotice: "அறிவிப்பு வசதி உருவாக்கப் பணியில் உள்ளது.",
+    profileNotice: "சுயவிவர வசதி உருவாக்கப் பணியில் உள்ளது.",
+    helpNotice: "உதவி மைய வசதி உருவாக்கப் பணியில் உள்ளது."
   }
 };
 
@@ -111,9 +159,8 @@ function setRYZONLanguage(language) {
   applyRYZONLanguage();
 }
 
-// Toggle between Tamil and English
+// Toggle temporary language
 function toggleRYZONLanguage() {
-  const primary = getRYZONPrimaryLanguage();
   const temporary = localStorage.getItem(RYZON_TEMP_LANG_KEY);
 
   if (temporary === "true") {
@@ -148,10 +195,10 @@ function applyRYZONLanguage() {
     }
   });
 
-  // Show the opposite language on the toggle button
+  // Language toggle shows the language to switch to
   document.querySelectorAll("[data-ryzon-language-toggle]").forEach(button => {
     button.textContent =
-      getRYZONLanguage() === "ta" ? "🌐 English" : "🌐 தமிழ்";
+      language === "ta" ? "🌐 English" : "🌐 தமிழ்";
   });
 }
 
