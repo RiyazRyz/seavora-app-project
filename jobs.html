@@ -94,16 +94,16 @@
 </div>
 
 <div class="card">
-  <h2>Private & IT Jobs</h2>
-  <p>Search for private-sector and technology jobs.</p>
+  <h2 data-ryzon-text="privateJobs">Private & IT Jobs</h2>
+<p data-ryzon-text="privateDescription">Search for private-sector and technology jobs.</p>
   <a href="https://www.naukri.com/" target="_blank">Naukri</a><br>
   <a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a><br>
   <a href="https://www.ncs.gov.in/" target="_blank">National Career Service</a>
 </div>
 
 <div class="card">
-  <h2>Job Search</h2>
-  <p id="result">Choose a category and enter a keyword to search.</p>
+  <h2 data-ryzon-text="jobSearch">Job Search</h2>
+<p id="result" data-ryzon-text="jobSearchHelp">Choose a category and enter a keyword to search.</p>
 </div>
 
 <footer>
@@ -121,8 +121,13 @@ function searchJobs() {
     query += " " + category + " jobs";
   }
 
-  document.getElementById("result").textContent =
-    "Searching for: " + query;
+  const language = getRYZONLanguage();
+
+const message = language === "ta"
+  ? "தேடுவது: "
+  : "Searching for: ";
+
+document.getElementById("result").textContent = message + query;
 
   window.open(
     "https://www.google.com/search?q=" + encodeURIComponent(query),
@@ -131,5 +136,5 @@ function searchJobs() {
 }
 </script>
 
-</body>
+</body> <button onclick="location.href='language.html'">🌐 Language</button>
 </html>
