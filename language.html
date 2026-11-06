@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RYZON - Language Selection</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +14,7 @@
       background: #f2f5f9;
       color: #222;
     }
+
     header {
       background: #172554;
       color: white;
@@ -20,6 +22,7 @@
       padding: 22px;
       border-radius: 12px;
     }
+
     .card {
       background: white;
       padding: 18px;
@@ -27,26 +30,32 @@
       border-radius: 10px;
       box-shadow: 0 2px 8px #00000015;
     }
+
     select, button {
       width: 100%;
       padding: 13px;
       margin-top: 12px;
       border-radius: 7px;
       font-size: 16px;
+      box-sizing: border-box;
     }
+
     select {
       border: 1px solid #bbb;
     }
+
     button {
       background: #172554;
       color: white;
       border: none;
       cursor: pointer;
     }
+
     #message {
       font-weight: bold;
       text-align: center;
     }
+
     footer {
       text-align: center;
       margin-top: 25px;
@@ -54,6 +63,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <header>
@@ -67,29 +77,29 @@
 
   <select id="language">
     <option value="">-- Select Language --</option>
-    <option value="Assamese">অসমীয়া - Assamese</option>
-    <option value="Bengali">বাংলা - Bengali</option>
-    <option value="Bodo">बड़ो - Bodo</option>
-    <option value="Dogri">डोगरी - Dogri</option>
-    <option value="Gujarati">ગુજરાતી - Gujarati</option>
-    <option value="Hindi">हिन्दी - Hindi</option>
-    <option value="Kannada">ಕನ್ನಡ - Kannada</option>
-    <option value="Kashmiri">कॉशुर - Kashmiri</option>
-    <option value="Konkani">कोंकणी - Konkani</option>
-    <option value="Maithili">मैथिली - Maithili</option>
-    <option value="Malayalam">മലയാളം - Malayalam</option>
-    <option value="Manipuri">মেইতেইলোন্ - Manipuri</option>
-    <option value="Marathi">मराठी - Marathi</option>
-    <option value="Nepali">नेपाली - Nepali</option>
-    <option value="Odia">ଓଡ଼ିଆ - Odia</option>
-    <option value="Punjabi">ਪੰਜਾਬੀ - Punjabi</option>
-    <option value="Sanskrit">संस्कृतम् - Sanskrit</option>
-    <option value="Santali">ᱥᱟᱱᱛᱟᱲᱤ - Santali</option>
-    <option value="Sindhi">سنڌي - Sindhi</option>
-    <option value="Tamil">தமிழ் - Tamil</option>
-    <option value="Telugu">తెలుగు - Telugu</option>
-    <option value="Urdu">اردو - Urdu</option>
-    <option value="English">English</option>
+    <option value="as">অসমীয়া - Assamese</option>
+    <option value="bn">বাংলা - Bengali</option>
+    <option value="brx">बड़ो - Bodo</option>
+    <option value="doi">डोगरी - Dogri</option>
+    <option value="gu">ગુજરાતી - Gujarati</option>
+    <option value="hi">हिन्दी - Hindi</option>
+    <option value="kn">ಕನ್ನಡ - Kannada</option>
+    <option value="ks">कॉशुर - Kashmiri</option>
+    <option value="kok">कोंकणी - Konkani</option>
+    <option value="mai">मैथिली - Maithili</option>
+    <option value="ml">മലയാളം - Malayalam</option>
+    <option value="mni">মেইতেইলোন্ - Manipuri</option>
+    <option value="mr">मराठी - Marathi</option>
+    <option value="ne">नेपाली - Nepali</option>
+    <option value="or">ଓଡ଼ିଆ - Odia</option>
+    <option value="pa">ਪੰਜਾਬੀ - Punjabi</option>
+    <option value="sa">संस्कृतम् - Sanskrit</option>
+    <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ - Santali</option>
+    <option value="sd">سنڌي - Sindhi</option>
+    <option value="ta">தமிழ் - Tamil</option>
+    <option value="te">తెలుగు - Telugu</option>
+    <option value="ur">اردو - Urdu</option>
+    <option value="en">English</option>
   </select>
 
   <button onclick="continueApp()">Continue</button>
@@ -99,7 +109,6 @@
 <footer>
   RYZON © 2026
 </footer>
-
 
 <script>
 function continueApp() {
@@ -111,11 +120,9 @@ function continueApp() {
     return;
   }
 
-  // Save selected language
   localStorage.setItem("ryzonLanguage", language);
-
-  // Continue directly to Home without OTP redirect
   localStorage.setItem("ryzonNextAction", "home");
+
   window.location.href = "home.html";
 }
 </script>
