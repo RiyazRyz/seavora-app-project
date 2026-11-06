@@ -286,8 +286,7 @@ window.sendOTP = async function(){
  try{
   message("Preparing secure verification...","blue");
 
-  const verifier=makeVerifier("otpRecaptcha");
-
+  const verifier=await makeVerifier("otpRecaptcha");
   otpConfirmation=await signInWithPhoneNumber(
    auth,phone,verifier
   );
