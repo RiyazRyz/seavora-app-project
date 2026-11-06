@@ -87,7 +87,8 @@ function getRYZONLanguage() {
 
 function setRYZONLanguage(language) {
   if (!translations[language]) return;
-  localStorage.setItem(RYZON_LANG_KEY, language);
+  const languageCode = language === "Tamil" ? "ta" : "en";
+localStorage.setItem("ryzonLanguage", languageCode);
   applyRYZONLanguage();
 }
 
