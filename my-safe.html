@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b68">
+<title>RYZON – My Safe</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#f1f5fb;color:#17345c;
+  font-family:Arial,sans-serif
+}
+header{
+  background:#123b68;color:white;text-align:center;
+  padding:22px
+}
+header h1{margin:0;letter-spacing:2px}
+header p{margin:8px 0 0;color:#dbeafe}
+main{max-width:650px;margin:auto;padding:16px}
+.card{
+  background:white;padding:18px;border-radius:14px;
+  margin:14px 0;box-shadow:0 2px 8px #00000010
+}
+input,textarea,select{
+  width:100%;padding:13px;margin:7px 0 13px;
+  border:1px solid #ccd7e5;border-radius:9px;
+  font-size:15px
+}
+textarea{min-height:90px;resize:vertical}
+button{
+  border:0;border-radius:9px;padding:12px 16px;
+  background:#2457d6;color:white;font-weight:bold;
+  cursor:pointer
+}
+button.secondary{background:#e5edf8;color:#17345c}
+button.danger{background:#b42318}
+button:disabled{opacity:.5}
+.grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px
+}
+.section-btn{
+  background:white;color:#17345c;border:1px solid #d5dfed;
+  padding:18px 8px;min-height:90px
+}
+.section-btn.active{background:#123b68;color:white}
+.entry{
+  border:1px solid #e0e7f0;border-radius:10px;
+  padding:13px;margin:10px 0;overflow-wrap:anywhere
+}
+.entry h3{margin:0 0 8px}
+.entry p{white-space:pre-wrap}
+.small{font-size:12px;color:#64748b}
+.hidden{display:none!important}
+.notice{padding:12px;border-radius:9px;background:#fff4d6;color:#704b00}
+#message{font-weight:bold;overflow-wrap:anywhere}
+footer{text-align:center;color:#718096;padding:20px;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🔐 RYZON – My Safe</h1>
+  <p>Your private space. Protected by encryption.</p>
+</header>
+
+<main>
+
+<section class="card" id="lockScreen">
+  <h2>🔒 Unlock My Safe</h2>
+  <p id="lockDescription">Create a strong Master Password to protect your data.</p>
+
+  <label for="masterPassword">Master Password</label>
+  <input id="masterPassword" type="password"
+    autocomplete="current-password"
+    placeholder="Enter Master Password">
+
+  <button id="unlockButton" onclick="unlockVault()">Create / Unlock Safe</button>
+
+  <p class="small">
+    முதல் முறையாக 12 அல்லது அதற்கு மேற்பட்ட எழுத்துகள் கொண்ட வலுவான
+    Master Password அமைக்கவும். இதை மறந்தால் தரவை மீட்டெடுக்க முடியாது.
+  </p>
+</section>
+
+<section id="safeScreen" class="hidden">
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <h2 style="margin:0">My Safe 🔐</h2>
+        <p class="small">Your data is encrypted before saving.</p>
+      </div>
+      <button class="danger" onclick="lockVault()">Lock</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <button class="section-btn active" data-section="Notes" onclick="showSection('Notes')">📝<br>Notes</button>
+    <button class="section-btn" data-section="Dates" onclick="showSection('Dates')">📅<br>Dates</button>
+    <button class="section-btn" data-section="Orders" onclick="showSection('Orders')">📦<br>Orders</button>
+    <button class="section-btn" data-section="Passwords" onclick="showSection('Passwords')">🔑<br>Passwords</button>
+  </div>
+
+  <section class="card">
+    <h2 id="sectionTitle">📝 Notes</h2>
+
+    <form id="entryForm">
+      <label for="entryTitle">Title</label>
+      <input id="entryTitle" maxlength="100" required
+        placeholder="Enter title">
+
+      <div id="dateField" class="hidden">
+        <label for="entryDate">Date</label>
+        <input id="entryDate" type="date">
+      </div>
+
+      <div id="orderFields" class="hidden">
+        <label for="orderId">Order ID</label>
+        <input id="orderId" maxlength="150" placeholder="Order ID">
+
+        <label for="tracking">Tracking Number / Link</label>
+        <input id="tracking" maxlength="500" placeholder="Tracking details">
+      </div>
+
+      <div id="passwordFields" class="hidden">
+        <label for="website">Website / App</label>
+        <input id="website" maxlength="200" placeholder="Website or app">
+
+        <label for="username">Username / Email</label>
+        <input id="username" maxlength="200" placeholder="Username">
+
+        <label for="secretPassword">Password</label>
+        <input id="secretPassword" type="password"
+          maxlength="500" autocomplete="new-password"
+          placeholder="Password">
+
+        <label>
+          <input id="showPassword" type="checkbox"
+            style="width:auto" onchange="togglePassword()">
+          Show password
+        </label>
+      </div>
+
+      <label for="entryDetails">Details / Notes</label>
+      <textarea id="entryDetails" maxlength="10000"
+        placeholder="Enter details"></textarea>
+
+      <button type="submit" id="saveButton">Save Encrypted</button>
+      <button type="button" class="secondary"
+        onclick="clearForm()">Clear</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Saved Items</h2>
+    <div id="entriesList"></div>
+  </section>
+
+  <p id="message"></p>
+</section>
+
+<footer>RYZON © 2026</footer>
+</main>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "ryzon_my_safe_encrypted_v1";
+const PBKDF2_ITERATIONS = 600000;
+const AUTO_LOCK_MS = 5 * 60 * 1000;
+
+let encryptionKey = null;
+let vaultData = null;
+let currentSection = "Notes";
+let editingId = null;
+let lockTimer = null;
+
+const $ = id => document.getElementById(id);
+
+function showMessage(text, error=false) {
+  $("message").textContent = text;
+  $("message").style.color = error ? "#b42318" : "#16703b";
+}
+
+function bytesToBase64(bytes) {
+  let binary = "";
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary);
+}
+
+function base64ToBytes(value) {
+  const binary = atob(value);
+  return Uint8Array.from(binary, c => c.charCodeAt(0));
+}
+
+async function deriveKey(password, salt) {
+  const material = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+
+  return crypto.subtle.deriveKey({
+    name:"PBKDF2",
+    salt:salt,
+    iterations:PBKDF2_ITERATIONS,
+    hash:"SHA-256"
+  }, material, {
+    name:"AES-GCM",
+    length:256
+  }, false, ["encrypt","decrypt"]);
+}
+
+async function encryptData(data) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const plain = new TextEncoder().encode(JSON.stringify(data));
+
+  const encrypted = await crypto.subtle.encrypt(
+    {name:"AES-GCM",iv:iv},
+    encryptionKey,
+    plain
+  );
+
+  return {
+    iv:bytesToBase64(iv),
+    data:bytesToBase64(new Uint8Array(encrypted))
+  };
+}
+
+async function decryptData(record) {
+  const decrypted = await crypto.subtle.decrypt({
+    name:"AES-GCM",
+    iv:base64ToBytes(record.iv)
+  }, encryptionKey, base64ToBytes(record.data));
+
+  return JSON.parse(new TextDecoder().decode(decrypted));
+}
+
+async function saveEncrypted() {
+  const encrypted = await encryptData(vaultData);
+  const oldRecord = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    version:1,
+    salt:oldRecord.salt,
+    iterations:PBKDF2_ITERATIONS,
+    iv:encrypted.iv,
+    data:encrypted.data
+  }));
+}
+
+async function unlockVault() {
+  if (!window.crypto || !crypto.subtle) {
+    showMessage("Secure encryption is unavailable. Open this page using HTTPS.",true);
+    return;
+  }
+
+  const password = $("masterPassword").value;
+
+  if (!password) {
+    showMessage("Enter your Master Password.",true);
+    return;
+  }
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+
+  try {
+    $("unlockButton").disabled = true;
+
+    if (!stored) {
+      if (password.length < 12) {
+        showMessage("Master Password must contain at least 12 characters.",true);
+        return;
+      }
+
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      encryptionKey = await deriveKey(password,salt);
+
+      vaultData = {
+        Notes:[],
+        Dates:[],
+        Orders:[],
+        Passwords:[]
+      };
+
+      const encrypted = await encryptData(vaultData);
+
+      localStorage.setItem(STORAGE_KEY,JSON.stringify({
+        version:1,
+        salt:bytesToBase64(salt),
+        iterations:PBKDF2_ITERATIONS,
+        iv:encrypted.iv,
+        data:encrypted.data
+      }));
+
+    } else {
+      const record = JSON.parse(stored);
+
+      if (record.version !== 1 ||
+          record.iterations !== PBKDF2_ITERATIONS) {
+        throw new Error("Unsupported vault format.");
+      }
+
+      encryptionKey = await deriveKey(
+        password,
+        base64ToBytes(record.salt)
+      );
+
+      vaultData = await decryptData(record);
+
+      for (const section of ["Notes","Dates","Orders","Passwords"]) {
+        if (!Array.isArray(vaultData[section])) {
+          throw new Error("Invalid vault data.");
+        }
+      }
+    }
+
+    $("masterPassword").value = "";
+    $("lockScreen").classList.add("hidden");
+    $("safeScreen").classList.remove("hidden");
+
+    showSection("Notes");
+    resetAutoLock();
+    showMessage("My Safe unlocked successfully.");
+
+  } catch(error) {
+    encryptionKey = null;
+    vaultData = null;
+    showMessage("Unlock failed. Check your Master Password or saved data.",true);
+  } finally {
+    $("unlockButton").disabled = false;
+  }
+}
+
+function lockVault() {
+  clearTimeout(lockTimer);
+  encryptionKey = null;
+  vaultData = null;
+  editingId = null;
+
+  $("safeScreen").classList.add("hidden");
+  $("lockScreen").classList.remove("hidden");
+  $("masterPassword").value = "";
+  $("entryForm").reset();
+  $("entriesList").replaceChildren();
+
+  showMessage("My Safe is locked.");
+}
+
+function resetAutoLock() {
+  clearTimeout(lockTimer);
+  lockTimer = setTimeout(lockVault,AUTO_LOCK_MS);
+}
+
+["click","keydown","touchstart"].forEach(event => {
+  document.addEventListener(event,() => {
+    if (encryptionKey) resetAutoLock();
+  },{passive:true});
+});
+
+function showSection(section) {
+  if (!vaultData || !vaultData[section]) return;
+
+  currentSection = section;
+  editingId = null;
+
+  document.querySelectorAll(".section-btn").forEach(button => {
+    button.classList.toggle("active",button.dataset.section === section);
+  });
+
+  const icons = {
+    Notes:"📝",
+    Dates:"📅",
+    Orders:"📦",
+    Passwords:"🔑"
+  };
+
+  $("sectionTitle").textContent = icons[section] + " " + section;
+
+  $("dateField").classList.toggle("hidden",section !== "Dates");
+  $("orderFields").classList.toggle("hidden",section !== "Orders");
+  $("passwordFields").classList.toggle("hidden",section !== "Passwords");
+
+  clearForm();
+  renderEntries();
+}
+
+function clearForm() {
+  $("entryForm").reset();
+  editingId = null;
+  $("saveButton").textContent = "Save Encrypted";
+}
+
+function togglePassword() {
+  $("secretPassword").type =
+    $("showPassword").checked ? "text" : "password";
+}
+
+$("entryForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!encryptionKey || !vaultData) return;
+
+  const title = $("entryTitle").value.trim();
+
+  if (!title) {
+    showMessage("Enter a title.",true);
+    return;
+  }
+
+  const item = {
+    id:editingId || crypto.randomUUID(),
+    title:title,
+    details:$("entryDetails").value,
+    date:currentSection === "Dates" ? $("entryDate").value : "",
+    orderId:currentSection === "Orders" ? $("orderId").value : "",
+    tracking:currentSection === "Orders" ? $("tracking").value : "",
+    website:currentSection === "Passwords" ? $("website").value : "",
+    username:currentSection === "Passwords" ? $("username").value : "",
+    secretPassword:currentSection === "Passwords" ? $("secretPassword").value : ""
+  };
+
+  const list = vaultData[currentSection];
+  const index = list.findIndex(x => x.id === item.id);
+
+  if (index >= 0) list[index] = item;
+  else list.unshift(item);
+
+  try {
+    await saveEncrypted();
+    clearForm();
+    renderEntries();
+    showMessage("Saved securely with encryption.");
+  } catch(error) {
+    showMessage("Could not save. Your device storage may be full.",true);
+  }
+});
+
+function addText(parent,tag,text,className) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if (className) element.className = className;
+  parent.appendChild(element);
+  return element;
+}
+
+function renderEntries() {
+  const container = $("entriesList");
+  container.replaceChildren();
+
+  const list = vaultData[currentSection];
+
+  if (!list.length) {
+    addText(container,"p","No saved items yet.","small");
+    return;
+  }
+
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "entry";
+
+    addText(card,"h3",item.title);
+
+    if (item.date) addText(card,"p","Date: " + item.date);
+    if (item.orderId) addText(card,"p","Order ID: " + item.orderId);
+    if (item.tracking) addText(card,"p","Tracking: " + item.tracking);
+    if (item.website) addText(card,"p","Website: " + item.website);
+    if (item.username) addText(card,"p","Username: " + item.username);
+
+    if (item.secretPassword) {
+      const passwordLine = document.createElement("p");
+      passwordLine.textContent = "Password: •••••••• ";
+
+      const reveal = document.createElement("button");
+      reveal.className = "secondary";
+      reveal.textContent = "Show";
+      reveal.type = "button";
+
+      let visible = false;
+
+      reveal.onclick = () => {
+        visible = !visible;
+        passwordLine.textContent =
+          "Password: " + (visible ? item.secretPassword : "••••••••") + " ";
+
+        reveal.textContent = visible ? "Hide" : "Show";
+
+        const copy = document.createElement("button");
+        copy.className = "secondary";
+        copy.type = "button";
+        copy.textContent = "Copy";
+        copy.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(item.secretPassword);
+            showMessage("Copied. Clear your clipboard when finished.");
+            setTimeout(async () => {
+              try {
+                await navigator.clipboard.writeText("");
+              } catch(e) {}
+            },30000);
+          } catch(e) {
+            showMessage("Clipboard access unavailable.",true);
+          }
+        };
+
+        if (visible && !passwordLine.querySelector("button")) {
+          passwordLine.appendChild(copy);
+        } else if (!visible) {
+          const oldCopy = passwordLine.querySelector("button");
+          if (oldCopy) oldCopy.remove();
+        }
+      };
+
+      passwordLine.appendChild(reveal);
+      card.appendChild(passwordLine);
+    }
+
+    if (item.details) addText(card,"p",item.details);
+
+    const edit = document.createElement("button");
+    edit.className = "secondary";
+    edit.textContent = "Edit";
+    edit.onclick = () => editEntry(item);
+
+    const remove = document.createElement("button");
+    remove.className = "danger";
+    remove.textContent = "Delete";
+    remove.style.marginLeft = "8px";
+    remove.onclick = () => deleteEntry(item.id);
+
+    card.append(edit,remove);
+    container.appendChild(card);
+  });
+}
+
+function editEntry(item) {
+  editingId = item.id;
+  $("entryTitle").value = item.title || "";
+  $("entryDetails").value = item.details || "";
+  $("entryDate").value = item.date || "";
+  $("orderId").value = item.orderId || "";
+  $("tracking").value = item.tracking || "";
+  $("website").value = item.website || "";
+  $("username").value = item.username || "";
+  $("secretPassword").value = item.secretPassword || "";
+  $("saveButton").textContent = "Update Encrypted";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function deleteEntry(id) {
+  if (!confirm("Delete this item permanently?")) return;
+
+  vaultData[currentSection] =
+    vaultData[currentSection].filter(item => item.id !== id);
+
+  try {
+    await saveEncrypted();
+    renderEntries();
+    showMessage("Item deleted.");
+  } catch(error) {
+    showMessage("Delete failed.",true);
+  }
+}
+
+$("masterPassword").addEventListener("keydown",event => {
+  if (event.key === "Enter") unlockVault();
+});
+
+if (!localStorage.getItem(STORAGE_KEY)) {
+  $("lockDescription").textContent =
+    "First time? Create a new Master Password for your Safe.";
+} else {
+  $("lockDescription").textContent =
+    "Enter your existing Master Password to unlock your Safe.";
+}
+</script>
+
+</body>
+</html>
