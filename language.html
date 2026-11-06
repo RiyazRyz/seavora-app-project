@@ -100,6 +100,7 @@
   RYZON © 2026
 </footer>
 
+
 <script>
 function continueApp() {
   const language = document.getElementById("language").value;
@@ -110,10 +111,12 @@ function continueApp() {
     return;
   }
 
+  // Save selected language
   localStorage.setItem("ryzonLanguage", language);
-  localStorage.setItem("ryzonNextAction", "home");
 
-  window.location.href = "otp.html";
+  // Continue directly to Home without OTP redirect
+  localStorage.setItem("ryzonNextAction", "home");
+  window.location.href = "home.html";
 }
 </script>
 
