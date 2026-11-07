@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#123b68">
+<meta name="description" content="RYZON - One App, Endless Possibilities!">
 <title>RYZON - Home</title>
 
 <script src="language-system.js"></script>
@@ -36,6 +37,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f1f5fb;
   color: #17345c;
+  padding-bottom: 75px;
 }
 
 header {
@@ -62,6 +64,7 @@ header p {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
+  gap: 8px;
 }
 
 .top button {
@@ -72,6 +75,12 @@ header p {
   color: #17345c;
   font-size: 18px;
   cursor: pointer;
+}
+
+.top button:active,
+.tile:active,
+.bottom-nav button:active {
+  transform: scale(.96);
 }
 
 main {
@@ -96,7 +105,23 @@ h2 { margin-bottom: 8px; }
   border: 1px solid #ccd7e5;
   border-radius: 12px;
   font-size: 16px;
-  margin: 10px 0 22px;
+  margin: 10px 0 10px;
+  background: white;
+  color: #17345c;
+}
+
+.search:focus {
+  outline: 2px solid #2457d6;
+}
+
+#noResults {
+  display: none;
+  text-align: center;
+  color: #718096;
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 10px 0;
 }
 
 .grid {
@@ -115,6 +140,13 @@ h2 { margin-bottom: 8px; }
   text-decoration: none;
   color: #17345c;
   font-weight: bold;
+  transition: transform .18s ease, box-shadow .18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tile:active {
+  transform: scale(.96);
+  box-shadow: 0 4px 12px #0002;
 }
 
 .tile > span:first-child {
@@ -147,7 +179,7 @@ h2 { margin-bottom: 8px; }
 .help {
   position: fixed;
   right: 15px;
-  bottom: 18px;
+  bottom: 88px;
   background: #2457d6;
   color: white;
   border: 0;
@@ -157,6 +189,7 @@ h2 { margin-bottom: 8px; }
   font-size: 25px;
   box-shadow: 0 3px 12px #0003;
   cursor: pointer;
+  z-index: 20;
 }
 
 footer {
@@ -166,11 +199,202 @@ footer {
   font-size: 12px;
 }
 
+/* Connection status */
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #64748b;
+  margin: 0 0 12px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+.status-dot.offline {
+  background: #dc2626;
+}
+
+#offlineBanner {
+  display: none;
+  background: #fff0f0;
+  color: #a51d1d;
+  border: 1px solid #f3b6b6;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 13px;
+}
+
+/* Bottom app navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  border-top: 1px solid #dbe3ee;
+  padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -3px 12px #0000000a;
+}
+
+.bottom-nav button {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: #52647a;
+  font-size: 11px;
+  padding: 5px 2px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+.bottom-nav button span {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+.bottom-nav button.active {
+  color: #2457d6;
+  font-weight: bold;
+}
+
+/* Modal screens */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #071b35a8;
+  padding: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #fff;
+  color: #17345c;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 12px 35px #0004;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-modal {
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 50%;
+  background: #edf2f8;
+  color: #17345c;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px;
+  margin: 8px 0;
+  background: #f4f7fb;
+  color: #17345c;
+  border: 1px solid #e0e7f0;
+  border-radius: 11px;
+  font-size: 14px;
+}
+
+.modal-item small {
+  display: block;
+  color: #718096;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.modal-primary {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: #2457d6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-danger {
+  background: #b42318;
+  color: white;
+}
+
+.modal-note {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#message {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+
+.empty-state {
+  padding: 20px;
+  text-align: center;
+  color: #718096;
+  background: #f4f7fb;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
 @media (max-width: 360px) {
   .top button {
     padding: 9px 10px;
     font-size: 15px;
   }
+
+  .tile {
+    padding: 17px 6px;
+  }
+}
+
+@media (min-width: 700px) {
+  body { padding-bottom: 0; }
+  .bottom-nav { display: none; }
+  .help { bottom: 18px; }
 }
 </style>
 </head>
@@ -183,10 +407,10 @@ footer {
 </header>
 
 <div class="top">
-  <button onclick="showNotice('Notifications')"
+  <button onclick="openModal('notificationsModal')"
     aria-label="Notifications">🔔</button>
 
-  <button onclick="showNotice('Profile')"
+  <button onclick="openProfile()"
     aria-label="Profile">👤</button>
 
   <button
@@ -197,6 +421,15 @@ footer {
 </div>
 
 <main>
+
+  <div class="status-line">
+    <span class="status-dot" id="connectionDot"></span>
+    <span id="connectionText">Checking connection...</span>
+  </div>
+
+  <div id="offlineBanner">
+    ⚠️ You are offline. Some RYZON services may not work.
+  </div>
 
   <section class="welcome">
     <h2 data-ryzon-text="welcome">
@@ -210,10 +443,15 @@ footer {
 
   <input
     class="search"
+    id="serviceSearch"
     type="search"
     placeholder="🔍 Search RYZON..."
     data-ryzon-placeholder="search"
     oninput="searchTiles(this.value)">
+
+  <div id="noResults">
+    🔍 No services found. Try another search.
+  </div>
 
   <div class="scam">
     <p data-ryzon-text="scamAlert">
@@ -290,18 +528,214 @@ footer {
 
   </div>
 
-  <p id="message" style="text-align:center;font-weight:bold;"></p>
+  <p id="message"></p>
 
   <footer>RYZON © 2026</footer>
 
 </main>
 
+<!-- Bottom navigation -->
+<nav class="bottom-nav" aria-label="App navigation">
+  <button class="active" onclick="goHome()">
+    <span>🏠</span>Home
+  </button>
+  <button onclick="openRandomChat()">
+    <span>💬</span>Chat
+  </button>
+  <button onclick="openModal('activityModal')">
+    <span>🕘</span>Activity
+  </button>
+  <button onclick="openModal('settingsModal')">
+    <span>⚙️</span>Settings
+  </button>
+</nav>
+
 <button
   class="help"
-  onclick="showNotice('Help Center')"
+  onclick="openModal('helpModal')"
   aria-label="Help Center">
   🎧
 </button>
+
+<!-- Profile Modal -->
+<div class="modal-backdrop" id="profileModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>👤 My Profile</h2>
+      <button class="close-modal" onclick="closeModal('profileModal')">×</button>
+    </div>
+
+    <div class="modal-item">
+      <b id="profileName">RYZON User</b>
+      <small id="profileEmail">Loading account...</small>
+      <small id="profilePhone"></small>
+    </div>
+
+    <button class="modal-item" onclick="openModal('settingsModal')">
+      ⚙️ Account Settings
+    </button>
+    <button class="modal-item" onclick="openModal('securityModal')">
+      🛡️ Privacy & Security
+    </button>
+    <button class="modal-item" onclick="openModal('activityModal')">
+      🕘 Recent Activity
+    </button>
+    <button class="modal-primary" onclick="logoutUser()">
+      Logout
+    </button>
+  </section>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal-backdrop" id="notificationsModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>🔔 Notifications</h2>
+      <button class="close-modal" onclick="closeModal('notificationsModal')">×</button>
+    </div>
+
+    <div class="empty-state">
+      🔔 No new notifications.
+
+      <p class="modal-note">
+        Friend requests, messages and security alerts will appear here
+        when their notification services are connected.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- Activity Modal -->
+<div class="modal-backdrop" id="activityModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>🕘 Recent Activity</h2>
+      <button class="close-modal" onclick="closeModal('activityModal')">×</button>
+    </div>
+
+    <div id="activityList"></div>
+
+    <button class="modal-item" onclick="clearActivity()">
+      Clear activity history
+    </button>
+  </section>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-backdrop" id="settingsModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>⚙️ Account Settings</h2>
+      <button class="close-modal" onclick="closeModal('settingsModal')">×</button>
+    </div>
+
+    <button class="modal-item" onclick="openProfile()">
+      👤 My Profile
+    </button>
+    <button class="modal-item" onclick="openModal('securityModal')">
+      🛡️ Privacy & Security
+    </button>
+    <button class="modal-item" onclick="openModal('activityModal')">
+      🕘 Recent Activity
+    </button>
+    <button class="modal-item" onclick="openModal('helpModal')">
+      🎧 Help & Feedback
+    </button>
+    <button class="modal-primary" onclick="logoutUser()">
+      Logout
+    </button>
+  </section>
+</div>
+
+<!-- Security Modal -->
+<div class="modal-backdrop" id="securityModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>🛡️ Privacy & Security</h2>
+      <button class="close-modal" onclick="closeModal('securityModal')">×</button>
+    </div>
+
+    <div class="modal-item">
+      <b>Secure Login</b>
+      <small>Your account is authenticated through Firebase.</small>
+    </div>
+
+    <div class="modal-item">
+      <b>Connection</b>
+      <small id="securityConnection">Checking...</small>
+    </div>
+
+    <div class="modal-item">
+      <b>Privacy Policy</b>
+      <small><a href="./privacy.html">Read Privacy Policy</a></small>
+    </div>
+
+    <div class="modal-item">
+      <b>Terms & Conditions</b>
+      <small><a href="./terms.html">Read Terms</a></small>
+    </div>
+
+    <p class="modal-note">
+      Never share your password or OTP with anyone.
+    </p>
+  </section>
+</div>
+
+<!-- Help Modal -->
+<div class="modal-backdrop" id="helpModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>🎧 Help & Feedback</h2>
+      <button class="close-modal" onclick="closeModal('helpModal')">×</button>
+    </div>
+
+    <div class="modal-item">
+      <b>Need help?</b>
+      <small>
+        Help Center and support contact will be connected
+        when the support service is configured.
+      </small>
+    </div>
+
+    <div class="modal-item">
+      <b>Report a Problem</b>
+      <small>
+        Please use the support channel when it becomes available.
+      </small>
+    </div>
+
+    <a class="modal-item" href="./terms.html">Terms & Conditions</a>
+    <a class="modal-item" href="./privacy.html">Privacy Policy</a>
+  </section>
+</div>
+
+<!-- Account Delete Confirmation -->
+<div class="modal-backdrop" id="deleteModal">
+  <section class="modal">
+    <div class="modal-header">
+      <h2>⚠️ Delete Account</h2>
+      <button class="close-modal" onclick="closeModal('deleteModal')">×</button>
+    </div>
+
+    <p>
+      Are you sure you want to delete your RYZON login account?
+    </p>
+
+    <p class="modal-note">
+      This action deletes the Firebase Authentication account.
+      Other stored app data may require separate secure backend cleanup.
+      You may need to sign in again before deletion.
+    </p>
+
+    <label for="deleteConfirm">Type DELETE to confirm:</label>
+    <input id="deleteConfirm" class="search" type="text"
+      placeholder="DELETE" autocomplete="off">
+
+    <button class="modal-primary modal-danger" onclick="confirmDeleteAccount()">
+      Delete Account
+    </button>
+  </section>
+</div>
 
 <script>
 function showNotice(name) {
@@ -311,26 +745,159 @@ function showNotice(name) {
 
 function searchTiles(value) {
   const tiles = document.querySelectorAll(".tile");
+  let visibleCount = 0;
 
   tiles.forEach(tile => {
-    tile.style.display =
-      tile.textContent.toLowerCase().includes(value.toLowerCase())
-        ? "block"
-        : "none";
+    const match = tile.textContent.toLowerCase()
+      .includes(value.toLowerCase());
+
+    tile.style.display = match ? "" : "none";
+
+    if (match) visibleCount++;
+  });
+
+  document.getElementById("noResults").style.display =
+    visibleCount === 0 ? "block" : "none";
+}
+
+function openModal(id) {
+  document.querySelectorAll(".modal-backdrop").forEach(modal => {
+    modal.classList.remove("open");
+  });
+
+  const modal = document.getElementById(id);
+
+  if (modal) modal.classList.add("open");
+
+  if (id === "activityModal") renderActivity();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+}
+
+document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+  backdrop.addEventListener("click", event => {
+    if (event.target === backdrop) {
+      backdrop.classList.remove("open");
+    }
+  });
+});
+
+function goHome() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openRandomChat() {
+  recordActivity("Opened Random Chat");
+  window.location.href = "random-chat.html";
+}
+
+function openProfile() {
+  openModal("profileModal");
+}
+
+function updateConnectionStatus() {
+  const online = navigator.onLine;
+
+  document.getElementById("connectionText").textContent =
+    online ? "Internet connected" : "You are offline";
+
+  document.getElementById("securityConnection").textContent =
+    online ? "Connected" : "Offline";
+
+  document.getElementById("connectionDot")
+    .classList.toggle("offline", !online);
+
+  document.getElementById("offlineBanner").style.display =
+    online ? "none" : "block";
+}
+
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
+updateConnectionStatus();
+
+/* Local activity history */
+function recordActivity(text) {
+  try {
+    const list = JSON.parse(
+      localStorage.getItem("ryzonActivity") || "[]"
+    );
+
+    list.unshift({
+      text,
+      time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+      "ryzonActivity",
+      JSON.stringify(list.slice(0, 30))
+    );
+  } catch (error) {
+    console.warn("Activity storage unavailable", error);
+  }
+}
+
+function renderActivity() {
+  const container = document.getElementById("activityList");
+
+  let list = [];
+
+  try {
+    list = JSON.parse(
+      localStorage.getItem("ryzonActivity") || "[]"
+    );
+  } catch (error) {
+    list = [];
+  }
+
+  if (!list.length) {
+    container.innerHTML =
+      '<div class="empty-state">No recent activity yet.</div>';
+    return;
+  }
+
+  container.replaceChildren();
+
+  list.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "modal-item";
+
+    const title = document.createElement("b");
+    title.textContent = item.text;
+
+    const time = document.createElement("small");
+    time.textContent = item.time;
+
+    row.append(title, time);
+    container.appendChild(row);
   });
 }
+
+function clearActivity() {
+  localStorage.removeItem("ryzonActivity");
+  renderActivity();
+}
+
+/* Track existing service navigation */
+document.querySelectorAll(".tile").forEach(tile => {
+  tile.addEventListener("click", () => {
+    recordActivity("Opened " + tile.textContent.trim());
+  });
+});
 </script>
 
 <script type="module">
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
   getAuth,
   onAuthStateChanged,
-  signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+  signOut,
+  deleteUser
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -345,7 +912,54 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, async (user) => {
+let currentUser = null;
+
+const $ = id => document.getElementById(id);
+
+function showHomeMessage(text, success = false) {
+  const message = $("message");
+  message.textContent = text;
+  message.style.color = success ? "#16803c" : "#b42318";
+}
+
+function showProfile(user) {
+  $("profileName").textContent =
+    user.displayName || "RYZON User";
+
+  $("profileEmail").textContent =
+    user.email || "Phone login account";
+
+  $("profilePhone").textContent =
+    user.phoneNumber || "";
+}
+
+function hasAcceptedLogin(user) {
+  const providers = user.providerData || [];
+
+  const hasPhone = providers.some(
+    provider => provider.providerId === "phone"
+  );
+
+  const hasGoogle = providers.some(
+    provider => provider.providerId === "google.com"
+  );
+
+  const hasVerifiedEmail =
+    Boolean(user.email && user.emailVerified);
+
+  /*
+    Allow:
+    - Verified Email login
+    - Google login
+    - Phone OTP login
+
+    Sign Up with Email + Phone is handled in otp.html.
+  */
+
+  return hasVerifiedEmail || hasGoogle || hasPhone;
+}
+
+onAuthStateChanged(auth, async user => {
   if (!user) {
     window.location.replace("otp.html");
     return;
@@ -354,20 +968,88 @@ onAuthStateChanged(auth, async (user) => {
   try {
     await user.reload();
 
-    if (!user.email || !user.emailVerified) {
+    const freshUser = auth.currentUser;
+
+    if (!freshUser || !hasAcceptedLogin(freshUser)) {
       await signOut(auth);
       window.location.replace("otp.html");
       return;
     }
 
+    currentUser = freshUser;
+
+    showProfile(currentUser);
+
+    recordActivity("Logged in to RYZON");
+
     document.documentElement.classList.add("auth-ready");
 
   } catch (error) {
     console.error("Authentication check failed:", error);
-    await signOut(auth);
+
+    try {
+      await signOut(auth);
+    } catch (signOutError) {
+      console.error(signOutError);
+    }
+
     window.location.replace("otp.html");
   }
 });
+
+window.logoutUser = async function() {
+  try {
+    await signOut(auth);
+    sessionStorage.removeItem("ryzonNextAction");
+    window.location.replace("otp.html");
+  } catch (error) {
+    console.error(error);
+    showHomeMessage("Logout failed. Please try again.");
+  }
+};
+
+window.confirmDeleteAccount = async function() {
+  const confirmation = $("deleteConfirm").value.trim();
+
+  if (confirmation !== "DELETE") {
+    showHomeMessage("Please type DELETE to confirm.");
+    return;
+  }
+
+  if (!currentUser) {
+    showHomeMessage("Please login again.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Final confirmation: Delete this Firebase login account?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    await deleteUser(currentUser);
+
+    localStorage.removeItem("ryzonActivity");
+    sessionStorage.clear();
+
+    window.location.replace("otp.html");
+
+  } catch (error) {
+    console.error("Account deletion failed:", error);
+
+    if (error.code === "auth/requires-recent-login") {
+      showHomeMessage(
+        "For security, please login again before deleting your account."
+      );
+    } else {
+      showHomeMessage(
+        "Account deletion failed: " +
+        (error.message || "Please try again.")
+      );
+    }
+  }
+};
 </script>
 
 </body>
