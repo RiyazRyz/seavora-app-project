@@ -99,10 +99,17 @@ button:disabled{opacity:.55;cursor:not-allowed}
 #recaptcha-container{margin-top:12px;overflow:hidden}
 
 .password-row{position:relative}
-.password-row input{padding-right:55px}
+.password-row input{padding-right:65px}
+
 .password-toggle{
- position:absolute;right:5px;top:8px;width:45px;height:43px;
- padding:5px;margin:0;background:#dceaf5;color:#123f69;font-size:18px
+ position:absolute;right:5px;top:8px;width:auto;height:43px;
+ min-width:52px;padding:5px 8px;margin:0;
+ background:transparent;color:#087fbd;font-size:13px;
+ font-weight:bold;border:0
+}
+
+.password-toggle:hover{
+ color:#075d8b;
 }
 
 .divider{
@@ -142,7 +149,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
   <div class="password-row">
    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
-   <button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">👁</button>
+   <button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button>
   </div>
 
   <div id="signupFields">
@@ -196,7 +203,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
  <div id="message"></div>
 
  <div class="footer-links">
-  <a href="./home.html">Home</a>
   <a href="./terms.html">Terms & Conditions</a>
   <a href="./privacy.html">Privacy Policy</a>
  </div>
@@ -389,11 +395,16 @@ function selectLoginMethod(method){
 $("emailMethodTab").addEventListener("click",()=>selectLoginMethod("email"));
 $("phoneMethodTab").addEventListener("click",()=>selectLoginMethod("phone"));
 
+// Simple Show / Hide Password
 $("togglePassword").addEventListener("click",()=>{
  const field=$("password");
  const show=field.type==="password";
+
  field.type=show?"text":"password";
- $("togglePassword").textContent=show?"🙈":"👁";
+ $("togglePassword").textContent=show?"Hide":"Show";
+ $("togglePassword").setAttribute(
+  "aria-label",show?"Hide password":"Show password"
+ );
 });
 
 // Sign Up
