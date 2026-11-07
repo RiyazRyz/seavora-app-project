@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,7 +148,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <button id="mobileTab" type="button">Mobile OTP</button>
  </div>
 
- <!-- Email Login / Sign Up -->
  <section id="emailSection">
   <div id="emailFields">
    <input id="email" type="email" placeholder="Email Address" autocomplete="email">
@@ -176,7 +176,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <span id="forgotLink" class="small-link">Forgot Password?</span>
  </section>
 
- <!-- Mobile Login / Sign Up -->
  <section id="phoneSection">
   <p><b id="phoneTitle">Mobile OTP Login</b></p>
   <p class="description" id="phoneDescription">
@@ -197,7 +196,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
   </div>
  </section>
 
- <!-- Email Verification -->
  <section id="verifiedSection">
   <p id="verificationText" class="description">
    உங்கள் Email-ஐத் திறந்து Verification Link-ஐ அழுத்துங்கள்.
@@ -279,25 +277,28 @@ let otpInterval=null;
 let otpExpired=false;
 let currentPhone="";
 
-const nextAction=sessionStorage.getItem("ryzonNextAction");
-const isRandomChat=nextAction==="randomChat";
+/* Phone library is optional. Its failure must not stop the page. */
+let phonePicker=null;
 
-const countryOptions={
- initialCountry:"auto",
- separateDialCode:true,
- nationalMode:true,
- geoIpLookup:function(callback){
-  fetch("https://ipapi.co/json/")
-   .then(response=>response.json())
-   .then(data=>{
-    callback(data?.country_code?.toLowerCase()||"in");
-   })
-   .catch(()=>callback("in"));
- },
- loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
-};
-
-const phonePicker=window.intlTelInput($("loginPhone"),countryOptions);
+try{
+ if(typeof window.intlTelInput==="function"){
+  phonePicker=window.intlTelInput($("loginPhone"),{
+   initialCountry:"auto",
+   separateDialCode:true,
+   nationalMode:true,
+   geoIpLookup:function(callback){
+    fetch("https://ipapi.co/json/")
+     .then(response=>response.json())
+     .then(data=>callback(data?.country_code?.toLowerCase()||"in"))
+     .catch(()=>callback("in"));
+   },
+   loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
+  });
+ }
+}catch(error){
+ console.warn("Phone input library unavailable:",error);
+ phonePicker=null;
+}
 
 function message(text,success=false){
  $("message").textContent=text;
@@ -346,17 +347,51 @@ async function setLoginPersistence(){
  );
 }
 
+/* Phone number validation with fallback if library fails */
 async function validPhone(){
- await phonePicker.promise;
+ const raw=$("loginPhone").value.trim();
 
- if(!phonePicker.isValidNumber()){
+ if(!raw){
   invalid($("loginPhone"));
-  $("loginPhone").focus();
-  throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
+  throw new Error("Mobile Number உள்ளிடுங்கள்.");
+ }
+
+ if(phonePicker){
+  try{
+   await phonePicker.promise;
+
+   if(!phonePicker.isValidNumber()){
+    invalid($("loginPhone"));
+    throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
+   }
+
+   valid($("loginPhone"));
+   return phonePicker.getNumber();
+  }catch(error){
+   if(error.message)throw error;
+   console.warn("Phone utility unavailable:",error);
+  }
+ }
+
+ let cleaned=raw.replace(/[^\d+]/g,"");
+
+ if(/^\d{10}$/.test(cleaned)){
+  cleaned="+91"+cleaned;
+ }else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91")){
+  cleaned="+"+cleaned;
+ }else if(/^\d{11}$/.test(cleaned)&&cleaned.startsWith("1")){
+  cleaned="+"+cleaned;
+ }else if(/^\d{8,15}$/.test(cleaned)){
+  cleaned="+"+cleaned;
+ }
+
+ if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){
+  invalid($("loginPhone"));
+  throw new Error("Country Code உடன் சரியான Mobile Number உள்ளிடுங்கள். உதாரணம்: +919876543210");
  }
 
  valid($("loginPhone"));
- return phonePicker.getNumber();
+ return cleaned;
 }
 
 function showLastLogin(){
@@ -840,9 +875,6 @@ async function sendOtp(){
   await setLoginPersistence();
   await createRecaptcha();
 
-  // Firebase Phone Authentication:
-  // New phone numbers create accounts.
-  // Existing phone numbers sign in to their accounts.
   confirmationResult=await signInWithPhoneNumber(
    auth,
    phone,
