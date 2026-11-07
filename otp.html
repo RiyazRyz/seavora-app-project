@@ -7,11 +7,8 @@
   <meta name="theme-color" content="#071b35">
   <title>RYZON - Secure Login</title>
 
-  <!-- Country Picker CSS -->
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
-
-  <!-- Country Picker JS -->
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
   <style>
@@ -40,29 +37,42 @@
 
     h1 {
       text-align: center;
-      margin: 0 0 8px;
+      margin: 0;
       color: #42c8ff;
-      font-size: 32px;
+      font-size: 34px;
+      letter-spacing: 2px;
+    }
+
+    .tagline {
+      text-align: center;
+      color: #65d0ff;
+      font-size: 13px;
+      margin-top: 5px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
       text-align: center;
       color: #c6d8e8;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
+      font-size: 14px;
     }
 
-    .tabs {
+    .tabs, .method-tabs {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .tabs button {
+    .tabs button, .method-tabs button {
       flex: 1;
       background: #254664;
+      margin-top: 0;
+      padding: 12px 8px;
+      font-size: 14px;
     }
 
-    .tabs button.active {
+    .tabs button.active, .method-tabs button.active {
       background: #078bd0;
     }
 
@@ -77,7 +87,6 @@
       font-size: 15px;
     }
 
-    /* Country Picker */
     .iti {
       width: 100%;
       margin: 8px 0;
@@ -122,6 +131,23 @@
       color: #65d0ff;
       cursor: pointer;
       text-decoration: underline;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      padding-top: 15px;
+      border-top: 1px solid #45617b;
+    }
+
+    .footer-links a {
+      color: #65d0ff;
+      font-size: 13px;
+      text-decoration: underline;
     }
 
     #message {
@@ -132,6 +158,7 @@
       line-height: 1.5;
       overflow-wrap: anywhere;
       display: none;
+      font-size: 14px;
     }
 
     #phoneSection, #otpSection, #verifiedSection {
@@ -151,27 +178,52 @@
       margin-top: 12px;
       overflow: hidden;
     }
+
+    .method-description {
+      color: #c6d8e8;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 360px) {
+      .container { padding: 20px; }
+      .tabs button, .method-tabs button { font-size: 12px; }
+    }
   </style>
 </head>
 
 <body>
   <main class="container">
+
     <h1>RYZON</h1>
+    <div class="tagline">One App, Endless Possibilities!</div>
     <div class="subtitle">Secure Login & Account Verification</div>
 
-    <div class="tabs">
+    <div class="tabs" id="accountTabs">
       <button id="loginTab" class="active" type="button">Login</button>
       <button id="signupTab" type="button">Sign Up</button>
     </div>
 
-    <section id="authSection">
-      <input id="email" type="email" placeholder="Email Address"
-        autocomplete="email">
+    <!-- Login Method Selection -->
+    <section id="loginMethods">
+      <div class="method-tabs">
+        <button id="emailMethodTab" type="button">Email + Password</button>
+        <button id="phoneMethodTab" type="button">Mobile OTP</button>
+      </div>
+    </section>
 
-      <input id="password" type="password" placeholder="Password"
-        autocomplete="current-password">
+    <!-- Email Login / Sign Up -->
+    <section id="authSection">
+
+      <input id="email" type="email"
+        placeholder="Email Address" autocomplete="email">
+
+      <input id="password" type="password"
+        placeholder="Password" autocomplete="current-password">
 
       <div id="signupFields" style="display:none">
+
         <input id="confirmPassword" type="password"
           placeholder="Confirm Password" autocomplete="new-password">
 
@@ -179,8 +231,9 @@
           placeholder="Mobile Number" autocomplete="tel">
 
         <p class="note">
-          Sign Up செய்த பிறகு Email-ஐ verify செய்ய வேண்டும்.
-          அதன்பிறகு Mobile OTP சரிபார்க்கப்படும்.
+          Sign Up செய்த பிறகு Email-ஐ Verify செய்ய வேண்டும்.
+          அதன்பிறகு Mobile OTP மூலம் உங்கள் Account-ல்
+          Mobile Number இணைக்கப்படும்.
         </p>
       </div>
 
@@ -191,18 +244,25 @@
       </span>
     </section>
 
+    <!-- Email Verification -->
     <section id="verifiedSection">
-      <p class="note">
+      <p class="note" id="verificationText">
         உங்கள் Email-க்கு Verification Link அனுப்பப்பட்டுள்ளது.
         Email-ஐத் திறந்து Verify செய்த பிறகு கீழே அழுத்துங்கள்.
       </p>
+
       <button id="checkEmailButton" type="button">
         I Have Verified My Email
       </button>
     </section>
 
+    <!-- Phone Login / Sign Up Phone Linking -->
     <section id="phoneSection">
-      <p><b>Mobile Number Verification</b></p>
+      <p><b id="phoneTitle">Mobile OTP Login</b></p>
+
+      <p class="method-description" id="phoneDescription">
+        உங்கள் Mobile Number உள்ளிட்டு OTP பெறுங்கள்.
+      </p>
 
       <input id="loginPhone" type="tel"
         placeholder="Mobile Number" autocomplete="tel">
@@ -217,6 +277,7 @@
       <button id="sendOtpButton" type="button">Send OTP</button>
     </section>
 
+    <!-- OTP Verification -->
     <section id="otpSection">
       <input id="otpCode" type="text" inputmode="numeric"
         placeholder="Enter SMS OTP" maxlength="6">
@@ -229,6 +290,12 @@
     </section>
 
     <div id="message"></div>
+
+    <div class="footer-links">
+      <a href="./home.html">Home</a>
+      <a href="./terms.html">Terms & Conditions</a>
+    </div>
+
   </main>
 
   <script type="module">
@@ -244,7 +311,8 @@
       reload,
       signOut,
       RecaptchaVerifier,
-      linkWithPhoneNumber
+      linkWithPhoneNumber,
+      signInWithPhoneNumber
     } from
       "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -262,12 +330,29 @@
     const auth = getAuth(app);
 
     let mode = "login";
+    let loginMethod = "email";
     let confirmationResult = null;
     let recaptchaVerifier = null;
 
     const $ = id => document.getElementById(id);
 
-    // Automatic Country Detection
+    // Detect which login page the user came from
+    const nextAction = sessionStorage.getItem("ryzonNextAction");
+    const isRandomChat = nextAction === "randomChat";
+
+    // Main App: Email first
+    // Random Chat: Mobile OTP first
+    if (isRandomChat) {
+      loginMethod = "phone";
+      $("phoneMethodTab").classList.add("active");
+      $("emailMethodTab").classList.remove("active");
+    } else {
+      loginMethod = "email";
+      $("emailMethodTab").classList.add("active");
+      $("phoneMethodTab").classList.remove("active");
+    }
+
+    // Country Picker Settings
     const countryOptions = {
       initialCountry: "auto",
       separateDialCode: true,
@@ -289,13 +374,11 @@
       )
     };
 
-    // Country Picker for Sign Up
     const signupPhonePicker = window.intlTelInput(
       $("phone"),
       { ...countryOptions }
     );
 
-    // Country Picker for OTP Verification
     const loginPhonePicker = window.intlTelInput(
       $("loginPhone"),
       { ...countryOptions }
@@ -368,88 +451,56 @@
         "auth/invalid-verification-code":
           "OTP தவறாக உள்ளது.",
         "auth/operation-not-allowed":
-          "இந்த நாட்டிற்கு Firebase SMS Region Policy-ல் அனுமதி வழங்கப்படவில்லை."
+          "Firebase Authentication-ல் இந்த Phone Login முறை அனுமதிக்கப்படவில்லை.",
+        "auth/captcha-check-failed":
+          "reCAPTCHA சரிபார்ப்பு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்."
       };
 
-      showMessage(messages[code] || (error?.message || "ஏதோ பிழை ஏற்பட்டுள்ளது."));
+      showMessage(
+        messages[code] || error?.message || "ஏதோ பிழை ஏற்பட்டுள்ளது."
+      );
+
       console.error(error);
     }
 
-    function showPhoneSection() {
-      $("authSection").style.display = "none";
-      $("verifiedSection").style.display = "none";
-      $("phoneSection").style.display = "block";
-      $("otpSection").style.display = "none";
-    }
-
-    function showEmailVerification() {
+    function hideAllSections() {
       $("authSection").style.display = "none";
       $("phoneSection").style.display = "none";
       $("otpSection").style.display = "none";
+      $("verifiedSection").style.display = "none";
+    }
+
+    function showAuthSection() {
+      hideAllSections();
+      $("authSection").style.display = "block";
+      $("loginMethods").style.display =
+        mode === "login" ? "block" : "none";
+    }
+
+    function showPhoneSection() {
+      hideAllSections();
+      $("phoneSection").style.display = "block";
+      $("loginMethods").style.display =
+        mode === "login" ? "block" : "none";
+    }
+
+    function showEmailVerification() {
+      hideAllSections();
       $("verifiedSection").style.display = "block";
-    }
-
-    function getPhoneProvider(user) {
-      return user.providerData.find(p => p.providerId === "phone");
-    }
-
-    async function continueSecurityCheck() {
-      const user = auth.currentUser;
-
-      if (!user) {
-        showMessage("முதலில் Login செய்யுங்கள்.");
-        return;
-      }
-
-      await reload(user);
-
-      if (!user.emailVerified) {
-        await sendEmailVerification(user);
-        showEmailVerification();
-        showMessage(
-          "Email Verification Link மீண்டும் அனுப்பப்பட்டுள்ளது.",
-          true
-        );
-        return;
-      }
-
-      const linkedPhone = getPhoneProvider(user);
-
-      if (linkedPhone) {
-        const entered = $("loginPhone").value.trim()
-          ? await getValidPhone(loginPhonePicker)
-          : "";
-
-        if (entered && entered !== linkedPhone.phoneNumber) {
-          showMessage(
-            "இந்த Account-ல் ஏற்கெனவே வேறு Mobile Number இணைக்கப்பட்டுள்ளது."
-          );
-          showPhoneSection();
-          return;
-        }
-
-        goToDestination();
-        return;
-      }
-
-      showPhoneSection();
-      showMessage(
-        "Email சரிபார்க்கப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.",
-        true
-      );
+      $("loginMethods").style.display = "none";
     }
 
     function goToDestination() {
-      const nextAction = sessionStorage.getItem("ryzonNextAction");
+      const action = sessionStorage.getItem("ryzonNextAction");
       sessionStorage.removeItem("ryzonNextAction");
 
       const destination =
-        nextAction === "randomChat"
+        action === "randomChat"
           ? "random-chat.html"
           : "home.html";
 
       showMessage(
-        "Verification வெற்றிகரமாக முடிந்தது. செல்கிறது...",
+        "Login வெற்றிகரமாக முடிந்தது. செல்கிறது...",
         true
       );
 
@@ -458,26 +509,80 @@
       }, 700);
     }
 
+    // Login Method Selection
+    function selectLoginMethod(method) {
+      if (mode !== "login") return;
+
+      loginMethod = method;
+      confirmationResult = null;
+
+      $("emailMethodTab").classList.toggle(
+        "active", method === "email"
+      );
+
+      $("phoneMethodTab").classList.toggle(
+        "active", method === "phone"
+      );
+
+      $("otpSection").style.display = "none";
+      hideMessage();
+
+      if (method === "email") {
+        showAuthSection();
+      } else {
+        $("phoneTitle").textContent = "Mobile OTP Login";
+        $("phoneDescription").textContent =
+          "உங்கள் Mobile Number உள்ளிட்டு OTP பெற்று Login செய்யுங்கள்.";
+        $("sendOtpButton").textContent = "Send OTP";
+        showPhoneSection();
+      }
+    }
+
+    $("emailMethodTab").addEventListener("click", () => {
+      selectLoginMethod("email");
+    });
+
+    $("phoneMethodTab").addEventListener("click", () => {
+      selectLoginMethod("phone");
+    });
+
+    // Login Tab
     $("loginTab").addEventListener("click", () => {
       mode = "login";
+
       $("loginTab").classList.add("active");
       $("signupTab").classList.remove("active");
+
       $("signupFields").style.display = "none";
       $("mainButton").textContent = "Login";
       $("forgotLink").style.display = "block";
+
+      $("loginMethods").style.display = "block";
+      $("accountTabs").style.display = "flex";
+
       hideMessage();
+      selectLoginMethod(loginMethod);
     });
 
+    // Sign Up Tab
     $("signupTab").addEventListener("click", () => {
       mode = "signup";
+
       $("signupTab").classList.add("active");
       $("loginTab").classList.remove("active");
+
       $("signupFields").style.display = "block";
       $("mainButton").textContent = "Create Account";
       $("forgotLink").style.display = "none";
+
+      $("loginMethods").style.display = "none";
+      $("accountTabs").style.display = "flex";
+
       hideMessage();
+      showAuthSection();
     });
 
+    // Email Login and Sign Up
     $("mainButton").addEventListener("click", async () => {
       const button = $("mainButton");
       const email = $("email").value.trim();
@@ -511,10 +616,13 @@
 
           loginPhonePicker.setNumber(phone);
 
+          $("verificationText").textContent =
+            "உங்கள் Email-க்கு Verification Link அனுப்பப்பட்டுள்ளது. Email-ஐ Verify செய்த பிறகு கீழே அழுத்துங்கள். அதன் பிறகு Mobile OTP சரிபார்க்கப்படும்.";
+
           showEmailVerification();
 
           showMessage(
-            "Account உருவாக்கப்பட்டது. Email-ஐ Verify செய்து, பிறகு கீழே உள்ள பொத்தானை அழுத்துங்கள்.",
+            "Account உருவாக்கப்பட்டது. Email-ஐ Verify செய்யுங்கள்.",
             true
           );
 
@@ -523,13 +631,25 @@
             auth, email, password
           );
 
-          const linkedPhone = getPhoneProvider(result.user);
+          await reload(result.user);
 
-          if (linkedPhone) {
-            loginPhonePicker.setNumber(linkedPhone.phoneNumber);
+          if (!result.user.emailVerified) {
+            await sendEmailVerification(result.user);
+
+            $("verificationText").textContent =
+              "உங்கள் Email இன்னும் Verify செய்யப்படவில்லை. Email-ல் உள்ள Verification Link-ஐ அழுத்திய பிறகு கீழே அழுத்துங்கள்.";
+
+            showEmailVerification();
+
+            showMessage(
+              "Email Verification Link அனுப்பப்பட்டுள்ளது.",
+              true
+            );
+            return;
           }
 
-          await continueSecurityCheck();
+          // Email Login is independent of Phone OTP
+          goToDestination();
         }
 
       } catch (error) {
@@ -539,6 +659,7 @@
       }
     });
 
+    // Email Verification Check
     $("checkEmailButton").addEventListener("click", async () => {
       const button = $("checkEmailButton");
       setBusy(button, true);
@@ -546,7 +667,7 @@
       try {
         if (!auth.currentUser) {
           showMessage(
-            "Email Verify செய்த பிறகு மீண்டும் Login செய்யுங்கள்."
+            "மீண்டும் Login செய்து Email Verification சரிபார்க்கவும்."
           );
           return;
         }
@@ -560,7 +681,23 @@
           return;
         }
 
-        await continueSecurityCheck();
+        if (mode === "signup") {
+          $("phoneTitle").textContent = "Mobile Number Verification";
+          $("phoneDescription").textContent =
+            "Sign Up-ல் கொடுத்த Mobile Number-க்கு OTP அனுப்பி Account-ல் இணைக்கவும்.";
+
+          $("sendOtpButton").textContent = "Send OTP";
+          $("loginMethods").style.display = "none";
+
+          showPhoneSection();
+
+          showMessage(
+            "Email Verify செய்யப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.",
+            true
+          );
+        } else {
+          goToDestination();
+        }
 
       } catch (error) {
         friendlyError(error);
@@ -569,8 +706,32 @@
       }
     });
 
+    // Create or Reset reCAPTCHA
+    async function createRecaptcha() {
+      if (recaptchaVerifier) {
+        try {
+          recaptchaVerifier.clear();
+        } catch (error) {
+          console.warn(error);
+        }
+        recaptchaVerifier = null;
+      }
+
+      $("recaptcha-container").innerHTML = "";
+
+      recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        { size: "normal" }
+      );
+
+      await recaptchaVerifier.render();
+    }
+
+    // Send OTP
     async function sendPhoneOtp() {
       const button = $("sendOtpButton");
+      hideMessage();
 
       let phone;
 
@@ -581,45 +742,33 @@
         return;
       }
 
-      if (!auth.currentUser || !auth.currentUser.emailVerified) {
-        showMessage("முதலில் Email Verification முடிக்க வேண்டும்.");
-        return;
-      }
-
-      const linkedPhone = getPhoneProvider(auth.currentUser);
-
-      if (linkedPhone) {
-        if (linkedPhone.phoneNumber === phone) {
-          goToDestination();
-        } else {
-          showMessage(
-            "இந்த Account-ல் வேறு Mobile Number ஏற்கெனவே இணைக்கப்பட்டுள்ளது."
-          );
+      // Sign Up: link phone to existing email account
+      if (mode === "signup") {
+        if (!auth.currentUser || !auth.currentUser.emailVerified) {
+          showMessage("முதலில் Email Verification முடிக்க வேண்டும்.");
+          return;
         }
-        return;
       }
 
       setBusy(button, true);
 
       try {
-        if (recaptchaVerifier) {
-          recaptchaVerifier.clear();
-          recaptchaVerifier = null;
+        await createRecaptcha();
+
+        if (mode === "signup") {
+          confirmationResult = await linkWithPhoneNumber(
+            auth.currentUser,
+            phone,
+            recaptchaVerifier
+          );
+        } else {
+          // Independent Phone OTP Login
+          confirmationResult = await signInWithPhoneNumber(
+            auth,
+            phone,
+            recaptchaVerifier
+          );
         }
-
-        recaptchaVerifier = new RecaptchaVerifier(
-          auth,
-          "recaptcha-container",
-          { size: "normal" }
-        );
-
-        await recaptchaVerifier.render();
-
-        confirmationResult = await linkWithPhoneNumber(
-          auth.currentUser,
-          phone,
-          recaptchaVerifier
-        );
 
         $("otpSection").style.display = "block";
 
@@ -636,8 +785,10 @@
     }
 
     $("sendOtpButton").addEventListener("click", sendPhoneOtp);
+
     $("resendOtpButton").addEventListener("click", sendPhoneOtp);
 
+    // Verify OTP
     $("verifyOtpButton").addEventListener("click", async () => {
       const button = $("verifyOtpButton");
       const code = $("otpCode").value.trim();
@@ -655,17 +806,24 @@
       setBusy(button, true);
 
       try {
-        await confirmationResult.confirm(code);
+        const result = await confirmationResult.confirm(code);
         confirmationResult = null;
 
-        await reload(auth.currentUser);
+        if (mode === "signup") {
+          await reload(result.user);
 
-        if (!getPhoneProvider(auth.currentUser)) {
-          throw new Error(
-            "Mobile Number இணைக்கப்படவில்லை. மீண்டும் முயற்சிக்கவும்."
+          const linkedPhone = result.user.providerData.find(
+            p => p.providerId === "phone"
           );
+
+          if (!linkedPhone) {
+            throw new Error(
+              "Mobile Number இணைக்கப்படவில்லை. மீண்டும் முயற்சிக்கவும்."
+            );
+          }
         }
 
+        // Phone Login or completed Sign Up
         goToDestination();
 
       } catch (error) {
@@ -675,6 +833,7 @@
       }
     });
 
+    // Forgot Password
     $("forgotLink").addEventListener("click", async () => {
       const email = $("email").value.trim();
 
@@ -687,14 +846,33 @@
 
       try {
         await sendPasswordResetEmail(auth, email);
+
         showMessage(
           "Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",
           true
         );
+
       } catch (error) {
         friendlyError(error);
       }
     });
+
+    // Initial Page Setup
+    $("accountTabs").style.display = "flex";
+    $("loginMethods").style.display = "block";
+
+    if (isRandomChat) {
+      $("phoneMethodTab").classList.add("active");
+      $("emailMethodTab").classList.remove("active");
+      $("phoneTitle").textContent = "Random Chat - Mobile OTP Login";
+      $("phoneDescription").textContent =
+        "Random Chat பயன்படுத்த Mobile Number உள்ளிட்டு OTP மூலம் Login செய்யுங்கள்.";
+      showPhoneSection();
+    } else {
+      $("emailMethodTab").classList.add("active");
+      $("phoneMethodTab").classList.remove("active");
+      showAuthSection();
+    }
 
   </script>
 </body>
