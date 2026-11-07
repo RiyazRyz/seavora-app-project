@@ -21,8 +21,7 @@ body{
 
 .container{
  width:100%;max-width:420px;padding:28px;border-radius:22px;
- background:#102b49;box-shadow:0 12px 40px #0006;
- min-height:650px;
+ background:#102b49;box-shadow:0 12px 40px #0006
 }
 
 .logo{
@@ -88,13 +87,8 @@ button:disabled{opacity:.55;cursor:not-allowed}
  display:none;font-size:14px
 }
 
-#phoneSection,#verifiedSection{
+#phoneSection,#otpSection,#verifiedSection{
  display:none;margin-top:18px;padding-top:15px;
- border-top:1px solid #45617b
-}
-
-#otpSection{
- display:none;margin-top:15px;padding-top:12px;
  border-top:1px solid #45617b
 }
 
@@ -114,13 +108,14 @@ button:disabled{opacity:.55;cursor:not-allowed}
  font-weight:bold;border:0
 }
 
-.password-toggle:hover{color:#075d8b}
+.password-toggle:hover{
+ color:#075d8b;
+}
 
 .divider{
  display:flex;align-items:center;gap:10px;margin:18px 0;
  color:#a9bfd2;font-size:12px
 }
-
 .divider:before,.divider:after{
  content:"";height:1px;background:#45617b;flex:1
 }
@@ -129,25 +124,9 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
 #signupFields{display:none}
 
-#emailFields{min-height:180px}
-
-#authSection{min-height:350px}
-
-#otpTimer{
- color:#65d0ff;font-size:13px;line-height:1.5;
- margin:10px 0;text-align:center
-}
-
-#resendOtpButton{margin-top:8px}
-
 @media(max-width:360px){
- .container{padding:20px;min-height:620px}
+ .container{padding:20px}
  .method-tabs button{font-size:12px}
-}
-
-@media(max-height:720px){
- body{align-items:flex-start}
- .container{min-height:0}
 }
 </style>
 </head>
@@ -162,27 +141,24 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
  <div class="method-tabs" id="methodTabs">
   <button id="emailMethodTab" class="active" type="button">Email</button>
-  <button id="phoneMethodTab" type="button">Mobile OTP</button>
+  <button id="phoneMethodTab" type="button">Mobile</button>
  </div>
 
  <section id="authSection">
+  <input id="email" type="email" placeholder="Email Address" autocomplete="email">
 
-  <div id="emailFields">
-   <input id="email" type="email" placeholder="Email Address" autocomplete="email">
-
-   <div class="password-row">
-    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
-    <button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button>
-   </div>
-
-   <div id="signupFields">
-    <input id="confirmPassword" type="password" placeholder="Confirm Password" autocomplete="new-password">
-    <input id="phone" type="tel" placeholder="Mobile Number" autocomplete="tel">
-    <p class="note">Sign Up செய்ய Email Verification மற்றும் Mobile OTP Verification இரண்டும் தேவை.</p>
-   </div>
-
-   <button id="mainButton" type="button">Sign In</button>
+  <div class="password-row">
+   <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+   <button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button>
   </div>
+
+  <div id="signupFields">
+   <input id="confirmPassword" type="password" placeholder="Confirm Password" autocomplete="new-password">
+   <input id="phone" type="tel" placeholder="Mobile Number" autocomplete="tel">
+   <p class="note">Sign Up செய்ய Email Verification மற்றும் Mobile OTP Verification இரண்டும் தேவை.</p>
+  </div>
+
+  <button id="mainButton" type="button">Sign In</button>
 
   <div class="divider">OR</div>
 
@@ -190,12 +166,18 @@ button:disabled{opacity:.55;cursor:not-allowed}
    <span>G</span> Continue with Google
   </button>
 
-  <span id="forgotLink" class="small-link">Forgot Password?</span>
-
   <div class="bottom-text" id="accountPrompt">
    Don't have an account? <a href="#" id="signupLink" style="color:#65d0ff">Sign Up</a>
   </div>
 
+  <span id="forgotLink" class="small-link">Forgot Password?</span>
+ </section>
+
+ <section id="verifiedSection">
+  <p class="note" id="verificationText">
+   உங்கள் Email-ஐத் திறந்து Verification Link-ஐ அழுத்துங்கள்.
+  </p>
+  <button id="checkEmailButton" type="button">I Have Verified My Email</button>
  </section>
 
  <section id="phoneSection">
@@ -210,24 +192,12 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
   <div id="recaptcha-container"></div>
   <button id="sendOtpButton" type="button">Send OTP</button>
-
-  <section id="otpSection">
-   <input id="otpCode" type="text" inputmode="numeric" placeholder="Enter SMS OTP" maxlength="6">
-
-   <p id="otpTimer"></p>
-
-   <button id="verifyOtpButton" type="button">Verify OTP</button>
-   <button id="resendOtpButton" class="secondary" type="button" disabled>
-    Resend OTP in 30s
-   </button>
-  </section>
  </section>
 
- <section id="verifiedSection">
-  <p class="note" id="verificationText">
-   உங்கள் Email-ஐத் திறந்து Verification Link-ஐ அழுத்துங்கள்.
-  </p>
-  <button id="checkEmailButton" type="button">I Have Verified My Email</button>
+ <section id="otpSection">
+  <input id="otpCode" type="text" inputmode="numeric" placeholder="Enter SMS OTP" maxlength="6">
+  <button id="verifyOtpButton" type="button">Verify OTP</button>
+  <button id="resendOtpButton" class="secondary" type="button">Resend OTP</button>
  </section>
 
  <div id="message"></div>
@@ -278,11 +248,6 @@ let confirmationResult = null;
 let recaptchaVerifier = null;
 let pendingSignupPhone = "";
 
-let otpExpiryTime = 0;
-let resendAvailableTime = 0;
-let otpCountdownInterval = null;
-let otpExpired = false;
-
 const $ = id => document.getElementById(id);
 
 const nextAction = sessionStorage.getItem("ryzonNextAction");
@@ -315,11 +280,9 @@ const loginPhonePicker = window.intlTelInput(
 
 async function getValidPhone(picker){
  await picker.promise;
-
  if(!picker.isValidNumber()){
   throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
  }
-
  return picker.getNumber();
 }
 
@@ -336,7 +299,6 @@ function hideMessage(){
 
 function setBusy(button,busy,text){
  button.disabled=busy;
-
  if(busy){
   button.dataset.oldText=button.textContent;
   button.textContent=text || "Please wait...";
@@ -347,7 +309,6 @@ function setBusy(button,busy,text){
 
 function friendlyError(error){
  const code=error?.code || "";
-
  const messages={
   "auth/email-already-in-use":"இந்த Email ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
   "auth/invalid-email":"சரியான Email முகவரியை உள்ளிடுங்கள்.",
@@ -362,7 +323,6 @@ function friendlyError(error){
   "auth/quota-exceeded":"SMS OTP வரம்பு முடிந்துள்ளது. பின்னர் முயற்சிக்கவும்.",
   "auth/billing-not-enabled":"Firebase Phone Authentication-க்கு Billing தேவைப்படலாம்.",
   "auth/code-expired":"OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
-  "auth/session-expired":"OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
   "auth/invalid-verification-code":"OTP தவறாக உள்ளது.",
   "auth/operation-not-allowed":"Firebase-ல் இந்த Login முறை Enable செய்யப்படவில்லை.",
   "auth/captcha-check-failed":"reCAPTCHA சரிபார்ப்பு தோல்வியடைந்தது.",
@@ -370,118 +330,31 @@ function friendlyError(error){
   "auth/popup-blocked":"Browser Popup-ஐ அனுமதிக்கவும்.",
   "auth/unauthorized-domain":"Firebase-ல் இந்த Website Domain அனுமதிக்கப்படவில்லை."
  };
-
  showMessage(messages[code] || error?.message || "பிழை ஏற்பட்டுள்ளது.");
  console.error(error);
-}
-
-function clearOtpCountdown(){
- if(otpCountdownInterval){
-  clearInterval(otpCountdownInterval);
-  otpCountdownInterval=null;
- }
-
- otpExpiryTime=0;
- resendAvailableTime=0;
- otpExpired=false;
-
- $("otpTimer").textContent="";
- $("resendOtpButton").disabled=true;
- $("resendOtpButton").textContent="Resend OTP in 30s";
- $("verifyOtpButton").disabled=false;
-}
-
-function updateOtpCountdown(){
- const now=Date.now();
-
- const expirySeconds=Math.max(
-  0,Math.ceil((otpExpiryTime-now)/1000)
- );
-
- const resendSeconds=Math.max(
-  0,Math.ceil((resendAvailableTime-now)/1000)
- );
-
- if(expirySeconds<=0){
-  otpExpired=true;
-  $("verifyOtpButton").disabled=true;
-  $("otpTimer").textContent="OTP Expired! Please request a new OTP.";
- }else{
-  $("verifyOtpButton").disabled=false;
-
-  $("otpTimer").textContent=
-   "OTP expires in "+expirySeconds+" seconds";
- }
-
- if(resendSeconds<=0){
-  $("resendOtpButton").disabled=false;
-  $("resendOtpButton").textContent="Resend OTP";
- }else{
-  $("resendOtpButton").disabled=true;
-  $("resendOtpButton").textContent=
-   "Resend OTP in "+resendSeconds+"s";
- }
-
- if(expirySeconds<=0 && resendSeconds<=0){
-  clearInterval(otpCountdownInterval);
-  otpCountdownInterval=null;
- }
-}
-
-function startOtpCountdown(){
- clearOtpCountdown();
-
- const now=Date.now();
-
- otpExpiryTime=now+60*1000;
- resendAvailableTime=now+30*1000;
- otpExpired=false;
-
- $("otpTimer").style.display="block";
- $("otpSection").style.display="block";
-
- updateOtpCountdown();
-
- otpCountdownInterval=setInterval(
-  updateOtpCountdown,1000
- );
 }
 
 function hideAllSections(){
  $("authSection").style.display="none";
  $("phoneSection").style.display="none";
+ $("otpSection").style.display="none";
  $("verifiedSection").style.display="none";
 }
 
 function showAuthSection(){
  hideAllSections();
-
  $("authSection").style.display="block";
- $("emailFields").style.display="block";
- $("phoneSection").style.display="none";
-
- $("methodTabs").style.display=
-  mode==="login"?"flex":"none";
+ $("methodTabs").style.display=mode==="login"?"flex":"none";
 }
 
 function showPhoneSection(){
  hideAllSections();
-
  $("phoneSection").style.display="block";
-
- if(mode==="login"){
-  $("authSection").style.display="block";
-  $("emailFields").style.display="none";
-  $("methodTabs").style.display="flex";
- }else{
-  $("authSection").style.display="none";
-  $("methodTabs").style.display="none";
- }
+ $("methodTabs").style.display=mode==="login"?"flex":"none";
 }
 
 function goToDestination(){
  const action=sessionStorage.getItem("ryzonNextAction");
-
  sessionStorage.removeItem("ryzonNextAction");
 
  const destination=action==="randomChat"
@@ -500,21 +373,12 @@ function selectLoginMethod(method){
 
  loginMethod=method;
  confirmationResult=null;
-
- clearOtpCountdown();
-
  $("otpSection").style.display="none";
  $("otpCode").value="";
-
  hideMessage();
 
- $("emailMethodTab").classList.toggle(
-  "active",method==="email"
- );
-
- $("phoneMethodTab").classList.toggle(
-  "active",method==="phone"
- );
+ $("emailMethodTab").classList.toggle("active",method==="email");
+ $("phoneMethodTab").classList.toggle("active",method==="phone");
 
  if(method==="email"){
   showAuthSection();
@@ -522,34 +386,22 @@ function selectLoginMethod(method){
   $("phoneTitle").textContent=isRandomChat
    ?"Random Chat - Mobile OTP Login"
    :"Mobile OTP Login";
-
-  $("phoneDescription").textContent=
-   "உங்கள் Mobile Number உள்ளிட்டு OTP பெற்று Login செய்யுங்கள்.";
-
+  $("phoneDescription").textContent="உங்கள் Mobile Number உள்ளிட்டு OTP பெற்று Login செய்யுங்கள்.";
   $("sendOtpButton").textContent="Send OTP";
-
   showPhoneSection();
  }
 }
 
-// Login method buttons
-$("emailMethodTab").addEventListener(
- "click",()=>selectLoginMethod("email")
-);
+$("emailMethodTab").addEventListener("click",()=>selectLoginMethod("email"));
+$("phoneMethodTab").addEventListener("click",()=>selectLoginMethod("phone"));
 
-$("phoneMethodTab").addEventListener(
- "click",()=>selectLoginMethod("phone")
-);
-
-// Password Show / Hide
+// Simple Show / Hide Password
 $("togglePassword").addEventListener("click",()=>{
  const field=$("password");
  const show=field.type==="password";
 
  field.type=show?"text":"password";
-
  $("togglePassword").textContent=show?"Hide":"Show";
-
  $("togglePassword").setAttribute(
   "aria-label",show?"Hide password":"Show password"
  );
@@ -558,19 +410,12 @@ $("togglePassword").addEventListener("click",()=>{
 // Sign Up
 function openSignup(){
  mode="signup";
-
- clearOtpCountdown();
-
  $("signupFields").style.display="block";
  $("mainButton").textContent="Create Account";
  $("forgotLink").style.display="none";
-
- $("accountPrompt").innerHTML=
-  'Already have an account? <a href="#" id="loginLink" style="color:#65d0ff">Login</a>';
-
+ $("accountPrompt").innerHTML='Already have an account? <a href="#" id="loginLink" style="color:#65d0ff">Login</a>';
  $("methodTabs").style.display="none";
  $("password").value="";
-
  hideMessage();
  showAuthSection();
 
@@ -582,21 +427,15 @@ function openSignup(){
 
 function openLogin(){
  mode="login";
-
  $("signupFields").style.display="none";
  $("mainButton").textContent="Sign In";
  $("forgotLink").style.display="block";
-
- $("accountPrompt").innerHTML=
-  'Don\\'t have an account? <a href="#" id="signupLink" style="color:#65d0ff">Sign Up</a>';
-
+ $("accountPrompt").innerHTML='Don\\'t have an account? <a href="#" id="signupLink" style="color:#65d0ff">Sign Up</a>';
  $("methodTabs").style.display="flex";
-
  $("signupLink").addEventListener("click",e=>{
   e.preventDefault();
   openSignup();
  });
-
  hideMessage();
  selectLoginMethod(loginMethod);
 }
@@ -609,10 +448,8 @@ $("signupLink").addEventListener("click",e=>{
 // Email Login and Sign Up
 $("mainButton").addEventListener("click",async()=>{
  const button=$("mainButton");
-
  const email=$("email").value.trim();
  const password=$("password").value;
-
  hideMessage();
 
  if(!email || !password){
@@ -631,45 +468,27 @@ $("mainButton").addEventListener("click",async()=>{
     return;
    }
 
-   pendingSignupPhone=
-    await getValidPhone(signupPhonePicker);
+   pendingSignupPhone=await getValidPhone(signupPhonePicker);
 
-   const result=await createUserWithEmailAndPassword(
-    auth,email,password
-   );
-
+   const result=await createUserWithEmailAndPassword(auth,email,password);
    await sendEmailVerification(result.user);
 
    $("verificationText").textContent=
     "உங்கள் Email-க்கு Verification Link அனுப்பப்பட்டுள்ளது. Email-ஐ Verify செய்த பிறகு கீழே அழுத்துங்கள். அதன் பிறகு Mobile OTP சரிபார்க்கப்படும்.";
 
    showEmailVerification();
-
-   showMessage(
-    "Account உருவாக்கப்பட்டது. Email-ஐ Verify செய்யுங்கள்.",
-    true
-   );
+   showMessage("Account உருவாக்கப்பட்டது. Email-ஐ Verify செய்யுங்கள்.",true);
 
   }else{
-   const result=await signInWithEmailAndPassword(
-    auth,email,password
-   );
-
+   const result=await signInWithEmailAndPassword(auth,email,password);
    await reload(result.user);
 
    if(!result.user.emailVerified){
     await sendEmailVerification(result.user);
-
     $("verificationText").textContent=
      "Email இன்னும் Verify செய்யப்படவில்லை. Email-ல் உள்ள Verification Link-ஐ அழுத்துங்கள்.";
-
     showEmailVerification();
-
-    showMessage(
-     "Email Verification Link அனுப்பப்பட்டுள்ளது.",
-     true
-    );
-
+    showMessage("Email Verification Link அனுப்பப்பட்டுள்ளது.",true);
     return;
    }
 
@@ -684,7 +503,6 @@ $("mainButton").addEventListener("click",async()=>{
 
 function showEmailVerification(){
  hideAllSections();
-
  $("verifiedSection").style.display="block";
  $("methodTabs").style.display="none";
 }
@@ -692,7 +510,6 @@ function showEmailVerification(){
 // Email Verification Check
 $("checkEmailButton").addEventListener("click",async()=>{
  const button=$("checkEmailButton");
-
  setBusy(button,true);
 
  try{
@@ -710,28 +527,18 @@ $("checkEmailButton").addEventListener("click",async()=>{
 
   if(mode==="signup"){
    if(!pendingSignupPhone){
-    showMessage(
-     "Sign Up செய்த Mobile Number கிடைக்கவில்லை. மீண்டும் Sign Up செய்யுங்கள்."
-    );
+    showMessage("Sign Up செய்த Mobile Number கிடைக்கவில்லை. மீண்டும் Sign Up செய்யுங்கள்.");
     return;
    }
 
    loginPhonePicker.setNumber(pendingSignupPhone);
-
-   $("phoneTitle").textContent=
-    "Mobile Number Verification";
-
-   $("phoneDescription").textContent=
-    "Sign Up-ல் கொடுத்த Mobile Number-க்கு OTP அனுப்பி Account-ல் இணைக்கவும்.";
-
+   $("phoneTitle").textContent="Mobile Number Verification";
+   $("phoneDescription").textContent="Sign Up-ல் கொடுத்த Mobile Number-க்கு OTP அனுப்பி Account-ல் இணைக்கவும்.";
    $("sendOtpButton").textContent="Send OTP";
 
    showPhoneSection();
-
-   showMessage(
-    "Email Verify செய்யப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.",
-    true
-   );
+   $("methodTabs").style.display="none";
+   showMessage("Email Verify செய்யப்பட்டது. இப்போது Mobile OTP சரிபார்க்கவும்.",true);
   }else{
    goToDestination();
   }
@@ -745,7 +552,6 @@ $("checkEmailButton").addEventListener("click",async()=>{
 // Google Login
 $("googleButton").addEventListener("click",async()=>{
  const button=$("googleButton");
-
  setBusy(button,true,"Connecting to Google...");
 
  try{
@@ -761,12 +567,7 @@ $("googleButton").addEventListener("click",async()=>{
 // reCAPTCHA
 async function createRecaptcha(){
  if(recaptchaVerifier){
-  try{
-   recaptchaVerifier.clear();
-  }catch(e){
-   console.warn(e);
-  }
-
+  try{recaptchaVerifier.clear();}catch(e){console.warn(e);}
   recaptchaVerifier=null;
  }
 
@@ -781,10 +582,9 @@ async function createRecaptcha(){
  await recaptchaVerifier.render();
 }
 
-// Send / Resend OTP
+// Send OTP
 async function sendPhoneOtp(){
  const button=$("sendOtpButton");
-
  hideMessage();
 
  let phone;
@@ -794,9 +594,7 @@ async function sendPhoneOtp(){
    ?pendingSignupPhone
    :await getValidPhone(loginPhonePicker);
 
-  if(!phone){
-   throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
-  }
+  if(!phone) throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
  }catch(error){
   showMessage(error.message);
   return;
@@ -815,27 +613,16 @@ async function sendPhoneOtp(){
 
   if(mode==="signup"){
    confirmationResult=await linkWithPhoneNumber(
-    auth.currentUser,
-    phone,
-    recaptchaVerifier
+    auth.currentUser,phone,recaptchaVerifier
    );
   }else{
    confirmationResult=await signInWithPhoneNumber(
-    auth,
-    phone,
-    recaptchaVerifier
+    auth,phone,recaptchaVerifier
    );
   }
 
   $("otpSection").style.display="block";
-  $("otpCode").value="";
-
-  startOtpCountdown();
-
-  showMessage(
-   "SMS OTP அனுப்பப்பட்டுள்ளது. 60 seconds-க்குள் OTP உள்ளிடுங்கள்.",
-   true
-  );
+  showMessage("SMS OTP அனுப்பப்பட்டுள்ளது. OTP-ஐ உள்ளிடுங்கள்.",true);
 
  }catch(error){
   friendlyError(error);
@@ -844,46 +631,16 @@ async function sendPhoneOtp(){
  }
 }
 
-$("sendOtpButton").addEventListener(
- "click",sendPhoneOtp
-);
-
-$("resendOtpButton").addEventListener(
- "click",async()=>{
-  if(Date.now()<resendAvailableTime){
-   return;
-  }
-
-  confirmationResult=null;
-  clearOtpCountdown();
-
-  $("otpCode").value="";
-
-  showMessage("புதிய OTP அனுப்பப்படுகிறது...",true);
-
-  await sendPhoneOtp();
- }
-);
+$("sendOtpButton").addEventListener("click",sendPhoneOtp);
+$("resendOtpButton").addEventListener("click",sendPhoneOtp);
 
 // Verify OTP
 $("verifyOtpButton").addEventListener("click",async()=>{
  const button=$("verifyOtpButton");
-
  const code=$("otpCode").value.trim();
 
  if(!confirmationResult){
   showMessage("முதலில் OTP பெறுங்கள்.");
-  return;
- }
-
- if(otpExpired || Date.now()>=otpExpiryTime){
-  otpExpired=true;
-  $("verifyOtpButton").disabled=true;
-
-  showMessage(
-   "OTP காலாவதியாகிவிட்டது. Resend OTP அழுத்தி புதிய OTP பெறுங்கள்."
-  );
-
   return;
  }
 
@@ -896,9 +653,7 @@ $("verifyOtpButton").addEventListener("click",async()=>{
 
  try{
   const result=await confirmationResult.confirm(code);
-
   confirmationResult=null;
-  clearOtpCountdown();
 
   if(mode==="signup"){
    await reload(result.user);
@@ -908,52 +663,30 @@ $("verifyOtpButton").addEventListener("click",async()=>{
    );
 
    if(!linkedPhone){
-    throw new Error(
-     "Mobile Number Account-ல் இணைக்கப்படவில்லை."
-    );
+    throw new Error("Mobile Number Account-ல் இணைக்கப்படவில்லை.");
    }
   }
 
   goToDestination();
-
  }catch(error){
   friendlyError(error);
  }finally{
   setBusy(button,false);
-
-  if(!otpExpired){
-   button.disabled=false;
-  }
  }
 });
 
 // Forgot Password
 $("forgotLink").addEventListener("click",async()=>{
- let email=$("email").value.trim();
+ const email=$("email").value.trim();
 
  if(!email){
-  if(loginMethod==="phone"){
-   selectLoginMethod("email");
-   showMessage(
-    "Password Reset Link பெற உங்கள் registered Email முகவரியை உள்ளிடுங்கள்."
-   );
-  }else{
-   showMessage(
-    "Password Reset Link பெற Email உள்ளிடுங்கள்."
-   );
-  }
-
-  $("email").focus();
+  showMessage("Password Reset Link பெற Email உள்ளிடுங்கள்.");
   return;
  }
 
  try{
   await sendPasswordResetEmail(auth,email);
-
-  showMessage(
-   "Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",
-   true
-  );
+  showMessage("Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",true);
  }catch(error){
   friendlyError(error);
  }
