@@ -1,9 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071a30">
+<meta name="description" content="RYZON Help and Support Center">
 <title>RYZON - Help & Support</title>
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RYZON">
 
 <style>
 *{box-sizing:border-box}
@@ -75,6 +85,7 @@ summary{
   cursor:pointer;
   color:#42d9ee;
   font-weight:bold;
+  line-height:1.5;
 }
 footer{
   text-align:center;
@@ -82,7 +93,6 @@ footer{
   color:#9ebbd2;
   font-size:13px;
 }
-.hidden{display:none}
 .status{color:#63e5a5;line-height:1.5}
 .error{color:#ff9c9c}
 .nav{
@@ -100,9 +110,26 @@ footer{
   border-radius:20px;
   font-size:13px;
 }
+.nav a:hover{background:#173b5c}
+.section-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.section-links a{
+  color:#42d9ee;
+  text-decoration:none;
+  border:1px solid #315572;
+  padding:9px 12px;
+  border-radius:8px;
+}
+label{color:#bdeeff;font-size:14px}
+.hidden{display:none!important}
 @media(max-width:600px){
   main{padding:10px}
   .card{padding:15px}
+  .logo{font-size:29px}
+  button,.link-button{max-width:100%}
 }
 </style>
 </head>
@@ -118,6 +145,7 @@ footer{
     <a href="profile.html">My Profile</a>
     <a href="settings.html">Settings</a>
     <a href="premium.html">Premium</a>
+    <a href="notifications.html">Notifications</a>
   </div>
 </header>
 
@@ -130,9 +158,15 @@ footer{
     and learn about our policies.
   </p>
   <p id="userStatus" class="muted">Checking account...</p>
-</section>
 
-<!-- FEEDBACK -->
+  <div class="section-links">
+    <a href="#feedback">Feedback</a>
+    <a href="#support">Support</a>
+    <a href="#faq">FAQs</a>
+    <a href="#terms">Terms</a>
+    <a href="#privacy">Privacy</a>
+  </div>
+</section>
 
 <section class="card" id="feedback">
   <h2>Send Feedback</h2>
@@ -147,6 +181,7 @@ footer{
       <option value="Bug Report">Bug Report</option>
       <option value="Account Problem">Account Problem</option>
       <option value="Payment Problem">Payment Problem</option>
+      <option value="Safety Report">Safety Report</option>
       <option value="Other">Other</option>
     </select>
 
@@ -160,18 +195,18 @@ footer{
       placeholder="Describe your feedback or problem..."
       required></textarea>
 
-    <button type="submit">Submit Feedback</button>
-    <p id="feedbackStatus" class="muted"></p>
+    <button type="submit" id="feedbackSubmit">
+      Submit Feedback
+    </button>
+
+    <p id="feedbackStatus" class="muted" role="status"></p>
   </form>
 
   <p class="muted">
-    Note: Feedback submission is not connected to a server yet.
-    This form currently provides a preview only; your message
-    will not be saved or sent.
+    Feedback backend is not connected yet. Your message
+    will not be sent or saved by this form.
   </p>
 </section>
-
-<!-- SUPPORT -->
 
 <section class="card" id="support">
   <h2>Customer Support</h2>
@@ -191,10 +226,9 @@ footer{
     <li>Premium membership questions</li>
     <li>Payments and gifts</li>
     <li>Privacy and account security</li>
+    <li>Reporting inappropriate users</li>
   </ul>
 </section>
-
-<!-- FAQ -->
 
 <section class="card" id="faq">
   <h2>Frequently Asked Questions</h2>
@@ -227,7 +261,7 @@ footer{
     <summary>How many friend requests are free?</summary>
     <p>
       The first 10 friend requests are free.
-      Additional requests require a paid or premium feature.
+      Additional requests require paid access.
     </p>
   </details>
 
@@ -246,6 +280,7 @@ footer{
       Use the Forgot Password option on the RYZON login page
       and follow the instructions sent to your registered email.
     </p>
+    <a class="link-button" href="otp.html">Open Login Page</a>
   </details>
 
   <details>
@@ -263,10 +298,18 @@ footer{
       Open the Settings page to manage available account,
       privacy, language and notification preferences.
     </p>
+    <a class="link-button" href="settings.html">Open Settings</a>
+  </details>
+
+  <details>
+    <summary>How do I install RYZON as an app?</summary>
+    <p>
+      Open RYZON in a supported browser. If installation is
+      available, use the browser's Install App or Add to
+      Home Screen option.
+    </p>
   </details>
 </section>
-
-<!-- TERMS -->
 
 <section class="card" id="terms">
   <h2>Terms & Conditions</h2>
@@ -325,8 +368,6 @@ footer{
     on this page.
   </p>
 </section>
-
-<!-- PRIVACY -->
 
 <section class="card" id="privacy">
   <h2>Privacy Policy</h2>
@@ -402,7 +443,7 @@ footer{
 
 <script type="module">
 
-import { initializeApp }
+import {initializeApp}
 from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
@@ -428,13 +469,17 @@ onAuthStateChanged(auth,user=>{
   const status=document.getElementById("userStatus");
 
   if(user){
-    status.textContent="Signed in as "+(user.email||user.phoneNumber||"RYZON user");
+    status.textContent=
+      "Signed in as "+(user.email||user.phoneNumber||"RYZON user");
   }else{
-    status.textContent="You are viewing RYZON Help & Support.";
+    status.textContent=
+      "You are viewing RYZON Help & Support.";
   }
 });
 
-document.getElementById("feedbackForm").addEventListener("submit",event=>{
+document.getElementById("feedbackForm")
+.addEventListener("submit",event=>{
+
   event.preventDefault();
 
   const type=document.getElementById("feedbackType").value;
@@ -452,6 +497,16 @@ document.getElementById("feedbackForm").addEventListener("submit",event=>{
   status.textContent=
     "Feedback backend is not connected yet. Your message has not been sent or saved.";
 });
+
+// PWA service worker
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error=>{
+        console.warn("Service worker registration failed:",error);
+      });
+  });
+}
 
 </script>
 
