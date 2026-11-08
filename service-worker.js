@@ -1,3 +1,4 @@
+
 const CACHE_NAME = "ryzon-cache-v1";
 
 const APP_FILES = [
@@ -17,35 +18,51 @@ const APP_FILES = [
   "./manifest.json"
 ];
 
-// Install: cache essential app files
+// INSTALL: Cache essential app files
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(APP_FILES).catch(error => {
-        console.warn("Some app files could not be cached:", error);
-      });
-    })
-  );
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
 
-  self.skipWaiting();
+      // Cache files individually so one missing file
+      // does not prevent all other files from caching.
+      await Promise.all(
+        APP_FILES.map(async file => {
+          try {
+            await cache.add(file);
+          } catch (error) {
+            console.warn("Could not cache:", file, error);
+          }
+        })
+      );
+
+      await self.skipWaiting();
+    })()
+  );
 });
 
-// Activate: remove old RYZON caches
+// ACTIVATE: Remove old RYZON caches
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
+    (async () => {
+      const keys = await caches.keys();
+
+      await Promise.all(
         keys
-          .filter(key => key.startsWith("ryzon-cache-") && key !== CACHE_NAME)
+          .filter(
+            key =>
+              key.startsWith("ryzon-cache-") &&
+              key !== CACHE_NAME
+          )
           .map(key => caches.delete(key))
       );
-    })
-  );
 
-  self.clients.claim();
+      await self.clients.claim();
+    })()
+  );
 });
 
-// Fetch: network first, then cached page
+// FETCH: Network first, then cache
 self.addEventListener("fetch", event => {
   const request = event.request;
 
@@ -53,41 +70,59 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  // Do not cache Firebase or other external requests
+  // Do not intercept Firebase or external requests
   if (url.origin !== self.location.origin) return;
 
+  // Do not cache browser extension or unsupported schemes
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    return;
+  }
+
   event.respondWith(
-    fetch(request)
-      .then(response => {
+    (async () => {
+      try {
+        const response = await fetch(request);
+
         if (response && response.ok) {
           const copy = response.clone();
 
           caches.open(CACHE_NAME).then(cache => {
             cache.put(request, copy);
+          }).catch(error => {
+            console.warn("Cache update failed:", error);
           });
         }
 
         return response;
-      })
-      .catch(async () => {
+
+      } catch (error) {
+        // Try exact cached request first
         const cached = await caches.match(request);
 
         if (cached) return cached;
 
+        // Offline navigation fallback
         if (request.mode === "navigate") {
           const homePage = await caches.match("./home.html");
+
           if (homePage) return homePage;
+
+          const loginPage = await caches.match("./otp.html");
+
+          if (loginPage) return loginPage;
         }
 
         return new Response(
           "You are offline. Please check your internet connection and try again.",
           {
             status: 503,
+            statusText: "Service Unavailable",
             headers: {
               "Content-Type": "text/plain; charset=utf-8"
             }
           }
         );
-      })
+      }
+    })()
   );
 });
