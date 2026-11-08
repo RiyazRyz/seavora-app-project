@@ -13,13 +13,9 @@
 <title>RYZON - Select Your Language</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  min-height: 100%;
-}
+html { min-height: 100%; }
 
 body {
   margin: 0;
@@ -74,21 +70,18 @@ body {
   margin: 0 0 52px;
 }
 
-select,
-button {
+select, button {
   width: 100%;
   min-height: 92px;
   padding: 18px 28px;
   border-radius: 20px;
   font-size: clamp(18px, 4vw, 27px);
-  margin-top: 0;
 }
 
 select {
   border: 1px solid #cbd0d8;
   background: white;
   color: #111827;
-  appearance: auto;
   margin-bottom: 22px;
 }
 
@@ -101,12 +94,9 @@ button {
   transition: opacity .2s, transform .2s;
 }
 
-button:active {
-  transform: scale(.98);
-}
+button:active { transform: scale(.98); }
 
-button:focus-visible,
-select:focus-visible {
+button:focus-visible, select:focus-visible {
   outline: 3px solid #5c91ff;
   outline-offset: 3px;
 }
@@ -132,69 +122,40 @@ footer {
 }
 
 @media (max-width: 480px) {
-  body {
-    padding: 25px 14px;
-  }
+  body { padding: 25px 14px; }
 
-  .tagline {
-    margin-bottom: 38px;
-  }
+  .tagline { margin-bottom: 38px; }
 
   .card {
     padding: 32px 22px 30px;
     border-radius: 28px;
   }
 
-  .card h2 {
-    margin: 12px 0 25px;
-  }
+  .card h2 { margin: 12px 0 25px; }
+  .card p { margin-bottom: 32px; }
 
-  .card p {
-    margin-bottom: 32px;
-  }
-
-  select,
-  button {
+  select, button {
     min-height: 66px;
     padding: 14px 18px;
     border-radius: 14px;
   }
 
-  .random {
-    margin-top: 18px;
-  }
-
-  .note {
-    margin-top: 25px;
-  }
-
-  footer {
-    margin-top: 30px;
-  }
+  .random { margin-top: 18px; }
+  .note { margin-top: 25px; }
+  footer { margin-top: 30px; }
 }
 
 @media (max-height: 700px) {
-  body {
-    align-items: flex-start;
-  }
-
-  .tagline {
-    margin-bottom: 28px;
-  }
+  body { align-items: flex-start; }
+  .tagline { margin-bottom: 28px; }
 
   .card {
     padding-top: 28px;
     padding-bottom: 25px;
   }
 
-  .card p {
-    margin-bottom: 25px;
-  }
-
-  select,
-  button {
-    min-height: 58px;
-  }
+  .card p { margin-bottom: 25px; }
+  select, button { min-height: 58px; }
 }
 </style>
 </head>
@@ -213,7 +174,7 @@ footer {
 
     <h2>Select Your Language</h2>
 
-    <p>உங்கள் மொழியைத் தேர்வு செய்யுங்கள்</p>
+    <p>Choose your preferred language</p>
 
     <select id="language" aria-label="Select Your Language">
       <option value="English">English</option>
@@ -245,10 +206,7 @@ footer {
       Continue →
     </button>
 
-    <button
-      type="button"
-      class="random"
-      onclick="randomChat()">
+    <button type="button" class="random" onclick="randomChat()">
       💬 Random Chat
     </button>
 
@@ -268,6 +226,7 @@ footer {
 <script>
 function saveLanguage() {
   const language = document.getElementById("language").value;
+
   localStorage.setItem("ryzonLanguage", language);
 }
 
@@ -285,6 +244,17 @@ function randomChat() {
   sessionStorage.setItem("ryzonNextAction", "randomChat");
 
   window.location.assign("./otp.html");
+}
+
+// Restore previously selected language.
+const savedLanguage = localStorage.getItem("ryzonLanguage");
+
+if (savedLanguage) {
+  const selector = document.getElementById("language");
+
+  if ([...selector.options].some(option => option.value === savedLanguage)) {
+    selector.value = savedLanguage;
+  }
 }
 </script>
 
