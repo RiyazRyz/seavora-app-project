@@ -1,68 +1,240 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RYZON - Project Market</title>
 
+<meta name="theme-color" content="#071a30">
+<meta name="description" content="Explore handmade projects, project materials and components with RYZON.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f1f5fb;
-  color: #17345c;
+  background: linear-gradient(145deg, #061426, #0c2c4c, #071a30);
+  color: #fff;
+  min-height: 100vh;
 }
 
 header {
-  background: #123b68;
-  color: white;
-  padding: 20px;
+  background: rgba(3, 15, 30, 0.9);
+  border-bottom: 1px solid #1b5279;
+  padding: 24px 15px;
   text-align: center;
 }
 
+.logo {
+  color: #36d9ff;
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.tagline {
+  color: #b8d9ed;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
 main {
-  max-width: 650px;
+  max-width: 850px;
+  width: 100%;
   margin: auto;
-  padding: 18px;
+  padding: 18px 15px 35px;
+}
+
+.intro {
+  text-align: center;
+  padding: 15px 5px;
+}
+
+.intro h2 {
+  font-size: 25px;
+}
+
+.intro p {
+  color: #c3d8e8;
+  line-height: 1.6;
 }
 
 .card {
-  background: white;
-  padding: 18px;
-  margin-bottom: 15px;
-  border-radius: 13px;
-  box-shadow: 0 2px 7px #0001;
+  background: rgba(15, 43, 70, 0.96);
+  border: 1px solid #245477;
+  padding: 19px;
+  margin-bottom: 16px;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px #0003;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.card p {
+  color: #c4d9e9;
+  line-height: 1.55;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  margin-top: 9px;
+  border: 1px solid #416a8c;
+  border-radius: 9px;
+  font-size: 15px;
+  background: #071a30;
+  color: white;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #36d9ff;
+  box-shadow: 0 0 0 2px #36d9ff22;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #91aabd;
+}
+
+input[type="file"] {
+  padding: 10px;
+  background: #102d49;
+}
+
+input[type="file"]::file-selector-button {
+  background: #176bd2;
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 9px;
+  margin-right: 8px;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
 button {
   width: 100%;
-  padding: 12px;
+  padding: 13px 14px;
   border: 0;
-  border-radius: 8px;
-  background: #2457d6;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #176bd2, #168fc7);
   color: white;
   font-size: 15px;
-  margin-top: 8px;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-input, select, textarea {
+button:hover {
+  filter: brightness(1.12);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.secondary {
+  background: #123b5d;
+  border: 1px solid #34749c;
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.component-grid button {
+  margin-top: 0;
+}
+
+.preview {
+  display: none;
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border: 1px solid #ccd7e5;
-  border-radius: 8px;
-  font-size: 15px;
+  max-height: 300px;
+  object-fit: contain;
+  background: #061426;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid #245477;
 }
 
-a { color: #2457d6; }
+.status {
+  display: block;
+  margin-top: 12px;
+  color: #70e6b0;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
 
 .note {
-  background: #fff4d6;
-  padding: 12px;
-  border-radius: 8px;
+  background: #3b321b;
+  border: 1px solid #76602b;
+  color: #ffe7a3;
+  padding: 13px;
+  border-radius: 10px;
   font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.navigation a {
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  color: #9bbbd0;
+  padding: 20px 10px;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 12px;
+  }
+
+  .component-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .intro h2 {
+    font-size: 22px;
+  }
 }
 </style>
 </head>
@@ -70,90 +242,218 @@ a { color: #2457d6; }
 <body>
 
 <header>
-  <h1>RYZON</h1>
+  <h1 class="logo">RYZON</h1>
+  <p class="tagline">One App, Endless Possibilities!</p>
   <p>Handmade Projects & Components Market</p>
 </header>
 
 <main>
 
-<div class="card">
+<section class="intro">
+  <h2>🛍️ RYZON Project Market</h2>
+  <p>
+    Explore handmade projects, ready-made models,
+    electronics components and project materials.
+  </p>
+</section>
+
+<section class="card">
   <h2>🎨 Handmade Projects</h2>
-  <p>School, College, Science Exhibition and Festival handmade projects.</p>
+  <p>
+    School, College, Science Exhibition and Festival
+    handmade projects.
+  </p>
 
   <button onclick="searchItems('Handmade school college science exhibition projects for sale')">
     Browse Handmade Projects
   </button>
-</div>
+</section>
 
-<div class="card">
+<section class="card">
   <h2>🛒 Readymade Handmade Projects</h2>
-  <p>Find completed handmade projects available for purchase.</p>
+  <p>
+    Find completed handmade projects available for purchase.
+  </p>
 
   <button onclick="searchItems('Handmade school college projects buy online India')">
     Find Projects to Buy
   </button>
-</div>
+</section>
 
-<div class="card">
+<section class="card">
   <h2>⚙️ Project Components</h2>
+  <p>Explore components for your school and college projects.</p>
 
-  <button onclick="searchItems('DC motors for school college projects')">Motors</button>
-  <button onclick="searchItems('IC integrated circuits for electronics projects')">IC</button>
-  <button onclick="searchItems('Rechargeable batteries for electronics projects')">Battery</button>
-  <button onclick="searchItems('Sensors for electronics projects')">Sensors</button>
-  <button onclick="searchItems('Resistors capacitors LEDs wires circuit boards')">Other Components</button>
-</div>
+  <div class="component-grid">
+    <button onclick="searchItems('DC motors for school college projects')">
+      ⚙️ Motors
+    </button>
 
-<div class="card"> 
+    <button onclick="searchItems('IC integrated circuits for electronics projects')">
+      🔌 IC
+    </button>
+
+    <button onclick="searchItems('Rechargeable batteries for electronics projects')">
+      🔋 Battery
+    </button>
+
+    <button onclick="searchItems('Sensors for electronics projects')">
+      📡 Sensors
+    </button>
+
+    <button onclick="searchItems('Resistors capacitors LEDs wires circuit boards')">
+      💡 Other Components
+    </button>
+
+    <button onclick="searchItems('Arduino boards electronics project kits')">
+      🤖 Arduino Kits
+    </button>
+  </div>
+</section>
+
+<section class="card">
   <h2>📦 Sell Your Handmade Project</h2>
-<h3>Seller Account</h3>
 
-<input type="email" id="sellerEmail"
-placeholder="Email Address">
+  <h3>🔐 Seller Account</h3>
 
-<input type="password" id="sellerPassword"
-placeholder="Password (Minimum 6 characters)">
+  <input
+    type="email"
+    id="sellerEmail"
+    placeholder="Email Address"
+    autocomplete="email"
+  >
 
-<button onclick="registerSeller()">
-Create Seller Account
-</button>
+  <input
+    type="password"
+    id="sellerPassword"
+    placeholder="Password (Minimum 6 characters)"
+    autocomplete="current-password"
+  >
 
-<button onclick="loginSeller()">
-Login to Seller Account
-</button>
+  <button onclick="registerSeller()">
+    Create Seller Account
+  </button>
 
-<p id="accountStatus"></p>
-  <p>Seller registration and project listing will be connected during development.</p>
+  <button class="secondary" onclick="loginSeller()">
+    Login to Seller Account
+  </button>
 
-  <input type="text" id="seller" placeholder="Seller Name">
-  <input type="text" id="projectName" placeholder="Project Name">
+  <p id="accountStatus" class="status" aria-live="polite"></p>
 
-  <input type="file" id="projectPhoto" accept="image/*">
-  <img id="photoPreview" style="display:none;width:100%;margin-top:10px;border-radius:10px;">
+  <hr style="border-color:#245477;margin:22px 0;">
 
-  <input type="file" id="projectVideo" accept="video/*">
-  <video id="videoPreview" controls style="display:none;width:100%;margin-top:10px;border-radius:10px;"></video>
+  <h3>📝 Submit Your Project</h3>
 
-  <input type="number" id="price" placeholder="Project Price (₹)">
-  <textarea id="description" placeholder="Project Description"></textarea>
+  <input
+    type="text"
+    id="seller"
+    placeholder="Seller Name"
+    maxlength="100"
+  >
 
-  <button onclick="submitProject()">Submit Project</button>
-  <p id="status"></p>
-</div>
+  <input
+    type="text"
+    id="projectName"
+    placeholder="Project Name"
+    maxlength="150"
+  >
 
-<p><a href="home.html">← Back to Home</a></p>
+  <label for="projectPhoto">Project Photo</label>
+  <input
+    type="file"
+    id="projectPhoto"
+    accept="image/*"
+  >
+
+  <img
+    id="photoPreview"
+    class="preview"
+    alt="Project photo preview"
+  >
+
+  <label for="projectVideo">Project Video</label>
+  <input
+    type="file"
+    id="projectVideo"
+    accept="video/*"
+  >
+
+  <video
+    id="videoPreview"
+    class="preview"
+    controls
+    playsinline
+  ></video>
+
+  <input
+    type="number"
+    id="price"
+    placeholder="Project Price (₹)"
+    min="1"
+    step="0.01"
+  >
+
+  <textarea
+    id="description"
+    placeholder="Project Description"
+    maxlength="3000"
+  ></textarea>
+
+  <button id="submitButton" onclick="submitProject()">
+    Submit Project for Approval
+  </button>
+
+  <p id="status" class="status" aria-live="polite"></p>
+
+  <div class="note">
+    Your project details will be submitted to RYZON for admin review.
+    Submitted projects will have Pending status until approved.
+    Photo and video previews are currently available on this page;
+    uploading media files to Firebase is not connected yet.
+  </div>
+</section>
+
+<section class="card">
+  <h2>💡 Need Project Ideas?</h2>
+  <p>
+    Discover school projects, college projects, science exhibition
+    models and creative handmade ideas.
+  </p>
+
+  <button onclick="location.href='project-ideas.html'">
+    Explore Project Ideas
+  </button>
+</section>
+
+<nav class="navigation">
+  <a href="home.html">
+    <button class="secondary">← Back to Home</button>
+  </a>
+
+  <a href="project-ideas.html">
+    <button class="secondary">Project Ideas →</button>
+  </a>
+</nav>
 
 </main>
 
+<footer>
+  © 2026 RYZON. One App, Endless Possibilities!
+</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
   getFirestore,
   collection,
   addDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
 import {
   getAuth,
   signInAnonymously,
@@ -162,6 +462,7 @@ import {
   linkWithCredential,
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
   authDomain: "seavora-5be21.firebaseapp.com",
@@ -177,6 +478,30 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 let currentUser = null;
+let authReady = false;
+
+const $ = (id) => document.getElementById(id);
+
+function setStatus(id, message, isError = false) {
+  const element = $(id);
+  element.textContent = message;
+  element.style.color = isError ? "#ffaaaa" : "#70e6b0";
+}
+
+function friendlyError(error) {
+  const messages = {
+    "auth/email-already-in-use": "This email is already registered. Please login.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password must contain at least 6 characters.",
+    "auth/invalid-credential": "Incorrect email or password.",
+    "auth/user-not-found": "No account found with this email.",
+    "auth/wrong-password": "Incorrect password.",
+    "auth/network-request-failed": "Network error. Please check your internet connection.",
+    "auth/operation-not-allowed": "This login method is not enabled in Firebase."
+  };
+
+  return messages[error.code] || error.message || "Something went wrong.";
+}
 
 onAuthStateChanged(auth, async (user) => {
   try {
@@ -186,113 +511,212 @@ onAuthStateChanged(auth, async (user) => {
       const result = await signInAnonymously(auth);
       currentUser = result.user;
     }
+
+    authReady = true;
+
   } catch (error) {
-    console.error(error);
-    document.getElementById("status").textContent =
-      "Login error: " + error.message;
+    console.error("Authentication error:", error);
+    authReady = true;
+    currentUser = null;
+
+    setStatus(
+      "status",
+      "Login error: " + friendlyError(error),
+      true
+    );
   }
 });
+
 window.registerSeller = async function() {
-  const email = document.getElementById("sellerEmail").value.trim();
-  const password = document.getElementById("sellerPassword").value;
-  const accountStatus = document.getElementById("accountStatus");
+  const email = $("sellerEmail").value.trim();
+  const password = $("sellerPassword").value;
 
   if (!email || password.length < 6) {
-    accountStatus.textContent =
-      "Enter a valid email and password (minimum 6 characters).";
+    setStatus(
+      "accountStatus",
+      "Enter a valid email and password (minimum 6 characters).",
+      true
+    );
+    return;
+  }
+
+  if (!authReady || !currentUser) {
+    setStatus(
+      "accountStatus",
+      "Please wait. Account is loading.",
+      true
+    );
     return;
   }
 
   try {
-    if (!currentUser) {
-      accountStatus.textContent = "Please wait. Account is loading.";
-      return;
-    }
-
     if (!currentUser.isAnonymous) {
-      accountStatus.textContent = "You already have a permanent account. Please use Login.";
+      setStatus(
+        "accountStatus",
+        "You already have a permanent account. Please use Login.",
+        true
+      );
       return;
     }
 
     const credential = EmailAuthProvider.credential(email, password);
-    const result = await linkWithCredential(currentUser, credential);
+
+    const result = await linkWithCredential(
+      currentUser,
+      credential
+    );
 
     currentUser = result.user;
-    accountStatus.textContent =
-      "Seller account created successfully!";
+
+    setStatus(
+      "accountStatus",
+      "Seller account created successfully!"
+    );
+
+    $("sellerEmail").value = "";
+    $("sellerPassword").value = "";
+
   } catch (error) {
-    accountStatus.textContent = "Registration failed: " + error.message;
+    console.error(error);
+
+    setStatus(
+      "accountStatus",
+      "Registration failed: " + friendlyError(error),
+      true
+    );
   }
 };
 
 window.loginSeller = async function() {
-  const email = document.getElementById("sellerEmail").value.trim();
-  const password = document.getElementById("sellerPassword").value;
-  const accountStatus = document.getElementById("accountStatus");
+  const email = $("sellerEmail").value.trim();
+  const password = $("sellerPassword").value;
+
+  if (!email || !password) {
+    setStatus(
+      "accountStatus",
+      "Please enter your email and password.",
+      true
+    );
+    return;
+  }
 
   try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
+    const result = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
     currentUser = result.user;
-    accountStatus.textContent = "Seller login successful!";
+
+    setStatus(
+      "accountStatus",
+      "Seller login successful!"
+    );
+
   } catch (error) {
-    accountStatus.textContent = "Login failed: " + error.message;
+    console.error(error);
+
+    setStatus(
+      "accountStatus",
+      "Login failed: " + friendlyError(error),
+      true
+    );
   }
 };
-  window.searchItems = function(query) {
-  window.open(
+
+window.searchItems = function(query) {
+  const url =
     "https://www.google.com/search?tbm=shop&q=" +
-    encodeURIComponent(query),
-    "_blank"
-  );
+    encodeURIComponent(query);
+
+  window.open(url, "_blank", "noopener");
 };
 
-document.getElementById("projectPhoto").addEventListener("change", function() {
+// Image preview
+$("projectPhoto").addEventListener("change", function() {
   const file = this.files[0];
-  const preview = document.getElementById("photoPreview");
+  const preview = $("photoPreview");
 
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-  } else {
+  if (!file) {
     preview.removeAttribute("src");
     preview.style.display = "none";
+    return;
   }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    this.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
 });
 
-document.getElementById("projectVideo").addEventListener("change", function() {
+// Video preview
+$("projectVideo").addEventListener("change", function() {
   const file = this.files[0];
-  const preview = document.getElementById("videoPreview");
+  const preview = $("videoPreview");
 
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-  } else {
+  if (!file) {
     preview.removeAttribute("src");
     preview.style.display = "none";
+    return;
   }
+
+  if (!file.type.startsWith("video/")) {
+    alert("Please select a video file.");
+    this.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
 });
 
+// Submit project
 window.submitProject = async function() {
-  const seller = document.getElementById("seller").value.trim();
-  const project = document.getElementById("projectName").value.trim();
-  const price = Number(document.getElementById("price").value);
-  const description = document.getElementById("description").value.trim();
-  const status = document.getElementById("status");
+  const seller = $("seller").value.trim();
+  const project = $("projectName").value.trim();
+  const price = Number($("price").value);
+  const description = $("description").value.trim();
+  const status = $("status");
+  const submitButton = $("submitButton");
 
-  if (!seller || !project || !description ||
-      !Number.isFinite(price) || price <= 0) {
-    status.textContent = "Please enter valid project details.";
+  if (
+    !seller ||
+    !project ||
+    !description ||
+    !Number.isFinite(price) ||
+    price <= 0
+  ) {
+    setStatus(
+      "status",
+      "Please enter valid seller name, project name, price and description.",
+      true
+    );
     return;
   }
 
-  if (!currentUser) {
-    status.textContent = "Please wait. Login is loading.";
+  if (!authReady || !currentUser) {
+    setStatus(
+      "status",
+      "Please wait. Login is loading.",
+      true
+    );
     return;
   }
 
-  status.textContent = "Saving project...";
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting...";
+
+  setStatus("status", "Saving project...");
 
   try {
+    // Keep existing Firestore collection and field names.
     await addDoc(collection(db, "projects"), {
       sellerName: seller,
       projectName: project,
@@ -303,27 +727,52 @@ window.submitProject = async function() {
       createdAt: serverTimestamp()
     });
 
-    status.textContent = "Project details saved successfully!";
- document.getElementById("seller").value = "";
-document.getElementById("projectName").value = "";
-document.getElementById("price").value = "";
-document.getElementById("description").value = "";
- document.getElementById("projectPhoto").value = "";
-document.getElementById("projectVideo").value = "";
+    setStatus(
+      "status",
+      "Project details submitted successfully! Waiting for admin approval."
+    );
 
-document.getElementById("photoPreview").removeAttribute("src");
-document.getElementById("photoPreview").style.display = "none";
+    $("seller").value = "";
+    $("projectName").value = "";
+    $("price").value = "";
+    $("description").value = "";
 
-document.getElementById("videoPreview").removeAttribute("src");
-document.getElementById("videoPreview").style.display = "none";
+    $("projectPhoto").value = "";
+    $("projectVideo").value = "";
+
+    $("photoPreview").removeAttribute("src");
+    $("photoPreview").style.display = "none";
+
+    $("videoPreview").removeAttribute("src");
+    $("videoPreview").style.display = "none";
+
   } catch (error) {
-     console.error(error);
-    status.textContent =
-      "Save failed: " + error.message;
+    console.error("Project submission error:", error);
+
+    setStatus(
+      "status",
+      "Save failed: " + friendlyError(error),
+      true
+    );
+
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Project for Approval";
   }
 };
+
 </script>
 
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(function(error) {
+        console.log("Service Worker registration failed:", error);
+      });
+  });
+}
+</script>
 
 </body>
 </html>
