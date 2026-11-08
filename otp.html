@@ -21,103 +21,427 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;min-height:100vh;display:flex;align-items:center;
- justify-content:center;padding:20px;font-family:Arial,sans-serif;
- color:#fff;background:radial-gradient(circle at top,#174c78 0%,transparent 45%),
- linear-gradient(135deg,#061629,#071a30 55%,#102e4d)
+ margin:0;
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ font-family:Arial,sans-serif;
+ color:#fff;
+ background:
+ radial-gradient(circle at top,#174c78 0%,transparent 45%),
+ linear-gradient(135deg,#061629,#071a30 55%,#102e4d);
 }
+
 .container{
- width:100%;max-width:430px;padding:26px;border:1px solid #285174;
- border-radius:24px;background:linear-gradient(160deg,#123454,#0c2742);
- box-shadow:0 18px 55px #0008
+ width:100%;
+ max-width:430px;
+ padding:26px;
+ border:1px solid #285174;
+ border-radius:24px;
+ background:linear-gradient(160deg,#123454,#0c2742);
+ box-shadow:0 18px 55px #0008;
 }
-.top{display:flex;justify-content:flex-end;margin-bottom:12px}
-.top button{width:auto;margin:0;padding:9px 13px;border-radius:20px;background:#254664;font-size:13px}
+
+.top{
+ display:flex;
+ justify-content:flex-end;
+ margin-bottom:12px;
+}
+
+.top button{
+ width:auto;
+ margin:0;
+ padding:9px 13px;
+ border-radius:20px;
+ background:#254664;
+ font-size:13px;
+}
+
 .logo{
- width:76px;height:76px;margin:0 auto 10px;border-radius:23px;
- display:flex;align-items:center;justify-content:center;
+ width:76px;
+ height:76px;
+ margin:0 auto 10px;
+ border-radius:23px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
  background:linear-gradient(145deg,#55dcff,#078bd0);
- color:white;font-size:55px;font-weight:900;box-shadow:0 8px 25px #0799e566
+ color:white;
+ font-size:55px;
+ font-weight:900;
+ box-shadow:0 8px 25px #0799e566;
 }
-h1{text-align:center;margin:0;color:#55dcff;font-size:32px;letter-spacing:3px}
-.tagline{text-align:center;color:#8bdfff;font-size:13px;margin:5px 0}
-.subtitle{text-align:center;color:#d3e5f3;margin:17px 0 20px;font-size:15px}
-.tabs,.method-tabs{display:flex;gap:9px;margin-bottom:17px}
-.tabs button,.method-tabs button{flex:1;background:#254664;padding:12px 5px;font-size:14px;margin:0}
+
+h1{
+ text-align:center;
+ margin:0;
+ color:#55dcff;
+ font-size:32px;
+ letter-spacing:3px;
+}
+
+.tagline{
+ text-align:center;
+ color:#8bdfff;
+ font-size:13px;
+ margin:5px 0;
+}
+
+.subtitle{
+ text-align:center;
+ color:#d3e5f3;
+ margin:17px 0 20px;
+ font-size:15px;
+}
+
+.tabs,.method-tabs{
+ display:flex;
+ gap:9px;
+ margin-bottom:17px;
+}
+
+.tabs button,.method-tabs button{
+ flex:1;
+ background:#254664;
+ padding:12px 5px;
+ font-size:14px;
+ margin:0;
+}
+
 .tabs button.active,.method-tabs button.active{
- background:linear-gradient(110deg,#078bd0,#16bde0);box-shadow:0 5px 15px #0799e544
+ background:linear-gradient(110deg,#078bd0,#16bde0);
+ box-shadow:0 5px 15px #0799e544;
 }
+
 input{
- width:100%;padding:14px;margin:8px 0;border:1px solid #54738e;
- border-radius:10px;background:#f7fbff;color:#102030;font-size:15px;outline:none
+ width:100%;
+ padding:14px;
+ margin:8px 0;
+ border:1px solid #54738e;
+ border-radius:10px;
+ background:#f7fbff;
+ color:#102030;
+ font-size:15px;
+ outline:none;
 }
+
 input:focus{border:2px solid #20c5ed}
-input.input-error{border:2px solid #ff4444!important;background:#fff0f0!important}
-.iti{width:100%;margin:8px 0}.iti input{width:100%;margin:0}
+
+input.input-error{
+ border:2px solid #ff4444!important;
+ background:#fff0f0!important;
+}
+
+.iti{width:100%;margin:8px 0}
+.iti input{width:100%;margin:0}
 .iti__country-list{color:#102030;max-width:300px}
+
 button{
- width:100%;padding:14px;margin-top:12px;border:0;border-radius:10px;
- background:linear-gradient(110deg,#078bd0,#16bde0);color:white;
- font-size:16px;font-weight:bold;cursor:pointer
+ width:100%;
+ padding:14px;
+ margin-top:12px;
+ border:0;
+ border-radius:10px;
+ background:linear-gradient(110deg,#078bd0,#16bde0);
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
 }
+
 button:disabled{opacity:.55;cursor:not-allowed}
+
 .secondary{background:#31516e}
-.google-button{background:#fff;color:#24364b;border:1px solid #d8e1e9}
+
+.google-button{
+ background:#fff;
+ color:#24364b;
+ border:1px solid #d8e1e9;
+}
+
 .google-button span{font-size:18px;margin-right:8px}
-.password-row{position:relative}.password-row input{padding-right:75px}
+
+.password-row{position:relative}
+.password-row input{padding-right:75px}
+
 .password-toggle{
- position:absolute;right:5px;top:8px;width:auto;height:43px;min-width:58px;
- padding:5px;margin:0;background:transparent;color:#087fbd;font-size:13px
+ position:absolute;
+ right:5px;
+ top:8px;
+ width:auto;
+ height:43px;
+ min-width:58px;
+ padding:5px;
+ margin:0;
+ background:transparent;
+ color:#087fbd;
+ font-size:13px;
 }
+
 .small-link{
- display:block;text-align:right;margin-top:12px;color:#65d0ff;
- cursor:pointer;text-decoration:underline;font-size:13px
+ display:block;
+ text-align:right;
+ margin-top:12px;
+ color:#65d0ff;
+ cursor:pointer;
+ text-decoration:underline;
+ font-size:13px;
 }
-.divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:#a9bfd2;font-size:12px}
-.divider:before,.divider:after{content:"";height:1px;background:#45617b;flex:1}
-.note,.description{color:#c6d8e8;font-size:13px;line-height:1.5}
+
+.divider{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin:18px 0;
+ color:#a9bfd2;
+ font-size:12px;
+}
+
+.divider:before,.divider:after{
+ content:"";
+ height:1px;
+ background:#45617b;
+ flex:1;
+}
+
+.note,.description{
+ color:#c6d8e8;
+ font-size:13px;
+ line-height:1.5;
+}
+
 .description{text-align:center}
-#phoneSection,#verifiedSection{display:none;margin-top:15px;padding-top:15px;border-top:1px solid #45617b}
-#otpSection{display:none;margin-top:15px;padding-top:12px;border-top:1px solid #45617b}
-#recaptcha-container{margin-top:12px;overflow:hidden}
-#message{display:none;margin-top:15px;padding:12px;border-radius:9px;background:#203e5a;line-height:1.5;font-size:14px;overflow-wrap:anywhere}
-.remember-row{display:flex;align-items:center;gap:9px;margin:12px 0;color:#c6d8e8;font-size:13px}
-.remember-row input{width:17px;height:17px;margin:0;accent-color:#0799e5}
-#lastLogin{color:#a9bfd2;font-size:12px;text-align:center;margin-top:12px}
-.bottom-text{text-align:center;color:#c6d8e8;font-size:13px;margin-top:18px}
+
+#phoneSection,#verifiedSection{
+ display:none;
+ margin-top:15px;
+ padding-top:15px;
+ border-top:1px solid #45617b;
+}
+
+#otpSection{
+ display:none;
+ margin-top:15px;
+ padding-top:12px;
+ border-top:1px solid #45617b;
+}
+
+#recaptcha-container{
+ margin-top:12px;
+ overflow:hidden;
+}
+
+#message{
+ display:none;
+ margin-top:15px;
+ padding:12px;
+ border-radius:9px;
+ background:#203e5a;
+ line-height:1.5;
+ font-size:14px;
+ overflow-wrap:anywhere;
+}
+
+.remember-row{
+ display:flex;
+ align-items:center;
+ gap:9px;
+ margin:12px 0;
+ color:#c6d8e8;
+ font-size:13px;
+}
+
+.remember-row input{
+ width:17px;
+ height:17px;
+ margin:0;
+ accent-color:#0799e5;
+}
+
+#lastLogin{
+ color:#a9bfd2;
+ font-size:12px;
+ text-align:center;
+ margin-top:12px;
+}
+
+.bottom-text{
+ text-align:center;
+ color:#c6d8e8;
+ font-size:13px;
+ margin-top:18px;
+}
+
 .bottom-text a,.footer-links a{color:#65d0ff}
+
 .footer-links{
- display:flex;justify-content:center;gap:16px;flex-wrap:wrap;
- margin-top:22px;padding-top:15px;border-top:1px solid #45617b
+ display:flex;
+ justify-content:center;
+ gap:16px;
+ flex-wrap:wrap;
+ margin-top:22px;
+ padding-top:15px;
+ border-top:1px solid #45617b;
 }
+
 .footer-links a{font-size:12px}
-#otpTimer{color:#65d0ff;font-size:13px;text-align:center;margin:10px 0}
+
+#otpTimer{
+ color:#65d0ff;
+ font-size:13px;
+ text-align:center;
+ margin:10px 0;
+}
+
 .hidden{display:none!important}
+
+/* PREMIUM SECTION */
+
+.premium-box{
+ margin-top:22px;
+ padding:17px;
+ border:1px solid #c99a32;
+ border-radius:16px;
+ background:linear-gradient(145deg,#172f48,#10243a);
+}
+
+.premium-heading{
+ text-align:center;
+ color:#f5c85b;
+ font-size:19px;
+ font-weight:bold;
+ margin-bottom:5px;
+}
+
+.premium-subtitle{
+ text-align:center;
+ color:#d8c28d;
+ font-size:12px;
+ margin-bottom:12px;
+}
+
+.premium-pin{
+ background:#eaf5ff;
+ border:2px solid #268bd0;
+ color:#102030;
+ text-align:center;
+ letter-spacing:7px;
+ font-size:20px;
+ font-weight:bold;
+}
+
+.premium-login{
+ background:linear-gradient(110deg,#b88620,#f4d477);
+ color:#17243a;
+ font-weight:bold;
+}
+
+.premium-actions{
+ display:flex;
+ justify-content:space-between;
+ align-items:stretch;
+ gap:10px;
+ margin-top:12px;
+}
+
+.premium-forgot,.premium-signup{
+ flex:1;
+ min-height:44px;
+ border-radius:8px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ font-size:12px;
+ cursor:pointer;
+ padding:8px;
+}
+
+.premium-forgot{
+ border:2px solid #e34c55;
+ color:#ff777e;
+}
+
+.premium-signup{
+ border:2px solid #9b69df;
+ color:#c49aff;
+}
+
+.premium-note{
+ display:none;
+ margin-top:12px;
+ padding:10px;
+ border-radius:8px;
+ background:#203e5a;
+ color:#ffe0a0;
+ font-size:12px;
+ line-height:1.5;
+ overflow-wrap:anywhere;
+}
+
 #successOverlay{
- display:none;position:fixed;inset:0;z-index:9999;background:#071b35ed;
- align-items:center;justify-content:center;padding:20px;text-align:center
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:#071b35ed;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ text-align:center;
 }
+
 .success-card{
- max-width:320px;width:100%;padding:35px 22px;background:#102b49;
- border:1px solid #285174;border-radius:22px;animation:pop .45s ease
+ max-width:320px;
+ width:100%;
+ padding:35px 22px;
+ background:#102b49;
+ border:1px solid #285174;
+ border-radius:22px;
+ animation:pop .45s ease;
 }
+
 .success-check{
- width:82px;height:82px;border-radius:50%;margin:0 auto 18px;
- background:#20c878;display:flex;align-items:center;justify-content:center;font-size:48px
+ width:82px;
+ height:82px;
+ border-radius:50%;
+ margin:0 auto 18px;
+ background:#20c878;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:48px;
 }
+
 .success-card h2{color:#65f0a5}
-@keyframes pop{from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
-@media(max-width:360px){.container{padding:18px}.tabs button,.method-tabs button{font-size:12px}}
-@media(max-height:720px){body{align-items:flex-start}}
+
+@keyframes pop{
+ from{opacity:0;transform:scale(.75)}
+ to{opacity:1;transform:scale(1)}
+}
+
+@media(max-width:360px){
+ .container{padding:18px}
+ .tabs button,.method-tabs button{font-size:12px}
+}
+
+@media(max-height:720px){
+ body{align-items:flex-start}
+}
 </style>
 </head>
 
 <body>
+
 <main class="container">
 
  <div class="top">
-  <button type="button" data-ryzon-language-toggle
+  <button type="button"
+   data-ryzon-language-toggle
    onclick="if(typeof toggleRYZONLanguage==='function')toggleRYZONLanguage()">
    🌐 English
   </button>
@@ -142,24 +466,40 @@ button:disabled{opacity:.55;cursor:not-allowed}
  </div>
 
  <section id="emailSection">
+
   <div id="emailFields">
-   <input id="email" type="email" data-ryzon-placeholder="emailPlaceholder"
-    placeholder="Enter your email" autocomplete="email">
+
+   <input id="email"
+    type="email"
+    data-ryzon-placeholder="emailPlaceholder"
+    placeholder="Enter your email"
+    autocomplete="email">
 
    <div class="password-row">
-    <input id="password" type="password" data-ryzon-placeholder="passwordPlaceholder"
-     placeholder="Enter password" autocomplete="current-password">
-    <button class="password-toggle" id="togglePassword" type="button"
+    <input id="password"
+     type="password"
+     data-ryzon-placeholder="passwordPlaceholder"
+     placeholder="Enter password"
+     autocomplete="current-password">
+
+    <button class="password-toggle"
+     id="togglePassword"
+     type="button"
      data-ryzon-text="show">Show</button>
    </div>
 
    <div id="signupFields" class="hidden">
-    <input id="confirmPassword" type="password"
-     data-ryzon-placeholder="confirmPassword" placeholder="Confirm Password"
+
+    <input id="confirmPassword"
+     type="password"
+     data-ryzon-placeholder="confirmPassword"
+     placeholder="Confirm Password"
      autocomplete="new-password">
+
     <p class="note" data-ryzon-text="passwordNote">
      Create a separate account using your email. Verify your email using the verification link.
     </p>
+
    </div>
 
    <label class="remember-row" id="rememberRow">
@@ -167,51 +507,146 @@ button:disabled{opacity:.55;cursor:not-allowed}
     <span data-ryzon-text="rememberMe">Remember Me</span>
    </label>
 
-   <button id="mainButton" type="button" data-ryzon-text="loginEmail">Login with Email</button>
+   <button id="mainButton"
+    type="button"
+    data-ryzon-text="loginEmail">Login with Email</button>
+
   </div>
-  <span id="forgotLink" class="small-link" data-ryzon-text="forgotPassword">Forgot Password?</span>
+
+  <span id="forgotLink"
+   class="small-link"
+   data-ryzon-text="forgotPassword">Forgot Password?</span>
+
  </section>
 
  <section id="phoneSection">
+
   <p><b id="phoneTitle" data-ryzon-text="mobileLogin">Mobile OTP Login</b></p>
-  <p class="description" id="phoneDescription" data-ryzon-text="phoneDescription">
+
+  <p class="description"
+   id="phoneDescription"
+   data-ryzon-text="phoneDescription">
    Enter your mobile number to receive an OTP.
   </p>
-  <input id="loginPhone" type="tel" data-ryzon-placeholder="phonePlaceholder"
-   placeholder="Mobile Number" autocomplete="tel">
-  <p class="note" data-ryzon-text="countryNote">Select the flag to choose your country code.</p>
+
+  <input id="loginPhone"
+   type="tel"
+   data-ryzon-placeholder="phonePlaceholder"
+   placeholder="Mobile Number"
+   autocomplete="tel">
+
+  <p class="note" data-ryzon-text="countryNote">
+   Select the flag to choose your country code.
+  </p>
+
   <div id="recaptcha-container"></div>
-  <button id="sendOtpButton" type="button" data-ryzon-text="sendOtp">Send OTP</button>
+
+  <button id="sendOtpButton"
+   type="button"
+   data-ryzon-text="sendOtp">Send OTP</button>
 
   <div id="otpSection">
-   <input id="otpCode" type="text" inputmode="numeric" maxlength="6"
-    data-ryzon-placeholder="otpPlaceholder" placeholder="Enter 6-digit OTP">
+
+   <input id="otpCode"
+    type="text"
+    inputmode="numeric"
+    maxlength="6"
+    data-ryzon-placeholder="otpPlaceholder"
+    placeholder="Enter 6-digit OTP">
+
    <p id="otpTimer"></p>
-   <button id="verifyOtpButton" type="button" data-ryzon-text="verifyOtp">Verify OTP</button>
-   <button id="resendOtpButton" class="secondary" type="button" disabled
+
+   <button id="verifyOtpButton"
+    type="button"
+    data-ryzon-text="verifyOtp">Verify OTP</button>
+
+   <button id="resendOtpButton"
+    class="secondary"
+    type="button"
+    disabled
     data-ryzon-text="resendOtp">Resend OTP</button>
+
   </div>
  </section>
 
  <section id="verifiedSection">
-  <p id="verificationText" class="description" data-ryzon-text="verificationText">
+
+  <p id="verificationText"
+   class="description"
+   data-ryzon-text="verificationText">
    Open your email and click the verification link.
   </p>
-  <button id="checkEmailButton" type="button" data-ryzon-text="verifyEmail">
+
+  <button id="checkEmailButton"
+   type="button"
+   data-ryzon-text="verifyEmail">
    I Have Verified My Email
   </button>
+
  </section>
 
  <div class="divider" id="divider" data-ryzon-text="or">OR</div>
 
  <button id="googleButton" class="google-button" type="button">
-  <span>G</span><span data-ryzon-text="googleLogin">Continue with Google</span>
+  <span>G</span>
+  <span data-ryzon-text="googleLogin">Continue with Google</span>
  </button>
 
  <div class="bottom-text" id="accountPrompt">
   <span data-ryzon-text="noAccount">Don't have an account?</span>
   <a href="#" id="signupLink" data-ryzon-text="signUp">Sign Up</a>
  </div>
+
+ <!-- PREMIUM QUICK LOGIN -->
+
+ <section class="premium-box" id="premiumSection">
+
+  <div class="premium-heading">👑 PREMIUM QUICK LOGIN</div>
+
+  <div class="premium-subtitle">
+   Exclusive RYZON Premium Members
+  </div>
+
+  <input
+   id="premiumPin"
+   class="premium-pin"
+   type="password"
+   inputmode="numeric"
+   maxlength="8"
+   placeholder="ENTER PREMIUM PIN"
+   autocomplete="off"
+   aria-label="Premium PIN">
+
+  <button
+   type="button"
+   class="premium-login"
+   id="premiumLoginButton">
+   👑 LOGIN
+  </button>
+
+  <div class="premium-actions">
+
+   <div
+    class="premium-forgot"
+    id="premiumForgot"
+    role="button"
+    tabindex="0">
+    Forget PIN?
+   </div>
+
+   <div
+    class="premium-signup"
+    id="premiumSignup"
+    role="button"
+    tabindex="0">
+    Premium Sign Up
+   </div>
+
+  </div>
+
+  <div class="premium-note" id="premiumNote" role="status"></div>
+
+ </section>
 
  <div id="lastLogin"></div>
  <div id="message"></div>
@@ -220,6 +655,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <a href="./terms.html" data-ryzon-text="terms">Terms & Conditions</a>
   <a href="./privacy.html" data-ryzon-text="privacy">Privacy Policy</a>
  </div>
+
 </main>
 
 <div id="successOverlay">
@@ -232,13 +668,26 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {initializeApp}
+ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
- getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
- sendEmailVerification,sendPasswordResetEmail,reload,RecaptchaVerifier,
- signInWithPhoneNumber,GoogleAuthProvider,signInWithPopup,setPersistence,
- browserLocalPersistence,browserSessionPersistence
+ getAuth,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ sendEmailVerification,
+ sendPasswordResetEmail,
+ reload,
+ RecaptchaVerifier,
+ signInWithPhoneNumber,
+ GoogleAuthProvider,
+ signInWithPopup,
+ setPersistence,
+ browserLocalPersistence,
+ browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -253,154 +702,380 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const googleProvider=new GoogleAuthProvider();
-const $=id=>document.getElementById(id);
-const T=key=>typeof window.getRYZONText==="function"?window.getRYZONText(key):key;
 
-const isRandomChat=sessionStorage.getItem("ryzonNextAction")==="randomChat";
-let mode="login",method="email",confirmationResult=null;
-let recaptchaVerifier=null,otpExpiryTime=0,resendAvailableTime=0;
-let otpInterval=null,otpExpired=false,currentPhone="";
+const $=id=>document.getElementById(id);
+
+const T=key=>
+ typeof window.getRYZONText==="function"
+ ?window.getRYZONText(key)
+ :key;
+
+let mode="login";
+let method="email";
+
+let confirmationResult=null;
+let recaptchaVerifier=null;
+
+let otpExpiryTime=0;
+let resendAvailableTime=0;
+let otpInterval=null;
+let otpExpired=false;
+let currentPhone="";
+
 let phonePicker=null;
 
+
+/* LANGUAGE */
+
 function applyLanguage(){
- if(typeof window.applyRYZONLanguage==="function")window.applyRYZONLanguage();
+ if(typeof window.applyRYZONLanguage==="function"){
+  window.applyRYZONLanguage();
+ }
  updateModeLabels();
  updateLastLogin();
 }
 
 function updateModeLabels(){
- $("subtitle").textContent=mode==="signup"?T("createAccountTitle"):T("welcomeBack");
- $("mainButton").textContent=mode==="signup"?T("createAccount"):T("loginEmail");
- $("phoneTitle").textContent=mode==="signup"?T("mobileSignup"):T("mobileLogin");
- $("phoneDescription").textContent=mode==="signup"?T("phoneSignupDescription"):T("phoneDescription");
- $("sendOtpButton").textContent=mode==="signup"?T("sendOtp")+" & "+T("signUp"):T("sendOtp");
- $("togglePassword").textContent=$("password").type==="password"?T("show"):T("hide");
+
+ $("subtitle").textContent=
+ mode==="signup"?T("createAccountTitle"):T("welcomeBack");
+
+ $("mainButton").textContent=
+ mode==="signup"?T("createAccount"):T("loginEmail");
+
+ $("phoneTitle").textContent=
+ mode==="signup"?T("mobileSignup"):T("mobileLogin");
+
+ $("phoneDescription").textContent=
+ mode==="signup"
+ ?T("phoneSignupDescription")
+ :T("phoneDescription");
+
+ $("sendOtpButton").textContent=
+ mode==="signup"
+ ?T("sendOtp")+" & "+T("signUp")
+ :T("sendOtp");
+
+ $("togglePassword").textContent=
+ $("password").type==="password"
+ ?T("show")
+ :T("hide");
+
  if($("otpSection").style.display==="block" && confirmationResult){
   updateOtpTimer();
  }
 }
 
+
+/* PHONE INPUT */
+
 try{
+
  if(typeof window.intlTelInput==="function"){
+
   phonePicker=window.intlTelInput($("loginPhone"),{
-   initialCountry:"auto",separateDialCode:true,nationalMode:true,
+
+   initialCountry:"auto",
+   separateDialCode:true,
+   nationalMode:true,
+
    geoIpLookup:callback=>{
-    fetch("https://ipapi.co/json/").then(r=>r.json())
+
+    fetch("https://ipapi.co/json/")
+     .then(r=>r.json())
      .then(d=>callback(d?.country_code?.toLowerCase()||"in"))
      .catch(()=>callback("in"));
+
    },
-   loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
+
+   loadUtils:()=>import(
+    "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"
+   )
+
   });
+
  }
-}catch(e){console.warn("Phone input library unavailable:",e);}
+
+}catch(e){
+ console.warn("Phone input library unavailable:",e);
+}
+
+
+/* MESSAGE */
 
 function message(text,success=false){
+
  $("message").textContent=text;
  $("message").style.display="block";
- $("message").style.color=success?"#75f0a5":"#ffb4b4";
-}
-function hideMessage(){$("message").style.display="none";}
-function invalid(field){field.classList.add("input-error");}
-function valid(field){field.classList.remove("input-error");}
 
-["email","password","confirmPassword","loginPhone","otpCode"].forEach(id=>{
- $(id).addEventListener("input",()=>valid($(id)));
+ $("message").style.color=
+ success?"#75f0a5":"#ffb4b4";
+
+}
+
+function hideMessage(){
+ $("message").style.display="none";
+}
+
+function invalid(field){
+ field.classList.add("input-error");
+}
+
+function valid(field){
+ field.classList.remove("input-error");
+}
+
+["email","password","confirmPassword","loginPhone","otpCode"]
+.forEach(id=>{
+ $(id).addEventListener("input",()=>{
+  valid($(id));
+ });
 });
 
+
+/* BUTTON LOADING */
+
 function busy(button,on,text){
+
  if(on){
-  if(!button.dataset.oldText)button.dataset.oldText=button.textContent;
+
+  if(!button.dataset.oldText){
+   button.dataset.oldText=button.textContent;
+  }
+
   button.disabled=true;
   button.textContent=text||T("pleaseWait");
+
  }else{
+
   button.disabled=false;
+
   if(button.dataset.oldText){
    button.textContent=button.dataset.oldText;
    delete button.dataset.oldText;
   }
+
   updateModeLabels();
+
  }
+
 }
+
+
+/* LOGIN PERSISTENCE */
 
 async function setLoginPersistence(){
- await setPersistence(auth,$("rememberMe").checked?browserLocalPersistence:browserSessionPersistence);
+
+ await setPersistence(
+  auth,
+  $("rememberMe").checked
+  ?browserLocalPersistence
+  :browserSessionPersistence
+ );
+
 }
+
+
+/* PHONE VALIDATION */
 
 async function validPhone(){
+
  const raw=$("loginPhone").value.trim();
- if(!raw){invalid($("loginPhone"));throw new Error(T("mobileRequired"));}
+
+ if(!raw){
+  invalid($("loginPhone"));
+  throw new Error(T("mobileRequired"));
+ }
+
  if(phonePicker){
+
   try{
+
    await phonePicker.promise;
+
    if(!phonePicker.isValidNumber()){
-    invalid($("loginPhone"));throw new Error(T("invalidPhone"));
+    invalid($("loginPhone"));
+    throw new Error(T("invalidPhone"));
    }
-   valid($("loginPhone"));return phonePicker.getNumber();
+
+   valid($("loginPhone"));
+
+   return phonePicker.getNumber();
+
   }catch(e){
+
    if(e.message===T("invalidPhone"))throw e;
+
    console.warn("Phone utility unavailable:",e);
+
   }
+
  }
+
  let cleaned=raw.replace(/[^\d+]/g,"");
- if(/^\d{10}$/.test(cleaned))cleaned="+91"+cleaned;
- else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91"))cleaned="+"+cleaned;
- else if(/^\d{8,15}$/.test(cleaned))cleaned="+"+cleaned;
- if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){
-  invalid($("loginPhone"));throw new Error(T("invalidPhone"));
+
+ if(/^\d{10}$/.test(cleaned)){
+  cleaned="+91"+cleaned;
  }
- valid($("loginPhone"));return cleaned;
+ else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91")){
+  cleaned="+"+cleaned;
+ }
+ else if(/^\d{8,15}$/.test(cleaned)){
+  cleaned="+"+cleaned;
+ }
+
+ if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){
+  invalid($("loginPhone"));
+  throw new Error(T("invalidPhone"));
+ }
+
+ valid($("loginPhone"));
+
+ return cleaned;
+
 }
+
+
+/* LAST LOGIN */
 
 function updateLastLogin(){
+
  const last=localStorage.getItem("ryzonLastLogin");
- $("lastLogin").textContent=last?T("lastLogin")+" "+last:"";
-}
-function successLogin(){
- localStorage.setItem("ryzonLastLogin",new Date().toLocaleString());
- updateLastLogin();
- $("successOverlay").style.display="flex";
- const action=sessionStorage.getItem("ryzonNextAction");
- setTimeout(()=>{
-  sessionStorage.removeItem("ryzonNextAction");
-  location.replace(action==="randomChat"?"random-chat.html":"home.html");
- },1600);
+
+ $("lastLogin").textContent=
+ last?T("lastLogin")+" "+last:"";
+
 }
 
-/* Login attempt lockout */
-const MAX_ATTEMPTS=5,LOCK_TIME=300000;
+
+/* SUCCESS */
+
+function successLogin(){
+
+ localStorage.setItem(
+  "ryzonLastLogin",
+  new Date().toLocaleString()
+ );
+
+ updateLastLogin();
+
+ $("successOverlay").style.display="flex";
+
+ const action=sessionStorage.getItem("ryzonNextAction");
+
+ setTimeout(()=>{
+
+  sessionStorage.removeItem("ryzonNextAction");
+
+  location.replace(
+   action==="randomChat"
+   ?"random-chat.html"
+   :"home.html"
+  );
+
+ },1600);
+
+}
+
+
+/* LOGIN ATTEMPT LOCKOUT
+   Client-side convenience only, not a security control.
+*/
+
+const MAX_ATTEMPTS=5;
+const LOCK_TIME=300000;
+
 function lockIdentity(){
- return method==="phone"?(currentPhone||$("loginPhone").value.trim()):$("email").value.trim().toLowerCase();
+
+ return method==="phone"
+ ?(currentPhone||$("loginPhone").value.trim())
+ :$("email").value.trim().toLowerCase();
+
 }
-function lockKey(){return "ryzonLoginLock_"+(lockIdentity()||"unknown");}
+
+function lockKey(){
+
+ return "ryzonLoginLock_"+(lockIdentity()||"unknown");
+
+}
+
 function attempts(){
- try{return JSON.parse(localStorage.getItem(lockKey()))||{count:0,until:0};}
- catch(e){return {count:0,until:0};}
+
+ try{
+  return JSON.parse(localStorage.getItem(lockKey()))||{
+   count:0,
+   until:0
+  };
+ }catch(e){
+  return {count:0,until:0};
+ }
+
 }
+
 function isLocked(){
+
  const data=attempts();
+
  if(data.until>Date.now()){
-  message("Login locked. Try again in "+Math.ceil((data.until-Date.now())/1000)+" seconds.");
+
+  message(
+   "Login locked. Try again in "+
+   Math.ceil((data.until-Date.now())/1000)+
+   " seconds."
+  );
+
   return true;
+
  }
- if(data.until)localStorage.removeItem(lockKey());
+
+ if(data.until){
+  localStorage.removeItem(lockKey());
+ }
+
  return false;
+
 }
+
 function failedAttempt(){
- const data=attempts();data.count++;
+
+ const data=attempts();
+ data.count++;
+
  if(data.count>=MAX_ATTEMPTS){
-  data.count=0;data.until=Date.now()+LOCK_TIME;
+
+  data.count=0;
+  data.until=Date.now()+LOCK_TIME;
+
   localStorage.setItem(lockKey(),JSON.stringify(data));
+
   message("5 failed attempts. Login locked for 5 minutes.");
+
  }else{
+
   localStorage.setItem(lockKey(),JSON.stringify(data));
-  message("Login details are incorrect. Remaining attempts: "+(MAX_ATTEMPTS-data.count));
+
+  message(
+   "Login details are incorrect. Remaining attempts: "+
+   (MAX_ATTEMPTS-data.count)
+  );
+
  }
+
 }
-function clearAttempts(){localStorage.removeItem(lockKey());}
+
+function clearAttempts(){
+ localStorage.removeItem(lockKey());
+}
+
+
+/* FIREBASE ERROR MESSAGES */
 
 function showError(error){
+
  const code=error?.code||"";
+
  const errors={
+
   "auth/email-already-in-use":"emailAlreadyUsed",
   "auth/invalid-email":"invalidEmail",
   "auth/weak-password":"weakPassword",
@@ -423,136 +1098,357 @@ function showError(error){
   "auth/billing-not-enabled":"billingRequired",
   "auth/network-request-failed":"networkError",
   "auth/missing-phone-number":"mobileRequired"
+
  };
- if(["auth/invalid-credential","auth/wrong-password","auth/user-not-found"].includes(code)){
+
+ if([
+  "auth/invalid-credential",
+  "auth/wrong-password",
+  "auth/user-not-found"
+ ].includes(code)){
+
   failedAttempt();
+
  }else{
-  message(errors[code]?T(errors[code]):(error?.message||"An error occurred."));
+
+  message(
+   errors[code]
+   ?T(errors[code])
+   :(error?.message||"An error occurred.")
+  );
+
  }
+
  console.error(error);
+
 }
 
-/* OTP countdown */
+
+/* OTP TIMER */
+
 function clearOtpTimer(){
- if(otpInterval){clearInterval(otpInterval);otpInterval=null;}
- otpExpiryTime=0;resendAvailableTime=0;otpExpired=false;
+
+ if(otpInterval){
+  clearInterval(otpInterval);
+  otpInterval=null;
+ }
+
+ otpExpiryTime=0;
+ resendAvailableTime=0;
+ otpExpired=false;
+
  $("otpTimer").textContent="";
  $("resendOtpButton").disabled=true;
  $("resendOtpButton").textContent=T("resendOtp");
  $("verifyOtpButton").disabled=false;
+
 }
+
 function updateOtpTimer(){
+
  const now=Date.now();
- const expiry=Math.max(0,Math.ceil((otpExpiryTime-now)/1000));
- const resend=Math.max(0,Math.ceil((resendAvailableTime-now)/1000));
+
+ const expiry=Math.max(
+  0,
+  Math.ceil((otpExpiryTime-now)/1000)
+ );
+
+ const resend=Math.max(
+  0,
+  Math.ceil((resendAvailableTime-now)/1000)
+ );
+
  if(expiry<=0){
-  otpExpired=true;$("verifyOtpButton").disabled=true;
+
+  otpExpired=true;
+  $("verifyOtpButton").disabled=true;
   $("otpTimer").textContent=T("otpExpired");
+
  }else{
+
   $("verifyOtpButton").disabled=false;
-  $("otpTimer").textContent=T("otpExpires")+" "+expiry+" seconds";
+
+  $("otpTimer").textContent=
+   T("otpExpires")+" "+expiry+" seconds";
+
  }
+
  if(resend<=0){
+
   $("resendOtpButton").disabled=false;
   $("resendOtpButton").textContent=T("resendOtp");
+
  }else{
+
   $("resendOtpButton").disabled=true;
-  $("resendOtpButton").textContent=T("resendIn")+" "+resend+"s";
+
+  $("resendOtpButton").textContent=
+   T("resendIn")+" "+resend+"s";
+
  }
- if(expiry<=0&&resend<=0){clearInterval(otpInterval);otpInterval=null;}
+
+ if(expiry<=0&&resend<=0){
+
+  clearInterval(otpInterval);
+  otpInterval=null;
+
+ }
+
 }
+
 function startOtpTimer(){
+
  clearOtpTimer();
+
  otpExpiryTime=Date.now()+60000;
  resendAvailableTime=Date.now()+30000;
+
  $("otpSection").style.display="block";
+
  updateOtpTimer();
+
  otpInterval=setInterval(updateOtpTimer,1000);
+
 }
 
-/* Page mode and method */
+
+/* LOGIN METHOD DISPLAY */
+
 function showMethod(){
- $("emailSection").style.display=method==="email"?"block":"none";
- $("phoneSection").style.display=method==="phone"?"block":"none";
- $("emailTab").classList.toggle("active",method==="email");
- $("mobileTab").classList.toggle("active",method==="phone");
- $("signupFields").classList.toggle("hidden",!(mode==="signup"&&method==="email"));
- $("rememberRow").style.display=mode==="login"&&method==="email"?"flex":"none";
- $("forgotLink").style.display=mode==="login"&&method==="email"?"block":"none";
+
+ $("emailSection").style.display=
+ method==="email"?"block":"none";
+
+ $("phoneSection").style.display=
+ method==="phone"?"block":"none";
+
+ $("emailTab").classList.toggle(
+  "active",
+  method==="email"
+ );
+
+ $("mobileTab").classList.toggle(
+  "active",
+  method==="phone"
+ );
+
+ $("signupFields").classList.toggle(
+  "hidden",
+  !(mode==="signup"&&method==="email")
+ );
+
+ $("rememberRow").style.display=
+ mode==="login"&&method==="email"
+ ?"flex"
+ :"none";
+
+ $("forgotLink").style.display=
+ mode==="login"&&method==="email"
+ ?"block"
+ :"none";
+
  updateModeLabels();
+
 }
+
 function selectMethod(value){
- method=value;confirmationResult=null;currentPhone="";
+
+ method=value;
+
+ confirmationResult=null;
+ currentPhone="";
+
  clearOtpTimer();
+
  $("otpSection").style.display="none";
  $("otpCode").value="";
+
  $("verifiedSection").style.display="none";
- hideMessage();showMethod();
+
+ hideMessage();
+
+ showMethod();
+
 }
+
+
+/* LOGIN MODE */
+
 function openLogin(){
+
  mode="login";
+
  $("loginTab").classList.add("active");
  $("signupTab").classList.remove("active");
+
  $("accountTabs").style.display="flex";
  $("methodTabs").style.display="flex";
  $("googleButton").style.display="block";
  $("accountPrompt").style.display="block";
- $("accountPrompt").innerHTML='<span data-ryzon-text="noAccount">'+T("noAccount")+'</span> <a href="#" id="signupLink">'+T("signUp")+'</a>';
- $("signupLink").onclick=e=>{e.preventDefault();openSignup();};
+
+ $("accountPrompt").innerHTML=
+ '<span data-ryzon-text="noAccount">'+
+ T("noAccount")+
+ '</span> <a href="#" id="signupLink">'+
+ T("signUp")+
+ '</a>';
+
+ $("signupLink").onclick=e=>{
+  e.preventDefault();
+  openSignup();
+ };
+
  selectMethod(method);
+
 }
+
+
+/* SIGNUP MODE */
+
 function openSignup(){
+
  mode="signup";
+
  $("loginTab").classList.remove("active");
  $("signupTab").classList.add("active");
+
  $("accountTabs").style.display="flex";
  $("methodTabs").style.display="flex";
  $("googleButton").style.display="block";
  $("accountPrompt").style.display="block";
- $("accountPrompt").innerHTML='<span data-ryzon-text="alreadyAccount">'+T("alreadyAccount")+'</span> <a href="#" id="loginLink">'+T("login")+'</a>';
- $("loginLink").onclick=e=>{e.preventDefault();openLogin();};
+
+ $("accountPrompt").innerHTML=
+ '<span data-ryzon-text="alreadyAccount">'+
+ T("alreadyAccount")+
+ '</span> <a href="#" id="loginLink">'+
+ T("login")+
+ '</a>';
+
+ $("loginLink").onclick=e=>{
+  e.preventDefault();
+  openLogin();
+ };
+
  selectMethod("email");
+
 }
+
 $("loginTab").onclick=openLogin;
 $("signupTab").onclick=openSignup;
+
 $("emailTab").onclick=()=>selectMethod("email");
 $("mobileTab").onclick=()=>selectMethod("phone");
-$("signupLink").onclick=e=>{e.preventDefault();openSignup();};
 
-/* Password show/hide */
-$("togglePassword").onclick=()=>{
- const field=$("password");
- field.type=field.type==="password"?"text":"password";
- $("togglePassword").textContent=field.type==="password"?T("show"):T("hide");
+$("signupLink").onclick=e=>{
+ e.preventDefault();
+ openSignup();
 };
 
-/* Email login / signup */
+
+/* PASSWORD SHOW/HIDE */
+
+$("togglePassword").onclick=()=>{
+
+ const field=$("password");
+
+ field.type=
+ field.type==="password"
+ ?"text"
+ :"password";
+
+ $("togglePassword").textContent=
+ field.type==="password"
+ ?T("show")
+ :T("hide");
+
+};
+
+
+/* EMAIL LOGIN / SIGNUP */
+
 $("mainButton").onclick=async()=>{
+
  const button=$("mainButton");
+
  const email=$("email").value.trim();
  const password=$("password").value;
+
  hideMessage();
+
  let ok=true;
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){invalid($("email"));ok=false;}
- else valid($("email"));
- if(!password){invalid($("password"));ok=false;}
- else valid($("password"));
- if(!ok){message(T("invalidEmail")+" "+T("invalidPassword"));return;}
- if(mode==="login"&&isLocked())return;
- if(mode==="signup"){
-  if(password!==$("confirmPassword").value){
-   invalid($("confirmPassword"));message(T("passwordMismatch"));return;
-  }
-  valid($("confirmPassword"));
-  if(password.length<6){message(T("weakPassword"));return;}
+
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+
+  invalid($("email"));
+  ok=false;
+
+ }else{
+
+  valid($("email"));
+
  }
+
+ if(!password){
+
+  invalid($("password"));
+  ok=false;
+
+ }else{
+
+  valid($("password"));
+
+ }
+
+ if(!ok){
+
+  message(T("invalidEmail")+" "+T("invalidPassword"));
+  return;
+
+ }
+
+ if(mode==="login"&&isLocked())return;
+
+ if(mode==="signup"){
+
+  if(password!==$("confirmPassword").value){
+
+   invalid($("confirmPassword"));
+   message(T("passwordMismatch"));
+   return;
+
+  }
+
+  valid($("confirmPassword"));
+
+  if(password.length<6){
+
+   message(T("weakPassword"));
+   return;
+
+  }
+
+ }
+
  busy(button,true);
+
  try{
+
   await setLoginPersistence();
+
   if(mode==="signup"){
-   const result=await createUserWithEmailAndPassword(auth,email,password);
+
+   const result=
+    await createUserWithEmailAndPassword(
+     auth,
+     email,
+     password
+    );
+
    await sendEmailVerification(result.user);
-   $("verificationText").textContent=T("verificationText");
+
+   $("verificationText").textContent=
+    T("verificationText");
+
    $("emailSection").style.display="none";
    $("phoneSection").style.display="none";
    $("accountTabs").style.display="none";
@@ -560,13 +1456,27 @@ $("mainButton").onclick=async()=>{
    $("verifiedSection").style.display="block";
    $("googleButton").style.display="none";
    $("accountPrompt").style.display="none";
+
    message(T("emailCreated"),true);
+
   }else{
-   const result=await signInWithEmailAndPassword(auth,email,password);
+
+   const result=
+    await signInWithEmailAndPassword(
+     auth,
+     email,
+     password
+    );
+
    await reload(result.user);
+
    if(!result.user.emailVerified){
+
     await sendEmailVerification(result.user);
-    $("verificationText").textContent=T("emailNotVerified");
+
+    $("verificationText").textContent=
+     T("emailNotVerified");
+
     $("emailSection").style.display="none";
     $("phoneSection").style.display="none";
     $("accountTabs").style.display="none";
@@ -574,134 +1484,456 @@ $("mainButton").onclick=async()=>{
     $("verifiedSection").style.display="block";
     $("googleButton").style.display="none";
     $("accountPrompt").style.display="none";
+
     message(T("verificationSent"),true);
+
     return;
+
    }
-   clearAttempts();successLogin();
+
+   clearAttempts();
+   successLogin();
+
   }
- }catch(error){showError(error);}
- finally{busy(button,false);}
-};
 
-/* Email verification */
-$("checkEmailButton").onclick=async()=>{
- const button=$("checkEmailButton");busy(button,true);
- try{
-  if(!auth.currentUser)throw new Error("Please login again.");
-  await reload(auth.currentUser);
-  if(!auth.currentUser.emailVerified){message(T("emailNotVerified"));return;}
-  successLogin();
- }catch(error){showError(error);}
- finally{busy(button,false);}
-};
+ }catch(error){
 
-/* Google login */
-$("googleButton").onclick=async()=>{
- const button=$("googleButton");
- busy(button,true,T("connectingGoogle"));
- try{
-  await setLoginPersistence();
-  await signInWithPopup(auth,googleProvider);
-  successLogin();
- }catch(error){showError(error);}
- finally{busy(button,false);}
-};
+  showError(error);
 
-/* reCAPTCHA */
-async function createRecaptcha(){
- if(recaptchaVerifier){
-  try{recaptchaVerifier.clear();}catch(e){console.warn(e);}
-  recaptchaVerifier=null;
+ }finally{
+
+  busy(button,false);
+
  }
+
+};
+
+
+/* EMAIL VERIFICATION */
+
+$("checkEmailButton").onclick=async()=>{
+
+ const button=$("checkEmailButton");
+
+ busy(button,true);
+
+ try{
+
+  if(!auth.currentUser){
+   throw new Error("Please login again.");
+  }
+
+  await reload(auth.currentUser);
+
+  if(!auth.currentUser.emailVerified){
+   message(T("emailNotVerified"));
+   return;
+  }
+
+  successLogin();
+
+ }catch(error){
+
+  showError(error);
+
+ }finally{
+
+  busy(button,false);
+
+ }
+
+};
+
+
+/* GOOGLE LOGIN */
+
+$("googleButton").onclick=async()=>{
+
+ const button=$("googleButton");
+
+ busy(button,true,T("connectingGoogle"));
+
+ try{
+
+  await setLoginPersistence();
+
+  await signInWithPopup(auth,googleProvider);
+
+  successLogin();
+
+ }catch(error){
+
+  showError(error);
+
+ }finally{
+
+  busy(button,false);
+
+ }
+
+};
+
+
+/* RECAPTCHA */
+
+async function createRecaptcha(){
+
+ if(recaptchaVerifier){
+
+  try{
+   recaptchaVerifier.clear();
+  }catch(e){
+   console.warn(e);
+  }
+
+  recaptchaVerifier=null;
+
+ }
+
  $("recaptcha-container").innerHTML="";
- recaptchaVerifier=new RecaptchaVerifier(auth,"recaptcha-container",{size:"normal"});
+
+ recaptchaVerifier=new RecaptchaVerifier(
+  auth,
+  "recaptcha-container",
+  {size:"normal"}
+ );
+
  await recaptchaVerifier.render();
+
 }
 
-/* Send OTP */
+
+/* SEND OTP */
+
 async function sendOtp(){
- const button=$("sendOtpButton");hideMessage();
+
+ const button=$("sendOtpButton");
+
+ hideMessage();
+
  let phone;
- try{phone=await validPhone();currentPhone=phone;}
- catch(error){message(error.message);return;}
- if(mode==="login"&&isLocked())return;
- busy(button,true);
+
  try{
+
+  phone=await validPhone();
+  currentPhone=phone;
+
+ }catch(error){
+
+  message(error.message);
+  return;
+
+ }
+
+ if(mode==="login"&&isLocked())return;
+
+ busy(button,true);
+
+ try{
+
   await setLoginPersistence();
+
   await createRecaptcha();
-  confirmationResult=await signInWithPhoneNumber(auth,phone,recaptchaVerifier);
+
+  confirmationResult=
+   await signInWithPhoneNumber(
+    auth,
+    phone,
+    recaptchaVerifier
+   );
+
   $("otpCode").value="";
+
   startOtpTimer();
+
   message(T("otpSent"),true);
- }catch(error){confirmationResult=null;showError(error);}
- finally{busy(button,false);}
+
+ }catch(error){
+
+  confirmationResult=null;
+  showError(error);
+
+ }finally{
+
+  busy(button,false);
+
+ }
+
 }
+
 $("sendOtpButton").onclick=sendOtp;
 
-/* Resend OTP */
+
+/* RESEND OTP */
+
 $("resendOtpButton").onclick=async()=>{
+
  if(Date.now()<resendAvailableTime)return;
- confirmationResult=null;clearOtpTimer();$("otpCode").value="";
+
+ confirmationResult=null;
+
+ clearOtpTimer();
+
+ $("otpCode").value="";
+
  await sendOtp();
+
 };
 
-/* Verify OTP */
+
+/* VERIFY OTP */
+
 $("verifyOtpButton").onclick=async()=>{
+
  const button=$("verifyOtpButton");
+
  const code=$("otpCode").value.trim();
- if(!confirmationResult){invalid($("otpCode"));message(T("enterOtpFirst"));return;}
+
+ if(!confirmationResult){
+
+  invalid($("otpCode"));
+  message(T("enterOtpFirst"));
+  return;
+
+ }
+
  if(otpExpired||Date.now()>=otpExpiryTime){
-  otpExpired=true;button.disabled=true;message(T("expiredOtp"));return;
+
+  otpExpired=true;
+  button.disabled=true;
+
+  message(T("expiredOtp"));
+
+  return;
+
  }
- if(!/^\d{6}$/.test(code)){invalid($("otpCode"));message(T("enterOtp"));return;}
+
+ if(!/^\d{6}$/.test(code)){
+
+  invalid($("otpCode"));
+  message(T("enterOtp"));
+
+  return;
+
+ }
+
  valid($("otpCode"));
+
  if(mode==="login"&&isLocked())return;
+
  busy(button,true);
+
  try{
+
   const result=await confirmationResult.confirm(code);
-  confirmationResult=null;clearOtpTimer();
-  if(!result.user)throw new Error("Mobile verification failed.");
-  clearAttempts();successLogin();
+
+  confirmationResult=null;
+
+  clearOtpTimer();
+
+  if(!result.user){
+   throw new Error("Mobile verification failed.");
+  }
+
+  clearAttempts();
+
+  successLogin();
+
  }catch(error){
-  if(error?.code==="auth/invalid-verification-code")failedAttempt();
-  else showError(error);
+
+  if(error?.code==="auth/invalid-verification-code"){
+   failedAttempt();
+  }else{
+   showError(error);
+  }
+
  }finally{
+
   busy(button,false);
-  if(otpExpired)button.disabled=true;
+
+  if(otpExpired){
+   button.disabled=true;
+  }
+
  }
+
 };
 
-/* Forgot password */
+
+/* FORGOT EMAIL PASSWORD */
+
 $("forgotLink").onclick=async()=>{
+
  const email=$("email").value.trim();
+
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-  invalid($("email"));message(T("enterEmail"));$("email").focus();return;
+
+  invalid($("email"));
+  message(T("enterEmail"));
+  $("email").focus();
+
+  return;
+
  }
+
  valid($("email"));
+
  try{
+
   await sendPasswordResetEmail(auth,email);
+
   message(T("resetSent"),true);
- }catch(error){showError(error);}
+
+ }catch(error){
+
+  showError(error);
+
+ }
+
 };
 
-/* Start */
+
+/* PREMIUM QUICK LOGIN
+   UI demonstration only.
+   No PIN is stored or authenticated here.
+*/
+
+const premiumNote=$("premiumNote");
+
+function showPremiumNote(text){
+
+ premiumNote.textContent=text;
+ premiumNote.style.display="block";
+
+}
+
+$("premiumPin").addEventListener("input",function(){
+
+ this.value=this.value
+  .replace(/\D/g,"")
+  .slice(0,8);
+
+ valid(this);
+
+ premiumNote.style.display="none";
+
+});
+
+
+/* PREMIUM LOGIN */
+
+$("premiumLoginButton").onclick=()=>{
+
+ const pin=$("premiumPin").value;
+
+ if(!/^\d{4,8}$/.test(pin)){
+
+  invalid($("premiumPin"));
+
+  showPremiumNote(
+   "Please enter a valid 4–8 digit Premium PIN."
+  );
+
+  return;
+
+ }
+
+ valid($("premiumPin"));
+
+ showPremiumNote(
+  "Premium PIN Login is not activated yet. Secure server verification must be connected first. Please use Email, Google or Mobile OTP Login."
+ );
+
+};
+
+
+/* FORGET PREMIUM PIN */
+
+function premiumForgotAction(){
+
+ showPremiumNote(
+  "Premium PIN recovery is not activated yet. Secure Premium account verification and recovery must be connected first."
+ );
+
+}
+
+$("premiumForgot").onclick=premiumForgotAction;
+
+$("premiumForgot").onkeydown=e=>{
+
+ if(e.key==="Enter"||e.key===" "){
+  e.preventDefault();
+  premiumForgotAction();
+ }
+
+};
+
+
+/* PREMIUM SIGNUP */
+
+function premiumSignupAction(){
+
+ showPremiumNote(
+  "Premium Sign Up is not activated yet. Secure PIN registration, membership verification and Premium activation must be connected first."
+ );
+
+}
+
+$("premiumSignup").onclick=premiumSignupAction;
+
+$("premiumSignup").onkeydown=e=>{
+
+ if(e.key==="Enter"||e.key===" "){
+  e.preventDefault();
+  premiumSignupAction();
+ }
+
+};
+
+
+/* START */
+
 updateLastLogin();
+
 openLogin();
+
 applyLanguage();
 
 window.addEventListener("storage",()=>{
  applyLanguage();
 });
+
 </script>
 
+
 <script>
+
 if("serviceWorker" in navigator){
+
  window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("./service-worker.js",{scope:"./"})
-   .then(registration=>console.log("RYZON Service Worker registered:",registration.scope))
-   .catch(error=>console.error("RYZON Service Worker registration failed:",error));
+
+  navigator.serviceWorker.register(
+   "./service-worker.js",
+   {scope:"./"}
+  )
+  .then(registration=>
+   console.log(
+    "RYZON Service Worker registered:",
+    registration.scope
+   )
+  )
+  .catch(error=>
+   console.error(
+    "RYZON Service Worker registration failed:",
+    error
+   )
+  );
+
  });
+
 }
+
 </script>
+
 </body>
 </html>
