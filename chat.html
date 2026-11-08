@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>RYZON - Chat</title>
+<style>
+:root{
+  --bg:#071426;
+  --panel:#10243d;
+  --panel2:#142d49;
+  --text:#f3f8ff;
+  --muted:#9db0c7;
+  --cyan:#55d7ff;
+  --border:#24415f;
+  --danger:#ff647c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(145deg,#06101f,#0b1e35);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+header{
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:#091a2d;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:39px;height:39px;border-radius:12px;
+  display:grid;place-items:center;
+  font-size:24px;font-weight:bold;
+  color:white;background:linear-gradient(135deg,#168cff,#31e0e5);
+}
+.brand h2{margin:0;color:var(--cyan);font-size:20px}
+.brand small{display:block;color:var(--muted);font-size:10px}
+.icon-btn{
+  background:var(--panel2);border:1px solid var(--border);
+  color:white;padding:9px 12px;border-radius:10px;
+}
+.container{max-width:1100px;margin:auto;padding:16px}
+.tabs{display:flex;gap:8px;margin:12px 0}
+.tab{
+  flex:1;padding:12px;border:1px solid var(--border);
+  background:var(--panel);color:var(--muted);
+  border-radius:12px;font-weight:bold;
+}
+.tab.active{background:#123b59;color:var(--cyan);border-color:var(--cyan)}
+.chat-layout{
+  display:grid;grid-template-columns:320px 1fr;
+  gap:14px;min-height:65vh;
+}
+.panel{
+  background:rgba(16,36,61,.95);
+  border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+.panel-head{padding:15px;border-bottom:1px solid var(--border)}
+.panel-head h3{margin:0 0 10px}
+.search{
+  width:100%;padding:11px;border-radius:10px;
+  border:1px solid var(--border);background:#07182a;color:white;
+  outline:none;
+}
+.contact-list{max-height:58vh;overflow:auto}
+.contact{
+  display:flex;align-items:center;gap:11px;
+  padding:13px;border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;
+}
+.contact:hover,.contact.selected{background:#173653}
+.avatar{
+  width:43px;height:43px;flex-shrink:0;border-radius:50%;
+  display:grid;place-items:center;background:linear-gradient(135deg,#1376b8,#24c9d6);
+  font-weight:bold;font-size:18px;
+}
+.contact-info{min-width:0;flex:1}
+.contact-info strong{display:block}
+.contact-info small{color:var(--muted)}
+.online-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#37d68a;margin-right:5px;
+}
+.chat-panel{display:flex;flex-direction:column;min-height:520px}
+.chat-head{
+  display:flex;align-items:center;gap:10px;
+  padding:14px;border-bottom:1px solid var(--border);
+}
+.chat-head .details{flex:1}
+.chat-head h3{margin:0 0 4px;font-size:16px}
+.chat-head small{color:var(--muted)}
+.chat-actions{display:flex;gap:6px}
+.messages{
+  flex:1;padding:16px;overflow-y:auto;min-height:300px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.empty{
+  margin:auto;text-align:center;color:var(--muted);
+  line-height:1.7;padding:25px;
+}
+.bubble{
+  max-width:78%;padding:11px 13px;border-radius:14px;
+  background:#1b3855;align-self:flex-start;
+  overflow-wrap:anywhere;
+}
+.bubble.mine{
+  background:linear-gradient(135deg,#087eb6,#087c91);
+  align-self:flex-end;
+}
+.bubble small{
+  display:block;text-align:right;margin-top:5px;
+  font-size:10px;opacity:.7;
+}
+.composer{
+  padding:12px;border-top:1px solid var(--border);
+  display:flex;gap:8px;align-items:center;
+}
+.composer input{
+  min-width:0;flex:1;padding:12px;border-radius:12px;
+  background:#07182a;color:white;border:1px solid var(--border);
+}
+.send{
+  background:linear-gradient(135deg,#078cc5,#13b9c5);
+  border:0;color:white;border-radius:11px;padding:12px 16px;
+  font-weight:bold;
+}
+.tool-btn{
+  border:1px solid var(--border);background:#173653;
+  color:white;border-radius:10px;padding:10px;
+}
+.notice{
+  background:#152f49;border:1px solid var(--border);
+  border-radius:12px;padding:12px;margin:12px 0;
+  color:var(--muted);font-size:13px;line-height:1.5;
+}
+.hidden{display:none!important}
+.modal-bg{
+  position:fixed;inset:0;background:#000b;z-index:20;
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.modal{
+  width:100%;max-width:390px;background:#10243d;
+  border:1px solid var(--border);border-radius:16px;padding:20px;
+}
+.modal h3{margin-top:0}
+.modal input,.modal textarea{
+  width:100%;padding:12px;margin:7px 0 12px;
+  border-radius:9px;border:1px solid var(--border);
+  background:#07182a;color:white;
+}
+.modal textarea{min-height:90px;resize:vertical}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.secondary{
+  background:#263c55;color:white;border:1px solid var(--border);
+  border-radius:9px;padding:10px 14px;
+}
+.danger{background:#7c263b}
+footer{
+  text-align:center;color:var(--muted);
+  padding:18px;font-size:12px;
+}
+@media(max-width:700px){
+  .chat-layout{grid-template-columns:1fr}
+  .contact-list{max-height:230px}
+  .chat-panel{min-height:480px}
+  .chat-actions{gap:3px}
+  .chat-actions button{padding:8px}
+  .bubble{max-width:88%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">R</div>
+    <div>
+      <h2>RYZON</h2>
+      <small>One App, Endless Possibilities!</small>
+    </div>
+  </div>
+  <button class="icon-btn" onclick="location.href='home.html'">⌂ Home</button>
+</header>
+
+<main class="container">
+  <div class="tabs">
+    <button class="tab active" id="personalTab" onclick="switchMode('personal')">Personal Chat</button>
+    <button class="tab" id="groupTab" onclick="switchMode('group')">Group Chat</button>
+  </div>
+
+  <div class="notice">
+    🔒 Keep your conversations respectful. Block or report suspicious users whenever needed.
+  </div>
+
+  <section class="chat-layout">
+    <div class="panel">
+      <div class="panel-head">
+        <h3 id="listTitle">Messages</h3>
+        <input class="search" id="searchInput" placeholder="Search conversations..." oninput="renderContacts()">
+        <button class="send" id="newGroupBtn" style="width:100%;margin-top:10px" onclick="createGroup()">＋ Create Group</button>
+      </div>
+      <div class="contact-list" id="contactList"></div>
+    </div>
+
+    <div class="panel chat-panel">
+      <div class="chat-head">
+        <div class="avatar" id="chatAvatar">R</div>
+        <div class="details">
+          <h3 id="chatName">Select a conversation</h3>
+          <small id="chatStatus">Your RYZON chats</small>
+        </div>
+        <div class="chat-actions">
+          <button class="tool-btn" title="Block" onclick="blockCurrent()">🚫</button>
+          <button class="tool-btn" title="Report" onclick="reportCurrent()">⚑</button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="empty">
+          <div style="font-size:42px">💬</div>
+          <strong>Welcome to RYZON Chat</strong><br>
+          Select a conversation to get started.
+        </div>
+      </div>
+
+      <div class="composer">
+        <button class="tool-btn" title="Photo / Video sharing (Paid)" onclick="showPaidNotice()">＋</button>
+        <input id="messageInput" placeholder="Type a message..." autocomplete="off">
+        <button class="tool-btn" id="voiceBtn" title="Record voice message" onclick="toggleRecording()">🎙️</button>
+        <button class="send" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="notice">
+    <strong>Feature information</strong><br>
+    • Text chat: available in this demo interface.<br>
+    • Voice messages: recording permission is required.<br>
+    • Photo and video sharing: Paid feature.<br>
+    • Online status and real-time delivery require Firebase chat integration.
+  </div>
+</main>
+
+<footer>© 2026 RYZON · <a href="help.html" style="color:#55d7ff">Help & Support</a></footer>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">RYZON</h3>
+    <div id="modalContent"></div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal()">Cancel</button>
+      <button class="send" id="modalConfirm">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getAuth,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+let currentUser=null;
+let mode="personal";
+let selectedId=null;
+let mediaRecorder=null;
+let audioChunks=[];
+let recording=false;
+
+const $=id=>document.getElementById(id);
+
+function storageKey(){
+  return "ryzonChatDemo_"+(currentUser?.uid || "guest");
+}
+function getData(){
+  try{return JSON.parse(localStorage.getItem(storageKey())) || {personal:[],groups:[],messages:{},blocked:[],reports:[]};}
+  catch{return {personal:[],groups:[],messages:{},blocked:[],reports:[]};}
+}
+function saveData(data){
+  localStorage.setItem(storageKey(),JSON.stringify(data));
+}
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+function currentList(){
+  const data=getData();
+  return mode==="personal"?data.personal:data.groups;
+}
+function selectedItem(){
+  return currentList().find(item=>item.id===selectedId);
+}
+function makeId(){
+  return "c_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
+}
+
+function renderContacts(){
+  const list=currentList();
+  const search=$("searchInput").value.toLowerCase();
+  const blocked=getData().blocked;
+  const filtered=list.filter(item=>
+    item.name.toLowerCase().includes(search) &&
+    !(mode==="personal" && blocked.includes(item.id))
+  );
+
+  $("contactList").innerHTML="";
+  if(!filtered.length){
+    $("contactList").innerHTML='<div class="empty">No conversations yet.<br>Select Create Group or add a contact.</div>';
+    return;
+  }
+
+  filtered.forEach(item=>{
+    const el=document.createElement("div");
+    el.className="contact"+(selectedId===item.id?" selected":"");
+    el.innerHTML=`
+      <div class="avatar">${escapeHTML(item.name.charAt(0).toUpperCase())}</div>
+      <div class="contact-info">
+        <strong>${escapeHTML(item.name)}</strong>
+        <small>${mode==="group"?"Group conversation":"Personal conversation"}</small>
+      </div>`;
+    el.onclick=()=>selectConversation(item.id);
+    $("contactList").appendChild(el);
+  });
+}
+
+function renderMessages(){
+  const item=selectedItem();
+  if(!item){
+    $("chatName").textContent="Select a conversation";
+    $("chatStatus").textContent="Your RYZON chats";
+    $("chatAvatar").textContent="R";
+    $("messages").innerHTML='<div class="empty">💬<br>Select a conversation to get started.</div>';
+    return;
+  }
+
+  $("chatName").textContent=item.name;
+  $("chatAvatar").textContent=item.name.charAt(0).toUpperCase();
+  $("chatStatus").textContent=mode==="group"?"Group chat · Demo mode":"Personal chat · Demo mode";
+
+  const data=getData();
+  const msgs=data.messages[selectedId]||[];
+  $("messages").innerHTML="";
+
+  if(!msgs.length){
+    $("messages").innerHTML='<div class="empty">No messages yet.<br>Send the first message!</div>';
+    return;
+  }
+
+  msgs.forEach(msg=>{
+    const bubble=document.createElement("div");
+    bubble.className="bubble"+(msg.mine?" mine":"");
+    bubble.innerHTML=`${escapeHTML(msg.text)}<small>${escapeHTML(msg.time)}</small>`;
+    $("messages").appendChild(bubble);
+  });
+  $("messages").scrollTop=$("messages").scrollHeight;
+}
+
+function selectConversation(id){
+  selectedId=id;
+  renderContacts();
+  renderMessages();
+}
+
+window.switchMode=function(next){
+  mode=next;
+  selectedId=null;
+  $("personalTab").classList.toggle("active",mode==="personal");
+  $("groupTab").classList.toggle("active",mode==="group");
+  $("listTitle").textContent=mode==="personal"?"Messages":"Groups";
+  $("newGroupBtn").style.display=mode==="group"?"block":"none";
+  renderContacts();
+  renderMessages();
+};
+
+window.createGroup=function(){
+  openModal("Create Group",`
+    <label>Group Name</label>
+    <input id="groupNameInput" placeholder="Enter group name" maxlength="40">
+    <p style="color:#9db0c7;font-size:12px">This creates a local demo group. Member invitations and synced group chat need backend integration.</p>
+  `,()=>{
+    const name=$("groupNameInput").value.trim();
+    if(!name){alert("Enter a group name.");return;}
+    const data=getData();
+    const group={id:makeId(),name,createdAt:Date.now()};
+    data.groups.push(group);
+    saveData(data);
+    closeModal();
+    selectConversation(group.id);
+  });
+};
+
+window.sendMessage=function(){
+  const item=selectedItem();
+  const text=$("messageInput").value.trim();
+  if(!item){alert("Select a conversation first.");return;}
+  if(!text)return;
+
+  const data=getData();
+  if(!data.messages[selectedId])data.messages[selectedId]=[];
+  data.messages[selectedId].push({
+    text,
+    mine:true,
+    time:new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})
+  });
+  saveData(data);
+  $("messageInput").value="";
+  renderMessages();
+};
+
+$("messageInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter")window.sendMessage();
+});
+
+window.showPaidNotice=function(){
+  openModal("Premium Feature",`
+    <p>📷 Photo Sharing and 🎥 Video Sharing are Paid Features on RYZON.</p>
+    <p>You can explore available plans on the Premium page.</p>
+  `,()=>{
+    closeModal();
+    location.href="premium.html";
+  },"View Plans");
+};
+
+window.toggleRecording=async function(){
+  if(recording){
+    mediaRecorder.stop();
+    recording=false;
+    $("voiceBtn").textContent="🎙️";
+    return;
+  }
+
+  if(!selectedItem()){
+    alert("Select a conversation first.");
+    return;
+  }
+  if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){
+    alert("Voice recording is not supported in this browser.");
+    return;
+  }
+
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    audioChunks=[];
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>{
+      if(e.data.size)audioChunks.push(e.data);
+    };
+    mediaRecorder.onstop=()=>{
+      const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+      const url=URL.createObjectURL(blob);
+      const audio=document.createElement("audio");
+      audio.controls=true;
+      audio.src=url;
+      const data=getData();
+      if(!data.messages[selectedId])data.messages[selectedId]=[];
+      data.messages[selectedId].push({
+        text:"Voice message recorded (local preview only)",
+        mine:true,
+        time:new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})
+      });
+      saveData(data);
+      renderMessages();
+      stream.getTracks().forEach(track=>track.stop());
+      alert("Voice recording completed. This demo does not upload or deliver the recording.");
+    };
+    mediaRecorder.start();
+    recording=true;
+    $("voiceBtn").textContent="⏹️";
+  }catch(error){
+    alert("Microphone permission was not granted.");
+  }
+};
+
+window.blockCurrent=function(){
+  const item=selectedItem();
+  if(!item || mode!=="personal"){
+    alert("Select a personal conversation to block.");
+    return;
+  }
+  openModal("Block User",`<p>Block <strong>${escapeHTML(item.name)}</strong> on this browser?</p>`,()=>{
+    const data=getData();
+    if(!data.blocked.includes(item.id))data.blocked.push(item.id);
+    saveData(data);
+    selectedId=null;
+    closeModal();
+    renderContacts();
+    renderMessages();
+  },"Block");
+};
+
+window.reportCurrent=function(){
+  const item=selectedItem();
+  if(!item){alert("Select a conversation first.");return;}
+  openModal("Report Conversation",`
+    <label>Reason</label>
+    <textarea id="reportReason" placeholder="Explain the issue..."></textarea>
+  `,()=>{
+    const reason=$("reportReason").value.trim();
+    if(!reason){alert("Enter a reason.");return;}
+    const data=getData();
+    data.reports.push({
+      conversation:item.name,
+      reason,
+      date:new Date().toISOString()
+    });
+    saveData(data);
+    closeModal();
+    alert("Report saved locally in this demo. It has not been sent to RYZON Admin.");
+  },"Submit Report");
+};
+
+function openModal(title,content,onConfirm,label="Continue"){
+  $("modalTitle").textContent=title;
+  $("modalContent").innerHTML=content;
+  $("modalConfirm").textContent=label;
+  $("modalConfirm").onclick=onConfirm;
+  $("modalBg").style.display="flex";
+}
+window.closeModal=function(){
+  $("modalBg").style.display="none";
+};
+
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    location.href="otp.html";
+    return;
+  }
+  currentUser=user;
+  renderContacts();
+  renderMessages();
+});
+</script>
+</body>
+</html>
