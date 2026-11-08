@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- RYZON PWA SETTINGS -->
 <meta name="theme-color" content="#071a30">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +15,7 @@
 <link rel="icon" type="image/png" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 
-<title>RYZON - Secure Login</title>
+<title>RYZON - Login</title>
 
 <script src="language-system.js"></script>
 
@@ -34,75 +33,78 @@ body{
  justify-content:center;
  padding:20px;
  font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#071b35,#123f69);
- color:white
+ color:#fff;
+ background:
+ radial-gradient(circle at top,#174c78 0%,transparent 45%),
+ linear-gradient(135deg,#061629,#071a30 55%,#102e4d);
 }
 
 .container{
  width:100%;
  max-width:430px;
- padding:25px;
- border-radius:22px;
- background:#102b49;
- box-shadow:0 12px 40px #0006
+ padding:26px;
+ border:1px solid #285174;
+ border-radius:24px;
+ background:linear-gradient(160deg,#123454,#0c2742);
+ box-shadow:0 18px 55px #0008;
 }
 
 .top{
  display:flex;
  justify-content:flex-end;
- margin-bottom:10px
+ margin-bottom:12px;
 }
 
 .top button{
  width:auto;
  margin:0;
- padding:9px 12px;
+ padding:9px 13px;
+ border-radius:20px;
  background:#254664;
- font-size:13px
+ font-size:13px;
 }
 
 .logo{
- width:82px;
- height:82px;
- margin:0 auto 12px;
- border-radius:24px;
+ width:76px;
+ height:76px;
+ margin:0 auto 10px;
+ border-radius:23px;
  display:flex;
  align-items:center;
  justify-content:center;
- background:linear-gradient(145deg,#42c8ff,#078bd0);
+ background:linear-gradient(145deg,#55dcff,#078bd0);
  color:white;
- font-size:60px;
+ font-size:55px;
  font-weight:900;
  box-shadow:0 8px 25px #0799e566;
- text-shadow:2px 3px 5px #06436b
 }
 
 h1{
  text-align:center;
  margin:0;
- color:#42c8ff;
+ color:#55dcff;
  font-size:32px;
- letter-spacing:3px
+ letter-spacing:3px;
 }
 
 .tagline{
  text-align:center;
- color:#65d0ff;
+ color:#8bdfff;
  font-size:13px;
- margin:5px 0
+ margin:5px 0;
 }
 
 .subtitle{
  text-align:center;
- color:#c6d8e8;
- margin:15px 0 20px;
- font-size:14px
+ color:#d3e5f3;
+ margin:17px 0 20px;
+ font-size:15px;
 }
 
 .tabs,.method-tabs{
  display:flex;
  gap:9px;
- margin-bottom:18px
+ margin-bottom:17px;
 }
 
 .tabs button,.method-tabs button{
@@ -110,42 +112,48 @@ h1{
  background:#254664;
  padding:12px 5px;
  font-size:14px;
- margin:0
+ margin:0;
 }
 
 .tabs button.active,.method-tabs button.active{
- background:#078bd0
+ background:linear-gradient(110deg,#078bd0,#16bde0);
+ box-shadow:0 5px 15px #0799e544;
 }
 
 input{
  width:100%;
  padding:14px;
  margin:8px 0;
- border:1px solid #52708b;
- border-radius:9px;
+ border:1px solid #54738e;
+ border-radius:10px;
  background:#f7fbff;
  color:#102030;
- font-size:15px
+ font-size:15px;
+ outline:none;
+}
+
+input:focus{
+ border:2px solid #20c5ed;
 }
 
 input.input-error{
- border:2px solid #ff3333!important;
- background:#fff0f0!important
+ border:2px solid #ff4444!important;
+ background:#fff0f0!important;
 }
 
 .iti{
  width:100%;
- margin:8px 0
+ margin:8px 0;
 }
 
 .iti input{
  width:100%;
- margin:0
+ margin:0;
 }
 
 .iti__country-list{
  color:#102030;
- max-width:300px
+ max-width:300px;
 }
 
 button{
@@ -153,35 +161,34 @@ button{
  padding:14px;
  margin-top:12px;
  border:0;
- border-radius:9px;
- background:#0799e5;
+ border-radius:10px;
+ background:linear-gradient(110deg,#078bd0,#16bde0);
  color:white;
  font-size:16px;
  font-weight:bold;
- cursor:pointer
+ cursor:pointer;
 }
 
 button:disabled{
  opacity:.55;
- cursor:not-allowed
+ cursor:not-allowed;
 }
 
 .secondary{background:#31516e}
 
 .google-button{
- background:white;
+ background:#fff;
  color:#24364b;
- border:1px solid #d8e1e9
+ border:1px solid #d8e1e9;
 }
 
 .google-button span{
  font-size:18px;
- margin-right:8px
+ margin-right:8px;
 }
 
 .password-row{position:relative}
-
-.password-row input{padding-right:70px}
+.password-row input{padding-right:75px}
 
 .password-toggle{
  position:absolute;
@@ -189,22 +196,22 @@ button:disabled{
  top:8px;
  width:auto;
  height:43px;
- min-width:55px;
+ min-width:58px;
  padding:5px;
  margin:0;
  background:transparent;
  color:#087fbd;
- font-size:13px
+ font-size:13px;
 }
 
 .small-link{
  display:block;
- text-align:center;
- margin-top:15px;
+ text-align:right;
+ margin-top:12px;
  color:#65d0ff;
  cursor:pointer;
  text-decoration:underline;
- font-size:14px
+ font-size:13px;
 }
 
 .divider{
@@ -213,20 +220,20 @@ button:disabled{
  gap:10px;
  margin:18px 0;
  color:#a9bfd2;
- font-size:12px
+ font-size:12px;
 }
 
 .divider:before,.divider:after{
  content:"";
  height:1px;
  background:#45617b;
- flex:1
+ flex:1;
 }
 
 .note,.description{
  color:#c6d8e8;
  font-size:13px;
- line-height:1.5
+ line-height:1.5;
 }
 
 .description{text-align:center}
@@ -235,30 +242,30 @@ button:disabled{
  display:none;
  margin-top:15px;
  padding-top:15px;
- border-top:1px solid #45617b
+ border-top:1px solid #45617b;
 }
 
 #otpSection{
  display:none;
  margin-top:15px;
  padding-top:12px;
- border-top:1px solid #45617b
+ border-top:1px solid #45617b;
 }
 
 #recaptcha-container{
  margin-top:12px;
- overflow:hidden
+ overflow:hidden;
 }
 
 #message{
  display:none;
  margin-top:15px;
  padding:12px;
- border-radius:8px;
+ border-radius:9px;
  background:#203e5a;
  line-height:1.5;
  font-size:14px;
- overflow-wrap:anywhere
+ overflow-wrap:anywhere;
 }
 
 .remember-row{
@@ -267,50 +274,51 @@ button:disabled{
  gap:9px;
  margin:12px 0;
  color:#c6d8e8;
- font-size:13px
+ font-size:13px;
 }
 
 .remember-row input{
  width:17px;
  height:17px;
  margin:0;
- accent-color:#0799e5
+ accent-color:#0799e5;
 }
 
 #lastLogin{
  color:#a9bfd2;
  font-size:12px;
  text-align:center;
- margin-top:12px
+ margin-top:12px;
 }
 
 .bottom-text{
  text-align:center;
  color:#c6d8e8;
  font-size:13px;
- margin-top:18px
+ margin-top:18px;
+}
+
+.bottom-text a,.footer-links a{
+ color:#65d0ff;
 }
 
 .footer-links{
  display:flex;
  justify-content:center;
- gap:15px;
+ gap:16px;
  flex-wrap:wrap;
  margin-top:22px;
  padding-top:15px;
- border-top:1px solid #45617b
+ border-top:1px solid #45617b;
 }
 
-.footer-links a{
- color:#65d0ff;
- font-size:12px
-}
+.footer-links a{font-size:12px}
 
 #otpTimer{
  color:#65d0ff;
  font-size:13px;
  text-align:center;
- margin:10px 0
+ margin:10px 0;
 }
 
 .hidden{display:none!important}
@@ -324,7 +332,7 @@ button:disabled{
  align-items:center;
  justify-content:center;
  padding:20px;
- text-align:center
+ text-align:center;
 }
 
 .success-card{
@@ -332,8 +340,9 @@ button:disabled{
  width:100%;
  padding:35px 22px;
  background:#102b49;
+ border:1px solid #285174;
  border-radius:22px;
- animation:pop .45s ease
+ animation:pop .45s ease;
 }
 
 .success-check{
@@ -345,7 +354,7 @@ button:disabled{
  display:flex;
  align-items:center;
  justify-content:center;
- font-size:48px
+ font-size:48px;
 }
 
 .success-card h2{color:#65f0a5}
@@ -379,12 +388,12 @@ button:disabled{
  </div>
 
  <div class="logo">R</div>
-
  <h1>RYZON</h1>
-
  <div class="tagline">One App, Endless Possibilities!</div>
 
- <div class="subtitle">Welcome Back</div>
+ <div class="subtitle" id="subtitle">
+  Welcome Back! Login to continue
+ </div>
 
  <div class="tabs" id="accountTabs">
   <button id="loginTab" class="active" type="button">Login</button>
@@ -393,7 +402,7 @@ button:disabled{
 
  <div class="method-tabs" id="methodTabs">
   <button id="emailTab" class="active" type="button">Email</button>
-  <button id="mobileTab" type="button">Mobile OTP</button>
+  <button id="mobileTab" type="button">Mobile</button>
  </div>
 
  <section id="emailSection">
@@ -402,13 +411,13 @@ button:disabled{
 
    <input id="email"
     type="email"
-    placeholder="Email Address"
+    placeholder="Enter your email"
     autocomplete="email">
 
    <div class="password-row">
     <input id="password"
      type="password"
-     placeholder="Password"
+     placeholder="Enter password"
      autocomplete="current-password">
 
     <button class="password-toggle"
@@ -435,7 +444,7 @@ button:disabled{
     Remember Me
    </label>
 
-   <button id="mainButton" type="button">Sign In</button>
+   <button id="mainButton" type="button">Login with Email</button>
 
   </div>
 
@@ -505,11 +514,10 @@ button:disabled{
 
  <div class="bottom-text" id="accountPrompt">
   Don't have an account?
-  <a href="#" id="signupLink" style="color:#65d0ff">Sign Up</a>
+  <a href="#" id="signupLink">Sign Up</a>
  </div>
 
  <div id="lastLogin"></div>
-
  <div id="message"></div>
 
  <div class="footer-links">
@@ -520,19 +528,12 @@ button:disabled{
 </main>
 
 <div id="successOverlay">
-
  <div class="success-card">
-
   <div class="success-check">✓</div>
-
   <h2>Login Successful!</h2>
-
   <p>Welcome to RYZON</p>
-
   <p>One App, Endless Possibilities!</p>
-
  </div>
-
 </div>
 
 <script type="module">
@@ -569,166 +570,107 @@ const firebaseConfig={
 };
 
 const app=initializeApp(firebaseConfig);
-
 const auth=getAuth(app);
-
 const googleProvider=new GoogleAuthProvider();
-
 const $=id=>document.getElementById(id);
 
 
-/* Random Chat redirect detection */
+/* Random Chat destination */
 
 const isRandomChat=
  sessionStorage.getItem("ryzonNextAction")==="randomChat";
 
-
 let mode="login";
 let method="email";
-
 let confirmationResult=null;
 let recaptchaVerifier=null;
-
 let otpExpiryTime=0;
 let resendAvailableTime=0;
-
 let otpInterval=null;
 let otpExpired=false;
-
 let currentPhone="";
 
 
-/* Phone input library */
+/* Phone input */
 
 let phonePicker=null;
 
 try{
-
  if(typeof window.intlTelInput==="function"){
-
   phonePicker=window.intlTelInput($("loginPhone"),{
-
    initialCountry:"auto",
    separateDialCode:true,
    nationalMode:true,
-
    geoIpLookup:function(callback){
-
     fetch("https://ipapi.co/json/")
      .then(response=>response.json())
-     .then(data=>callback(
-      data?.country_code?.toLowerCase()||"in"
-     ))
+     .then(data=>callback(data?.country_code?.toLowerCase()||"in"))
      .catch(()=>callback("in"));
-
    },
-
    loadUtils:()=>import(
     "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"
    )
-
   });
-
  }
-
 }catch(error){
-
  console.warn("Phone input library unavailable:",error);
-
  phonePicker=null;
-
 }
 
 
-/* Message functions */
+/* Messages */
 
 function message(text,success=false){
-
  $("message").textContent=text;
-
  $("message").style.display="block";
-
- $("message").style.color=
-  success?"#75f0a5":"#ffb4b4";
-
+ $("message").style.color=success?"#75f0a5":"#ffb4b4";
 }
 
 function hideMessage(){
-
  $("message").style.display="none";
-
 }
 
 function invalid(field){
-
  field.classList.add("input-error");
-
 }
 
 function valid(field){
-
  field.classList.remove("input-error");
-
 }
 
-
-[
- "email",
- "password",
- "confirmPassword",
- "loginPhone",
- "otpCode"
-].forEach(id=>{
-
+["email","password","confirmPassword","loginPhone","otpCode"].forEach(id=>{
  $(id).addEventListener("input",()=>valid($(id)));
-
 });
 
 
 /* Button loading */
 
 function busy(button,on,text){
-
  if(on){
-
   if(!button.dataset.oldText){
-
    button.dataset.oldText=button.textContent;
-
   }
-
   button.disabled=true;
-
   button.textContent=text||"Please wait...";
-
  }else{
-
   button.disabled=false;
-
   if(button.dataset.oldText){
-
    button.textContent=button.dataset.oldText;
-
    delete button.dataset.oldText;
-
   }
-
  }
-
 }
 
 
-/* Login persistence */
+/* Persistence */
 
 async function setLoginPersistence(){
-
  await setPersistence(
   auth,
   $("rememberMe").checked?
    browserLocalPersistence:
    browserSessionPersistence
  );
-
 }
 
 
@@ -739,11 +681,8 @@ async function validPhone(){
  const raw=$("loginPhone").value.trim();
 
  if(!raw){
-
   invalid($("loginPhone"));
-
   throw new Error("Mobile Number உள்ளிடுங்கள்.");
-
  }
 
  if(phonePicker){
@@ -751,99 +690,56 @@ async function validPhone(){
   let pickerReady=false;
 
   try{
-
    await phonePicker.promise;
-
    pickerReady=true;
-
   }catch(error){
-
    console.warn("Phone utility unavailable:",error);
-
   }
 
   if(pickerReady){
-
    try{
-
     if(!phonePicker.isValidNumber()){
-
      invalid($("loginPhone"));
-
      throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
-
     }
-
     valid($("loginPhone"));
-
     return phonePicker.getNumber();
-
    }catch(error){
-
     if(error.message==="சரியான Mobile Number உள்ளிடுங்கள்."){
-
      throw error;
-
     }
-
     console.warn("Phone validation utility error:",error);
-
    }
-
   }
-
  }
 
  let cleaned=raw.replace(/[^\d+]/g,"");
 
  if(/^\d{10}$/.test(cleaned)){
-
   cleaned="+91"+cleaned;
-
- }else if(
-  /^\d{12}$/.test(cleaned)&&cleaned.startsWith("91")
- ){
-
+ }else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91")){
   cleaned="+"+cleaned;
-
- }else if(
-  /^\d{11}$/.test(cleaned)&&cleaned.startsWith("1")
- ){
-
-  cleaned="+"+cleaned;
-
  }else if(/^\d{8,15}$/.test(cleaned)){
-
   cleaned="+"+cleaned;
-
  }
 
  if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){
-
   invalid($("loginPhone"));
-
   throw new Error(
    "Country Code உடன் சரியான Mobile Number உள்ளிடுங்கள். உதாரணம்: +919876543210"
   );
-
  }
 
  valid($("loginPhone"));
-
  return cleaned;
-
 }
 
 
 /* Last login */
 
 function showLastLogin(){
-
  const last=localStorage.getItem("ryzonLastLogin");
-
- $("lastLogin").textContent=
-  last?"Last Login: "+last:"";
-
+ $("lastLogin").textContent=last?"Last Login: "+last:"";
 }
 
 
@@ -857,13 +753,11 @@ function successLogin(){
  );
 
  showLastLogin();
-
  $("successOverlay").style.display="flex";
 
  const action=sessionStorage.getItem("ryzonNextAction");
 
  setTimeout(()=>{
-
   sessionStorage.removeItem("ryzonNextAction");
 
   location.replace(
@@ -871,692 +765,419 @@ function successLogin(){
     "random-chat.html":
     "home.html"
   );
-
  },1600);
-
 }
 
 
 /* Login lockout */
 
 const MAX_ATTEMPTS=5;
-
 const LOCK_TIME=300000;
 
-
 function lockIdentity(){
-
  if(method==="phone"){
-
   return currentPhone||$("loginPhone").value.trim();
-
  }
-
  return $("email").value.trim().toLowerCase();
-
 }
-
 
 function lockKey(){
-
  return "ryzonLoginLock_"+(lockIdentity()||"unknown");
-
 }
-
 
 function attempts(){
-
  try{
-
-  return JSON.parse(localStorage.getItem(lockKey()))||
-   {count:0,until:0};
-
+  return JSON.parse(localStorage.getItem(lockKey()))||{count:0,until:0};
  }catch(e){
-
   return {count:0,until:0};
-
  }
-
 }
-
 
 function isLocked(){
 
  const data=attempts();
 
  if(data.until>Date.now()){
-
   message(
    "Login தற்காலிகமாக Lock செய்யப்பட்டுள்ளது. "+
    Math.ceil((data.until-Date.now())/1000)+
    " seconds கழித்து முயற்சிக்கவும்."
   );
-
   return true;
-
  }
 
  if(data.until){
-
   localStorage.removeItem(lockKey());
-
  }
 
  return false;
-
 }
-
 
 function failedAttempt(){
 
  const data=attempts();
-
  data.count++;
 
  if(data.count>=MAX_ATTEMPTS){
-
   data.count=0;
-
   data.until=Date.now()+LOCK_TIME;
-
   localStorage.setItem(lockKey(),JSON.stringify(data));
-
-  message(
-   "5 தவறான முயற்சிகள். 5 நிமிடங்களுக்கு Login Lock செய்யப்பட்டுள்ளது."
-  );
-
+  message("5 தவறான முயற்சிகள். 5 நிமிடங்களுக்கு Login Lock செய்யப்பட்டுள்ளது.");
  }else{
-
   localStorage.setItem(lockKey(),JSON.stringify(data));
-
   message(
    "Login விவரங்கள் தவறாக உள்ளன. மீதமுள்ள முயற்சிகள்: "+
    (MAX_ATTEMPTS-data.count)
   );
-
  }
-
 }
-
 
 function clearAttempts(){
-
  localStorage.removeItem(lockKey());
-
 }
 
 
-/* Friendly Firebase errors */
+/* Firebase errors */
 
 function showError(error){
 
  const code=error?.code||"";
 
  const messages={
-
-  "auth/email-already-in-use":
-   "இந்த Email ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
-
-  "auth/invalid-email":
-   "சரியான Email முகவரியை உள்ளிடுங்கள்.",
-
-  "auth/weak-password":
-   "Password குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.",
-
-  "auth/invalid-credential":
-   "Email அல்லது Password தவறாக உள்ளது.",
-
-  "auth/user-not-found":
-   "இந்த Email-க்கு Account இல்லை.",
-
-  "auth/wrong-password":
-   "Password தவறாக உள்ளது.",
-
-  "auth/too-many-requests":
-   "பலமுறை முயற்சி செய்யப்பட்டுள்ளது. பின்னர் முயற்சிக்கவும்.",
-
-  "auth/invalid-phone-number":
-   "சரியான Mobile Number உள்ளிடுங்கள்.",
-
-  "auth/phone-number-already-exists":
-   "இந்த Mobile Number ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
-
-  "auth/credential-already-in-use":
-   "இந்த Mobile Number வேறு Account-ல் இணைக்கப்பட்டுள்ளது.",
-
-  "auth/code-expired":
-   "OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
-
-  "auth/session-expired":
-   "OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
-
-  "auth/invalid-verification-code":
-   "OTP தவறாக உள்ளது.",
-
-  "auth/operation-not-allowed":
-   "Firebase-ல் இந்த Login முறை Enable செய்யப்படவில்லை.",
-
-  "auth/captcha-check-failed":
-   "reCAPTCHA சரிபார்ப்பு தோல்வியடைந்தது.",
-
-  "auth/popup-closed-by-user":
-   "Google Login மூடப்பட்டது.",
-
-  "auth/popup-blocked":
-   "Browser Popup-ஐ அனுமதிக்கவும்.",
-
-  "auth/unauthorized-domain":
-   "Firebase-ல் இந்த Website Domain அனுமதிக்கப்படவில்லை.",
-
-  "auth/quota-exceeded":
-   "SMS OTP வரம்பு முடிந்துள்ளது. பின்னர் முயற்சிக்கவும்.",
-
-  "auth/billing-not-enabled":
-   "Firebase Phone Authentication-க்கு Billing அமைப்பு தேவைப்படலாம்.",
-
-  "auth/network-request-failed":
-   "Internet Connection சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
-
-  "auth/missing-phone-number":
-   "Mobile Number உள்ளிடுங்கள்."
-
+  "auth/email-already-in-use":"இந்த Email ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
+  "auth/invalid-email":"சரியான Email முகவரியை உள்ளிடுங்கள்.",
+  "auth/weak-password":"Password குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.",
+  "auth/invalid-credential":"Email அல்லது Password தவறாக உள்ளது.",
+  "auth/user-not-found":"இந்த Email-க்கு Account இல்லை.",
+  "auth/wrong-password":"Password தவறாக உள்ளது.",
+  "auth/too-many-requests":"பலமுறை முயற்சி செய்யப்பட்டுள்ளது. பின்னர் முயற்சிக்கவும்.",
+  "auth/invalid-phone-number":"சரியான Mobile Number உள்ளிடுங்கள்.",
+  "auth/phone-number-already-exists":"இந்த Mobile Number ஏற்கெனவே பயன்படுத்தப்படுகிறது.",
+  "auth/credential-already-in-use":"இந்த Mobile Number வேறு Account-ல் இணைக்கப்பட்டுள்ளது.",
+  "auth/code-expired":"OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
+  "auth/session-expired":"OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.",
+  "auth/invalid-verification-code":"OTP தவறாக உள்ளது.",
+  "auth/operation-not-allowed":"Firebase-ல் இந்த Login முறை Enable செய்யப்படவில்லை.",
+  "auth/captcha-check-failed":"reCAPTCHA சரிபார்ப்பு தோல்வியடைந்தது.",
+  "auth/popup-closed-by-user":"Google Login மூடப்பட்டது.",
+  "auth/popup-blocked":"Browser Popup-ஐ அனுமதிக்கவும்.",
+  "auth/unauthorized-domain":"Firebase-ல் இந்த Website Domain அனுமதிக்கப்படவில்லை.",
+  "auth/quota-exceeded":"SMS OTP வரம்பு முடிந்துள்ளது. பின்னர் முயற்சிக்கவும்.",
+  "auth/billing-not-enabled":"Firebase Phone Authentication-க்கு Billing அமைப்பு தேவைப்படலாம்.",
+  "auth/network-request-failed":"Internet Connection சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+  "auth/missing-phone-number":"Mobile Number உள்ளிடுங்கள்."
  };
-
 
  if(
   code==="auth/invalid-credential"||
   code==="auth/wrong-password"||
   code==="auth/user-not-found"
  ){
-
   failedAttempt();
-
  }else{
-
   message(messages[code]||error?.message||"பிழை ஏற்பட்டுள்ளது.");
-
  }
 
  console.error(error);
-
 }
 
 
-/* OTP Timer */
+/* OTP timer */
 
 function clearOtpTimer(){
 
  if(otpInterval){
-
   clearInterval(otpInterval);
-
   otpInterval=null;
-
  }
 
  otpExpiryTime=0;
-
  resendAvailableTime=0;
-
  otpExpired=false;
 
  $("otpTimer").textContent="";
-
  $("resendOtpButton").disabled=true;
-
  $("resendOtpButton").textContent="Resend OTP in 30s";
-
  $("verifyOtpButton").disabled=false;
-
 }
-
 
 function updateOtpTimer(){
 
  const now=Date.now();
 
- const expiry=Math.max(
-  0,
-  Math.ceil((otpExpiryTime-now)/1000)
- );
-
- const resend=Math.max(
-  0,
-  Math.ceil((resendAvailableTime-now)/1000)
- );
-
+ const expiry=Math.max(0,Math.ceil((otpExpiryTime-now)/1000));
+ const resend=Math.max(0,Math.ceil((resendAvailableTime-now)/1000));
 
  if(expiry<=0){
-
   otpExpired=true;
-
   $("verifyOtpButton").disabled=true;
-
-  $("otpTimer").textContent=
-   "OTP Expired! Please request a new OTP.";
-
+  $("otpTimer").textContent="OTP Expired! Please request a new OTP.";
  }else{
-
   $("verifyOtpButton").disabled=false;
-
-  $("otpTimer").textContent=
-   "OTP expires in "+expiry+" seconds";
-
+  $("otpTimer").textContent="OTP expires in "+expiry+" seconds";
  }
-
 
  if(resend<=0){
-
   $("resendOtpButton").disabled=false;
-
   $("resendOtpButton").textContent="Resend OTP";
-
  }else{
-
   $("resendOtpButton").disabled=true;
-
-  $("resendOtpButton").textContent=
-   "Resend OTP in "+resend+"s";
-
+  $("resendOtpButton").textContent="Resend OTP in "+resend+"s";
  }
-
 
  if(expiry<=0&&resend<=0){
-
   clearInterval(otpInterval);
-
   otpInterval=null;
-
  }
-
 }
-
 
 function startOtpTimer(){
 
  clearOtpTimer();
 
  otpExpiryTime=Date.now()+60000;
-
  resendAvailableTime=Date.now()+30000;
 
  $("otpSection").style.display="block";
 
  updateOtpTimer();
-
  otpInterval=setInterval(updateOtpTimer,1000);
-
 }
 
 
-/* Screen switching */
+/* Screen controls */
 
 function showMethod(){
 
- $("emailSection").style.display=
-  method==="email"?"block":"none";
+ $("emailSection").style.display=method==="email"?"block":"none";
+ $("phoneSection").style.display=method==="phone"?"block":"none";
 
- $("phoneSection").style.display=
-  method==="phone"?"block":"none";
-
-
- $("emailTab").classList.toggle(
-  "active",
-  method==="email"
- );
-
- $("mobileTab").classList.toggle(
-  "active",
-  method==="phone"
- );
-
+ $("emailTab").classList.toggle("active",method==="email");
+ $("mobileTab").classList.toggle("active",method==="phone");
 
  $("signupFields").classList.toggle(
   "hidden",
   !(mode==="signup"&&method==="email")
  );
 
-
  $("rememberRow").style.display=
   mode==="login"&&method==="email"?"flex":"none";
 
-
  $("mainButton").textContent=
-  mode==="signup"?"Create Account":"Sign In";
-
+  mode==="signup"?"Create Account":"Login with Email";
 
  $("forgotLink").style.display=
   mode==="login"&&method==="email"?"block":"none";
 
-
  $("phoneTitle").textContent=
   mode==="signup"?"Mobile Sign Up":"Mobile OTP Login";
-
 
  $("phoneDescription").textContent=
   mode==="signup"
    ?"Mobile Number உள்ளிட்டு OTP Verify செய்து புதிய Account உருவாக்குங்கள்."
    :"உங்கள் Mobile Number உள்ளிட்டு OTP பெறுங்கள்.";
 
-
- $("sendOtpButton").textContent="Send OTP";
-
+ $("sendOtpButton").textContent=
+  mode==="signup"?"Send OTP & Sign Up":"Send OTP";
 }
-
 
 function selectMethod(value){
 
  method=value;
-
  confirmationResult=null;
-
  currentPhone="";
 
  clearOtpTimer();
 
  $("otpSection").style.display="none";
-
  $("otpCode").value="";
-
  $("verifiedSection").style.display="none";
 
  hideMessage();
-
  showMethod();
-
 }
-
 
 function openLogin(){
 
  mode="login";
 
  $("loginTab").classList.add("active");
-
  $("signupTab").classList.remove("active");
 
  $("accountTabs").style.display="flex";
-
  $("methodTabs").style.display="flex";
-
  $("googleButton").style.display="block";
-
  $("accountPrompt").style.display="block";
-
+ $("subtitle").textContent="Welcome Back! Login to continue";
 
  $("accountPrompt").innerHTML=
-  "Don't have an account? <a href='#' id='signupLink' style='color:#65d0ff'>Sign Up</a>";
-
+  'Don\'t have an account? <a href="#" id="signupLink">Sign Up</a>';
 
  $("signupLink").onclick=e=>{
-
   e.preventDefault();
-
   openSignup();
-
  };
 
-
  selectMethod(method);
-
 }
-
 
 function openSignup(){
 
  mode="signup";
 
  $("loginTab").classList.remove("active");
-
  $("signupTab").classList.add("active");
 
  $("accountTabs").style.display="flex";
-
  $("methodTabs").style.display="flex";
-
  $("googleButton").style.display="block";
-
  $("accountPrompt").style.display="block";
-
+ $("subtitle").textContent="Create Your RYZON Account";
 
  $("accountPrompt").innerHTML=
-  'Already have an account? <a href="#" id="loginLink" style="color:#65d0ff">Login</a>';
-
+  'Already have an account? <a href="#" id="loginLink">Login</a>';
 
  $("loginLink").onclick=e=>{
-
   e.preventDefault();
-
   openLogin();
-
  };
 
-
  selectMethod("email");
-
 }
 
-
 $("loginTab").onclick=openLogin;
-
 $("signupTab").onclick=openSignup;
-
 $("emailTab").onclick=()=>selectMethod("email");
-
 $("mobileTab").onclick=()=>selectMethod("phone");
 
-
 $("signupLink").onclick=e=>{
-
  e.preventDefault();
-
  openSignup();
-
 };
 
 
-/* Password Show / Hide */
+/* Password visibility */
 
 $("togglePassword").onclick=()=>{
-
  const field=$("password");
-
- field.type=
-  field.type==="password"?"text":"password";
-
+ field.type=field.type==="password"?"text":"password";
  $("togglePassword").textContent=
   field.type==="password"?"Show":"Hide";
-
 };
 
 
-/* Email Login / Signup */
+/* Email Login and Signup */
 
 $("mainButton").onclick=async()=>{
 
  const button=$("mainButton");
-
  const email=$("email").value.trim();
-
  const password=$("password").value;
 
  hideMessage();
 
  let ok=true;
 
-
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-
   invalid($("email"));
-
   ok=false;
-
  }else{
-
   valid($("email"));
-
  }
-
 
  if(!password){
-
   invalid($("password"));
-
   ok=false;
-
  }else{
-
   valid($("password"));
-
  }
-
 
  if(!ok){
-
   message("சரியான Email மற்றும் Password உள்ளிடுங்கள்.");
-
   return;
-
  }
 
-
  if(mode==="login"&&isLocked())return;
-
 
  if(mode==="signup"){
 
   if(password!==$("confirmPassword").value){
-
    invalid($("confirmPassword"));
-
    message("இரண்டு Password-களும் ஒன்றாக இல்லை.");
-
    return;
-
   }
 
   valid($("confirmPassword"));
 
-
   if(password.length<6){
-
    message("Password குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.");
-
    return;
-
   }
-
  }
 
-
  busy(button,true);
-
 
  try{
 
   await setLoginPersistence();
 
-
   if(mode==="signup"){
 
-   const result=await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-   );
-
+   const result=await createUserWithEmailAndPassword(auth,email,password);
 
    await sendEmailVerification(result.user);
-
 
    $("verificationText").textContent=
     "உங்கள் Email-க்கு Verification Link அனுப்பப்பட்டுள்ளது. Email-ஐ Verify செய்த பிறகு கீழே உள்ள பொத்தானை அழுத்துங்கள்.";
 
-
    $("emailSection").style.display="none";
-
    $("phoneSection").style.display="none";
-
+   $("accountTabs").style.display="none";
    $("methodTabs").style.display="none";
-
    $("verifiedSection").style.display="block";
-
    $("googleButton").style.display="none";
-
    $("accountPrompt").style.display="none";
 
-
-   message(
-    "Email Account உருவாக்கப்பட்டது. உங்கள் Email-ஐ Verify செய்யுங்கள்.",
-    true
-   );
-
+   message("Email Account உருவாக்கப்பட்டது. உங்கள் Email-ஐ Verify செய்யுங்கள்.",true);
 
   }else{
 
-   const result=await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-   );
-
+   const result=await signInWithEmailAndPassword(auth,email,password);
 
    await reload(result.user);
-
 
    if(!result.user.emailVerified){
 
     await sendEmailVerification(result.user);
 
-
     $("verificationText").textContent=
      "Email இன்னும் Verify செய்யப்படவில்லை. Email-ல் உள்ள Verification Link-ஐ அழுத்துங்கள்.";
 
-
     $("emailSection").style.display="none";
-
     $("phoneSection").style.display="none";
-
+    $("accountTabs").style.display="none";
     $("methodTabs").style.display="none";
-
     $("verifiedSection").style.display="block";
-
     $("googleButton").style.display="none";
-
     $("accountPrompt").style.display="none";
 
-
-    message(
-     "Email Verification Link அனுப்பப்பட்டுள்ளது.",
-     true
-    );
-
+    message("Email Verification Link அனுப்பப்பட்டுள்ளது.",true);
     return;
-
    }
 
-
    clearAttempts();
-
    successLogin();
-
   }
 
-
  }catch(error){
-
   showError(error);
-
  }finally{
-
   busy(button,false);
-
  }
-
 };
 
 
-/* Email Verification */
+/* Email verification check */
 
 $("checkEmailButton").onclick=async()=>{
 
@@ -1564,43 +1185,26 @@ $("checkEmailButton").onclick=async()=>{
 
  busy(button,true);
 
-
  try{
 
   if(!auth.currentUser){
-
    throw new Error("மீண்டும் Login செய்யுங்கள்.");
-
   }
-
 
   await reload(auth.currentUser);
 
-
   if(!auth.currentUser.emailVerified){
-
-   message(
-    "Email இன்னும் Verify ஆகவில்லை. Email-ல் உள்ள Link-ஐ அழுத்துங்கள்."
-   );
-
+   message("Email இன்னும் Verify ஆகவில்லை. Email-ல் உள்ள Link-ஐ அழுத்துங்கள்.");
    return;
-
   }
-
 
   successLogin();
 
-
  }catch(error){
-
   showError(error);
-
  }finally{
-
   busy(button,false);
-
  }
-
 };
 
 
@@ -1612,26 +1216,17 @@ $("googleButton").onclick=async()=>{
 
  busy(button,true,"Connecting to Google...");
 
-
  try{
 
   await setLoginPersistence();
-
   await signInWithPopup(auth,googleProvider);
-
   successLogin();
 
-
  }catch(error){
-
   showError(error);
-
  }finally{
-
   busy(button,false);
-
  }
-
 };
 
 
@@ -1640,24 +1235,15 @@ $("googleButton").onclick=async()=>{
 async function createRecaptcha(){
 
  if(recaptchaVerifier){
-
   try{
-
    recaptchaVerifier.clear();
-
   }catch(e){
-
    console.warn(e);
-
   }
-
   recaptchaVerifier=null;
-
  }
 
-
  $("recaptcha-container").innerHTML="";
-
 
  recaptchaVerifier=new RecaptchaVerifier(
   auth,
@@ -1665,9 +1251,7 @@ async function createRecaptcha(){
   {size:"normal"}
  );
 
-
  await recaptchaVerifier.render();
-
 }
 
 
@@ -1681,34 +1265,22 @@ async function sendOtp(){
 
  let phone;
 
-
  try{
-
   phone=await validPhone();
-
   currentPhone=phone;
-
  }catch(error){
-
   message(error.message);
-
   return;
-
  }
-
 
  if(mode==="login"&&isLocked())return;
 
-
  busy(button,true);
-
 
  try{
 
   await setLoginPersistence();
-
   await createRecaptcha();
-
 
   confirmationResult=await signInWithPhoneNumber(
    auth,
@@ -1716,32 +1288,20 @@ async function sendOtp(){
    recaptchaVerifier
   );
 
-
   $("otpCode").value="";
-
   startOtpTimer();
 
-
-  message(
-   "SMS OTP அனுப்பப்பட்டுள்ளது. 60 seconds-க்குள் உள்ளிடுங்கள்.",
-   true
-  );
-
+  message("SMS OTP அனுப்பப்பட்டுள்ளது. 60 seconds-க்குள் உள்ளிடுங்கள்.",true);
 
  }catch(error){
 
   confirmationResult=null;
-
   showError(error);
 
  }finally{
-
   busy(button,false);
-
  }
-
 }
-
 
 $("sendOtpButton").onclick=sendOtp;
 
@@ -1753,13 +1313,10 @@ $("resendOtpButton").onclick=async()=>{
  if(Date.now()<resendAvailableTime)return;
 
  confirmationResult=null;
-
  clearOtpTimer();
-
  $("otpCode").value="";
 
  await sendOtp();
-
 };
 
 
@@ -1768,95 +1325,59 @@ $("resendOtpButton").onclick=async()=>{
 $("verifyOtpButton").onclick=async()=>{
 
  const button=$("verifyOtpButton");
-
  const code=$("otpCode").value.trim();
 
-
  if(!confirmationResult){
-
   invalid($("otpCode"));
-
   message("முதலில் OTP பெறுங்கள்.");
-
   return;
-
  }
-
 
  if(otpExpired||Date.now()>=otpExpiryTime){
-
   otpExpired=true;
-
   button.disabled=true;
-
   message("OTP காலாவதியாகிவிட்டது. புதிய OTP பெறுங்கள்.");
-
   return;
-
  }
-
 
  if(!/^\d{6}$/.test(code)){
-
   invalid($("otpCode"));
-
   message("6 இலக்க OTP உள்ளிடுங்கள்.");
-
   return;
-
  }
-
 
  valid($("otpCode"));
 
-
  if(mode==="login"&&isLocked())return;
 
-
  busy(button,true);
-
 
  try{
 
   const result=await confirmationResult.confirm(code);
 
   confirmationResult=null;
-
   clearOtpTimer();
 
-
   if(!result.user){
-
    throw new Error("Mobile Verification முடியவில்லை.");
-
   }
 
-
   clearAttempts();
-
   successLogin();
-
 
  }catch(error){
 
   if(error?.code==="auth/invalid-verification-code"){
-
    failedAttempt();
-
   }else{
-
    showError(error);
-
   }
 
  }finally{
-
   busy(button,false);
-
   if(otpExpired)button.disabled=true;
-
  }
-
 };
 
 
@@ -1866,96 +1387,51 @@ $("forgotLink").onclick=async()=>{
 
  const email=$("email").value.trim();
 
-
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-
   invalid($("email"));
-
-  message(
-   "Password Reset Link பெற சரியான Email உள்ளிடுங்கள்."
-  );
-
+  message("Password Reset Link பெற சரியான Email உள்ளிடுங்கள்.");
   $("email").focus();
-
   return;
-
  }
 
-
  valid($("email"));
-
 
  try{
 
   await sendPasswordResetEmail(auth,email);
 
-  message(
-   "Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",
-   true
-  );
+  message("Password Reset Link உங்கள் Email-க்கு அனுப்பப்பட்டுள்ளது.",true);
 
  }catch(error){
-
   showError(error);
-
  }
-
 };
 
 
-/* Initial Setup */
+/* Initial Setup: SAME DESIGN for both login routes */
 
 showLastLogin();
 
-
-if(isRandomChat){
-
- selectMethod("phone");
-
- $("emailTab").style.display="none";
-
- $("accountTabs").style.display="none";
-
- $("googleButton").style.display="none";
-
- $("accountPrompt").style.display="none";
-
- $("divider").classList.add("hidden");
-
-}else{
-
- selectMethod("email");
-
-}
+openLogin();
 
 </script>
 
-
-<!-- RYZON SERVICE WORKER REGISTRATION -->
 <script>
+/* RYZON Service Worker Registration */
+
 if("serviceWorker" in navigator){
 
  window.addEventListener("load",()=>{
 
   navigator.serviceWorker.register("./service-worker.js",{
    scope:"./"
-  })
+  }).then(registration=>{
 
-  .then(registration=>{
+   console.log("RYZON Service Worker registered:",registration.scope);
 
-   console.log(
-    "RYZON Service Worker registered:",
-    registration.scope
-   );
+  }).catch(error=>{
 
-  })
-
-  .catch(error=>{
-
-   console.error(
-    "RYZON Service Worker registration failed:",
-    error
-   );
+   console.error("RYZON Service Worker registration failed:",error);
 
   });
 
