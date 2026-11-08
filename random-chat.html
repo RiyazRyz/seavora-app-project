@@ -5,30 +5,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071426">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
 <title>RYZON - Worldwide Random Chat</title>
 
 <style>
 :root{
-  --bg:#071426;
-  --panel:#10243d;
-  --panel2:#173653;
-  --text:#f3f8ff;
-  --muted:#9db0c7;
-  --cyan:#55d7ff;
-  --border:#24415f;
-  --green:#31d69a;
-  --red:#ff647c;
+  --bg:#071426;--panel:#10243d;--panel2:#173653;
+  --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
+  --border:#24415f;--green:#31d69a;--red:#ff647c;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
-  padding:15px;
+  margin:0;min-height:100vh;padding:15px;
   font-family:Arial,sans-serif;
   background:linear-gradient(145deg,#071426,#102b4b);
   color:var(--text);
 }
-button,input,select,textarea{font:inherit}
+button,input,select{font:inherit}
 button{cursor:pointer}
 .container{max-width:650px;margin:auto}
 header{
@@ -38,72 +34,54 @@ header{
 .brand{display:flex;align-items:center;gap:10px}
 .logo{
   width:42px;height:42px;border-radius:13px;
-  display:grid;place-items:center;
-  font-size:25px;font-weight:bold;
+  display:grid;place-items:center;font-size:25px;font-weight:bold;
   background:linear-gradient(135deg,#168cff,#31e0e5);
 }
 .brand h2{margin:0;color:var(--cyan);letter-spacing:2px}
 .brand small{display:block;color:var(--muted);font-size:10px}
 .home-btn{
   padding:10px 13px;border-radius:10px;
-  border:1px solid var(--border);
-  background:var(--panel2);color:white;
+  border:1px solid var(--border);background:var(--panel2);color:white;
 }
 .card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  padding:20px;border-radius:18px;
-  box-shadow:0 12px 35px #0004;
+  background:var(--panel);border:1px solid var(--border);
+  padding:20px;border-radius:18px;box-shadow:0 12px 35px #0004;
   margin-bottom:15px;
 }
 h1{font-size:23px;margin:0 0 8px}
-h2{font-size:19px}
 .subtitle{color:var(--muted);font-size:13px;line-height:1.6}
 .free-label{
   display:inline-block;background:#123f36;color:#65efbb;
-  padding:6px 11px;border-radius:20px;font-size:12px;
-  font-weight:bold;
+  padding:6px 11px;border-radius:20px;font-size:12px;font-weight:bold;
 }
 .status{
-  padding:15px;border-radius:13px;
-  background:#0b1b30;border:1px solid var(--border);
-  margin:17px 0;text-align:center;
-  color:var(--cyan);line-height:1.5;
+  padding:15px;border-radius:13px;background:#0b1b30;
+  border:1px solid var(--border);margin:17px 0;
+  text-align:center;color:var(--cyan);line-height:1.5;
 }
 .status-dot{
-  display:inline-block;width:9px;height:9px;
-  border-radius:50%;background:var(--green);
-  margin-right:7px;
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--green);margin-right:7px;
 }
 .field{margin:15px 0;text-align:left}
 .field label{
-  display:block;font-size:13px;
-  color:var(--muted);margin-bottom:7px;
+  display:block;font-size:13px;color:var(--muted);margin-bottom:7px;
 }
-.field select,.field input,.field textarea{
-  width:100%;padding:12px;
-  border-radius:10px;border:1px solid var(--border);
-  background:#07182a;color:white;outline:none;
+.field select{
+  width:100%;padding:12px;border-radius:10px;
+  border:1px solid var(--border);background:#07182a;color:white;
 }
 .primary,.secondary,.danger{
-  width:100%;padding:13px;border:0;
-  border-radius:11px;margin-top:10px;
-  font-weight:bold;font-size:15px;
+  width:100%;padding:13px;border:0;border-radius:11px;
+  margin-top:10px;font-weight:bold;font-size:15px;
 }
-.primary{
-  background:linear-gradient(135deg,#078cc5,#13b9c5);
-  color:white;
-}
-.secondary{
-  background:#1c3b5a;color:white;
-  border:1px solid var(--border);
-}
+.primary{background:linear-gradient(135deg,#078cc5,#13b9c5);color:white}
+.secondary{background:#1c3b5a;color:white;border:1px solid var(--border)}
 .danger{background:#762a40;color:white}
 button:disabled{opacity:.5;cursor:not-allowed}
 .chat-area{
-  display:flex;flex-direction:column;
-  height:430px;background:#091a2d;
-  border:1px solid var(--border);
+  display:flex;flex-direction:column;height:430px;
+  background:#091a2d;border:1px solid var(--border);
   border-radius:15px;overflow:hidden;
 }
 .chat-header{
@@ -115,8 +93,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .chat-header small{display:block;color:var(--muted);margin-top:4px}
 .chat-actions{display:flex;gap:5px}
 .icon-btn{
-  background:#193957;color:white;
-  border:1px solid var(--border);
+  background:#193957;color:white;border:1px solid var(--border);
   border-radius:9px;padding:8px;
 }
 .messages{
@@ -124,44 +101,30 @@ button:disabled{opacity:.5;cursor:not-allowed}
   display:flex;flex-direction:column;gap:10px;
 }
 .message{
-  max-width:85%;padding:10px 12px;
-  border-radius:12px;background:#1a3958;
-  align-self:flex-start;overflow-wrap:anywhere;
-  font-size:14px;line-height:1.5;
+  max-width:85%;padding:10px 12px;border-radius:12px;
+  background:#1a3958;align-self:flex-start;
+  overflow-wrap:anywhere;font-size:14px;line-height:1.5;
 }
-.message.mine{
-  align-self:flex-end;
-  background:#087c91;
-}
-.message small{
-  display:block;text-align:right;
-  opacity:.7;font-size:10px;margin-top:4px;
-}
+.message.mine{align-self:flex-end;background:#087c91}
 .chat-empty{
-  margin:auto;text-align:center;
-  color:var(--muted);line-height:1.7;
-  padding:20px;
+  margin:auto;text-align:center;color:var(--muted);
+  line-height:1.7;padding:20px;
 }
 .composer{
-  padding:10px;display:flex;gap:7px;
-  border-top:1px solid var(--border);
+  padding:10px;display:flex;gap:7px;border-top:1px solid var(--border);
 }
 .composer input{
-  flex:1;min-width:0;padding:11px;
-  background:#07182a;color:white;
-  border:1px solid var(--border);
-  border-radius:10px;
+  flex:1;min-width:0;padding:11px;background:#07182a;color:white;
+  border:1px solid var(--border);border-radius:10px;
 }
 .send{
-  padding:10px 14px;border:0;
-  border-radius:10px;background:#078ebc;color:white;
-  font-weight:bold;
+  padding:10px 14px;border:0;border-radius:10px;
+  background:#078ebc;color:white;font-weight:bold;
 }
 .note{
   background:#142d49;border:1px solid var(--border);
-  border-radius:12px;padding:13px;
-  color:var(--muted);font-size:12px;line-height:1.7;
-  margin-top:15px;
+  border-radius:12px;padding:13px;color:var(--muted);
+  font-size:12px;line-height:1.7;margin-top:15px;
 }
 .hidden{display:none!important}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
@@ -242,9 +205,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
     </div>
   </div>
 
-  <div class="status" id="chatStatus">
-    Searching for a chat partner...
-  </div>
+  <div class="status" id="chatStatus">Searching for a chat partner...</div>
 
   <div class="chat-area">
     <div class="messages" id="messages">
@@ -263,10 +224,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
   <button class="primary" onclick="findPartner()" id="nextBtn" disabled>
     ➜ Next Partner
   </button>
-
-  <button class="danger" onclick="endChat()">
-    ✕ End Chat
-  </button>
+  <button class="danger" onclick="endChat()">✕ End Chat</button>
 
   <p class="subtitle">
     Chat messages in this demo are not delivered to another person.
@@ -283,7 +241,6 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 </div>
 
 <footer>© 2026 RYZON · Worldwide Random Chat</footer>
-
 </main>
 
 <script>
@@ -293,24 +250,35 @@ let searchTimer=null;
 
 const $=id=>document.getElementById(id);
 
-function setStatus(message){
-  $("status").textContent=message;
+/* Login state is checked using Firebase Auth.
+   Firebase SDK is loaded below. */
+
+function openRandomChatLogin(){
+  sessionStorage.setItem("ryzonNextAction","randomChat");
+  location.href="otp.html";
+}
+
+function goHome(){
+  location.href="home.html";
 }
 
 function findPartner(){
-  clearTimeout(searchTimer);
+  if(!window.ryzonAuth || !window.ryzonAuth.currentUser){
+    openRandomChatLogin();
+    return;
+  }
 
+  clearTimeout(searchTimer);
   $("setupCard").classList.add("hidden");
   $("chatCard").classList.remove("hidden");
 
   searching=true;
   connected=false;
 
-  $("chatStatus").textContent=
-    "🔍 Searching for a worldwide chat partner...";
-
+  $("chatStatus").textContent="🔍 Searching for a worldwide chat partner...";
   $("partnerName").textContent="Finding Partner";
   $("partnerStatus").textContent="Searching";
+
   $("messages").innerHTML=`
     <div class="chat-empty">
       🌍<br>
@@ -326,10 +294,7 @@ function findPartner(){
     if(!searching)return;
 
     searching=false;
-
-    $("chatStatus").textContent=
-      "No partner available in this demo.";
-
+    $("chatStatus").textContent="No partner available in this demo.";
     $("partnerName").textContent="No Partner Connected";
     $("partnerStatus").textContent="Offline";
 
@@ -349,24 +314,14 @@ function endChat(){
   clearTimeout(searchTimer);
   searching=false;
   connected=false;
-
   $("chatCard").classList.add("hidden");
   $("setupCard").classList.remove("hidden");
-
-  setStatus("Chat ended. You can find another partner.");
-}
-
-function goHome(){
-  location.href="home.html";
+  $("status").textContent="Chat ended. You can find another partner.";
 }
 
 function escapeHTML(value){
   return String(value).replace(/[&<>"']/g,c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
 }
 
@@ -378,13 +333,11 @@ function sendMessage(){
 
   const input=$("messageInput");
   const text=input.value.trim();
-
   if(!text)return;
 
   const bubble=document.createElement("div");
   bubble.className="message mine";
   bubble.textContent=text;
-
   $("messages").appendChild(bubble);
   input.value="";
   $("messages").scrollTop=$("messages").scrollHeight;
@@ -396,19 +349,62 @@ $("messageInput").addEventListener("keydown",event=>{
 
 function blockPartner(){
   if(!confirm("Block this chat partner?"))return;
-
-  alert("Block request is only a local demo. Server-side blocking will be enabled with Firebase integration.");
+  alert("Block request is only a local demo. Server-side blocking is not connected.");
   endChat();
 }
 
 function reportPartner(){
   const reason=prompt("Enter the reason for reporting:");
-
   if(!reason || !reason.trim())return;
-
   alert("Report recorded for this demo only. It has not been sent to the RYZON Admin.");
 }
-
 </script>
+
+<!-- Firebase Authentication -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain:"seavora-5be21.firebaseapp.com",
+  projectId:"seavora-5be21",
+  storageBucket:"seavora-5be21.firebasestorage.app",
+  messagingSenderId:"41187328725",
+  appId:"1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+window.ryzonAuth=auth;
+
+onAuthStateChanged(auth,user=>{
+  window.ryzonAuth=auth;
+
+  if(!user){
+    // Keep the page visible, but login is required before searching.
+    return;
+  }
+
+  const nextAction=sessionStorage.getItem("ryzonNextAction");
+  if(nextAction==="randomChat"){
+    sessionStorage.removeItem("ryzonNextAction");
+    $("setupCard").classList.remove("hidden");
+  }
+});
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js").catch(error=>{
+      console.log("Service worker registration failed:",error);
+    });
+  });
+}
+</script>
+
 </body>
 </html>
