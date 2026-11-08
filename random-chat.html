@@ -11,136 +11,141 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
 <title>RYZON - Worldwide Random Chat</title>
+<script src="./language-system.js"></script>
 
 <style>
 :root{
-  --bg:#071426;--panel:#10243d;--panel2:#173653;
-  --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
-  --border:#24415f;--green:#31d69a;--red:#ff647c;
+ --bg:#071426;--panel:#10243d;--panel2:#173653;
+ --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
+ --border:#24415f;--green:#31d69a;--red:#ff647c;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;padding:15px;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(145deg,#071426,#102b4b);
-  color:var(--text);
+ margin:0;min-height:100vh;padding:15px;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(145deg,#071426,#102b4b);
+ color:var(--text)
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
 .container{max-width:650px;margin:auto;display:none}
 #authLoading{
-  max-width:650px;margin:100px auto;padding:20px;
-  text-align:center;color:var(--cyan);font-size:16px;
+ max-width:650px;margin:100px auto;padding:20px;
+ text-align:center;color:var(--cyan);font-size:16px
 }
 header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 0 18px;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:10px;padding:10px 0 18px
 }
 .brand{display:flex;align-items:center;gap:10px}
 .logo{
-  width:42px;height:42px;border-radius:13px;
-  display:grid;place-items:center;font-size:25px;font-weight:bold;
-  background:linear-gradient(135deg,#168cff,#31e0e5);
+ width:42px;height:42px;border-radius:13px;display:grid;
+ place-items:center;font-size:25px;font-weight:bold;
+ background:linear-gradient(135deg,#168cff,#31e0e5)
 }
 .brand h2{margin:0;color:var(--cyan);letter-spacing:2px}
 .brand small{display:block;color:var(--muted);font-size:10px}
-.home-btn{
-  padding:10px 13px;border-radius:10px;
-  border:1px solid var(--border);background:var(--panel2);color:white;
+.header-actions{display:flex;gap:7px;align-items:center}
+.home-btn,.language-btn{
+ padding:10px 11px;border-radius:10px;
+ border:1px solid var(--border);background:var(--panel2);color:white;
+ font-size:13px
 }
 .card{
-  background:var(--panel);border:1px solid var(--border);
-  padding:20px;border-radius:18px;box-shadow:0 12px 35px #0004;
-  margin-bottom:15px;
+ background:var(--panel);border:1px solid var(--border);
+ padding:20px;border-radius:18px;box-shadow:0 12px 35px #0004;
+ margin-bottom:15px
 }
 h1{font-size:23px;margin:0 0 8px}
 .subtitle{color:var(--muted);font-size:13px;line-height:1.6}
 .free-label{
-  display:inline-block;background:#123f36;color:#65efbb;
-  padding:6px 11px;border-radius:20px;font-size:12px;font-weight:bold;
+ display:inline-block;background:#123f36;color:#65efbb;
+ padding:6px 11px;border-radius:20px;font-size:12px;font-weight:bold
 }
 .status{
-  padding:15px;border-radius:13px;background:#0b1b30;
-  border:1px solid var(--border);margin:17px 0;
-  text-align:center;color:var(--cyan);line-height:1.5;
+ padding:15px;border-radius:13px;background:#0b1b30;
+ border:1px solid var(--border);margin:17px 0;
+ text-align:center;color:var(--cyan);line-height:1.5
 }
 .status-dot{
-  display:inline-block;width:9px;height:9px;border-radius:50%;
-  background:var(--green);margin-right:7px;
+ display:inline-block;width:9px;height:9px;border-radius:50%;
+ background:var(--green);margin-right:7px
 }
 .field{margin:15px 0;text-align:left}
 .field label{
-  display:block;font-size:13px;color:var(--muted);margin-bottom:7px;
+ display:block;font-size:13px;color:var(--muted);margin-bottom:7px
 }
 .field select{
-  width:100%;padding:12px;border-radius:10px;
-  border:1px solid var(--border);background:#07182a;color:white;
+ width:100%;padding:12px;border-radius:10px;
+ border:1px solid var(--border);background:#07182a;color:white
 }
 .primary,.secondary,.danger{
-  width:100%;padding:13px;border:0;border-radius:11px;
-  margin-top:10px;font-weight:bold;font-size:15px;
+ width:100%;padding:13px;border:0;border-radius:11px;
+ margin-top:10px;font-weight:bold;font-size:15px
 }
 .primary{background:linear-gradient(135deg,#078cc5,#13b9c5);color:white}
 .secondary{background:#1c3b5a;color:white;border:1px solid var(--border)}
 .danger{background:#762a40;color:white}
 button:disabled{opacity:.5;cursor:not-allowed}
 .chat-area{
-  display:flex;flex-direction:column;height:430px;
-  background:#091a2d;border:1px solid var(--border);
-  border-radius:15px;overflow:hidden;
+ display:flex;flex-direction:column;height:430px;
+ background:#091a2d;border:1px solid var(--border);
+ border-radius:15px;overflow:hidden
 }
 .chat-header{
-  padding:13px;display:flex;align-items:center;
-  justify-content:space-between;gap:10px;
-  background:#10243d;border-bottom:1px solid var(--border);
+ padding:13px;display:flex;align-items:center;
+ justify-content:space-between;gap:10px;
+ background:#10243d;border-bottom:1px solid var(--border)
 }
 .chat-header strong{font-size:14px}
 .chat-header small{display:block;color:var(--muted);margin-top:4px}
 .chat-actions{display:flex;gap:5px}
 .icon-btn{
-  background:#193957;color:white;border:1px solid var(--border);
-  border-radius:9px;padding:8px;
+ background:#193957;color:white;border:1px solid var(--border);
+ border-radius:9px;padding:8px
 }
 .messages{
-  flex:1;overflow:auto;padding:14px;
-  display:flex;flex-direction:column;gap:10px;
+ flex:1;overflow:auto;padding:14px;
+ display:flex;flex-direction:column;gap:10px
 }
 .message{
-  max-width:85%;padding:10px 12px;border-radius:12px;
-  background:#1a3958;align-self:flex-start;
-  overflow-wrap:anywhere;font-size:14px;line-height:1.5;
+ max-width:85%;padding:10px 12px;border-radius:12px;
+ background:#1a3958;align-self:flex-start;
+ overflow-wrap:anywhere;font-size:14px;line-height:1.5
 }
 .message.mine{align-self:flex-end;background:#087c91}
 .chat-empty{
-  margin:auto;text-align:center;color:var(--muted);
-  line-height:1.7;padding:20px;
+ margin:auto;text-align:center;color:var(--muted);
+ line-height:1.7;padding:20px
 }
 .composer{
-  padding:10px;display:flex;gap:7px;border-top:1px solid var(--border);
+ padding:10px;display:flex;gap:7px;border-top:1px solid var(--border)
 }
 .composer input{
-  flex:1;min-width:0;padding:11px;background:#07182a;color:white;
-  border:1px solid var(--border);border-radius:10px;
+ flex:1;min-width:0;padding:11px;background:#07182a;color:white;
+ border:1px solid var(--border);border-radius:10px
 }
 .send{
-  padding:10px 14px;border:0;border-radius:10px;
-  background:#078ebc;color:white;font-weight:bold;
+ padding:10px 14px;border:0;border-radius:10px;
+ background:#078ebc;color:white;font-weight:bold
 }
 .note{
-  background:#142d49;border:1px solid var(--border);
-  border-radius:12px;padding:13px;color:var(--muted);
-  font-size:12px;line-height:1.7;margin-top:15px;
+ background:#142d49;border:1px solid var(--border);
+ border-radius:12px;padding:13px;color:var(--muted);
+ font-size:12px;line-height:1.7;margin-top:15px
 }
 .hidden{display:none!important}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 button:focus-visible,input:focus-visible,select:focus-visible{
-  outline:2px solid var(--cyan);outline-offset:3px;
+ outline:2px solid var(--cyan);outline-offset:3px
 }
 @media(max-width:480px){
-  body{padding:12px}
-  .card{padding:16px}
-  .chat-area{height:400px}
-  h1{font-size:21px}
+ body{padding:12px}
+ .card{padding:16px}
+ .chat-area{height:400px}
+ h1{font-size:21px}
+ .header-actions{gap:5px}
+ .home-btn,.language-btn{padding:9px 8px;font-size:12px}
 }
 </style>
 </head>
@@ -148,114 +153,275 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 <body>
 
 <div id="authLoading">
-  Checking your RYZON login...<br><br>
-  Please wait.
+ <span data-chat="checkingLogin">Checking your RYZON login...</span>
+ <br><br>
+ <span data-chat="pleaseWait">Please wait.</span>
 </div>
 
 <main class="container" id="mainContent">
+
 <header>
-  <div class="brand">
-    <div class="logo">R</div>
-    <div>
-      <h2>RYZON</h2>
-      <small>One App, Endless Possibilities!</small>
-    </div>
+ <div class="brand">
+  <div class="logo">R</div>
+  <div>
+   <h2>RYZON</h2>
+   <small>One App, Endless Possibilities!</small>
   </div>
-  <button class="home-btn" onclick="goHome()">⌂ Home</button>
+ </div>
+
+ <div class="header-actions">
+  <button class="language-btn" id="languageToggle" type="button"
+   onclick="toggleChatLanguage()">🌐 English</button>
+  <button class="home-btn" onclick="goHome()" data-chat="home">⌂ Home</button>
+ </div>
 </header>
 
 <section class="card" id="setupCard">
-  <span class="free-label">🌍 FREE FOR EVERYONE</span>
-  <h1>💬 Worldwide Random Chat</h1>
-  <p class="subtitle">
-    Meet new people from around the world.
-    Choose your preferred language and get ready to connect.
-  </p>
 
-  <div class="field">
-    <label for="language">Preferred Language</label>
-    <select id="language">
-      <option value="Any Language">Any Language</option>
-      <option value="English">English</option>
-      <option value="Tamil">Tamil</option>
-      <option value="Hindi">Hindi</option>
-      <option value="Malayalam">Malayalam</option>
-      <option value="Telugu">Telugu</option>
-      <option value="Kannada">Kannada</option>
-      <option value="Bengali">Bengali</option>
-      <option value="Urdu">Urdu</option>
-      <option value="Arabic">Arabic</option>
-      <option value="French">French</option>
-      <option value="Spanish">Spanish</option>
-      <option value="German">German</option>
-      <option value="Other">Other</option>
-    </select>
-  </div>
+ <span class="free-label" data-chat="free">🌍 FREE FOR EVERYONE</span>
 
-  <div class="status" id="status">
-    <span class="status-dot"></span>
-    Welcome to RYZON Random Chat!
-  </div>
+ <h1 data-chat="title">💬 Worldwide Random Chat</h1>
 
-  <button class="primary" id="findBtn" onclick="findPartner()" disabled>
-    🔍 Find a Chat Partner
-  </button>
+ <p class="subtitle" data-chat="description">
+  Meet new people from around the world.
+  Choose your preferred language and get ready to connect.
+ </p>
 
-  <p class="subtitle" style="text-align:center">
-    Worldwide Random Chat is free. No Premium membership required.
-  </p>
+ <div class="field">
+  <label for="language" data-chat="partnerLanguage">Partner Language</label>
+  <select id="language">
+   <option value="Any Language" data-chat="anyLanguage">Any Language</option>
+   <option value="English">English</option>
+   <option value="Tamil">Tamil</option>
+   <option value="Hindi">Hindi</option>
+   <option value="Malayalam">Malayalam</option>
+   <option value="Telugu">Telugu</option>
+   <option value="Kannada">Kannada</option>
+   <option value="Bengali">Bengali</option>
+   <option value="Urdu">Urdu</option>
+   <option value="Arabic">Arabic</option>
+   <option value="French">French</option>
+   <option value="Spanish">Spanish</option>
+   <option value="German">German</option>
+   <option value="Other">Other</option>
+  </select>
+ </div>
+
+ <div class="status" id="status">
+  <span class="status-dot"></span>
+  <span data-chat="welcome">Welcome to RYZON Random Chat!</span>
+ </div>
+
+ <button class="primary" id="findBtn" onclick="findPartner()" disabled
+  data-chat="findPartner">🔍 Find a Chat Partner</button>
+
+ <p class="subtitle" style="text-align:center" data-chat="freeNote">
+  Worldwide Random Chat is free. No Premium membership required.
+ </p>
 </section>
 
 <section class="card hidden" id="chatCard">
-  <div class="chat-header">
-    <div>
-      <strong id="partnerName">Random Chat</strong>
-      <small id="partnerStatus">Waiting for connection</small>
-    </div>
-    <div class="chat-actions">
-      <button class="icon-btn" onclick="reportPartner()" title="Report">⚑</button>
-      <button class="icon-btn" onclick="blockPartner()" title="Block">🚫</button>
-    </div>
+
+ <div class="chat-header">
+  <div>
+   <strong id="partnerName" data-chat="randomChat">Random Chat</strong>
+   <small id="partnerStatus" data-chat="waiting">Waiting for connection</small>
   </div>
 
-  <div class="status" id="chatStatus">Searching for a chat partner...</div>
+  <div class="chat-actions">
+   <button class="icon-btn" onclick="reportPartner()" title="Report"
+    data-chat-title="report">⚑</button>
+   <button class="icon-btn" onclick="blockPartner()" title="Block"
+    data-chat-title="block">🚫</button>
+  </div>
+ </div>
 
-  <div class="chat-area">
-    <div class="messages" id="messages">
-      <div class="chat-empty">
-        🌍<br>
-        Your conversation will appear here when a partner is connected.
-      </div>
-    </div>
+ <div class="status" id="chatStatus" data-chat="searching">
+  Searching for a chat partner...
+ </div>
 
-    <div class="composer">
-      <input id="messageInput" placeholder="Type a message..." disabled>
-      <button class="send" onclick="sendMessage()" disabled id="sendBtn">Send</button>
-    </div>
+ <div class="chat-area">
+  <div class="messages" id="messages">
+   <div class="chat-empty">
+    🌍<br>
+    <span data-chat="conversationHere">
+     Your conversation will appear here when a partner is connected.
+    </span>
+   </div>
   </div>
 
-  <button class="secondary" onclick="cancelSearch()" id="cancelBtn">Cancel Search</button>
-  <button class="primary" onclick="findPartner()" id="nextBtn" disabled>➜ Next Partner</button>
-  <button class="danger" onclick="endChat()">✕ End Chat</button>
+  <div class="composer">
+   <input id="messageInput" data-chat-placeholder="messagePlaceholder"
+    placeholder="Type a message..." disabled>
+   <button class="send" onclick="sendMessage()" disabled id="sendBtn"
+    data-chat="send">Send</button>
+  </div>
+ </div>
 
-  <p class="subtitle">
-    Real-time worldwide matching and message delivery require a server connection.
-  </p>
+ <button class="secondary" onclick="cancelSearch()" id="cancelBtn"
+  data-chat="cancel">Cancel Search</button>
+
+ <button class="primary" onclick="findPartner()" id="nextBtn" disabled
+  data-chat="nextPartner">➜ Next Partner</button>
+
+ <button class="danger" onclick="endChat()" data-chat="endChat">
+  ✕ End Chat
+ </button>
+
+ <p class="subtitle" data-chat="serverNote">
+  Real-time worldwide matching and message delivery require a server connection.
+ </p>
 </section>
 
 <div class="note">
-  <strong>🔐 Safety Guidelines</strong><br>
-  • Never share your OTP or password.<br>
-  • Never share bank details or private information.<br>
-  • Block and report suspicious users.<br>
-  • Be respectful to everyone.<br>
-  • Do not send inappropriate content.
+ <strong data-chat="safetyTitle">🔐 Safety Guidelines</strong><br>
+ • <span data-chat="safety1">Never share your OTP or password.</span><br>
+ • <span data-chat="safety2">Never share bank details or private information.</span><br>
+ • <span data-chat="safety3">Block and report suspicious users.</span><br>
+ • <span data-chat="safety4">Be respectful to everyone.</span><br>
+ • <span data-chat="safety5">Do not send inappropriate content.</span>
 </div>
 
 <footer>© 2026 RYZON · Worldwide Random Chat</footer>
 </main>
 
 <script>
+const chatTranslations={
+ en:{
+  checkingLogin:"Checking your RYZON login...",
+  pleaseWait:"Please wait.",home:"⌂ Home",
+  free:"🌍 FREE FOR EVERYONE",
+  title:"💬 Worldwide Random Chat",
+  description:"Meet new people from around the world. Choose your preferred language and get ready to connect.",
+  partnerLanguage:"Partner Language",
+  anyLanguage:"Any Language",
+  welcome:"Welcome to RYZON Random Chat!",
+  findPartner:"🔍 Find a Chat Partner",
+  freeNote:"Worldwide Random Chat is free. No Premium membership required.",
+  randomChat:"Random Chat",waiting:"Waiting for connection",
+  searching:"🔍 Searching for a worldwide chat partner...",
+  conversationHere:"Your conversation will appear here when a partner is connected.",
+  messagePlaceholder:"Type a message...",send:"Send",
+  cancel:"Cancel Search",nextPartner:"➜ Next Partner",
+  endChat:"✕ End Chat",
+  serverNote:"Real-time worldwide matching and message delivery require a server connection.",
+  safetyTitle:"🔐 Safety Guidelines",
+  safety1:"Never share your OTP or password.",
+  safety2:"Never share bank details or private information.",
+  safety3:"Block and report suspicious users.",
+  safety4:"Be respectful to everyone.",
+  safety5:"Do not send inappropriate content.",
+  noPartner:"No partner available in this demo.",
+  noPartnerTitle:"No Partner Connected",
+  offline:"Offline",
+  noConnection:"No chat partner connected",
+  notConnected:"Real-time worldwide matching is not connected yet.",
+  tryLater:"Please try again later.",
+  searchCancelled:"Search cancelled.",
+  cancelledMessage:"Search cancelled. You can try again.",
+  chatEnded:"Chat ended. You can find another partner.",
+  loginWait:"Please wait. Checking your login...",
+  noPartnerMessage:"No partner is connected. Real-time chat is not available yet.",
+  confirmBlock:"Block this chat partner?",
+  blockDemo:"Block management is not connected to the RYZON server yet.",
+  reportReason:"Enter the reason for reporting:",
+  reportDemo:"Report feature is a demo. This report has not been sent to RYZON Admin.",
+  report:"Report",block:"Block",
+  lookingFor:"Looking for someone who speaks",
+  languageSuffix:"...",
+  toggle:"🌐 English"
+ },
+ ta:{
+  checkingLogin:"உங்கள் RYZON Login சரிபார்க்கப்படுகிறது...",
+  pleaseWait:"தயவுசெய்து காத்திருக்கவும்.",
+  home:"⌂ முகப்பு",
+  free:"🌍 அனைவருக்கும் இலவசம்",
+  title:"💬 உலகளாவிய சீரற்ற அரட்டை",
+  description:"உலகம் முழுவதும் புதிய நபர்களைச் சந்தியுங்கள். விரும்பும் மொழியைத் தேர்ந்தெடுத்து இணையுங்கள்.",
+  partnerLanguage:"பேச விரும்பும் மொழி",
+  anyLanguage:"எந்த மொழியும்",
+  welcome:"RYZON Random Chat-க்கு வரவேற்கிறோம்!",
+  findPartner:"🔍 நண்பரைத் தேடுங்கள்",
+  freeNote:"உலகளாவிய Random Chat இலவசம். Premium தேவையில்லை.",
+  randomChat:"சீரற்ற அரட்டை",
+  waiting:"இணைப்புக்காகக் காத்திருக்கிறது",
+  searching:"🔍 உலகம் முழுவதும் நண்பரைத் தேடுகிறது...",
+  conversationHere:"நண்பர் இணைந்ததும் உங்கள் உரையாடல் இங்கே தோன்றும்.",
+  messagePlaceholder:"செய்தியை உள்ளிடுங்கள்...",
+  send:"அனுப்பு",
+  cancel:"தேடலை நிறுத்து",
+  nextPartner:"➜ அடுத்த நண்பர்",
+  endChat:"✕ அரட்டையை முடி",
+  serverNote:"நேரடி உலகளாவிய நண்பர் தேடல் மற்றும் செய்திகளுக்கு Server இணைப்பு தேவை.",
+  safetyTitle:"🔐 பாதுகாப்பு வழிகாட்டுதல்கள்",
+  safety1:"உங்கள் OTP அல்லது Password-ஐ யாரிடமும் பகிர வேண்டாம்.",
+  safety2:"வங்கி விவரங்கள் அல்லது தனிப்பட்ட தகவல்களைப் பகிர வேண்டாம்.",
+  safety3:"சந்தேகத்திற்குரிய நபர்களை Block மற்றும் Report செய்யுங்கள்.",
+  safety4:"அனைவரிடமும் மரியாதையுடன் பழகுங்கள்.",
+  safety5:"பொருத்தமற்ற உள்ளடக்கங்களை அனுப்ப வேண்டாம்.",
+  noPartner:"இந்த Demo-வில் தற்போது நண்பர் கிடைக்கவில்லை.",
+  noPartnerTitle:"நண்பர் இணைக்கப்படவில்லை",
+  offline:"இணைப்பில் இல்லை",
+  noConnection:"அரட்டை நண்பர் யாரும் இணைக்கப்படவில்லை",
+  notConnected:"நேரடி உலகளாவிய நண்பர் தேடல் இன்னும் இணைக்கப்படவில்லை.",
+  tryLater:"பிறகு மீண்டும் முயற்சிக்கவும்.",
+  searchCancelled:"தேடல் நிறுத்தப்பட்டது.",
+  cancelledMessage:"தேடல் நிறுத்தப்பட்டது. மீண்டும் முயற்சிக்கலாம்.",
+  chatEnded:"அரட்டை முடிந்தது. வேறொரு நண்பரைத் தேடலாம்.",
+  loginWait:"உங்கள் Login சரிபார்க்கப்படுகிறது. காத்திருக்கவும்...",
+  noPartnerMessage:"நண்பர் இணைக்கப்படவில்லை. நேரடி அரட்டை இன்னும் செயல்படவில்லை.",
+  confirmBlock:"இந்த அரட்டை நண்பரை Block செய்ய வேண்டுமா?",
+  blockDemo:"Block வசதி RYZON Server-உடன் இன்னும் இணைக்கப்படவில்லை.",
+  reportReason:"Report செய்வதற்கான காரணத்தை உள்ளிடுங்கள்:",
+  reportDemo:"இது Demo வசதி. உங்கள் Report RYZON Admin-க்கு அனுப்பப்படவில்லை.",
+  report:"புகார்",
+  block:"தடு",
+  lookingFor:"இந்த மொழி பேசும் நபரைத் தேடுகிறது:",
+  languageSuffix:"...",
+  toggle:"🌐 English"
+ }
+};
+
+function currentChatLanguage(){
+ if(typeof window.getRYZONLanguage==="function"){
+  return window.getRYZONLanguage()==="ta"?"ta":"en";
+ }
+ return "en";
+}
+function chatText(key){
+ const lang=currentChatLanguage();
+ return chatTranslations[lang][key]||chatTranslations.en[key]||key;
+}
+function applyChatLanguage(){
+ const lang=currentChatLanguage();
+ document.documentElement.lang=lang;
+
+ document.querySelectorAll("[data-chat]").forEach(element=>{
+  const key=element.getAttribute("data-chat");
+  element.textContent=chatText(key);
+ });
+
+ document.querySelectorAll("[data-chat-placeholder]").forEach(element=>{
+  element.placeholder=chatText(element.getAttribute("data-chat-placeholder"));
+ });
+
+ document.querySelectorAll("[data-chat-title]").forEach(element=>{
+  const key=element.getAttribute("data-chat-title");
+  element.title=chatText(key);
+ });
+
+ $("languageToggle").textContent=chatText("toggle");
+
+ updateDynamicText();
+}
+
+function toggleChatLanguage(){
+ if(typeof window.toggleRYZONLanguage==="function"){
+  window.toggleRYZONLanguage();
+ }
+ applyChatLanguage();
+}
+
 let searching=false;
 let searchTimer=null;
 let authReady=false;
@@ -264,113 +430,122 @@ let currentUser=null;
 const $=id=>document.getElementById(id);
 
 function openRandomChatLogin(){
-  sessionStorage.setItem("ryzonNextAction","randomChat");
-  location.replace("./otp.html");
+ sessionStorage.setItem("ryzonNextAction","randomChat");
+ location.replace("./otp.html");
+}
+function goHome(){location.href="./home.html";}
+
+function showStatus(text){
+ $("status").textContent=text;
 }
 
-function goHome(){
-  location.href="./home.html";
+function updateDynamicText(){
+ if(searching){
+  $("chatStatus").textContent=chatText("searching");
+  $("partnerName").textContent=chatText("randomChat");
+  $("partnerStatus").textContent=chatText("waiting");
+ }
 }
 
 function findPartner(){
-  if(!authReady){
-    showStatus("Please wait. Checking your login...");
-    return;
-  }
+ if(!authReady){
+  showStatus(chatText("loginWait"));
+  return;
+ }
+ if(!currentUser){
+  openRandomChatLogin();
+  return;
+ }
 
-  if(!currentUser){
-    openRandomChatLogin();
-    return;
-  }
+ clearTimeout(searchTimer);
+ searching=true;
 
-  clearTimeout(searchTimer);
-  searching=true;
+ $("setupCard").classList.add("hidden");
+ $("chatCard").classList.remove("hidden");
 
-  $("setupCard").classList.add("hidden");
-  $("chatCard").classList.remove("hidden");
+ $("chatStatus").textContent=chatText("searching");
+ $("partnerName").textContent=chatText("randomChat");
+ $("partnerStatus").textContent=chatText("waiting");
 
-  $("chatStatus").textContent="🔍 Searching for a worldwide chat partner...";
-  $("partnerName").textContent="Finding Partner";
-  $("partnerStatus").textContent="Searching";
+ $("messages").innerHTML=`
+  <div class="chat-empty">
+   🌍<br>${escapeHTML(chatText("lookingFor"))}
+   ${escapeHTML($("language").value)}${escapeHTML(chatText("languageSuffix"))}
+  </div>`;
+
+ $("messageInput").disabled=true;
+ $("sendBtn").disabled=true;
+ $("nextBtn").disabled=true;
+ $("cancelBtn").disabled=false;
+
+ searchTimer=setTimeout(()=>{
+  if(!searching)return;
+
+  searching=false;
+  $("chatStatus").textContent=chatText("noPartner");
+  $("partnerName").textContent=chatText("noPartnerTitle");
+  $("partnerStatus").textContent=chatText("offline");
 
   $("messages").innerHTML=`
-    <div class="chat-empty">
-      🌍<br>
-      Looking for someone who speaks
-      ${escapeHTML($("language").value)}...
-    </div>`;
+   <div class="chat-empty">
+    <div style="font-size:35px">🌐</div>
+    <strong>${escapeHTML(chatText("noConnection"))}</strong><br>
+    ${escapeHTML(chatText("notConnected"))}<br><br>
+    ${escapeHTML(chatText("tryLater"))}
+   </div>`;
 
-  $("messageInput").disabled=true;
-  $("sendBtn").disabled=true;
-  $("nextBtn").disabled=true;
-  $("cancelBtn").disabled=false;
-
-  searchTimer=setTimeout(()=>{
-    if(!searching)return;
-
-    searching=false;
-    $("chatStatus").textContent="No partner available in this demo.";
-    $("partnerName").textContent="No Partner Connected";
-    $("partnerStatus").textContent="Offline";
-
-    $("messages").innerHTML=`
-      <div class="chat-empty">
-        <div style="font-size:35px">🌐</div>
-        <strong>No chat partner connected</strong><br>
-        Real-time worldwide matching is not connected yet.<br><br>
-        Please try again later.
-      </div>`;
-
-    $("cancelBtn").disabled=true;
-    $("nextBtn").disabled=false;
-  },2500);
-}
-
-function showStatus(message){
-  $("status").textContent=message;
+  $("cancelBtn").disabled=true;
+  $("nextBtn").disabled=false;
+ },2500);
 }
 
 function cancelSearch(){
-  clearTimeout(searchTimer);
-  searching=false;
-  $("chatStatus").textContent="Search cancelled.";
-  $("partnerName").textContent="Random Chat";
-  $("partnerStatus").textContent="Not connected";
-  $("messages").innerHTML=`
-    <div class="chat-empty">Search cancelled. You can try again.</div>`;
-  $("cancelBtn").disabled=true;
-  $("nextBtn").disabled=false;
+ clearTimeout(searchTimer);
+ searching=false;
+ $("chatStatus").textContent=chatText("searchCancelled");
+ $("partnerName").textContent=chatText("randomChat");
+ $("partnerStatus").textContent=chatText("offline");
+ $("messages").innerHTML=`
+  <div class="chat-empty">${escapeHTML(chatText("cancelledMessage"))}</div>`;
+ $("cancelBtn").disabled=true;
+ $("nextBtn").disabled=false;
 }
 
 function endChat(){
-  clearTimeout(searchTimer);
-  searching=false;
-  $("chatCard").classList.add("hidden");
-  $("setupCard").classList.remove("hidden");
-  $("status").textContent="Chat ended. You can find another partner.";
+ clearTimeout(searchTimer);
+ searching=false;
+ $("chatCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+ showStatus(chatText("chatEnded"));
 }
 
 function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
 }
 
 function sendMessage(){
-  alert("No partner is connected. Real-time chat is not available yet.");
+ alert(chatText("noPartnerMessage"));
 }
-
 function blockPartner(){
-  if(!confirm("Block this chat partner?"))return;
-  alert("Block management is not connected to the RYZON server yet.");
-  endChat();
+ if(!confirm(chatText("confirmBlock")))return;
+ alert(chatText("blockDemo"));
+ endChat();
+}
+function reportPartner(){
+ const reason=prompt(chatText("reportReason"));
+ if(!reason||!reason.trim())return;
+ alert(chatText("reportDemo"));
 }
 
-function reportPartner(){
-  const reason=prompt("Enter the reason for reporting:");
-  if(!reason||!reason.trim())return;
-  alert("Report feature is a demo. This report has not been sent to RYZON Admin.");
-}
+applyChatLanguage();
+
+window.addEventListener("storage",event=>{
+ if(event.key==="ryzonLanguage"||event.key==="ryzonTemporaryEnglish"){
+  applyChatLanguage();
+ }
+});
 </script>
 
 <script type="module">
@@ -378,52 +553,51 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase
 import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
-  authDomain:"seavora-5be21.firebaseapp.com",
-  projectId:"seavora-5be21",
-  storageBucket:"seavora-5be21.firebasestorage.app",
-  messagingSenderId:"41187328725",
-  appId:"1:41187328725:web:07ca55487383bc5798d85c",
-  measurementId:"G-PDY0RZRDDH"
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
 };
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
 onAuthStateChanged(auth,user=>{
-  currentUser=user;
-  authReady=true;
+ currentUser=user;
+ authReady=true;
 
-  if(!user){
-    // Random Chat requires login before the page can be used.
-    sessionStorage.setItem("ryzonNextAction","randomChat");
-    location.replace("./otp.html");
-    return;
-  }
+ if(!user){
+  sessionStorage.setItem("ryzonNextAction","randomChat");
+  location.replace("./otp.html");
+  return;
+ }
 
-  // User is authenticated: show Random Chat page.
-  $("authLoading").style.display="none";
-  $("mainContent").style.display="block";
-  $("findBtn").disabled=false;
+ $("authLoading").style.display="none";
+ $("mainContent").style.display="block";
+ $("findBtn").disabled=false;
 
-  showStatus("Welcome to RYZON Random Chat!");
+ showStatus(chatText("welcome"));
 
-  const nextAction=sessionStorage.getItem("ryzonNextAction");
+ const nextAction=sessionStorage.getItem("ryzonNextAction");
+ if(nextAction==="randomChat"){
+  sessionStorage.removeItem("ryzonNextAction");
+  $("setupCard").classList.remove("hidden");
+ }
 
-  if(nextAction==="randomChat"){
-    sessionStorage.removeItem("ryzonNextAction");
-    $("setupCard").classList.remove("hidden");
-  }
+ applyChatLanguage();
 });
 </script>
 
 <script>
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("./service-worker.js").catch(error=>{
-      console.log("Service worker registration failed:",error);
-    });
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./service-worker.js").catch(error=>{
+   console.log("Service worker registration failed:",error);
   });
+ });
 }
 </script>
 
