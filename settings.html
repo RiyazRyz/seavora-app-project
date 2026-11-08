@@ -5,290 +5,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071426">
+<meta name="description" content="Manage your RYZON account, privacy, notifications and app preferences.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
 <title>Settings | RYZON</title>
 
 <style>
-:root {
-  --bg: #071426;
-  --card: #10243d;
-  --card2: #142d49;
-  --text: #f1f7ff;
-  --muted: #9eb2ca;
-  --accent: #00d9ff;
-  --border: rgba(255,255,255,.09);
-  --danger: #ff6578;
+:root{
+  --bg:#071426;--card:#10243d;--card2:#142d49;
+  --text:#f1f7ff;--muted:#9eb2ca;--accent:#00d9ff;
+  --border:rgba(255,255,255,.09);--danger:#ff6578;
 }
-
-body.light {
-  --bg: #edf3fa;
-  --card: #ffffff;
-  --card2: #e5edf7;
-  --text: #14243a;
-  --muted: #62758d;
-  --accent: #008eb5;
-  --border: rgba(0,0,0,.1);
-  --danger: #d93650;
+body.light{
+  --bg:#edf3fa;--card:#fff;--card2:#e5edf7;
+  --text:#14243a;--muted:#62758d;--accent:#008eb5;
+  --border:rgba(0,0,0,.1);--danger:#d93650;
 }
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  transition: .25s;
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;transition:.25s;
 }
-
-header {
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 5;
+header{
+  padding:16px;display:flex;align-items:center;gap:14px;
+  background:var(--card);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:5;
 }
-
-.back {
-  border: 0;
-  background: var(--card2);
-  color: var(--text);
-  padding: 10px 13px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 18px;
+.back{
+  border:0;background:var(--card2);color:var(--text);
+  padding:10px 14px;border-radius:10px;cursor:pointer;font-size:18px;
 }
-
-.brand {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--accent);
-  letter-spacing: 2px;
+.brand{font-size:22px;font-weight:900;color:var(--accent);letter-spacing:2px}
+header small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.container{width:100%;max-width:650px;margin:auto;padding:20px 15px 45px}
+.page-title{font-size:25px;margin:12px 0 5px}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:24px}
+.section-title{
+  color:var(--accent);font-size:13px;font-weight:bold;
+  letter-spacing:1px;margin:24px 5px 10px;text-transform:uppercase;
 }
-
-header small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 3px;
+.card,.account-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-bottom:13px;
 }
-
-.container {
-  width: 100%;
-  max-width: 650px;
-  margin: auto;
-  padding: 20px 15px 45px;
+.setting{
+  display:flex;align-items:center;gap:13px;padding:15px;
+  border-bottom:1px solid var(--border);min-height:67px;
 }
-
-.page-title {
-  font-size: 25px;
-  margin: 12px 0 5px;
+.setting:last-child{border-bottom:0}
+.setting-icon{
+  width:39px;height:39px;border-radius:12px;background:var(--card2);
+  display:grid;place-items:center;font-size:19px;flex-shrink:0;
 }
-
-.subtitle {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 24px;
+.setting-info{flex:1;min-width:0}
+.setting-info strong{display:block;font-size:14px}
+.setting-info small{
+  display:block;color:var(--muted);font-size:11px;
+  margin-top:5px;line-height:1.4;
 }
-
-.section-title {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin: 24px 5px 10px;
-  text-transform: uppercase;
+.arrow{color:var(--muted);font-size:20px}
+select{
+  background:var(--card2);color:var(--text);
+  border:1px solid var(--border);padding:9px;border-radius:9px;max-width:125px;
 }
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 13px;
+.switch{position:relative;width:45px;height:25px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.slider{
+  position:absolute;inset:0;background:#63758b;
+  border-radius:30px;cursor:pointer;transition:.2s;
 }
-
-.setting {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 15px;
-  border-bottom: 1px solid var(--border);
-  min-height: 67px;
+.slider:before{
+  content:"";position:absolute;width:19px;height:19px;
+  left:3px;top:3px;background:white;border-radius:50%;transition:.2s;
 }
-
-.setting:last-child { border-bottom: 0; }
-
-.setting-icon {
-  width: 39px;
-  height: 39px;
-  border-radius: 12px;
-  background: var(--card2);
-  display: grid;
-  place-items: center;
-  font-size: 19px;
-  flex-shrink: 0;
+.switch input:checked+.slider{background:#00bddd}
+.switch input:checked+.slider:before{transform:translateX(20px)}
+.action{
+  border:0;background:transparent;color:var(--text);
+  width:100%;text-align:left;font:inherit;cursor:pointer;padding:0;
 }
-
-.setting-info {
-  flex: 1;
-  min-width: 0;
+.danger{color:var(--danger)}
+.account-box{padding:17px}
+.account-box p{color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.primary-btn{
+  width:100%;border:0;border-radius:11px;padding:13px;
+  background:linear-gradient(110deg,#00c9ee,#087cf0);
+  color:white;font-weight:bold;cursor:pointer;margin-top:10px;
 }
-
-.setting-info strong {
-  display: block;
-  font-size: 14px;
+footer{text-align:center;color:var(--muted);font-size:11px;padding:22px 10px}
+footer a{color:var(--accent);text-decoration:none;margin:0 7px}
+#toast{
+  position:fixed;bottom:25px;left:50%;transform:translateX(-50%);
+  background:#142d49;color:white;padding:12px 18px;border-radius:10px;
+  display:none;z-index:20;box-shadow:0 5px 20px #0005;
+  font-size:13px;max-width:90%;text-align:center;
 }
-
-.setting-info small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 5px;
-  line-height: 1.4;
+#loading{text-align:center;padding:40px 15px;color:var(--muted)}
+button:focus-visible,select:focus-visible,a:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;
 }
-
-.arrow {
-  color: var(--muted);
-  font-size: 20px;
-}
-
-select {
-  background: var(--card2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 9px;
-  border-radius: 9px;
-  max-width: 125px;
-}
-
-.switch {
-  position: relative;
-  width: 45px;
-  height: 25px;
-  flex-shrink: 0;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  inset: 0;
-  background: #63758b;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: .2s;
-}
-
-.slider:before {
-  content: "";
-  position: absolute;
-  width: 19px;
-  height: 19px;
-  left: 3px;
-  top: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .2s;
-}
-
-.switch input:checked + .slider {
-  background: #00bddd;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-.action {
-  border: 0;
-  background: transparent;
-  color: var(--text);
-  width: 100%;
-  text-align: left;
-  font: inherit;
-  cursor: pointer;
-}
-
-.danger { color: var(--danger); }
-
-.account-box {
-  background: var(--card);
-  padding: 17px;
-  border-radius: 15px;
-  border: 1px solid var(--border);
-  margin-bottom: 13px;
-}
-
-.account-box p {
-  color: var(--muted);
-  font-size: 12px;
-  overflow-wrap: anywhere;
-}
-
-.primary-btn {
-  width: 100%;
-  border: 0;
-  border-radius: 11px;
-  padding: 13px;
-  background: linear-gradient(110deg,#00c9ee,#087cf0);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  padding: 22px 10px;
-}
-
-footer a {
-  color: var(--accent);
-  text-decoration: none;
-  margin: 0 7px;
-}
-
-#toast {
-  position: fixed;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #142d49;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 10px;
-  display: none;
-  z-index: 20;
-  box-shadow: 0 5px 20px #0005;
-  font-size: 13px;
-}
-
-#loading {
-  text-align: center;
-  padding: 40px 15px;
-  color: var(--muted);
-}
-
-button:focus-visible, select:focus-visible, a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+[hidden]{display:none!important}
 </style>
 </head>
 
 <body>
-
 <header>
   <button class="back" onclick="goBack()" aria-label="Go back">←</button>
   <div>
@@ -298,17 +118,14 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 </header>
 
 <main class="container">
-
   <h1 class="page-title">⚙️ Settings</h1>
   <p class="subtitle">Manage your RYZON app preferences and account.</p>
 
   <div id="loading">Checking your account...</div>
 
   <div id="settingsContent" hidden>
-
     <div class="section-title">Appearance</div>
     <div class="card">
-
       <div class="setting">
         <div class="setting-icon">🎨</div>
         <div class="setting-info">
@@ -316,18 +133,17 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <small>Change the appearance of RYZON.</small>
         </div>
         <label class="switch">
-          <input type="checkbox" id="themeToggle">
+          <input type="checkbox" id="themeToggle" aria-label="Light mode">
           <span class="slider"></span>
         </label>
       </div>
-
       <div class="setting">
         <div class="setting-icon">🌐</div>
         <div class="setting-info">
           <strong>Language</strong>
           <small>Select your preferred language.</small>
         </div>
-        <select id="languageSelect">
+        <select id="languageSelect" aria-label="Preferred language">
           <option value="en">English</option>
           <option value="ta">தமிழ்</option>
           <option value="hi">हिन्दी</option>
@@ -335,12 +151,10 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <option value="fr">Français</option>
         </select>
       </div>
-
     </div>
 
     <div class="section-title">Notifications</div>
     <div class="card">
-
       <div class="setting">
         <div class="setting-icon">🔔</div>
         <div class="setting-info">
@@ -348,52 +162,47 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <small>Allow browser notifications where supported.</small>
         </div>
         <label class="switch">
-          <input type="checkbox" id="pushToggle">
+          <input type="checkbox" id="pushToggle" aria-label="Push notifications">
           <span class="slider"></span>
         </label>
       </div>
-
       <div class="setting">
         <div class="setting-icon">💬</div>
         <div class="setting-info">
           <strong>Message Notifications</strong>
-          <small>Notification preference for messages.</small>
+          <small>Preference for message notifications.</small>
         </div>
         <label class="switch">
           <input type="checkbox" id="messageToggle" checked>
           <span class="slider"></span>
         </label>
       </div>
-
       <div class="setting">
         <div class="setting-icon">❤️</div>
         <div class="setting-info">
           <strong>Likes & Comments</strong>
-          <small>Notification preference for social activity.</small>
+          <small>Preference for social activity notifications.</small>
         </div>
         <label class="switch">
           <input type="checkbox" id="socialToggle" checked>
           <span class="slider"></span>
         </label>
       </div>
-
       <div class="setting">
         <div class="setting-icon">👥</div>
         <div class="setting-info">
           <strong>Friend Requests</strong>
-          <small>Notification preference for friend requests.</small>
+          <small>Preference for friend request notifications.</small>
         </div>
         <label class="switch">
           <input type="checkbox" id="requestToggle" checked>
           <span class="slider"></span>
         </label>
       </div>
-
     </div>
 
     <div class="section-title">Chat & Privacy</div>
     <div class="card">
-
       <div class="setting">
         <div class="setting-icon">🟢</div>
         <div class="setting-info">
@@ -405,25 +214,26 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="slider"></span>
         </label>
       </div>
-
-      <div class="setting">
-        <div class="setting-icon">🔒</div>
-        <div class="setting-info">
-          <strong>Privacy & Security</strong>
-          <small>Manage your account security.</small>
+      <button class="action" onclick="openPrivacy()">
+        <div class="setting">
+          <div class="setting-icon">🔒</div>
+          <div class="setting-info">
+            <strong>Privacy & Security</strong>
+            <small>Manage your account security.</small>
+          </div>
+          <span class="arrow">›</span>
         </div>
-        <button class="back" onclick="openPrivacy()">›</button>
-      </div>
-
-      <div class="setting">
-        <div class="setting-icon">🚫</div>
-        <div class="setting-info">
-          <strong>Blocked Users</strong>
-          <small>Manage your blocked users.</small>
+      </button>
+      <button class="action" onclick="showMessage('Blocked user management is not connected to a live account database yet.')">
+        <div class="setting">
+          <div class="setting-icon">🚫</div>
+          <div class="setting-info">
+            <strong>Blocked Users</strong>
+            <small>Blocked-user management.</small>
+          </div>
+          <span class="arrow">›</span>
         </div>
-        <button class="back" onclick="showMessage('Blocked user management will be connected to your account database.')">›</button>
-      </div>
-
+      </button>
     </div>
 
     <div class="section-title">Account</div>
@@ -437,7 +247,6 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 
     <div class="section-title">RYZON Services</div>
     <div class="card">
-
       <button class="action" onclick="goTo('premium.html')">
         <div class="setting">
           <div class="setting-icon">👑</div>
@@ -448,18 +257,16 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="arrow">›</span>
         </div>
       </button>
-
       <button class="action" onclick="goTo('chat.html')">
         <div class="setting">
           <div class="setting-icon">💬</div>
           <div class="setting-info">
             <strong>Chat System</strong>
-            <small>Open your personal and group chats.</small>
+            <small>Open personal and group chats.</small>
           </div>
           <span class="arrow">›</span>
         </div>
       </button>
-
       <button class="action" onclick="goTo('notifications.html')">
         <div class="setting">
           <div class="setting-icon">📩</div>
@@ -470,12 +277,10 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="arrow">›</span>
         </div>
       </button>
-
     </div>
 
     <div class="section-title">Support & Information</div>
     <div class="card">
-
       <button class="action" onclick="goTo('help.html')">
         <div class="setting">
           <div class="setting-icon">🆘</div>
@@ -486,8 +291,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="arrow">›</span>
         </div>
       </button>
-
-      <button class="action" onclick="showMessage('RYZON — One App, Endless Possibilities!')">
+      <button class="action" onclick="showMessage('RYZON — One App, Endless Possibilities! Version 1.0.0')">
         <div class="setting">
           <div class="setting-icon">ℹ️</div>
           <div class="setting-info">
@@ -497,23 +301,20 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="arrow">›</span>
         </div>
       </button>
-
       <button class="action" onclick="goTo('help.html')">
         <div class="setting">
           <div class="setting-icon">📜</div>
           <div class="setting-info">
             <strong>Terms & Privacy Policy</strong>
-            <small>Read our terms and privacy information.</small>
+            <small>Read terms and privacy information.</small>
           </div>
           <span class="arrow">›</span>
         </div>
       </button>
-
     </div>
 
     <div class="section-title">Account Actions</div>
     <div class="card">
-
       <button class="action danger" onclick="logout()">
         <div class="setting">
           <div class="setting-icon">🚪</div>
@@ -524,9 +325,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
           <span class="arrow">›</span>
         </div>
       </button>
-
     </div>
-
   </div>
 </main>
 
@@ -540,189 +339,178 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
-  getAuth,
-  onAuthStateChanged,
-  signOut,
-  sendPasswordResetEmail
+  getAuth,onAuthStateChanged,signOut,sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
-  authDomain: "seavora-5be21.firebaseapp.com",
-  projectId: "seavora-5be21",
-  storageBucket: "seavora-5be21.firebasestorage.app",
-  messagingSenderId: "41187328725",
-  appId: "1:41187328725:web:07ca55487383bc5798d85c",
-  measurementId: "G-PDY0RZRDDH"
+const firebaseConfig={
+  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain:"seavora-5be21.firebaseapp.com",
+  projectId:"seavora-5be21",
+  storageBucket:"seavora-5be21.firebasestorage.app",
+  messagingSenderId:"41187328725",
+  appId:"1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId:"G-PDY0RZRDDH"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const $=id=>document.getElementById(id);
 
-const $ = id => document.getElementById(id);
+let toastTimer;
 
-function showMessage(message) {
-  const toast = $("toast");
-  toast.textContent = message;
-  toast.style.display = "block";
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => {
-    toast.style.display = "none";
-  }, 2800);
+function showMessage(message){
+  const toast=$("toast");
+  toast.textContent=message;
+  toast.style.display="block";
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toast.style.display="none",2800);
 }
+window.showMessage=showMessage;
 
-window.showMessage = showMessage;
-
-window.goTo = function(page) {
-  window.location.href = page;
-};
-
-window.goBack = function() {
-  if (document.referrer && new URL(document.referrer).origin === location.origin) {
-    history.back();
-  } else {
-    location.href = "home.html";
+window.goTo=page=>location.href=page;
+window.goBack=()=>{
+  try{
+    if(document.referrer && new URL(document.referrer).origin===location.origin){
+      history.back();
+    }else{
+      location.href="home.html";
+    }
+  }catch{
+    location.href="home.html";
   }
 };
 
-function getPreferenceKey(name) {
-  return "ryzon_" + name;
-}
+function preferenceKey(name){return "ryzon_"+name;}
 
-function loadSwitch(id, key, defaultValue) {
-  const saved = localStorage.getItem(getPreferenceKey(key));
-  $(id).checked = saved === null ? defaultValue : saved === "true";
-
-  $(id).addEventListener("change", () => {
-    localStorage.setItem(getPreferenceKey(key), String($(id).checked));
-    showMessage("Setting saved.");
+function loadSwitch(id,key,defaultValue){
+  const saved=localStorage.getItem(preferenceKey(key));
+  $(id).checked=saved===null?defaultValue:saved==="true";
+  $(id).addEventListener("change",()=>{
+    localStorage.setItem(preferenceKey(key),String($(id).checked));
+    showMessage("Setting saved on this device.");
   });
 }
 
 // Theme
-const savedTheme = localStorage.getItem("ryzon_theme") || "dark";
-document.body.classList.toggle("light", savedTheme === "light");
-$("themeToggle").checked = savedTheme === "light";
+const savedTheme=localStorage.getItem("ryzon_theme")||"dark";
+document.body.classList.toggle("light",savedTheme==="light");
+$("themeToggle").checked=savedTheme==="light";
 
-$("themeToggle").addEventListener("change", () => {
-  const theme = $("themeToggle").checked ? "light" : "dark";
-  document.body.classList.toggle("light", theme === "light");
-  localStorage.setItem("ryzon_theme", theme);
+$("themeToggle").addEventListener("change",()=>{
+  const theme=$("themeToggle").checked?"light":"dark";
+  document.body.classList.toggle("light",theme==="light");
+  localStorage.setItem("ryzon_theme",theme);
   showMessage("Theme updated.");
 });
 
 // Language preference
-$("languageSelect").value = localStorage.getItem("ryzon_language") || "en";
-
-$("languageSelect").addEventListener("change", () => {
-  localStorage.setItem("ryzon_language", $("languageSelect").value);
+$("languageSelect").value=localStorage.getItem("ryzon_language")||"en";
+$("languageSelect").addEventListener("change",()=>{
+  localStorage.setItem("ryzon_language",$("languageSelect").value);
   showMessage("Language preference saved.");
-  if (typeof window.toggleRYZONLanguage === "function") {
-    window.toggleRYZONLanguage();
-  }
 });
 
-// Notification and privacy preferences
-loadSwitch("pushToggle", "push_notifications", false);
-loadSwitch("messageToggle", "message_notifications", true);
-loadSwitch("socialToggle", "social_notifications", true);
-loadSwitch("requestToggle", "request_notifications", true);
-loadSwitch("onlineToggle", "online_status", true);
+// Local notification preferences
+loadSwitch("messageToggle","message_notifications",true);
+loadSwitch("socialToggle","social_notifications",true);
+loadSwitch("requestToggle","request_notifications",true);
+loadSwitch("onlineToggle","online_status",true);
 
-// Browser notification permission
-$("pushToggle").addEventListener("change", async () => {
-  if (!$("pushToggle").checked) return;
+// Push notification permission
+const pushSaved=localStorage.getItem("ryzon_push_notifications")==="true";
+$("pushToggle").checked=pushSaved;
 
-  if (!("Notification" in window)) {
-    $("pushToggle").checked = false;
-    localStorage.setItem("ryzon_push_notifications", "false");
+$("pushToggle").addEventListener("change",async()=>{
+  if(!$("pushToggle").checked){
+    localStorage.setItem("ryzon_push_notifications","false");
+    showMessage("Push notification preference turned off.");
+    return;
+  }
+
+  if(!("Notification" in window)){
+    $("pushToggle").checked=false;
+    localStorage.setItem("ryzon_push_notifications","false");
     showMessage("This browser does not support notifications.");
     return;
   }
 
-  if (Notification.permission === "granted") {
-    showMessage("Browser notifications are allowed.");
-    return;
-  }
-
-  if (Notification.permission === "denied") {
-    $("pushToggle").checked = false;
-    localStorage.setItem("ryzon_push_notifications", "false");
+  if(Notification.permission==="denied"){
+    $("pushToggle").checked=false;
+    localStorage.setItem("ryzon_push_notifications","false");
     showMessage("Notifications are blocked in browser settings.");
     return;
   }
 
-  try {
-    const permission = await Notification.requestPermission();
-    const allowed = permission === "granted";
-    $("pushToggle").checked = allowed;
-    localStorage.setItem("ryzon_push_notifications", String(allowed));
-    showMessage(allowed ? "Notifications enabled." : "Notification permission not granted.");
-  } catch (error) {
-    $("pushToggle").checked = false;
-    localStorage.setItem("ryzon_push_notifications", "false");
+  try{
+    const permission=Notification.permission==="granted"
+      ?"granted":await Notification.requestPermission();
+    const allowed=permission==="granted";
+    $("pushToggle").checked=allowed;
+    localStorage.setItem("ryzon_push_notifications",String(allowed));
+    showMessage(allowed?"Browser notification permission granted.":"Permission not granted.");
+  }catch(error){
+    $("pushToggle").checked=false;
+    localStorage.setItem("ryzon_push_notifications","false");
     showMessage("Could not request notification permission.");
   }
 });
 
-// Auth
-onAuthStateChanged(auth, user => {
-  $("loading").hidden = true;
-
-  if (!user) {
+// Authentication
+onAuthStateChanged(auth,user=>{
+  $("loading").hidden=true;
+  if(!user){
     location.replace("otp.html");
     return;
   }
 
-  $("settingsContent").hidden = false;
-
-  $("accountEmail").textContent =
-    user.email || user.phoneNumber || "Account information unavailable";
-
-  const providers = user.providerData.map(p => p.providerId).join(", ");
-  $("accountProvider").textContent =
-    "Login method: " + (providers || "Unknown");
+  $("settingsContent").hidden=false;
+  $("accountEmail").textContent=user.email||user.phoneNumber||"Account information unavailable";
+  const providers=user.providerData.map(item=>item.providerId).join(", ");
+  $("accountProvider").textContent="Login method: "+(providers||"Unknown");
 });
 
 // Password reset
-window.resetPassword = async function() {
-  const user = auth.currentUser;
-
-  if (!user || !user.email) {
+window.resetPassword=async()=>{
+  const user=auth.currentUser;
+  if(!user||!user.email){
     showMessage("Password reset is available for email accounts.");
     return;
   }
-
-  if (!confirm("Send a password reset email to " + user.email + "?")) return;
-
-  try {
-    await sendPasswordResetEmail(auth, user.email);
+  if(!confirm("Send a password reset email to "+user.email+"?"))return;
+  try{
+    await sendPasswordResetEmail(auth,user.email);
     showMessage("Password reset email sent.");
-  } catch (error) {
-    showMessage(error.message || "Could not send reset email.");
+  }catch(error){
+    showMessage(error.message||"Could not send reset email.");
   }
 };
 
-// Privacy page information
-window.openPrivacy = function() {
-  showMessage("Privacy controls are saved as preferences on this device.");
+// Privacy information
+window.openPrivacy=()=>{
+  showMessage("Privacy preferences are stored locally. Account security is managed by Firebase.");
 };
 
 // Logout
-window.logout = async function() {
-  if (!confirm("Are you sure you want to logout from RYZON?")) return;
-
-  try {
+window.logout=async()=>{
+  if(!confirm("Are you sure you want to logout from RYZON?"))return;
+  try{
     await signOut(auth);
     location.replace("otp.html");
-  } catch (error) {
+  }catch(error){
     showMessage("Logout failed. Please try again.");
   }
 };
-</script>
 
+// Service worker
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("service-worker.js").catch(error=>{
+      console.log("Service worker registration failed:",error);
+    });
+  });
+}
+</script>
 </body>
 </html>
