@@ -266,6 +266,10 @@ const auth=getAuth(app);
 const googleProvider=new GoogleAuthProvider();
 const $=id=>document.getElementById(id);
 
+/* Random Chat redirect detection */
+const isRandomChat=
+ sessionStorage.getItem("ryzonNextAction")==="randomChat";
+
 let mode="login";
 let method="email";
 let confirmationResult=null;
@@ -276,7 +280,7 @@ let otpInterval=null;
 let otpExpired=false;
 let currentPhone="";
 
-/* Phone library is optional. Its failure must not stop the page. */
+/* Optional phone library */
 let phonePicker=null;
 
 try{
@@ -346,7 +350,7 @@ async function setLoginPersistence(){
  );
 }
 
-/* Phone number validation with fallback if library fails */
+/* Phone validation with fallback */
 async function validPhone(){
  const raw=$("loginPhone").value.trim();
 
@@ -356,19 +360,30 @@ async function validPhone(){
  }
 
  if(phonePicker){
+  let pickerReady=false;
+
   try{
    await phonePicker.promise;
-
-   if(!phonePicker.isValidNumber()){
-    invalid($("loginPhone"));
-    throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
-   }
-
-   valid($("loginPhone"));
-   return phonePicker.getNumber();
+   pickerReady=true;
   }catch(error){
-   if(error.message)throw error;
    console.warn("Phone utility unavailable:",error);
+  }
+
+  if(pickerReady){
+   try{
+    if(!phonePicker.isValidNumber()){
+     invalid($("loginPhone"));
+     throw new Error("சரியான Mobile Number உள்ளிடுங்கள்.");
+    }
+
+    valid($("loginPhone"));
+    return phonePicker.getNumber();
+   }catch(error){
+    if(error.message==="சரியான Mobile Number உள்ளிடுங்கள்."){
+     throw error;
+    }
+    console.warn("Phone validation utility error:",error);
+   }
   }
  }
 
@@ -412,7 +427,7 @@ function successLogin(){
  },1600);
 }
 
-/* Login Lockout */
+/* Login lockout */
 const MAX_ATTEMPTS=5;
 const LOCK_TIME=300000;
 
@@ -574,7 +589,7 @@ function startOtpTimer(){
  otpInterval=setInterval(updateOtpTimer,1000);
 }
 
-/* Screen Switching */
+/* Screen switching */
 function showMethod(){
  $("emailSection").style.display=method==="email"?"block":"none";
  $("phoneSection").style.display=method==="phone"?"block":"none";
@@ -992,6 +1007,7 @@ if(isRandomChat){
  $("accountTabs").style.display="none";
  $("googleButton").style.display="none";
  $("accountPrompt").style.display="none";
+ $("divider")?.classList.add("hidden");
 }else{
  selectMethod("email");
 }
