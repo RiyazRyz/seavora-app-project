@@ -5,123 +5,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071426">
+<meta name="description" content="Discover people, topics and communities on RYZON">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>RYZON - Explore</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 
 <style>
 :root{
-  --bg:#071426;
-  --panel:#10243d;
-  --panel2:#173653;
-  --text:#f3f8ff;
-  --muted:#9db0c7;
-  --cyan:#55d7ff;
+  --bg:#071426;--panel:#10243d;--panel2:#173653;
+  --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
   --border:#24415f;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:linear-gradient(145deg,#06101f,#0b1e35);
+  margin:0;min-height:100vh;font-family:Arial,sans-serif;
+  color:var(--text);background:linear-gradient(145deg,#06101f,#0b1e35);
+}
+html:not(.auth-ready) body{visibility:hidden}
+html:not(.auth-ready)::before{
+  content:"Checking secure login...";
+  position:fixed;inset:0;display:flex;align-items:center;
+  justify-content:center;background:#071426;color:#55d7ff;
+  font-weight:bold;z-index:9999;visibility:visible;
 }
 button,input{font:inherit}
 button{cursor:pointer}
 header{
-  position:sticky;top:0;z-index:5;
-  display:flex;align-items:center;
-  justify-content:space-between;
-  padding:14px 16px;
-  background:#091a2d;
+  position:sticky;top:0;z-index:5;display:flex;
+  align-items:center;justify-content:space-between;
+  padding:14px 16px;background:#091a2d;
   border-bottom:1px solid var(--border);
 }
 .brand{display:flex;align-items:center;gap:10px}
 .logo{
   width:40px;height:40px;border-radius:12px;
-  display:grid;place-items:center;
-  font-size:24px;font-weight:bold;
+  display:grid;place-items:center;font-size:24px;font-weight:bold;
   background:linear-gradient(135deg,#168cff,#31e0e5);
 }
 .brand h2{margin:0;color:var(--cyan);font-size:20px}
 .brand small{display:block;color:var(--muted);font-size:10px}
 .home-btn{
-  background:var(--panel2);color:white;
-  border:1px solid var(--border);
+  background:var(--panel2);color:white;border:1px solid var(--border);
   border-radius:10px;padding:10px 13px;
 }
 .container{max-width:1000px;margin:auto;padding:17px}
 .hero{
-  padding:24px 20px;
-  border:1px solid var(--border);
+  padding:24px 20px;border:1px solid var(--border);
   border-radius:18px;
   background:linear-gradient(120deg,#123c60,#10243d 65%,#123c60);
 }
 .hero h1{font-size:27px;margin:0 0 8px}
 .hero p{color:#c0d3e7;line-height:1.6;margin:0 0 17px}
-.search-box{
-  display:flex;gap:8px;
-}
+.search-box{display:flex;gap:8px}
 .search-box input{
-  flex:1;min-width:0;padding:13px;
-  border:1px solid var(--border);
-  border-radius:11px;background:#07182a;
-  color:white;outline:none;
+  flex:1;min-width:0;padding:13px;border:1px solid var(--border);
+  border-radius:11px;background:#07182a;color:white;outline:none;
 }
 .search-box button,.primary{
-  border:0;border-radius:11px;padding:12px 16px;
-  color:white;font-weight:bold;
-  background:linear-gradient(135deg,#078cc5,#13b9c5);
+  border:0;border-radius:11px;padding:12px 16px;color:white;
+  font-weight:bold;background:linear-gradient(135deg,#078cc5,#13b9c5);
 }
 .section{margin-top:25px}
 .section-heading{
-  display:flex;align-items:center;
-  justify-content:space-between;gap:10px;
-  margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin-bottom:12px;
 }
 .section-heading h2{font-size:19px;margin:0}
 .section-heading small{color:var(--muted)}
 .quick-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:11px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:11px;
 }
 .quick-card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;padding:17px 10px;
-  text-align:center;cursor:pointer;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:17px 10px;text-align:center;
+  cursor:pointer;transition:.2s;
 }
-.quick-card:hover{border-color:var(--cyan)}
+.quick-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
 .quick-card .emoji{font-size:29px;margin-bottom:9px}
 .quick-card strong{display:block;font-size:13px}
-.quick-card small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
-.card-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:12px;
+.quick-card small{
+  display:block;color:var(--muted);font-size:11px;margin-top:5px;
 }
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .content-card{
-  background:var(--panel);
-  border:1px solid var(--border);
+  background:var(--panel);border:1px solid var(--border);
   border-radius:14px;padding:16px;
 }
 .content-card h3{font-size:15px;margin:0 0 8px}
-.content-card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+.content-card p{
+  font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 12px;
+}
 .tag{
-  display:inline-block;
-  color:var(--cyan);background:#123b59;
-  border-radius:20px;padding:5px 9px;
-  font-size:11px;margin:3px 3px 3px 0;
+  display:inline-block;color:var(--cyan);background:#123b59;
+  border-radius:20px;padding:5px 9px;font-size:11px;margin:3px 3px 3px 0;
 }
 .card-btn{
-  border:1px solid var(--border);
-  background:var(--panel2);color:var(--cyan);
-  padding:9px 12px;border-radius:9px;
-  font-size:12px;
+  border:1px solid var(--border);background:var(--panel2);
+  color:var(--cyan);padding:9px 12px;border-radius:9px;font-size:12px;
 }
 .community-icon{
-  width:45px;height:45px;
-  border-radius:13px;background:#1b3d5c;
-  display:grid;place-items:center;font-size:23px;
-  margin-bottom:12px;
+  width:45px;height:45px;border-radius:13px;background:#1b3d5c;
+  display:grid;place-items:center;font-size:23px;margin-bottom:12px;
 }
 .result-area{margin-top:15px}
 .result-card{
@@ -130,8 +116,8 @@ header{
 }
 .empty{
   background:var(--panel);border:1px solid var(--border);
-  border-radius:14px;padding:25px 15px;
-  text-align:center;color:var(--muted);line-height:1.7;
+  border-radius:14px;padding:25px 15px;text-align:center;
+  color:var(--muted);line-height:1.7;
 }
 .notice{
   color:var(--muted);font-size:12px;line-height:1.6;
@@ -139,6 +125,7 @@ header{
   border-radius:12px;padding:13px;margin-top:22px;
 }
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+footer a{color:var(--cyan)}
 @media(max-width:600px){
   .quick-grid{grid-template-columns:repeat(2,1fr)}
   .card-grid{grid-template-columns:1fr}
@@ -216,6 +203,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
     </div>
 
     <div class="card-grid">
+
       <div class="content-card">
         <h3>💻 Technology</h3>
         <p>Explore technology, apps, gadgets and digital innovation.</p>
@@ -247,6 +235,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
         <span class="tag">Design</span>
         <button class="card-btn" onclick="searchTopic('Creativity')">Explore Topic</button>
       </div>
+
     </div>
   </section>
 
@@ -254,6 +243,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
     <div class="section-heading">
       <h2>👥 Discover Users</h2>
     </div>
+
     <div class="empty">
       <div style="font-size:38px">👥</div>
       <strong>Discover new people</strong><br>
@@ -271,6 +261,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
     </div>
 
     <div class="card-grid">
+
       <div class="content-card">
         <div class="community-icon">💻</div>
         <h3>Technology Community</h3>
@@ -302,6 +293,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
         <span class="tag">Photography</span>
         <button class="card-btn" onclick="communityInfo('Photography Community')">View Community</button>
       </div>
+
     </div>
   </section>
 
@@ -311,6 +303,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
     </div>
 
     <div class="quick-grid">
+
       <div class="quick-card" onclick="location.href='premium.html'">
         <div class="emoji">⭐</div>
         <strong>Premium</strong>
@@ -334,6 +327,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
         <strong>Help & Support</strong>
         <small>Get assistance</small>
       </div>
+
     </div>
   </section>
 
@@ -346,8 +340,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 </main>
 
 <footer>
-  © 2026 RYZON ·
-  <a href="help.html" style="color:#55d7ff">Help & Support</a>
+  © 2026 RYZON · <a href="help.html">Help & Support</a>
 </footer>
 
 <script type="module">
@@ -371,14 +364,6 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
 let currentUser=null;
-
-onAuthStateChanged(auth,user=>{
-  if(!user){
-    location.href="otp.html";
-    return;
-  }
-  currentUser=user;
-});
 
 const $=id=>document.getElementById(id);
 
@@ -410,7 +395,7 @@ window.searchExplore=function(){
       </div>
       <div class="empty">
         <div style="font-size:35px">🔍</div>
-        <strong>Searching for "${safe}"</strong><br>
+        <strong>Search: "${safe}"</strong><br>
         Live people, posts and community search will be available
         after Firebase search integration.
       </div>
@@ -435,6 +420,25 @@ window.communityInfo=function(name){
     "\n\nCommunity discovery and joining will be enabled after the RYZON community database is connected."
   );
 };
+
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    location.replace("otp.html");
+    return;
+  }
+
+  currentUser=user;
+  document.documentElement.classList.add("auth-ready");
+});
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error=>console.log("Service Worker:",error));
+  });
+}
 </script>
 
 </body>
