@@ -1,9 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071b35">
+<meta name="description" content="RYZON Admin Dashboard">
 <title>RYZON Admin Dashboard</title>
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RYZON">
 
 <style>
 *{box-sizing:border-box}
@@ -18,7 +27,7 @@ header{
   color:white;
   padding:22px;
 }
-header h1{margin:0 0 6px}
+header h1{margin:0 0 6px;font-size:25px}
 header p{margin:0;color:#c9e7ff}
 main{max-width:1100px;margin:auto;padding:18px}
 .panel{
@@ -35,19 +44,22 @@ input,select{
   border-radius:7px;
   margin:7px 0;
   font-size:15px;
+  background:white;
+  color:#172b4d;
 }
 button{
   border:0;
   border-radius:7px;
-  padding:10px 15px;
+  padding:11px 15px;
   margin:5px 3px;
   cursor:pointer;
   font-weight:bold;
+  font-size:14px;
 }
+button:disabled{opacity:.5;cursor:not-allowed}
 .primary{background:#1265a8;color:white}
 .approve{background:#16834a;color:white}
-.reject{background:#c93636;color:white}
-.logout{background:#c93636;color:white}
+.reject,.logout{background:#c93636;color:white}
 .neutral{background:#e7eef5;color:#173b58}
 .stats{
   display:grid;
@@ -76,9 +88,11 @@ button{
   padding:12px;
   border-radius:8px;
   color:#72520b;
+  line-height:1.6;
 }
-#status,#loginStatus,#resetStatus{overflow-wrap:anywhere}
+#status,#loginStatus,#resetStatus{overflow-wrap:anywhere;line-height:1.5}
 .tabs{display:flex;flex-wrap:wrap;gap:5px}
+.tab{background:#e7eef5;color:#173b58}
 .tab.active{background:#1265a8;color:white}
 .badge{
   display:inline-block;
@@ -86,11 +100,38 @@ button{
   border-radius:20px;
   background:#e9eff5;
   font-size:12px;
+  font-weight:bold;
+}
+.topline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.status-pending{background:#fff0c2;color:#805b00}
+.status-approved{background:#d8f5e3;color:#126536}
+.status-rejected{background:#ffe0e0;color:#a32121}
+.empty{
+  padding:20px;
+  text-align:center;
+  color:#65758b;
+  background:#f7f9fb;
+  border-radius:8px;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#65758b;
+  font-size:13px;
 }
 @media(max-width:600px){
   main{padding:10px}
   header{padding:18px}
+  header h1{font-size:21px}
   .panel{padding:14px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  button{max-width:100%}
 }
 </style>
 </head>
@@ -106,45 +147,87 @@ button{
 
 <section class="panel" id="loginPanel">
   <h2>Admin Login</h2>
-  <input type="email" id="adminEmail" placeholder="Admin Email" autocomplete="username">
-  <input type="password" id="adminPassword" placeholder="Admin Password" autocomplete="current-password">
+  <p class="muted">Authorized administrator access only.</p>
 
-  <button class="primary" id="authButton" onclick="toggleAdminAuth()">Login</button>
-  <button class="neutral" onclick="resetAdminPassword()">Forgot Password?</button>
+  <form id="loginForm">
+    <input type="email" id="adminEmail"
+      placeholder="Admin Email"
+      autocomplete="username" required>
 
-  <p id="loginStatus"></p>
-  <p id="resetStatus"></p>
+    <input type="password" id="adminPassword"
+      placeholder="Admin Password"
+      autocomplete="current-password" required>
+
+    <button class="primary" type="submit" id="authButton">
+      Login
+    </button>
+
+    <button class="neutral" type="button"
+      onclick="resetAdminPassword()">
+      Forgot Password?
+    </button>
+  </form>
+
+  <p id="loginStatus" role="status"></p>
+  <p id="resetStatus" role="status"></p>
 </section>
 
 <section id="adminPanel" class="hidden">
 
   <div class="panel">
-    <h2>Dashboard Overview</h2>
-    <p class="muted">Project approval summary</p>
-
-    <div class="stats">
-      <div class="stat">Total Projects<strong id="totalCount">0</strong></div>
-      <div class="stat">Pending<strong id="pendingCount">0</strong></div>
-      <div class="stat">Approved<strong id="approvedCount">0</strong></div>
-      <div class="stat">Rejected<strong id="rejectedCount">0</strong></div>
+    <div class="topline">
+      <div>
+        <h2>Dashboard Overview</h2>
+        <p class="muted">Project approval summary</p>
+      </div>
+      <button class="logout" onclick="toggleAdminAuth()">
+        Logout
+      </button>
     </div>
 
-    <button class="logout" onclick="toggleAdminAuth()">Logout</button>
+    <div class="stats">
+      <div class="stat">
+        Total Projects
+        <strong id="totalCount">0</strong>
+      </div>
+      <div class="stat">
+        Pending
+        <strong id="pendingCount">0</strong>
+      </div>
+      <div class="stat">
+        Approved
+        <strong id="approvedCount">0</strong>
+      </div>
+      <div class="stat">
+        Rejected
+        <strong id="rejectedCount">0</strong>
+      </div>
+    </div>
   </div>
 
   <div class="panel">
     <h2>Admin Sections</h2>
     <div class="tabs">
-      <button class="tab active" onclick="showSection('projectsSection',this)">Projects</button>
-      <button class="tab" onclick="showSection('usersSection',this)">User Management</button>
-      <button class="tab" onclick="showSection('reportsSection',this)">Reports</button>
+      <button class="tab active"
+        onclick="showSection('projectsSection',this)">
+        Projects
+      </button>
+      <button class="tab"
+        onclick="showSection('usersSection',this)">
+        User Management
+      </button>
+      <button class="tab"
+        onclick="showSection('reportsSection',this)">
+        Reports
+      </button>
     </div>
   </div>
 
   <section id="projectsSection" class="panel">
     <h2>Project Approval Panel</h2>
 
-    <input type="text" id="projectSearch" placeholder="Search project or seller">
+    <input type="search" id="projectSearch"
+      placeholder="Search project or seller">
 
     <select id="projectFilter">
       <option value="all">All Projects</option>
@@ -153,47 +236,71 @@ button{
       <option value="rejected">Rejected</option>
     </select>
 
-    <p id="status">Loading projects...</p>
+    <p id="status" role="status">Loading projects...</p>
     <div id="projects"></div>
+
+    <button class="neutral" onclick="loadProjects()">
+      Refresh Projects
+    </button>
   </section>
 
   <section id="usersSection" class="panel hidden">
     <h2>User Management</h2>
     <div class="notice">
-      User listing, account status changes, blocking and user search require a secure backend integration.
-      Firebase Authentication user lists cannot safely be retrieved using the normal browser SDK.
-      No user records have been loaded or modified here.
+      User listing, account status changes, blocking and user
+      search require a secure backend integration.
+      Firebase Authentication user lists cannot safely be
+      retrieved using the normal browser SDK.
     </div>
-    <p class="muted">Connect a protected Firebase Cloud Function using the Firebase Admin SDK to enable this section.</p>
+    <p class="muted">
+      Connect a protected Firebase Cloud Function using the
+      Firebase Admin SDK to enable this section.
+    </p>
+    <p>No user records have been loaded or modified here.</p>
   </section>
 
   <section id="reportsSection" class="panel hidden">
     <h2>Reports Management</h2>
     <div class="notice">
-      Report records are not connected yet. The existing Firestore report collection name and document fields must be confirmed before displaying or processing reports.
+      Report records are not connected yet. The existing
+      Firestore report collection name and document fields
+      must be confirmed before displaying or processing reports.
     </div>
-    <p class="muted">No reports have been created, deleted, or modified by this dashboard.</p>
+    <p class="muted">
+      No reports have been created, deleted, or modified by
+      this dashboard.
+    </p>
   </section>
 
 </section>
 
 </main>
 
+<footer>
+  © 2026 RYZON. One App, Endless Possibilities!
+</footer>
+
 <script type="module">
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
-  getFirestore,collection,getDocs,doc,updateDoc
-}
-from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 import {
-  getAuth,signInWithEmailAndPassword,signOut,
-  sendPasswordResetEmail,onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -212,114 +319,21 @@ const auth=getAuth(app);
 const ADMIN_UID="30G6RAmoyJVZsz2rBXEhqdXtVXR2";
 
 let allProjects=[];
-let currentFilter="all";
+let loadingProjects=false;
 
 const $=id=>document.getElementById(id);
 
 function isAdmin(){
-  return auth.currentUser && auth.currentUser.uid===ADMIN_UID;
+  return !!auth.currentUser &&
+    auth.currentUser.uid===ADMIN_UID;
 }
 
 function setAdminView(enabled){
   $("adminPanel").classList.toggle("hidden",!enabled);
   $("loginPanel").classList.toggle("hidden",enabled);
-  $("authButton").textContent=enabled?"Logout":"Login";
-}
-
-window.toggleAdminAuth=async function(){
-
-  if(isAdmin()){
-    try{
-      await signOut(auth);
-      $("loginStatus").textContent="Logged out.";
-    }catch(error){
-      $("loginStatus").textContent=error.message;
-    }
-    return;
-  }
-
-  const email=$("adminEmail").value.trim();
-  const password=$("adminPassword").value;
-
-  if(!email||!password){
-    $("loginStatus").textContent="Enter admin email and password.";
-    return;
-  }
-
-  $("loginStatus").textContent="Signing in...";
-
-  try{
-    const result=await signInWithEmailAndPassword(auth,email,password);
-
-    if(result.user.uid!==ADMIN_UID){
-      await signOut(auth);
-      $("loginStatus").textContent="Not authorized as admin.";
-      return;
-    }
-
-    $("loginStatus").textContent="Admin login successful.";
-  }catch(error){
-    $("loginStatus").textContent="Login failed: "+error.message;
-  }
-};
-
-window.resetAdminPassword=async function(){
-
-  const email=$("adminEmail").value.trim();
-
-  if(!email){
-    $("resetStatus").textContent="Enter your admin email first.";
-    return;
-  }
-
-  try{
-    await sendPasswordResetEmail(auth,email);
-    $("resetStatus").textContent="Password reset link sent to your email.";
-  }catch(error){
-    $("resetStatus").textContent="Reset failed: "+error.message;
-  }
-};
-
-onAuthStateChanged(auth,async user=>{
-
-  if(user && user.uid===ADMIN_UID){
-    setAdminView(true);
-    await loadProjects();
-  }else{
-    setAdminView(false);
-    allProjects=[];
-    $("projects").innerHTML="";
-    $("status").textContent="Please login as admin.";
-    updateStats([]);
-  }
-});
-
-async function loadProjects(){
-
-  if(!isAdmin())return;
-
-  $("status").textContent="Loading projects...";
-
-  try{
-    const snapshot=await getDocs(collection(db,"projects"));
-
-    if(!isAdmin())return;
-
-    allProjects=snapshot.docs.map(item=>({
-      id:item.id,
-      ...item.data()
-    }));
-
-    updateStats(allProjects);
-    filterProjects();
-
-  }catch(error){
-    $("status").textContent="Error loading projects: "+error.message;
-  }
 }
 
 function updateStats(list){
-
   $("totalCount").textContent=list.length;
 
   $("pendingCount").textContent=
@@ -332,74 +346,222 @@ function updateStats(list){
     list.filter(p=>p.status==="rejected").length;
 }
 
+function clearAdminData(){
+  allProjects=[];
+  $("projects").innerHTML="";
+  $("status").textContent="Please login as admin.";
+  updateStats([]);
+}
+
+window.toggleAdminAuth=async function(){
+
+  if(isAdmin()){
+    try{
+      await signOut(auth);
+      $("loginStatus").textContent="Logged out successfully.";
+    }catch(error){
+      $("loginStatus").textContent="Logout failed: "+error.message;
+    }
+    return;
+  }
+
+  $("loginForm").requestSubmit();
+};
+
+$("loginForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const email=$("adminEmail").value.trim();
+  const password=$("adminPassword").value;
+
+  if(!email||!password){
+    $("loginStatus").textContent=
+      "Enter admin email and password.";
+    return;
+  }
+
+  $("authButton").disabled=true;
+  $("authButton").textContent="Signing in...";
+  $("loginStatus").textContent="Checking admin account...";
+
+  try{
+    const result=await signInWithEmailAndPassword(
+      auth,email,password
+    );
+
+    if(result.user.uid!==ADMIN_UID){
+      await signOut(auth);
+      $("loginStatus").textContent=
+        "Access denied. This account is not an authorized admin.";
+      return;
+    }
+
+    $("loginStatus").textContent="Admin login successful.";
+  }catch(error){
+    $("loginStatus").textContent=
+      "Login failed: "+error.message;
+  }finally{
+    $("authButton").disabled=false;
+    $("authButton").textContent="Login";
+  }
+});
+
+window.resetAdminPassword=async function(){
+
+  const email=$("adminEmail").value.trim();
+
+  if(!email){
+    $("resetStatus").textContent=
+      "Enter your admin email first.";
+    return;
+  }
+
+  $("resetStatus").textContent="Sending reset email...";
+
+  try{
+    await sendPasswordResetEmail(auth,email);
+    $("resetStatus").textContent=
+      "Password reset link sent. Check your email.";
+  }catch(error){
+    $("resetStatus").textContent=
+      "Reset failed: "+error.message;
+  }
+};
+
+onAuthStateChanged(auth,async user=>{
+
+  if(user && user.uid===ADMIN_UID){
+    setAdminView(true);
+    await loadProjects();
+  }else{
+    setAdminView(false);
+    clearAdminData();
+
+    if(user){
+      $("loginStatus").textContent=
+        "This account is not authorized as admin.";
+      await signOut(auth);
+    }
+  }
+});
+
+window.loadProjects=async function(){
+
+  if(!isAdmin()||loadingProjects)return;
+
+  loadingProjects=true;
+  $("status").textContent="Loading projects...";
+
+  try{
+    const snapshot=await getDocs(
+      collection(db,"projects")
+    );
+
+    if(!isAdmin())return;
+
+    allProjects=snapshot.docs.map(item=>({
+      id:item.id,
+      ...item.data()
+    }));
+
+    updateStats(allProjects);
+    filterProjects();
+
+  }catch(error){
+    $("status").textContent=
+      "Error loading projects: "+error.message;
+  }finally{
+    loadingProjects=false;
+  }
+};
+
 function filterProjects(){
 
+  if(!isAdmin())return;
+
   const query=$("projectSearch").value.trim().toLowerCase();
-  currentFilter=$("projectFilter").value;
+  const filter=$("projectFilter").value;
 
   const filtered=allProjects.filter(project=>{
 
-    const name=(project.projectName||"").toLowerCase();
-    const seller=(project.sellerName||"").toLowerCase();
+    const name=String(project.projectName||"").toLowerCase();
+    const seller=String(project.sellerName||"").toLowerCase();
     const status=project.status||"pending";
 
-    const matchesSearch=name.includes(query)||seller.includes(query);
-    const matchesFilter=currentFilter==="all"||status===currentFilter;
+    const matchesSearch=
+      name.includes(query)||seller.includes(query);
+
+    const matchesFilter=
+      filter==="all"||status===filter;
 
     return matchesSearch&&matchesFilter;
   });
 
   displayProjects(filtered);
-  $("status").textContent=filtered.length+" matching projects found.";
+  $("status").textContent=
+    filtered.length+" matching projects found.";
 }
 
 function displayProjects(list){
 
   const container=$("projects");
-  container.innerHTML="";
+  container.replaceChildren();
 
   if(list.length===0){
-    container.textContent="No projects found.";
+    const empty=document.createElement("div");
+    empty.className="empty";
+    empty.textContent="No projects found.";
+    container.appendChild(empty);
     return;
   }
 
-  list.forEach(p=>{
+  list.forEach(project=>{
 
     const card=document.createElement("div");
     card.className="project";
 
     const title=document.createElement("h3");
-    title.textContent=p.projectName||"Unnamed Project";
+    title.textContent=project.projectName||"Unnamed Project";
 
     const seller=document.createElement("p");
-    seller.textContent="Seller: "+(p.sellerName||"Not provided");
+    seller.textContent=
+      "Seller: "+(project.sellerName||"Not provided");
 
     const price=document.createElement("p");
-    price.textContent="Price: ₹"+(p.price??"Not provided");
+    price.textContent=
+      "Price: ₹"+(project.price??"Not provided");
 
     const description=document.createElement("p");
-    description.textContent=p.description||"No description";
+    description.textContent=
+      project.description||"No description";
 
-    const state=document.createElement("p");
-    state.textContent="Status: "+(p.status||"pending");
+    const status=document.createElement("p");
+    const currentStatus=project.status||"pending";
+    status.textContent="Status: "+currentStatus;
 
     const badge=document.createElement("span");
-    badge.className="badge";
-    badge.textContent=(p.status||"pending").toUpperCase();
+    badge.className="badge status-"+currentStatus;
+    badge.textContent=currentStatus.toUpperCase();
 
-    card.append(title,seller,price,description,state,badge);
+    card.append(
+      title,seller,price,description,status,badge
+    );
 
-    if((p.status||"pending")==="pending"){
+    if(currentStatus==="pending"){
 
       const approve=document.createElement("button");
       approve.className="approve";
       approve.textContent="Approve";
-      approve.onclick=()=>changeStatus(p.id,"approved");
+      approve.onclick=()=>changeStatus(
+        project.id,"approved"
+      );
 
       const reject=document.createElement("button");
       reject.className="reject";
       reject.textContent="Reject";
-      reject.onclick=()=>changeStatus(p.id,"rejected");
+      reject.onclick=()=>changeStatus(
+        project.id,"rejected"
+      );
 
       card.append(approve,reject);
     }
@@ -417,7 +579,10 @@ async function changeStatus(id,newStatus){
 
   if(!["approved","rejected"].includes(newStatus))return;
 
-  const confirmed=confirm("Are you sure you want to "+newStatus+" this project?");
+  const confirmed=confirm(
+    "Are you sure you want to "+newStatus+" this project?"
+  );
+
   if(!confirmed)return;
 
   try{
@@ -433,14 +598,27 @@ async function changeStatus(id,newStatus){
   }
 }
 
-$("projectSearch").addEventListener("input",filterProjects);
-$("projectFilter").addEventListener("change",filterProjects);
+$("projectSearch").addEventListener(
+  "input",filterProjects
+);
+
+$("projectFilter").addEventListener(
+  "change",filterProjects
+);
 
 window.showSection=function(sectionId,button){
 
   if(!isAdmin())return;
 
-  ["projectsSection","usersSection","reportsSection"].forEach(id=>{
+  const allowed=[
+    "projectsSection",
+    "usersSection",
+    "reportsSection"
+  ];
+
+  if(!allowed.includes(sectionId))return;
+
+  allowed.forEach(id=>{
     $(id).classList.toggle("hidden",id!==sectionId);
   });
 
@@ -450,6 +628,16 @@ window.showSection=function(sectionId,button){
 
   button.classList.add("active");
 };
+
+// PWA service worker
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error=>{
+        console.warn("Service worker registration failed:",error);
+      });
+  });
+}
 
 </script>
 
