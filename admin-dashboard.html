@@ -1,220 +1,457 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RYZON Admin Dashboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f6fa;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 { color: #123b50; }
-    .project {
-      background: white;
-      padding: 16px;
-      margin: 12px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px #ddd;
-    }
-    button {
-      padding: 10px 15px;
-      margin: 5px;
-      border: 0;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .approve { background: #16834a; color: white; }
-    .reject { background: #c93636; color: white; }
-    #status { color: #123b50; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RYZON Admin Dashboard</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  background:#f1f5f9;
+  color:#172b4d;
+}
+header{
+  background:linear-gradient(120deg,#071b35,#123f62);
+  color:white;
+  padding:22px;
+}
+header h1{margin:0 0 6px}
+header p{margin:0;color:#c9e7ff}
+main{max-width:1100px;margin:auto;padding:18px}
+.panel{
+  background:white;
+  padding:18px;
+  margin:16px 0;
+  border-radius:12px;
+  box-shadow:0 3px 12px #0000000d;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccd6e0;
+  border-radius:7px;
+  margin:7px 0;
+  font-size:15px;
+}
+button{
+  border:0;
+  border-radius:7px;
+  padding:10px 15px;
+  margin:5px 3px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.primary{background:#1265a8;color:white}
+.approve{background:#16834a;color:white}
+.reject{background:#c93636;color:white}
+.logout{background:#c93636;color:white}
+.neutral{background:#e7eef5;color:#173b58}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:12px;
+}
+.stat{
+  background:#edf5fc;
+  border-radius:10px;
+  padding:17px;
+}
+.stat strong{display:block;font-size:25px;margin-top:8px}
+.project{
+  border:1px solid #e1e8ef;
+  border-radius:10px;
+  padding:15px;
+  margin:12px 0;
+  overflow-wrap:anywhere;
+}
+.project h3{margin-top:0}
+.muted{color:#65758b}
+.hidden{display:none!important}
+.notice{
+  background:#fff7df;
+  border:1px solid #f1d68b;
+  padding:12px;
+  border-radius:8px;
+  color:#72520b;
+}
+#status,#loginStatus,#resetStatus{overflow-wrap:anywhere}
+.tabs{display:flex;flex-wrap:wrap;gap:5px}
+.tab.active{background:#1265a8;color:white}
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e9eff5;
+  font-size:12px;
+}
+@media(max-width:600px){
+  main{padding:10px}
+  header{padding:18px}
+  .panel{padding:14px}
+}
+</style>
 </head>
+
 <body>
 
+<header>
   <h1>RYZON Admin Dashboard</h1>
-  <p>Project Approval Panel</p>
- <h3>Admin Login</h3>
+  <p>One App, Endless Possibilities!</p>
+</header>
 
-<input type="email" id="adminEmail"
-placeholder="Admin Email">
+<main>
 
-<input type="password" id="adminPassword"
-placeholder="Admin Password">
+<section class="panel" id="loginPanel">
+  <h2>Admin Login</h2>
+  <input type="email" id="adminEmail" placeholder="Admin Email" autocomplete="username">
+  <input type="password" id="adminPassword" placeholder="Admin Password" autocomplete="current-password">
 
-<button id="authButton" onclick="toggleAdminAuth()">Login</button>
-<button onclick="resetAdminPassword()">Forgot Password?</button>
-<p id="resetStatus"></p>
+  <button class="primary" id="authButton" onclick="toggleAdminAuth()">Login</button>
+  <button class="neutral" onclick="resetAdminPassword()">Forgot Password?</button>
+
   <p id="loginStatus"></p>
-  <p id="status">Loading projects...</p>
-  <input type="text" id="projectSearch" placeholder="Search project or seller">
-  <div id="projects"></div>
+  <p id="resetStatus"></p>
+</section>
 
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import {
-      getFirestore, collection, getDocs, doc, updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+<section id="adminPanel" class="hidden">
+
+  <div class="panel">
+    <h2>Dashboard Overview</h2>
+    <p class="muted">Project approval summary</p>
+
+    <div class="stats">
+      <div class="stat">Total Projects<strong id="totalCount">0</strong></div>
+      <div class="stat">Pending<strong id="pendingCount">0</strong></div>
+      <div class="stat">Approved<strong id="approvedCount">0</strong></div>
+      <div class="stat">Rejected<strong id="rejectedCount">0</strong></div>
+    </div>
+
+    <button class="logout" onclick="toggleAdminAuth()">Logout</button>
+  </div>
+
+  <div class="panel">
+    <h2>Admin Sections</h2>
+    <div class="tabs">
+      <button class="tab active" onclick="showSection('projectsSection',this)">Projects</button>
+      <button class="tab" onclick="showSection('usersSection',this)">User Management</button>
+      <button class="tab" onclick="showSection('reportsSection',this)">Reports</button>
+    </div>
+  </div>
+
+  <section id="projectsSection" class="panel">
+    <h2>Project Approval Panel</h2>
+
+    <input type="text" id="projectSearch" placeholder="Search project or seller">
+
+    <select id="projectFilter">
+      <option value="all">All Projects</option>
+      <option value="pending">Pending</option>
+      <option value="approved">Approved</option>
+      <option value="rejected">Rejected</option>
+    </select>
+
+    <p id="status">Loading projects...</p>
+    <div id="projects"></div>
+  </section>
+
+  <section id="usersSection" class="panel hidden">
+    <h2>User Management</h2>
+    <div class="notice">
+      User listing, account status changes, blocking and user search require a secure backend integration.
+      Firebase Authentication user lists cannot safely be retrieved using the normal browser SDK.
+      No user records have been loaded or modified here.
+    </div>
+    <p class="muted">Connect a protected Firebase Cloud Function using the Firebase Admin SDK to enable this section.</p>
+  </section>
+
+  <section id="reportsSection" class="panel hidden">
+    <h2>Reports Management</h2>
+    <div class="notice">
+      Report records are not connected yet. The existing Firestore report collection name and document fields must be confirmed before displaying or processing reports.
+    </div>
+    <p class="muted">No reports have been created, deleted, or modified by this dashboard.</p>
+  </section>
+
+</section>
+
+</main>
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
-  getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-    const firebaseConfig = {
-apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
-authDomain: "seavora-5be21.firebaseapp.com",
-projectId: "seavora-5be21",
-storageBucket: "seavora-5be21.firebasestorage.app",
-messagingSenderId: "41187328725",
-appId: "1:41187328725:web:07ca55487383bc5798d85c",
-measurementId: "G-PDY0RZRDDH"
+  getFirestore,collection,getDocs,doc,updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+import {
+  getAuth,signInWithEmailAndPassword,signOut,
+  sendPasswordResetEmail,onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain:"seavora-5be21.firebaseapp.com",
+  projectId:"seavora-5be21",
+  storageBucket:"seavora-5be21.firebasestorage.app",
+  messagingSenderId:"41187328725",
+  appId:"1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId:"G-PDY0RZRDDH"
 };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const ADMIN_UID = "30G6RAmoyJVZsz2rBXEhqdXtVXR2";
-    let allProjects = [];
-window.toggleAdminAuth = async function () {
-  const button = document.getElementById("authButton");
-  const loginStatus = document.getElementById("loginStatus");
-  if (auth.currentUser && auth.currentUser.uid === ADMIN_UID) {
-    await signOut(auth);
-    button.textContent = "Login";
-    document.getElementById("projects").innerHTML = "";
-    document.getElementById("status").textContent = "Please login as admin.";
-    loginStatus.textContent = "Logged out.";
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
+
+const ADMIN_UID="30G6RAmoyJVZsz2rBXEhqdXtVXR2";
+
+let allProjects=[];
+let currentFilter="all";
+
+const $=id=>document.getElementById(id);
+
+function isAdmin(){
+  return auth.currentUser && auth.currentUser.uid===ADMIN_UID;
+}
+
+function setAdminView(enabled){
+  $("adminPanel").classList.toggle("hidden",!enabled);
+  $("loginPanel").classList.toggle("hidden",enabled);
+  $("authButton").textContent=enabled?"Logout":"Login";
+}
+
+window.toggleAdminAuth=async function(){
+
+  if(isAdmin()){
+    try{
+      await signOut(auth);
+      $("loginStatus").textContent="Logged out.";
+    }catch(error){
+      $("loginStatus").textContent=error.message;
+    }
     return;
   }
 
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
+  const email=$("adminEmail").value.trim();
+  const password=$("adminPassword").value;
 
-  try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
+  if(!email||!password){
+    $("loginStatus").textContent="Enter admin email and password.";
+    return;
+  }
 
-    if (result.user.uid !== ADMIN_UID) {
+  $("loginStatus").textContent="Signing in...";
+
+  try{
+    const result=await signInWithEmailAndPassword(auth,email,password);
+
+    if(result.user.uid!==ADMIN_UID){
       await signOut(auth);
-      loginStatus.textContent = "Not authorized as admin.";
+      $("loginStatus").textContent="Not authorized as admin.";
       return;
     }
 
-    button.textContent = "Logout";
-    loginStatus.textContent = "Admin login successful.";
-    await loadProjects();
-  } catch (error) {
-    loginStatus.textContent = "Login failed: " + error.message;
+    $("loginStatus").textContent="Admin login successful.";
+  }catch(error){
+    $("loginStatus").textContent="Login failed: "+error.message;
   }
 };
 
- async function loadProjects() {
-  const status = document.getElementById("status");
+window.resetAdminPassword=async function(){
 
-  if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
-    status.textContent = "Please login as admin.";
+  const email=$("adminEmail").value.trim();
+
+  if(!email){
+    $("resetStatus").textContent="Enter your admin email first.";
     return;
   }
 
-  try {
-    const snapshot = await getDocs(collection(db, "projects"));
+  try{
+    await sendPasswordResetEmail(auth,email);
+    $("resetStatus").textContent="Password reset link sent to your email.";
+  }catch(error){
+    $("resetStatus").textContent="Reset failed: "+error.message;
+  }
+};
 
-    allProjects = snapshot.docs.map(item => ({
-      id: item.id,
+onAuthStateChanged(auth,async user=>{
+
+  if(user && user.uid===ADMIN_UID){
+    setAdminView(true);
+    await loadProjects();
+  }else{
+    setAdminView(false);
+    allProjects=[];
+    $("projects").innerHTML="";
+    $("status").textContent="Please login as admin.";
+    updateStats([]);
+  }
+});
+
+async function loadProjects(){
+
+  if(!isAdmin())return;
+
+  $("status").textContent="Loading projects...";
+
+  try{
+    const snapshot=await getDocs(collection(db,"projects"));
+
+    if(!isAdmin())return;
+
+    allProjects=snapshot.docs.map(item=>({
+      id:item.id,
       ...item.data()
     }));
 
-    displayProjects(allProjects);
-    status.textContent = allProjects.length + " projects found.";
-  } catch (error) {
-    status.textContent = "Error: " + error.message;
+    updateStats(allProjects);
+    filterProjects();
+
+  }catch(error){
+    $("status").textContent="Error loading projects: "+error.message;
   }
 }
-window.resetAdminPassword = async function () {
-  const email = document.getElementById("adminEmail").value.trim();
-  const status = document.getElementById("resetStatus");
 
-  if (!email) {
-    status.textContent = "Enter your admin email first.";
+function updateStats(list){
+
+  $("totalCount").textContent=list.length;
+
+  $("pendingCount").textContent=
+    list.filter(p=>(p.status||"pending")==="pending").length;
+
+  $("approvedCount").textContent=
+    list.filter(p=>p.status==="approved").length;
+
+  $("rejectedCount").textContent=
+    list.filter(p=>p.status==="rejected").length;
+}
+
+function filterProjects(){
+
+  const query=$("projectSearch").value.trim().toLowerCase();
+  currentFilter=$("projectFilter").value;
+
+  const filtered=allProjects.filter(project=>{
+
+    const name=(project.projectName||"").toLowerCase();
+    const seller=(project.sellerName||"").toLowerCase();
+    const status=project.status||"pending";
+
+    const matchesSearch=name.includes(query)||seller.includes(query);
+    const matchesFilter=currentFilter==="all"||status===currentFilter;
+
+    return matchesSearch&&matchesFilter;
+  });
+
+  displayProjects(filtered);
+  $("status").textContent=filtered.length+" matching projects found.";
+}
+
+function displayProjects(list){
+
+  const container=$("projects");
+  container.innerHTML="";
+
+  if(list.length===0){
+    container.textContent="No projects found.";
     return;
   }
 
-  try {
-    await sendPasswordResetEmail(auth, email);
-    status.textContent = "Password reset link sent to your email.";
-  } catch (error) {
-    status.textContent = "Reset failed: " + error.message;
-  }
-};
-function displayProjects(projectList) {
-  const container = document.getElementById("projects");
-  container.innerHTML = "";
+  list.forEach(p=>{
 
-  projectList.forEach((p) => {
-    const card = document.createElement("div");
-    card.className = "project";
+    const card=document.createElement("div");
+    card.className="project";
 
-    const title = document.createElement("h3");
-    title.textContent = p.projectName || "Unnamed Project";
+    const title=document.createElement("h3");
+    title.textContent=p.projectName||"Unnamed Project";
 
-    const seller = document.createElement("p");
-    seller.textContent = "Seller: " + (p.sellerName || "");
+    const seller=document.createElement("p");
+    seller.textContent="Seller: "+(p.sellerName||"Not provided");
 
-    const price = document.createElement("p");
-    price.textContent = "Price: ₹" + (p.price ?? "");
+    const price=document.createElement("p");
+    price.textContent="Price: ₹"+(p.price??"Not provided");
 
-    const description = document.createElement("p");
-    description.textContent = p.description || "";
+    const description=document.createElement("p");
+    description.textContent=p.description||"No description";
 
-    const state = document.createElement("p");
-    state.textContent = "Status: " + (p.status || "pending");
+    const state=document.createElement("p");
+    state.textContent="Status: "+(p.status||"pending");
 
-    card.append(title, seller, price, description, state);
+    const badge=document.createElement("span");
+    badge.className="badge";
+    badge.textContent=(p.status||"pending").toUpperCase();
 
-    if (p.status === "pending") {
-      const approve = document.createElement("button");
-      approve.className = "approve";
-      approve.textContent = "Approve";
-      approve.onclick = () => changeStatus(p.id, "approved");
+    card.append(title,seller,price,description,state,badge);
 
-      const reject = document.createElement("button");
-      reject.className = "reject";
-      reject.textContent = "Reject";
-      reject.onclick = () => changeStatus(p.id, "rejected");
+    if((p.status||"pending")==="pending"){
 
-      card.append(approve, reject);
+      const approve=document.createElement("button");
+      approve.className="approve";
+      approve.textContent="Approve";
+      approve.onclick=()=>changeStatus(p.id,"approved");
+
+      const reject=document.createElement("button");
+      reject.className="reject";
+      reject.textContent="Reject";
+      reject.onclick=()=>changeStatus(p.id,"rejected");
+
+      card.append(approve,reject);
     }
 
     container.appendChild(card);
   });
 }
-    async function changeStatus(id, newStatus) {
-  if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) {
+
+async function changeStatus(id,newStatus){
+
+  if(!isAdmin()){
     alert("Admin login required.");
     return;
   }
 
-  try {
-    await updateDoc(doc(db, "projects", id), { status: newStatus });
-    alert("Project status updated!");
+  if(!["approved","rejected"].includes(newStatus))return;
+
+  const confirmed=confirm("Are you sure you want to "+newStatus+" this project?");
+  if(!confirmed)return;
+
+  try{
+    await updateDoc(doc(db,"projects",id),{
+      status:newStatus
+    });
+
+    alert("Project status updated successfully.");
     await loadProjects();
-  } catch (error) {
-    alert("Update failed: " + error.message);
+
+  }catch(error){
+    alert("Update failed: "+error.message);
   }
 }
-document.getElementById("projectSearch").addEventListener("input", (event) => {
-  const query = event.target.value.trim().toLowerCase();
 
-  const filtered = allProjects.filter((project) =>
-    (project.projectName || "").toLowerCase().includes(query) ||
-    (project.sellerName || "").toLowerCase().includes(query)
-  );
+$("projectSearch").addEventListener("input",filterProjects);
+$("projectFilter").addEventListener("change",filterProjects);
 
-  displayProjects(filtered);
+window.showSection=function(sectionId,button){
 
-  document.getElementById("status").textContent =
-    filtered.length + " matching projects found.";
-});
-  </script>
+  if(!isAdmin())return;
+
+  ["projectsSection","usersSection","reportsSection"].forEach(id=>{
+    $(id).classList.toggle("hidden",id!==sectionId);
+  });
+
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.classList.remove("active");
+  });
+
+  button.classList.add("active");
+};
+
+</script>
 
 </body>
 </html>
