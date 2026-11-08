@@ -11,390 +11,169 @@
 <script src="language-system.js"></script>
 
 <style>
-* { box-sizing: border-box; }
-
-html:not(.auth-ready) body {
-  visibility: hidden;
+*{box-sizing:border-box}
+html:not(.auth-ready) body{visibility:hidden}
+html:not(.auth-ready)::before{
+ content:"Checking secure login...";
+ position:fixed;inset:0;display:flex;align-items:center;
+ justify-content:center;background:#f1f5fb;color:#17345c;
+ font-family:Arial,sans-serif;font-weight:bold;visibility:visible;z-index:9999
 }
-
-html:not(.auth-ready)::before {
-  content: "Checking secure login...";
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f1f5fb;
-  color: #17345c;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  visibility: visible;
-  z-index: 9999;
+body{
+ margin:0;font-family:Arial,sans-serif;background:#f1f5fb;
+ color:#17345c;padding-bottom:85px
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5fb;
-  color: #17345c;
-  padding-bottom: 75px;
+header{background:#123b68;color:white;padding:20px;text-align:center}
+header h1{margin:0;letter-spacing:4px;font-size:28px}
+header p{margin:7px 0 0;color:#dbeafe;font-size:13px}
+.top{
+ display:flex;justify-content:space-between;align-items:center;
+ padding:15px;gap:8px
 }
-
-header {
-  background: #123b68;
-  color: white;
-  padding: 20px;
-  text-align: center;
+.top button{
+ background:white;border:1px solid #d5dfed;border-radius:10px;
+ padding:10px 13px;color:#17345c;font-size:18px;cursor:pointer
 }
-
-header h1 {
-  margin: 0;
-  letter-spacing: 4px;
-  font-size: 28px;
+.top button:active,.tile:active,.bottom-nav button:active{transform:scale(.96)}
+main{max-width:650px;margin:auto;padding:10px 16px 30px}
+h2{margin-bottom:8px}
+.welcome{
+ background:white;padding:18px;border-radius:14px;margin-bottom:18px;
+ box-shadow:0 2px 8px #0000000d
 }
-
-header p {
-  margin: 7px 0 0;
-  color: #dbeafe;
-  font-size: 13px;
+.welcome p{line-height:1.5}
+.welcome-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.action-btn{
+ border:0;border-radius:9px;padding:10px 14px;
+ background:#2457d6;color:white;font-weight:bold;cursor:pointer
 }
-
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  gap: 8px;
+.search{
+ width:100%;padding:14px;border:1px solid #ccd7e5;
+ border-radius:12px;font-size:16px;margin:10px 0;background:white;color:#17345c
 }
-
-.top button {
-  background: white;
-  border: 1px solid #d5dfed;
-  border-radius: 10px;
-  padding: 10px 13px;
-  color: #17345c;
-  font-size: 18px;
-  cursor: pointer;
+.search:focus{outline:2px solid #2457d6}
+#noResults{
+ display:none;text-align:center;color:#718096;background:white;
+ border-radius:12px;padding:18px;margin:10px 0
 }
-
-.top button:active,
-.tile:active,
-.bottom-nav button:active {
-  transform: scale(.96);
+.section-heading{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:10px;margin:22px 0 10px
 }
-
-main {
-  max-width: 650px;
-  margin: auto;
-  padding: 10px 16px 30px;
+.section-heading h2{margin:0;font-size:20px}
+.section-link{
+ color:#2457d6;font-size:13px;text-decoration:none;font-weight:bold
 }
-
-h2 { margin-bottom: 8px; }
-
-.welcome {
-  background: white;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px #0000000d;
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.tile{
+ background:white;padding:20px 8px;text-align:center;border-radius:14px;
+ border:1px solid #e0e7f0;box-shadow:0 2px 7px #0000000b;
+ text-decoration:none;color:#17345c;font-weight:bold;
+ transition:transform .18s ease,box-shadow .18s ease;
+ -webkit-tap-highlight-color:transparent
 }
-
-.search {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #ccd7e5;
-  border-radius: 12px;
-  font-size: 16px;
-  margin: 10px 0 10px;
-  background: white;
-  color: #17345c;
+.tile:active{transform:scale(.96);box-shadow:0 4px 12px #0002}
+.tile>span:first-child{display:block;font-size:31px;margin-bottom:10px}
+.tile small{display:block;font-size:11px;color:#718096;font-weight:normal;margin-top:6px}
+.scam{
+ background:#18243b;color:#ffd65a;padding:12px;margin:15px 0;
+ border-radius:8px;overflow:hidden;white-space:nowrap
 }
-
-.search:focus {
-  outline: 2px solid #2457d6;
+.scam p{display:inline-block;margin:0;animation:move 14s linear infinite}
+@keyframes move{
+ from{transform:translateX(-100%)}
+ to{transform:translateX(100vw)}
 }
-
-#noResults {
-  display: none;
-  text-align: center;
-  color: #718096;
-  background: white;
-  border-radius: 12px;
-  padding: 18px;
-  margin: 10px 0;
+.help{
+ position:fixed;right:15px;bottom:95px;background:#2457d6;color:white;
+ border:0;border-radius:50%;width:55px;height:55px;font-size:25px;
+ box-shadow:0 3px 12px #0003;cursor:pointer;z-index:20
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 13px;
+footer{text-align:center;padding:20px;color:#718096;font-size:12px}
+.status-line{
+ display:flex;align-items:center;gap:7px;font-size:12px;
+ color:#64748b;margin:0 0 12px
 }
-
-.tile {
-  background: white;
-  padding: 20px 8px;
-  text-align: center;
-  border-radius: 14px;
-  border: 1px solid #e0e7f0;
-  box-shadow: 0 2px 7px #0000000b;
-  text-decoration: none;
-  color: #17345c;
-  font-weight: bold;
-  transition: transform .18s ease, box-shadow .18s ease;
-  -webkit-tap-highlight-color: transparent;
+.status-dot{width:9px;height:9px;border-radius:50%;background:#16a34a}
+.status-dot.offline{background:#dc2626}
+#offlineBanner{
+ display:none;background:#fff0f0;color:#a51d1d;border:1px solid #f3b6b6;
+ border-radius:10px;padding:12px;margin:10px 0;font-size:13px
 }
-
-.tile:active {
-  transform: scale(.96);
-  box-shadow: 0 4px 12px #0002;
+.bottom-nav{
+ position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;
+ justify-content:space-around;align-items:center;background:white;
+ border-top:1px solid #dbe3ee;padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+ box-shadow:0 -3px 12px #0000000a
 }
-
-.tile > span:first-child {
-  display: block;
-  font-size: 31px;
-  margin-bottom: 10px;
+.bottom-nav button{
+ flex:1;border:0;background:transparent;color:#52647a;
+ font-size:11px;padding:5px 2px;cursor:pointer;transition:transform .15s
 }
-
-.scam {
-  background: #18243b;
-  color: #ffd65a;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 8px;
-  overflow: hidden;
-  white-space: nowrap;
+.bottom-nav button span{display:block;font-size:21px;margin-bottom:3px}
+.bottom-nav button.active{color:#2457d6;font-weight:bold}
+.modal-backdrop{
+ display:none;position:fixed;inset:0;z-index:100;background:#071b35a8;
+ padding:18px;align-items:center;justify-content:center
 }
-
-.scam p {
-  display: inline-block;
-  margin: 0;
-  animation: move 14s linear infinite;
+.modal-backdrop.open{display:flex}
+.modal{
+ width:100%;max-width:420px;max-height:85vh;overflow-y:auto;
+ background:#fff;color:#17345c;border-radius:18px;padding:20px;
+ box-shadow:0 12px 35px #0004
 }
-
-@keyframes move {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100vw); }
+.modal-header{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:10px;margin-bottom:15px
 }
-
-.help {
-  position: fixed;
-  right: 15px;
-  bottom: 88px;
-  background: #2457d6;
-  color: white;
-  border: 0;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  font-size: 25px;
-  box-shadow: 0 3px 12px #0003;
-  cursor: pointer;
-  z-index: 20;
+.modal-header h2{margin:0;font-size:20px}
+.close-modal{
+ width:35px;height:35px;border:0;border-radius:50%;
+ background:#edf2f8;color:#17345c;font-size:20px;cursor:pointer
 }
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #718096;
-  font-size: 12px;
+.modal-item{
+ display:block;width:100%;text-align:left;padding:14px;margin:8px 0;
+ background:#f4f7fb;color:#17345c;border:1px solid #e0e7f0;
+ border-radius:11px;font-size:14px;text-decoration:none
 }
-
-/* Connection status */
-.status-line {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  color: #64748b;
-  margin: 0 0 12px;
+.modal-item small{
+ display:block;color:#718096;margin-top:5px;overflow-wrap:anywhere
 }
-
-.status-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #16a34a;
+.modal-primary{
+ width:100%;padding:13px;margin-top:10px;border:0;border-radius:10px;
+ background:#2457d6;color:white;font-weight:bold;cursor:pointer
 }
-
-.status-dot.offline {
-  background: #dc2626;
+.modal-danger{background:#b42318;color:white}
+.modal-note{color:#64748b;font-size:13px;line-height:1.5}
+#message{text-align:center;font-weight:bold;padding:10px;overflow-wrap:anywhere}
+.empty-state{
+ padding:20px;text-align:center;color:#718096;background:#f4f7fb;
+ border-radius:12px;font-size:14px
 }
-
-#offlineBanner {
-  display: none;
-  background: #fff0f0;
-  color: #a51d1d;
-  border: 1px solid #f3b6b6;
-  border-radius: 10px;
-  padding: 12px;
-  margin: 10px 0;
-  font-size: 13px;
+.activity-row{
+ background:#f4f7fb;border-radius:10px;padding:12px;margin:8px 0;
+ font-size:14px
 }
-
-/* Bottom app navigation */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 30;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: white;
-  border-top: 1px solid #dbe3ee;
-  padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
-  box-shadow: 0 -3px 12px #0000000a;
+.activity-row small{display:block;color:#718096;margin-top:5px}
+.update-card{
+ background:white;border:1px solid #e0e7f0;border-radius:12px;
+ padding:14px;margin:9px 0;font-size:14px;line-height:1.5
 }
-
-.bottom-nav button {
-  flex: 1;
-  border: 0;
-  background: transparent;
-  color: #52647a;
-  font-size: 11px;
-  padding: 5px 2px;
-  cursor: pointer;
-  transition: transform .15s;
+.update-card small{display:block;color:#718096;margin-top:5px}
+.feature-card{
+ display:block;background:white;padding:16px;border:1px solid #e0e7f0;
+ border-radius:13px;margin:9px 0;text-decoration:none;color:#17345c
 }
-
-.bottom-nav button span {
-  display: block;
-  font-size: 21px;
-  margin-bottom: 3px;
+.feature-card b{display:block;margin-bottom:5px}
+.feature-card small{color:#718096;line-height:1.5}
+@media(max-width:360px){
+ .top button{padding:9px 10px;font-size:15px}
+ .tile{padding:17px 6px}
 }
-
-.bottom-nav button.active {
-  color: #2457d6;
-  font-weight: bold;
-}
-
-/* Modal screens */
-.modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: #071b35a8;
-  padding: 18px;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-backdrop.open {
-  display: flex;
-}
-
-.modal {
-  width: 100%;
-  max-width: 420px;
-  max-height: 85vh;
-  overflow-y: auto;
-  background: #fff;
-  color: #17345c;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 12px 35px #0004;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.modal-header h2 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.close-modal {
-  width: 35px;
-  height: 35px;
-  border: 0;
-  border-radius: 50%;
-  background: #edf2f8;
-  color: #17345c;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.modal-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 14px;
-  margin: 8px 0;
-  background: #f4f7fb;
-  color: #17345c;
-  border: 1px solid #e0e7f0;
-  border-radius: 11px;
-  font-size: 14px;
-}
-
-.modal-item small {
-  display: block;
-  color: #718096;
-  margin-top: 5px;
-  overflow-wrap: anywhere;
-}
-
-.modal-primary {
-  width: 100%;
-  padding: 13px;
-  margin-top: 10px;
-  border: 0;
-  border-radius: 10px;
-  background: #2457d6;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.modal-danger {
-  background: #b42318;
-  color: white;
-}
-
-.modal-note {
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-#message {
-  text-align: center;
-  font-weight: bold;
-  padding: 10px;
-  overflow-wrap: anywhere;
-}
-
-.empty-state {
-  padding: 20px;
-  text-align: center;
-  color: #718096;
-  background: #f4f7fb;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-@media (max-width: 360px) {
-  .top button {
-    padding: 9px 10px;
-    font-size: 15px;
-  }
-
-  .tile {
-    padding: 17px 6px;
-  }
-}
-
-@media (min-width: 700px) {
-  body { padding-bottom: 0; }
-  .bottom-nav { display: none; }
-  .help { bottom: 18px; }
+@media(min-width:700px){
+ body{padding-bottom:0}
+ .bottom-nav{display:none}
+ .help{bottom:18px}
 }
 </style>
 </head>
@@ -402,653 +181,655 @@ footer {
 <body>
 
 <header>
-  <h1>RYZON</h1>
-  <p>One App, Endless Possibilities!</p>
+ <h1>RYZON</h1>
+ <p>One App, Endless Possibilities!</p>
 </header>
 
 <div class="top">
-  <button onclick="openModal('notificationsModal')"
-    aria-label="Notifications">🔔</button>
-
-  <button onclick="openProfile()"
-    aria-label="Profile">👤</button>
-
-  <button
-    data-ryzon-language-toggle
-    onclick="toggleRYZONLanguage()">
-    🌐 English
-  </button>
+ <button onclick="openModal('notificationsModal')" aria-label="Notifications">🔔</button>
+ <button onclick="openProfile()" aria-label="Profile">👤</button>
+ <button data-ryzon-language-toggle
+  onclick="if(typeof toggleRYZONLanguage==='function')toggleRYZONLanguage()">
+  🌐 English
+ </button>
 </div>
 
 <main>
 
-  <div class="status-line">
-    <span class="status-dot" id="connectionDot"></span>
-    <span id="connectionText">Checking connection...</span>
+ <div class="status-line">
+  <span class="status-dot" id="connectionDot"></span>
+  <span id="connectionText">Checking connection...</span>
+ </div>
+
+ <div id="offlineBanner">
+  ⚠️ You are offline. Some RYZON services may not work.
+ </div>
+
+ <!-- Welcome -->
+ <section class="welcome">
+  <h2 data-ryzon-text="welcome">Welcome to RYZON!</h2>
+  <p id="welcomeUser">Hello! Welcome back.</p>
+  <p data-ryzon-text="tagline">
+   Your world. Your language. Your possibilities.
+  </p>
+  <div class="welcome-actions">
+   <button class="action-btn" onclick="openProfile()">👤 My Profile</button>
+   <button class="action-btn" onclick="openRandomChat()">💬 Start Chat</button>
   </div>
+ </section>
 
-  <div id="offlineBanner">
-    ⚠️ You are offline. Some RYZON services may not work.
-  </div>
+ <!-- Search -->
+ <input class="search" id="serviceSearch" type="search"
+  placeholder="🔍 Search RYZON..."
+  data-ryzon-placeholder="search"
+  oninput="searchTiles(this.value)">
 
-  <section class="welcome">
-    <h2 data-ryzon-text="welcome">
-      Welcome to RYZON!
-    </h2>
+ <div id="noResults">🔍 No services found. Try another search.</div>
 
-    <p data-ryzon-text="tagline">
-      Your world. Your language. Your possibilities.
-    </p>
-  </section>
+ <div class="scam">
+  <p data-ryzon-text="scamAlert">
+   ⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details.
+   Verify before you pay. ⚠️
+  </p>
+ </div>
 
-  <input
-    class="search"
-    id="serviceSearch"
-    type="search"
-    placeholder="🔍 Search RYZON..."
-    data-ryzon-placeholder="search"
-    oninput="searchTiles(this.value)">
+ <!-- Quick Access -->
+ <div class="section-heading">
+  <h2>⚡ Quick Access</h2>
+ </div>
+ <div class="grid">
+  <a class="tile" href="profile.html"><span>👤</span>My Profile</a>
+  <a class="tile" href="chat.html"><span>💬</span>Personal Chat</a>
+  <a class="tile" href="explore.html"><span>🔎</span>Explore</a>
+  <a class="tile" href="notifications.html"><span>🔔</span>Notifications</a>
+ </div>
 
-  <div id="noResults">
-    🔍 No services found. Try another search.
-  </div>
+ <!-- Main Services - all existing services retained -->
+ <div class="section-heading">
+  <h2 data-ryzon-text="mainServices">Main Services</h2>
+ </div>
 
-  <div class="scam">
-    <p data-ryzon-text="scamAlert">
-      ⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details.
-      Verify before you pay. ⚠️
-    </p>
-  </div>
+ <div class="grid" id="serviceGrid">
 
-  <h2 data-ryzon-text="mainServices">
-    Main Services
-  </h2>
+  <a class="tile" href="random-chat.html">
+   <span>💬</span><span>Random Chat</span>
+   <small>Worldwide free random chat</small>
+  </a>
 
-  <div class="grid" id="serviceGrid">
+  <a class="tile" href="my-safe.html">
+   <span>🔐</span><span>My Safe</span>
+  </a>
 
-    <a class="tile" href="random-chat.html">
-      <span>💬</span>
-      <span>Random Chat</span>
-    </a>
+  <a class="tile" href="project-ideas.html">
+   <span>🎓</span><span data-ryzon-text="education">Education</span>
+  </a>
 
-    <a class="tile" href="my-safe.html">
-      <span>🔐</span>
-      <span>My Safe</span>
-    </a>
+  <a class="tile" href="jobs.html">
+   <span>💼</span><span data-ryzon-text="jobs">Jobs</span>
+  </a>
 
-    <a class="tile" href="project-ideas.html">
-      <span>🎓</span>
-      <span data-ryzon-text="education">Education</span>
-    </a>
+  <a class="tile" href="shopping.html">
+   <span>🛍️</span><span data-ryzon-text="shopping">Shopping</span>
+  </a>
 
-    <a class="tile" href="jobs.html">
-      <span>💼</span>
-      <span data-ryzon-text="jobs">Jobs</span>
-    </a>
+  <a class="tile" href="ai-assistant.html">
+   <span>🤖</span><span data-ryzon-text="ai">AI Assistant</span>
+  </a>
 
-    <a class="tile" href="shopping.html">
-      <span>🛍️</span>
-      <span data-ryzon-text="shopping">Shopping</span>
-    </a>
+  <a class="tile" href="browser.html">
+   <span>🌐</span><span data-ryzon-text="browser">Browser</span>
+  </a>
 
-    <a class="tile" href="ai-assistant.html">
-      <span>🤖</span>
-      <span data-ryzon-text="ai">AI Assistant</span>
-    </a>
+  <a class="tile" href="parcel-safety.html">
+   <span>📦</span><span data-ryzon-text="parcelSafety">Parcel Safety</span>
+  </a>
 
-    <a class="tile" href="browser.html">
-      <span>🌐</span>
-      <span data-ryzon-text="browser">Browser</span>
-    </a>
+  <a class="tile" href="local-services.html">
+   <span>📍</span><span data-ryzon-text="localServices">Local Services</span>
+  </a>
 
-    <a class="tile" href="parcel-safety.html">
-      <span>📦</span>
-      <span data-ryzon-text="parcelSafety">Parcel Safety</span>
-    </a>
+  <a class="tile" href="safety-help.html">
+   <span>🛡️</span><span data-ryzon-text="safetyHelp">Safety &amp; Help</span>
+  </a>
 
-    <a class="tile" href="local-services.html">
-      <span>📍</span>
-      <span data-ryzon-text="localServices">Local Services</span>
-    </a>
+  <a class="tile" href="premium.html">
+   <span>⭐</span><span data-ryzon-text="premium">Premium</span>
+  </a>
 
-    <a class="tile" href="safety-help.html">
-      <span>🛡️</span>
-      <span data-ryzon-text="safetyHelp">Safety &amp; Help</span>
-    </a>
+  <a class="tile" href="language.html">
+   <span>🌐</span><span data-ryzon-text="language">Language</span>
+  </a>
 
-    <a class="tile" href="premium.html">
-      <span>⭐</span>
-      <span data-ryzon-text="premium">Premium</span>
-    </a>
+  <!-- New RYZON features -->
+  <a class="tile" href="group-chat.html">
+   <span>👥</span>Group Chat
+  </a>
 
-    <a class="tile" href="language.html">
-      <span>🌐</span>
-      <span data-ryzon-text="language">Language</span>
-    </a>
+  <a class="tile" href="stories.html">
+   <span>📸</span>Stories / Status
+  </a>
 
-  </div>
+  <a class="tile" href="saved-posts.html">
+   <span>🔖</span>Saved Posts
+  </a>
 
-  <p id="message"></p>
+  <a class="tile" href="communities.html">
+   <span>🌍</span>Communities
+  </a>
 
-  <footer>RYZON © 2026</footer>
+  <a class="tile" href="gifts.html">
+   <span>🎁</span>Send Gifts
+  </a>
 
+  <a class="tile" href="settings.html">
+   <span>⚙️</span>Settings
+  </a>
+
+ </div>
+
+ <!-- Featured Services -->
+ <div class="section-heading">
+  <h2>⭐ Featured Services</h2>
+  <a class="section-link" href="explore.html">Explore all</a>
+ </div>
+
+ <a class="feature-card" href="random-chat.html">
+  <b>🌎 Worldwide Random Chat</b>
+  <small>Connect with people around the world for free.</small>
+ </a>
+
+ <a class="feature-card" href="ai-assistant.html">
+  <b>🤖 AI Chat Assistant</b>
+  <small>Get help and explore ideas with the RYZON AI Assistant.</small>
+ </a>
+
+ <a class="feature-card" href="premium.html">
+  <b>⭐ RYZON Premium</b>
+  <small>Explore paid features, membership and gift options.</small>
+ </a>
+
+ <!-- Recent Activities -->
+ <div class="section-heading">
+  <h2>🕘 Recent Activities</h2>
+  <a class="section-link" href="#" onclick="openModal('activityModal');return false;">View all</a>
+ </div>
+ <div id="homeRecentActivity">
+  <div class="empty-state">Your recent activities will appear here.</div>
+ </div>
+
+ <!-- New Updates -->
+ <div class="section-heading">
+  <h2>🆕 New Updates</h2>
+ </div>
+
+ <div class="update-card">
+  <b>💬 RYZON Chat</b>
+  <div>Personal and group chat features are part of the RYZON development plan.</div>
+  <small>RYZON Features</small>
+ </div>
+
+ <div class="update-card">
+  <b>🎁 Gifts</b>
+  <div>Free gifts and individually purchasable premium gifts are planned.</div>
+  <small>RYZON Updates</small>
+ </div>
+
+ <div class="update-card">
+  <b>🌎 Worldwide Random Chat</b>
+  <div>Worldwide Random Chat is free for everyone.</div>
+  <small>RYZON Services</small>
+ </div>
+
+ <p id="message"></p>
+ <footer>RYZON © 2026</footer>
 </main>
 
 <!-- Bottom navigation -->
 <nav class="bottom-nav" aria-label="App navigation">
-  <button class="active" onclick="goHome()">
-    <span>🏠</span>Home
-  </button>
-  <button onclick="openRandomChat()">
-    <span>💬</span>Chat
-  </button>
-  <button onclick="openModal('activityModal')">
-    <span>🕘</span>Activity
-  </button>
-  <button onclick="openModal('settingsModal')">
-    <span>⚙️</span>Settings
-  </button>
+ <button class="active" onclick="goHome()"><span>🏠</span>Home</button>
+ <button onclick="openRandomChat()"><span>💬</span>Chat</button>
+ <button onclick="window.location.href='explore.html'"><span>🔎</span>Explore</button>
+ <button onclick="openModal('activityModal')"><span>🕘</span>Activity</button>
+ <button onclick="window.location.href='settings.html'"><span>⚙️</span>Settings</button>
 </nav>
 
-<button
-  class="help"
-  onclick="openModal('helpModal')"
-  aria-label="Help Center">
-  🎧
-</button>
+<button class="help" onclick="openModal('helpModal')" aria-label="Help Center">🎧</button>
 
 <!-- Profile Modal -->
 <div class="modal-backdrop" id="profileModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>👤 My Profile</h2>
-      <button class="close-modal" onclick="closeModal('profileModal')">×</button>
-    </div>
-
-    <div class="modal-item">
-      <b id="profileName">RYZON User</b>
-      <small id="profileEmail">Loading account...</small>
-      <small id="profilePhone"></small>
-    </div>
-
-    <button class="modal-item" onclick="openModal('settingsModal')">
-      ⚙️ Account Settings
-    </button>
-    <button class="modal-item" onclick="openModal('securityModal')">
-      🛡️ Privacy & Security
-    </button>
-    <button class="modal-item" onclick="openModal('activityModal')">
-      🕘 Recent Activity
-    </button>
-    <button class="modal-primary" onclick="logoutUser()">
-      Logout
-    </button>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>👤 My Profile</h2>
+   <button class="close-modal" onclick="closeModal('profileModal')">×</button>
+  </div>
+  <div class="modal-item">
+   <b id="profileName">RYZON User</b>
+   <small id="profileEmail">Loading account...</small>
+   <small id="profilePhone"></small>
+  </div>
+  <button class="modal-item" onclick="window.location.href='profile.html'">👤 Open Full Profile</button>
+  <button class="modal-item" onclick="openModal('settingsModal')">⚙️ Account Settings</button>
+  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy & Security</button>
+  <button class="modal-item" onclick="openModal('activityModal')">🕘 Recent Activity</button>
+  <button class="modal-primary" onclick="logoutUser()">Logout</button>
+  <button class="modal-item" onclick="openModal('deleteModal')">⚠️ Delete Account</button>
+ </section>
 </div>
 
 <!-- Notifications Modal -->
 <div class="modal-backdrop" id="notificationsModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>🔔 Notifications</h2>
-      <button class="close-modal" onclick="closeModal('notificationsModal')">×</button>
-    </div>
-
-    <div class="empty-state">
-      🔔 No new notifications.
-
-      <p class="modal-note">
-        Friend requests, messages and security alerts will appear here
-        when their notification services are connected.
-      </p>
-    </div>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>🔔 Notifications</h2>
+   <button class="close-modal" onclick="closeModal('notificationsModal')">×</button>
+  </div>
+  <div class="empty-state">
+   🔔 No new notifications.
+   <p class="modal-note">
+    Friend requests, messages and security alerts will appear here
+    when their notification services are connected.
+   </p>
+  </div>
+  <button class="modal-primary" onclick="window.location.href='notifications.html'">
+   Open Notifications
+  </button>
+ </section>
 </div>
 
 <!-- Activity Modal -->
 <div class="modal-backdrop" id="activityModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>🕘 Recent Activity</h2>
-      <button class="close-modal" onclick="closeModal('activityModal')">×</button>
-    </div>
-
-    <div id="activityList"></div>
-
-    <button class="modal-item" onclick="clearActivity()">
-      Clear activity history
-    </button>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>🕘 Recent Activity</h2>
+   <button class="close-modal" onclick="closeModal('activityModal')">×</button>
+  </div>
+  <div id="activityList"></div>
+  <button class="modal-item" onclick="clearActivity()">Clear activity history</button>
+ </section>
 </div>
 
 <!-- Settings Modal -->
 <div class="modal-backdrop" id="settingsModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>⚙️ Account Settings</h2>
-      <button class="close-modal" onclick="closeModal('settingsModal')">×</button>
-    </div>
-
-    <button class="modal-item" onclick="openProfile()">
-      👤 My Profile
-    </button>
-    <button class="modal-item" onclick="openModal('securityModal')">
-      🛡️ Privacy & Security
-    </button>
-    <button class="modal-item" onclick="openModal('activityModal')">
-      🕘 Recent Activity
-    </button>
-    <button class="modal-item" onclick="openModal('helpModal')">
-      🎧 Help & Feedback
-    </button>
-    <button class="modal-primary" onclick="logoutUser()">
-      Logout
-    </button>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>⚙️ Account Settings</h2>
+   <button class="close-modal" onclick="closeModal('settingsModal')">×</button>
+  </div>
+  <button class="modal-item" onclick="window.location.href='settings.html'">⚙️ Open Full Settings</button>
+  <button class="modal-item" onclick="openProfile()">👤 My Profile</button>
+  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy & Security</button>
+  <button class="modal-item" onclick="openModal('activityModal')">🕘 Recent Activity</button>
+  <button class="modal-item" onclick="openModal('helpModal')">🎧 Help & Feedback</button>
+  <button class="modal-primary" onclick="logoutUser()">Logout</button>
+ </section>
 </div>
 
 <!-- Security Modal -->
 <div class="modal-backdrop" id="securityModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>🛡️ Privacy & Security</h2>
-      <button class="close-modal" onclick="closeModal('securityModal')">×</button>
-    </div>
-
-    <div class="modal-item">
-      <b>Secure Login</b>
-      <small>Your account is authenticated through Firebase.</small>
-    </div>
-
-    <div class="modal-item">
-      <b>Connection</b>
-      <small id="securityConnection">Checking...</small>
-    </div>
-
-    <div class="modal-item">
-      <b>Privacy Policy</b>
-      <small><a href="./privacy.html">Read Privacy Policy</a></small>
-    </div>
-
-    <div class="modal-item">
-      <b>Terms & Conditions</b>
-      <small><a href="./terms.html">Read Terms</a></small>
-    </div>
-
-    <p class="modal-note">
-      Never share your password or OTP with anyone.
-    </p>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>🛡️ Privacy & Security</h2>
+   <button class="close-modal" onclick="closeModal('securityModal')">×</button>
+  </div>
+  <div class="modal-item">
+   <b>Secure Login</b>
+   <small>Your account is authenticated through Firebase.</small>
+  </div>
+  <div class="modal-item">
+   <b>Connection</b>
+   <small id="securityConnection">Checking...</small>
+  </div>
+  <div class="modal-item">
+   <b>Privacy Policy</b>
+   <small><a href="./privacy.html">Read Privacy Policy</a></small>
+  </div>
+  <div class="modal-item">
+   <b>Terms & Conditions</b>
+   <small><a href="./terms.html">Read Terms</a></small>
+  </div>
+  <p class="modal-note">Never share your password or OTP with anyone.</p>
+ </section>
 </div>
 
 <!-- Help Modal -->
 <div class="modal-backdrop" id="helpModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>🎧 Help & Feedback</h2>
-      <button class="close-modal" onclick="closeModal('helpModal')">×</button>
-    </div>
-
-    <div class="modal-item">
-      <b>Need help?</b>
-      <small>
-        Help Center and support contact will be connected
-        when the support service is configured.
-      </small>
-    </div>
-
-    <div class="modal-item">
-      <b>Report a Problem</b>
-      <small>
-        Please use the support channel when it becomes available.
-      </small>
-    </div>
-
-    <a class="modal-item" href="./terms.html">Terms & Conditions</a>
-    <a class="modal-item" href="./privacy.html">Privacy Policy</a>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>🎧 Help & Feedback</h2>
+   <button class="close-modal" onclick="closeModal('helpModal')">×</button>
+  </div>
+  <div class="modal-item">
+   <b>Need help?</b>
+   <small>Help Center and support contact will be connected when the support service is configured.</small>
+  </div>
+  <div class="modal-item">
+   <b>Report a Problem</b>
+   <small>Please use the support channel when it becomes available.</small>
+  </div>
+  <a class="modal-item" href="./help.html">Open Help Center</a>
+  <a class="modal-item" href="./terms.html">Terms & Conditions</a>
+  <a class="modal-item" href="./privacy.html">Privacy Policy</a>
+ </section>
 </div>
 
 <!-- Account Delete Confirmation -->
 <div class="modal-backdrop" id="deleteModal">
-  <section class="modal">
-    <div class="modal-header">
-      <h2>⚠️ Delete Account</h2>
-      <button class="close-modal" onclick="closeModal('deleteModal')">×</button>
-    </div>
-
-    <p>
-      Are you sure you want to delete your RYZON login account?
-    </p>
-
-    <p class="modal-note">
-      This action deletes the Firebase Authentication account.
-      Other stored app data may require separate secure backend cleanup.
-      You may need to sign in again before deletion.
-    </p>
-
-    <label for="deleteConfirm">Type DELETE to confirm:</label>
-    <input id="deleteConfirm" class="search" type="text"
-      placeholder="DELETE" autocomplete="off">
-
-    <button class="modal-primary modal-danger" onclick="confirmDeleteAccount()">
-      Delete Account
-    </button>
-  </section>
+ <section class="modal">
+  <div class="modal-header">
+   <h2>⚠️ Delete Account</h2>
+   <button class="close-modal" onclick="closeModal('deleteModal')">×</button>
+  </div>
+  <p>Are you sure you want to delete your RYZON login account?</p>
+  <p class="modal-note">
+   This action deletes the Firebase Authentication account.
+   Other stored app data may require separate secure backend cleanup.
+   You may need to sign in again before deletion.
+  </p>
+  <label for="deleteConfirm">Type DELETE to confirm:</label>
+  <input id="deleteConfirm" class="search" type="text" placeholder="DELETE" autocomplete="off">
+  <button class="modal-primary modal-danger" onclick="confirmDeleteAccount()">Delete Account</button>
+ </section>
 </div>
 
 <script>
-function showNotice(name) {
-  document.getElementById("message").textContent =
-    name + " service will be connected during development.";
+function searchTiles(value){
+ const tiles=document.querySelectorAll(".tile");
+ let visibleCount=0;
+ const query=value.toLowerCase().trim();
+
+ tiles.forEach(tile=>{
+  const match=tile.textContent.toLowerCase().includes(query);
+  tile.style.display=match?"":"none";
+  if(match)visibleCount++;
+ });
+
+ document.getElementById("noResults").style.display=
+  visibleCount===0?"block":"none";
 }
 
-function searchTiles(value) {
-  const tiles = document.querySelectorAll(".tile");
-  let visibleCount = 0;
-
-  tiles.forEach(tile => {
-    const match = tile.textContent.toLowerCase()
-      .includes(value.toLowerCase());
-
-    tile.style.display = match ? "" : "none";
-
-    if (match) visibleCount++;
-  });
-
-  document.getElementById("noResults").style.display =
-    visibleCount === 0 ? "block" : "none";
+function openModal(id){
+ document.querySelectorAll(".modal-backdrop").forEach(modal=>{
+  modal.classList.remove("open");
+ });
+ const modal=document.getElementById(id);
+ if(modal)modal.classList.add("open");
+ if(id==="activityModal")renderActivity();
 }
 
-function openModal(id) {
-  document.querySelectorAll(".modal-backdrop").forEach(modal => {
-    modal.classList.remove("open");
-  });
-
-  const modal = document.getElementById(id);
-
-  if (modal) modal.classList.add("open");
-
-  if (id === "activityModal") renderActivity();
+function closeModal(id){
+ const modal=document.getElementById(id);
+ if(modal)modal.classList.remove("open");
 }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove("open");
-}
-
-document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
-  backdrop.addEventListener("click", event => {
-    if (event.target === backdrop) {
-      backdrop.classList.remove("open");
-    }
-  });
+document.querySelectorAll(".modal-backdrop").forEach(backdrop=>{
+ backdrop.addEventListener("click",event=>{
+  if(event.target===backdrop)backdrop.classList.remove("open");
+ });
 });
 
-function goHome() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function goHome(){
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function openRandomChat() {
-  recordActivity("Opened Random Chat");
-  window.location.href = "random-chat.html";
+function openRandomChat(){
+ recordActivity("Opened Random Chat");
+ sessionStorage.setItem("ryzonNextAction","randomChat");
+ window.location.href="otp.html";
 }
 
-function openProfile() {
-  openModal("profileModal");
+function openProfile(){
+ openModal("profileModal");
 }
 
-function updateConnectionStatus() {
-  const online = navigator.onLine;
-
-  document.getElementById("connectionText").textContent =
-    online ? "Internet connected" : "You are offline";
-
-  document.getElementById("securityConnection").textContent =
-    online ? "Connected" : "Offline";
-
-  document.getElementById("connectionDot")
-    .classList.toggle("offline", !online);
-
-  document.getElementById("offlineBanner").style.display =
-    online ? "none" : "block";
+function updateConnectionStatus(){
+ const online=navigator.onLine;
+ document.getElementById("connectionText").textContent=
+  online?"Internet connected":"You are offline";
+ document.getElementById("securityConnection").textContent=
+  online?"Connected":"Offline";
+ document.getElementById("connectionDot").classList.toggle("offline",!online);
+ document.getElementById("offlineBanner").style.display=
+  online?"none":"block";
 }
 
-window.addEventListener("online", updateConnectionStatus);
-window.addEventListener("offline", updateConnectionStatus);
+window.addEventListener("online",updateConnectionStatus);
+window.addEventListener("offline",updateConnectionStatus);
 updateConnectionStatus();
 
 /* Local activity history */
-function recordActivity(text) {
-  try {
-    const list = JSON.parse(
-      localStorage.getItem("ryzonActivity") || "[]"
-    );
-
-    list.unshift({
-      text,
-      time: new Date().toLocaleString()
-    });
-
-    localStorage.setItem(
-      "ryzonActivity",
-      JSON.stringify(list.slice(0, 30))
-    );
-  } catch (error) {
-    console.warn("Activity storage unavailable", error);
-  }
+function recordActivity(text){
+ try{
+  const list=JSON.parse(localStorage.getItem("ryzonActivity")||"[]");
+  list.unshift({text,time:new Date().toLocaleString()});
+  localStorage.setItem("ryzonActivity",JSON.stringify(list.slice(0,30)));
+  renderHomeRecentActivity();
+ }catch(error){
+  console.warn("Activity storage unavailable",error);
+ }
 }
 
-function renderActivity() {
-  const container = document.getElementById("activityList");
-
-  let list = [];
-
-  try {
-    list = JSON.parse(
-      localStorage.getItem("ryzonActivity") || "[]"
-    );
-  } catch (error) {
-    list = [];
-  }
-
-  if (!list.length) {
-    container.innerHTML =
-      '<div class="empty-state">No recent activity yet.</div>';
-    return;
-  }
-
-  container.replaceChildren();
-
-  list.forEach(item => {
-    const row = document.createElement("div");
-    row.className = "modal-item";
-
-    const title = document.createElement("b");
-    title.textContent = item.text;
-
-    const time = document.createElement("small");
-    time.textContent = item.time;
-
-    row.append(title, time);
-    container.appendChild(row);
-  });
+function getActivity(){
+ try{
+  return JSON.parse(localStorage.getItem("ryzonActivity")||"[]");
+ }catch(error){
+  return [];
+ }
 }
 
-function clearActivity() {
-  localStorage.removeItem("ryzonActivity");
-  renderActivity();
+function renderActivity(){
+ const container=document.getElementById("activityList");
+ const list=getActivity();
+
+ if(!list.length){
+  container.innerHTML='<div class="empty-state">No recent activity yet.</div>';
+  return;
+ }
+
+ container.replaceChildren();
+
+ list.forEach(item=>{
+  const row=document.createElement("div");
+  row.className="activity-row";
+
+  const title=document.createElement("b");
+  title.textContent=item.text;
+
+  const time=document.createElement("small");
+  time.textContent=item.time;
+
+  row.append(title,time);
+  container.appendChild(row);
+ });
 }
 
-/* Track existing service navigation */
-document.querySelectorAll(".tile").forEach(tile => {
-  tile.addEventListener("click", () => {
-    recordActivity("Opened " + tile.textContent.trim());
-  });
+function renderHomeRecentActivity(){
+ const container=document.getElementById("homeRecentActivity");
+ if(!container)return;
+
+ const list=getActivity().slice(0,4);
+
+ if(!list.length){
+  container.innerHTML='<div class="empty-state">Your recent activities will appear here.</div>';
+  return;
+ }
+
+ container.replaceChildren();
+
+ list.forEach(item=>{
+  const row=document.createElement("div");
+  row.className="activity-row";
+
+  const title=document.createElement("b");
+  title.textContent=item.text;
+
+  const time=document.createElement("small");
+  time.textContent=item.time;
+
+  row.append(title,time);
+  container.appendChild(row);
+ });
+}
+
+function clearActivity(){
+ localStorage.removeItem("ryzonActivity");
+ renderActivity();
+ renderHomeRecentActivity();
+}
+
+/* Track service navigation */
+document.querySelectorAll(".tile").forEach(tile=>{
+ tile.addEventListener("click",()=>{
+  recordActivity("Opened "+tile.textContent.trim());
+ });
 });
+
+renderHomeRecentActivity();
 </script>
 
 <script type="module">
 import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+ initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getAuth,
-  onAuthStateChanged,
-  signOut,
-  deleteUser
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+ getAuth,
+ onAuthStateChanged,
+ signOut,
+ deleteUser
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
-  authDomain: "seavora-5be21.firebaseapp.com",
-  projectId: "seavora-5be21",
-  storageBucket: "seavora-5be21.firebasestorage.app",
-  messagingSenderId: "41187328725",
-  appId: "1:41187328725:web:07ca55487383bc5798d85c",
-  measurementId: "G-PDY0RZRDDH"
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+let currentUser=null;
+const $=id=>document.getElementById(id);
 
-let currentUser = null;
-
-const $ = id => document.getElementById(id);
-
-function showHomeMessage(text, success = false) {
-  const message = $("message");
-  message.textContent = text;
-  message.style.color = success ? "#16803c" : "#b42318";
+function showHomeMessage(text,success=false){
+ const message=$("message");
+ message.textContent=text;
+ message.style.color=success?"#16803c":"#b42318";
 }
 
-function showProfile(user) {
-  $("profileName").textContent =
-    user.displayName || "RYZON User";
+function showProfile(user){
+ $("profileName").textContent=user.displayName||"RYZON User";
+ $("profileEmail").textContent=user.email||"Phone login account";
+ $("profilePhone").textContent=user.phoneNumber||"";
 
-  $("profileEmail").textContent =
-    user.email || "Phone login account";
-
-  $("profilePhone").textContent =
-    user.phoneNumber || "";
+ $("welcomeUser").textContent=
+  "Hello, "+(user.displayName||user.email||"RYZON User")+"! Welcome back.";
 }
 
-function hasAcceptedLogin(user) {
-  const providers = user.providerData || [];
+function hasAcceptedLogin(user){
+ const providers=user.providerData||[];
 
-  const hasPhone = providers.some(
-    provider => provider.providerId === "phone"
-  );
+ const hasPhone=providers.some(
+  provider=>provider.providerId==="phone"
+ );
 
-  const hasGoogle = providers.some(
-    provider => provider.providerId === "google.com"
-  );
+ const hasGoogle=providers.some(
+  provider=>provider.providerId==="google.com"
+ );
 
-  const hasVerifiedEmail =
-    Boolean(user.email && user.emailVerified);
+ const hasVerifiedEmail=Boolean(user.email&&user.emailVerified);
 
-  /*
-    Allow:
-    - Verified Email login
-    - Google login
-    - Phone OTP login
-
-    Sign Up with Email + Phone is handled in otp.html.
-  */
-
-  return hasVerifiedEmail || hasGoogle || hasPhone;
+ return hasVerifiedEmail||hasGoogle||hasPhone;
 }
 
-onAuthStateChanged(auth, async user => {
-  if (!user) {
-    window.location.replace("otp.html");
-    return;
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  window.location.replace("otp.html");
+  return;
+ }
+
+ try{
+  await user.reload();
+  const freshUser=auth.currentUser;
+
+  if(!freshUser||!hasAcceptedLogin(freshUser)){
+   await signOut(auth);
+   window.location.replace("otp.html");
+   return;
   }
 
-  try {
-    await user.reload();
+  currentUser=freshUser;
+  showProfile(currentUser);
+  recordActivity("Logged in to RYZON");
 
-    const freshUser = auth.currentUser;
+  document.documentElement.classList.add("auth-ready");
 
-    if (!freshUser || !hasAcceptedLogin(freshUser)) {
-      await signOut(auth);
-      window.location.replace("otp.html");
-      return;
-    }
+ }catch(error){
+  console.error("Authentication check failed:",error);
 
-    currentUser = freshUser;
-
-    showProfile(currentUser);
-
-    recordActivity("Logged in to RYZON");
-
-    document.documentElement.classList.add("auth-ready");
-
-  } catch (error) {
-    console.error("Authentication check failed:", error);
-
-    try {
-      await signOut(auth);
-    } catch (signOutError) {
-      console.error(signOutError);
-    }
-
-    window.location.replace("otp.html");
+  try{
+   await signOut(auth);
+  }catch(signOutError){
+   console.error(signOutError);
   }
+
+  window.location.replace("otp.html");
+ }
 });
 
-window.logoutUser = async function() {
-  try {
-    await signOut(auth);
-    sessionStorage.removeItem("ryzonNextAction");
-    window.location.replace("otp.html");
-  } catch (error) {
-    console.error(error);
-    showHomeMessage("Logout failed. Please try again.");
-  }
+window.logoutUser=async function(){
+ try{
+  await signOut(auth);
+  sessionStorage.removeItem("ryzonNextAction");
+  window.location.replace("otp.html");
+ }catch(error){
+  console.error(error);
+  showHomeMessage("Logout failed. Please try again.");
+ }
 };
 
-window.confirmDeleteAccount = async function() {
-  const confirmation = $("deleteConfirm").value.trim();
+window.confirmDeleteAccount=async function(){
+ const confirmation=$("deleteConfirm").value.trim();
 
-  if (confirmation !== "DELETE") {
-    showHomeMessage("Please type DELETE to confirm.");
-    return;
+ if(confirmation!=="DELETE"){
+  showHomeMessage("Please type DELETE to confirm.");
+  return;
+ }
+
+ if(!currentUser){
+  showHomeMessage("Please login again.");
+  return;
+ }
+
+ const confirmed=window.confirm(
+  "Final confirmation: Delete this Firebase login account?"
+ );
+
+ if(!confirmed)return;
+
+ try{
+  await deleteUser(currentUser);
+
+  localStorage.removeItem("ryzonActivity");
+  sessionStorage.clear();
+
+  window.location.replace("otp.html");
+
+ }catch(error){
+  console.error("Account deletion failed:",error);
+
+  if(error.code==="auth/requires-recent-login"){
+   showHomeMessage(
+    "For security, please login again before deleting your account."
+   );
+  }else{
+   showHomeMessage(
+    "Account deletion failed: "+(error.message||"Please try again.")
+   );
   }
-
-  if (!currentUser) {
-    showHomeMessage("Please login again.");
-    return;
-  }
-
-  const confirmed = window.confirm(
-    "Final confirmation: Delete this Firebase login account?"
-  );
-
-  if (!confirmed) return;
-
-  try {
-    await deleteUser(currentUser);
-
-    localStorage.removeItem("ryzonActivity");
-    sessionStorage.clear();
-
-    window.location.replace("otp.html");
-
-  } catch (error) {
-    console.error("Account deletion failed:", error);
-
-    if (error.code === "auth/requires-recent-login") {
-      showHomeMessage(
-        "For security, please login again before deleting your account."
-      );
-    } else {
-      showHomeMessage(
-        "Account deletion failed: " +
-        (error.message || "Please try again.")
-      );
-    }
-  }
+ }
 };
 </script>
 
