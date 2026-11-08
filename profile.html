@@ -4,129 +4,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#123b68">
+<meta name="theme-color" content="#071426">
 <meta name="description" content="RYZON User Profile">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>RYZON - My Profile</title>
 
 <script src="language-system.js"></script>
 
 <style>
+:root{
+ --bg:#071426;--panel:#10243d;--panel2:#173653;
+ --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
+ --border:#24415f;--accent:#168cff;--green:#31d69a;
+ --red:#ff647c;
+}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
  margin:0;font-family:Arial,sans-serif;
- background:#f1f5fb;color:#17345c;
- padding-bottom:75px
+ background:linear-gradient(145deg,#071426,#102b4b);
+ color:var(--text);padding-bottom:85px;min-height:100vh
 }
 html:not(.auth-ready) body{visibility:hidden}
 html:not(.auth-ready)::before{
  content:"Checking secure login...";
  position:fixed;inset:0;display:flex;align-items:center;
- justify-content:center;background:#f1f5fb;color:#17345c;
+ justify-content:center;background:#071426;color:#55d7ff;
  font-weight:bold;z-index:9999;visibility:visible
 }
+button,input,textarea{font:inherit}
+button{cursor:pointer}
 header{
- background:#123b68;color:white;padding:18px;
- display:flex;align-items:center;justify-content:space-between
+ background:#0c2038eF;color:white;padding:14px 18px;
+ display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid #24415f;position:sticky;top:0;z-index:30;
+ backdrop-filter:blur(12px)
 }
-header h1{margin:0;letter-spacing:3px;font-size:23px}
+header h1{margin:0;letter-spacing:3px;font-size:22px;color:var(--cyan)}
 header button{
- background:#ffffff20;color:white;border:1px solid #ffffff55;
- padding:9px 13px;border-radius:9px;font-size:15px
+ background:#ffffff12;color:white;border:1px solid #ffffff35;
+ padding:9px 12px;border-radius:9px
 }
-main{max-width:600px;margin:auto;padding:16px}
+main{max-width:680px;margin:auto;padding:16px}
 .card{
- background:white;border-radius:15px;padding:18px;
- margin-bottom:15px;box-shadow:0 2px 8px #0000000c
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:17px;padding:17px;margin-bottom:15px;
+ box-shadow:0 10px 28px #0002
 }
-.profile-top{text-align:center}
+.cover{
+ height:145px;border-radius:13px;
+ background:linear-gradient(120deg,#075985,#164e8a,#123b68);
+ position:relative;margin-bottom:0;overflow:hidden
+}
+.cover:after{
+ content:"";position:absolute;width:220px;height:220px;
+ border:1px solid #ffffff25;border-radius:50%;
+ right:-40px;top:-80px;
+ box-shadow:0 0 0 25px #ffffff08,0 0 0 50px #ffffff05
+}
+.cover-edit{
+ position:absolute;right:10px;bottom:10px;z-index:2;
+ background:#071426bb;color:white;border:1px solid #ffffff55;
+ border-radius:9px;padding:8px 10px;font-size:12px
+}
+.profile-top{text-align:center;padding-top:0}
 .avatar{
- width:110px;height:110px;border-radius:50%;
- background:#dbeafe;display:flex;align-items:center;
- justify-content:center;margin:5px auto 12px;
- overflow:hidden;border:4px solid #dce9ff;
- font-size:45px;color:#2457d6
+ width:112px;height:112px;border-radius:50%;
+ background:#173653;display:flex;align-items:center;
+ justify-content:center;margin:-56px auto 10px;
+ overflow:hidden;border:5px solid var(--panel);
+ position:relative;z-index:2;font-size:43px;color:var(--cyan)
 }
 .avatar img{width:100%;height:100%;object-fit:cover}
-#profileName{margin:8px 0 5px;font-size:23px}
-#profileEmail{color:#718096;font-size:13px;overflow-wrap:anywhere}
-#profileBio{color:#52647a;line-height:1.5;margin:12px 0}
+#profileName{margin:8px 0 4px;font-size:23px}
+.username{font-size:13px;color:var(--cyan);margin:0 0 8px}
+#profileEmail{color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+#profileBio{color:#d0dcec;line-height:1.6;margin:12px auto;max-width:480px;font-size:14px}
+.badge{
+ display:inline-block;background:#123f36;color:#65efbb;
+ padding:5px 10px;border-radius:20px;font-size:11px;font-weight:bold
+}
+.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:15px 0}
+.btn{
+ border:0;border-radius:10px;padding:11px 15px;
+ background:linear-gradient(135deg,#078cc5,#13b9c5);
+ color:white;font-weight:bold;cursor:pointer
+}
+.btn-secondary{background:#1c3b5a;color:white;border:1px solid var(--border)}
+.btn-danger{background:#762a40;color:white}
+.btn-small{padding:8px 11px;font-size:12px}
 .stats{
  display:grid;grid-template-columns:repeat(3,1fr);
- gap:8px;margin-top:18px
+ gap:9px;margin-top:17px
 }
 .stat{
- background:#f1f5fb;padding:13px 5px;
- border-radius:11px;text-align:center
+ background:#0b1b30;padding:13px 5px;
+ border:1px solid var(--border);border-radius:12px;text-align:center
 }
-.stat strong{display:block;font-size:20px;color:#2457d6}
-.stat span{font-size:12px;color:#64748b}
-.btn{
- border:0;border-radius:10px;padding:12px 16px;
- background:#2457d6;color:white;font-weight:bold;
- cursor:pointer
+.stat strong{display:block;font-size:21px;color:var(--cyan)}
+.stat span{font-size:12px;color:var(--muted)}
+.stat button{
+ background:none;border:0;color:inherit;padding:0;
+ width:100%;cursor:pointer
 }
-.btn-secondary{background:#edf2f8;color:#17345c}
-.btn-danger{background:#b42318}
-.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
 .section-title{
  display:flex;justify-content:space-between;
- align-items:center;margin-bottom:12px
+ align-items:center;gap:10px;margin-bottom:13px
 }
-.section-title h2{font-size:18px;margin:0}
-.profile-field{margin:12px 0}
-.profile-field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.section-title h2{font-size:17px;margin:0}
+.profile-field{margin:13px 0}
+.profile-field label{
+ display:block;font-size:13px;font-weight:bold;
+ margin-bottom:7px;color:#c6d7e9
+}
 .profile-field input,.profile-field textarea{
- width:100%;padding:12px;border:1px solid #ccd7e5;
- border-radius:9px;font-size:15px;color:#17345c;
- background:white
+ width:100%;padding:12px;border:1px solid var(--border);
+ border-radius:10px;font-size:14px;color:white;background:#07182a
 }
 .profile-field textarea{resize:vertical;min-height:85px}
 .empty{
- text-align:center;padding:22px;background:#f4f7fb;
- color:#718096;border-radius:11px;font-size:14px
+ text-align:center;padding:22px;background:#0b1b30;
+ border:1px dashed var(--border);color:var(--muted);
+ border-radius:11px;font-size:13px;line-height:1.6
 }
 .item{
- padding:13px;background:#f4f7fb;border-radius:10px;
- margin:8px 0;font-size:14px;overflow-wrap:anywhere
+ padding:13px;background:#0b1b30;border:1px solid var(--border);
+ border-radius:11px;margin:8px 0;font-size:14px;overflow-wrap:anywhere
 }
-.item small{display:block;color:#718096;margin-top:5px}
+.item small{display:block;color:var(--muted);margin-top:5px}
+.post-card{
+ background:#0b1b30;border:1px solid var(--border);
+ padding:14px;border-radius:12px;margin:10px 0
+}
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.mini-avatar{
+ width:35px;height:35px;border-radius:50%;
+ display:grid;place-items:center;background:#173653;color:var(--cyan)
+}
+.post-content{font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.post-actions{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap}
+.post-actions button{
+ background:#173653;color:white;border:1px solid var(--border);
+ border-radius:9px;padding:8px 11px;font-size:12px
+}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-box{
+ padding:12px;background:#0b1b30;border:1px solid var(--border);
+ border-radius:10px;min-width:0
+}
+.info-box small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.info-box strong{font-size:13px;overflow-wrap:anywhere}
+.option-btn{
+ width:100%;margin:5px 0;padding:12px;text-align:left;
+ border-radius:10px;background:#173653;color:white;
+ border:1px solid var(--border);font-weight:bold
+}
+.option-btn:hover,.post-actions button:hover{background:#205078}
 .bottom-nav{
- position:fixed;bottom:0;left:0;right:0;background:white;
- display:flex;justify-content:space-around;padding:9px 3px;
- border-top:1px solid #dbe3ee;z-index:20
+ position:fixed;bottom:0;left:0;right:0;
+ background:#0b1b30f5;display:flex;justify-content:space-around;
+ padding:9px 3px;border-top:1px solid var(--border);z-index:40;
+ backdrop-filter:blur(12px)
 }
 .bottom-nav a{
  flex:1;text-align:center;text-decoration:none;
- color:#52647a;font-size:11px
+ color:var(--muted);font-size:11px
 }
-.bottom-nav span{display:block;font-size:21px;margin-bottom:3px}
-.bottom-nav a.active{color:#2457d6;font-weight:bold}
+.bottom-nav span{display:block;font-size:20px;margin-bottom:3px}
+.bottom-nav a.active{color:var(--cyan);font-weight:bold}
 .modal-backdrop{
- display:none;position:fixed;inset:0;background:#071b35a8;
- z-index:50;align-items:center;justify-content:center;padding:16px
+ display:none;position:fixed;inset:0;background:#000b;
+ z-index:60;align-items:center;justify-content:center;padding:15px
 }
 .modal-backdrop.open{display:flex}
 .modal{
- background:white;border-radius:16px;padding:20px;
- width:100%;max-width:420px;max-height:90vh;overflow:auto
+ background:#10243d;border:1px solid var(--border);
+ border-radius:16px;padding:19px;width:100%;max-width:430px;
+ max-height:90vh;overflow:auto;box-shadow:0 15px 50px #0007
 }
 .modal-head{
  display:flex;justify-content:space-between;
  align-items:center;margin-bottom:15px
 }
-.modal-head h2{margin:0;font-size:20px}
+.modal-head h2{margin:0;font-size:19px}
 .close{
  border:0;border-radius:50%;width:34px;height:34px;
- background:#edf2f8;font-size:20px;color:#17345c
+ background:#1c3b5a;font-size:20px;color:white
 }
-#message{text-align:center;font-size:14px;font-weight:bold}
+#message{text-align:center;font-size:13px;font-weight:bold;line-height:1.5}
 #photoPreview{
  width:85px;height:85px;object-fit:cover;
  border-radius:50%;display:none;margin:10px auto
 }
+#coverPreview{
+ width:100%;height:90px;object-fit:cover;
+ border-radius:10px;display:none;margin-top:8px
+}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
+.hidden{display:none!important}
 @media(min-width:700px){
  body{padding-bottom:0}
  .bottom-nav{display:none}
+}
+@media(max-width:420px){
+ main{padding:11px}
+ .card{padding:14px}
+ .profile-top{padding-top:0}
+ .cover{height:125px}
+ .info-grid{grid-template-columns:1fr}
+ header h1{font-size:19px}
 }
 </style>
 </head>
@@ -136,150 +226,104 @@ main{max-width:600px;margin:auto;padding:16px}
 <header>
  <button onclick="goBack()">← Back</button>
  <h1>RYZON</h1>
- <button onclick="window.location.href='home.html'">🏠 Home</button>
+ <button onclick="location.href='home.html'">🏠 Home</button>
 </header>
 
 <main>
 
- <!-- Profile Details -->
- <section class="card profile-top">
+<section class="card profile-top">
+ <div class="cover" id="cover">
+  <button class="cover-edit" onclick="openEditProfile()">📷 Edit Cover</button>
+ </div>
 
-  <div class="avatar" id="avatar">
-   <span>👤</span>
+ <div class="avatar" id="avatar"><span>👤</span></div>
+
+ <h2 id="profileName">Loading Profile...</h2>
+ <p class="username" id="profileUsername">@ryzonuser</p>
+ <div id="profileEmail">Loading account...</div>
+ <p id="profileBio">Welcome to my RYZON profile!</p>
+ <span class="badge">✦ RYZON MEMBER</span>
+
+ <div class="actions">
+  <button class="btn" onclick="openEditProfile()">✏️ Edit Profile</button>
+  <button class="btn btn-secondary" onclick="shareProfile()">📤 Share Profile</button>
+ </div>
+
+ <div class="stats">
+  <div class="stat">
+   <button onclick="showSocialList('followers')">
+    <strong id="followersCount">0</strong><span>Followers</span>
+   </button>
   </div>
-
-  <h2 id="profileName">Loading Profile...</h2>
-  <div id="profileEmail">Loading account...</div>
-  <p id="profileBio">Welcome to my RYZON profile!</p>
-
-  <div class="actions">
-   <button class="btn" onclick="openEditProfile()">✏️ Edit Profile</button>
-   <button class="btn btn-secondary" onclick="shareProfile()">📤 Share</button>
+  <div class="stat">
+   <button onclick="showSocialList('following')">
+    <strong id="followingCount">0</strong><span>Following</span>
+   </button>
   </div>
-
-  <div class="stats">
-   <div class="stat">
-    <strong id="followersCount">0</strong>
-    <span>Followers</span>
-   </div>
-   <div class="stat">
-    <strong id="followingCount">0</strong>
-    <span>Following</span>
-   </div>
-   <div class="stat">
-    <strong id="postsCount">0</strong>
-    <span>My Posts</span>
-   </div>
+  <div class="stat">
+   <strong id="postsCount">0</strong><span>My Posts</span>
   </div>
+ </div>
+</section>
 
- </section>
+<section class="card">
+ <div class="section-title"><h2>👤 Account Information</h2></div>
+ <div class="info-grid">
+  <div class="info-box"><small>Display Name</small><strong id="infoName">Loading...</strong></div>
+  <div class="info-box"><small>Username</small><strong id="infoUsername">Loading...</strong></div>
+  <div class="info-box"><small>Email</small><strong id="infoEmail">Loading...</strong></div>
+  <div class="info-box"><small>Mobile Number</small><strong id="infoPhone">Not available</strong></div>
+  <div class="info-box"><small>Account Created</small><strong id="createdDate">Loading...</strong></div>
+  <div class="info-box"><small>Last Sign In</small><strong id="lastLogin">Loading...</strong></div>
+ </div>
+</section>
 
- <!-- Account Information -->
- <section class="card">
-  <div class="section-title">
-   <h2>👤 Account Information</h2>
-  </div>
+<section class="card">
+ <div class="section-title"><h2>👥 Followers</h2></div>
+ <div id="followersList" class="empty">
+  Followers will appear here when Firebase social connections are connected.
+ </div>
+</section>
 
-  <div class="item">
-   <b>Name</b>
-   <small id="infoName">Loading...</small>
-  </div>
+<section class="card">
+ <div class="section-title"><h2>➕ Following</h2></div>
+ <div id="followingList" class="empty">
+  People you follow will appear here when Firebase social connections are connected.
+ </div>
+</section>
 
-  <div class="item">
-   <b>Email</b>
-   <small id="infoEmail">Loading...</small>
-  </div>
+<section class="card">
+ <div class="section-title">
+  <h2>📝 My Posts</h2>
+  <button class="btn btn-small" onclick="createPost()">＋ Create Post</button>
+ </div>
+ <div id="postsContainer">
+  <div class="empty">You have no posts yet. Create your first post!</div>
+ </div>
+</section>
 
-  <div class="item">
-   <b>Mobile Number</b>
-   <small id="infoPhone">Not available</small>
-  </div>
+<section class="card">
+ <div class="section-title">
+  <h2>🕘 Account Activity</h2>
+  <button class="btn btn-secondary btn-small" onclick="loadActivity()">Refresh</button>
+ </div>
+ <div id="activityContainer"><div class="empty">Loading activity...</div></div>
+</section>
 
-  <div class="item">
-   <b>Account Created</b>
-   <small id="createdDate">Loading...</small>
-  </div>
+<section class="card">
+ <h2 style="font-size:17px">⚙️ Profile Options</h2>
+ <button class="option-btn" onclick="location.href='settings.html'">⚙️ Account Settings</button>
+ <button class="option-btn" onclick="location.href='chat.html'">💬 My Chats</button>
+ <button class="option-btn" onclick="location.href='premium.html'">⭐ RYZON Premium</button>
+ <button class="option-btn" onclick="location.href='help.html'">🎧 Help & Support</button>
+ <button class="option-btn" onclick="location.href='notifications.html'">🔔 Notifications</button>
+ <button class="option-btn" style="background:#762a40" onclick="logoutUser()">🚪 Logout</button>
+</section>
 
-  <div class="item">
-   <b>Last Sign In</b>
-   <small id="lastLogin">Loading...</small>
-  </div>
- </section>
-
- <!-- Followers -->
- <section class="card">
-  <div class="section-title">
-   <h2>👥 Followers</h2>
-  </div>
-  <div class="empty">
-   Followers list will appear here when the social connection service is connected.
-  </div>
- </section>
-
- <!-- Following -->
- <section class="card">
-  <div class="section-title">
-   <h2>➕ Following</h2>
-  </div>
-  <div class="empty">
-   People you follow will appear here when the follow service is connected.
-  </div>
- </section>
-
- <!-- Posts -->
- <section class="card">
-  <div class="section-title">
-   <h2>📝 My Posts</h2>
-   <button class="btn" onclick="createPost()">＋ Create</button>
-  </div>
-  <div id="postsContainer">
-   <div class="empty">
-    You have no posts yet. Your posts will appear here.
-   </div>
-  </div>
- </section>
-
- <!-- Account Activity -->
- <section class="card">
-  <div class="section-title">
-   <h2>🕘 Account Activity</h2>
-   <button class="btn btn-secondary" onclick="loadActivity()">Refresh</button>
-  </div>
-  <div id="activityContainer">
-   <div class="empty">Loading activity...</div>
-  </div>
- </section>
-
- <!-- Profile Options -->
- <section class="card">
-  <h2>⚙️ Profile Options</h2>
-  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
-   onclick="window.location.href='settings.html'">
-   Account Settings
-  </button>
-  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
-   onclick="window.location.href='premium.html'">
-   ⭐ RYZON Premium
-  </button>
-  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
-   onclick="window.location.href='help.html'">
-   🎧 Help & Support
-  </button>
-  <button class="btn btn-danger" style="width:100%;margin:5px 0"
-   onclick="logoutUser()">
-   Logout
-  </button>
- </section>
-
- <p id="message"></p>
-
- <footer style="text-align:center;color:#718096;font-size:12px;padding:15px">
-  RYZON © 2026
- </footer>
-
+<p id="message"></p>
+<footer>RYZON © 2026 · One App, Endless Possibilities!</footer>
 </main>
 
-<!-- Bottom Navigation -->
 <nav class="bottom-nav">
  <a href="home.html"><span>🏠</span>Home</a>
  <a href="chat.html"><span>💬</span>Chat</a>
@@ -288,78 +332,75 @@ main{max-width:600px;margin:auto;padding:16px}
  <a href="profile.html" class="active"><span>👤</span>Profile</a>
 </nav>
 
-<!-- Edit Profile Modal -->
+<!-- Edit Profile -->
 <div class="modal-backdrop" id="editModal">
- <section class="modal">
+<section class="modal">
+ <div class="modal-head">
+  <h2>✏️ Edit Profile</h2>
+  <button class="close" onclick="closeEditProfile()">×</button>
+ </div>
 
-  <div class="modal-head">
-   <h2>✏️ Edit Profile</h2>
-   <button class="close" onclick="closeEditProfile()">×</button>
+ <form id="editForm">
+  <div class="profile-field">
+   <label for="editName">Display Name</label>
+   <input id="editName" type="text" maxlength="50" placeholder="Enter your name">
   </div>
-
-  <form id="editForm">
-
-   <div class="profile-field">
-    <label for="editName">Display Name</label>
-    <input id="editName" type="text" maxlength="50"
-     placeholder="Enter your name">
-   </div>
-
-   <div class="profile-field">
-    <label for="editBio">Bio</label>
-    <textarea id="editBio" maxlength="250"
-     placeholder="Tell people about yourself"></textarea>
-   </div>
-
-   <div class="profile-field">
-    <label for="photoInput">Profile Photo</label>
-    <input id="photoInput" type="file" accept="image/*">
-    <img id="photoPreview" alt="Profile photo preview">
-   </div>
-
-   <button class="btn" type="submit" style="width:100%">
-    Save Profile
-   </button>
-
-  </form>
-
- </section>
+  <div class="profile-field">
+   <label for="editUsername">Username</label>
+   <input id="editUsername" type="text" maxlength="25" placeholder="Enter username">
+  </div>
+  <div class="profile-field">
+   <label for="editBio">Bio</label>
+   <textarea id="editBio" maxlength="250" placeholder="Tell people about yourself"></textarea>
+  </div>
+  <div class="profile-field">
+   <label for="photoInput">Profile Photo (max 1 MB)</label>
+   <input id="photoInput" type="file" accept="image/*">
+   <img id="photoPreview" alt="Profile photo preview">
+  </div>
+  <div class="profile-field">
+   <label for="coverInput">Cover Photo (max 1 MB)</label>
+   <input id="coverInput" type="file" accept="image/*">
+   <img id="coverPreview" alt="Cover photo preview">
+  </div>
+  <button class="btn" type="submit" style="width:100%">Save Profile</button>
+ </form>
+</section>
 </div>
 
-<!-- Create Post Modal -->
+<!-- Create Post -->
 <div class="modal-backdrop" id="postModal">
- <section class="modal">
-
-  <div class="modal-head">
-   <h2>📝 Create Post</h2>
-   <button class="close" onclick="closePostModal()">×</button>
+<section class="modal">
+ <div class="modal-head">
+  <h2>📝 Create Post</h2>
+  <button class="close" onclick="closePostModal()">×</button>
+ </div>
+ <form id="postForm">
+  <div class="profile-field">
+   <label for="postText">What's on your mind?</label>
+   <textarea id="postText" maxlength="1000" placeholder="Write something..." required></textarea>
   </div>
+  <button class="btn" type="submit" style="width:100%">Publish Post</button>
+ </form>
+</section>
+</div>
 
-  <form id="postForm">
-   <div class="profile-field">
-    <label for="postText">What's on your mind?</label>
-    <textarea id="postText" maxlength="1000"
-     placeholder="Write something..." required></textarea>
-   </div>
-   <button class="btn" type="submit" style="width:100%">
-    Save Post
-   </button>
-  </form>
-
- </section>
+<!-- Social List -->
+<div class="modal-backdrop" id="socialModal">
+<section class="modal">
+ <div class="modal-head">
+  <h2 id="socialTitle">Social Connections</h2>
+  <button class="close" onclick="closeSocialList()">×</button>
+ </div>
+ <div class="empty" id="socialContent">
+  Social connections are not connected yet.
+ </div>
+</section>
 </div>
 
 <script type="module">
-import{
- initializeApp
-}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import{
- getAuth,
- onAuthStateChanged,
- updateProfile,
- signOut
-}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,updateProfile,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -373,370 +414,333 @@ const firebaseConfig={
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
-
 let currentUser=null;
 let selectedPhoto=null;
-
+let selectedCover=null;
 const $=id=>document.getElementById(id);
 
 function showMessage(text,success=false){
  $("message").textContent=text;
- $("message").style.color=success?"#16803c":"#b42318";
+ $("message").style.color=success?"#31d69a":"#ff647c";
 }
 
 function safeDate(value){
  if(!value)return"Not available";
- const date=new Date(value);
- return isNaN(date.getTime())?"Not available":date.toLocaleString();
+ const d=new Date(value);
+ return isNaN(d.getTime())?"Not available":d.toLocaleString();
 }
 
-function updateAvatar(photoURL){
+function usernameFor(user){
+ return localStorage.getItem("ryzonUsername_"+user.uid)||
+  (user.displayName||"ryzonuser").toLowerCase().replace(/[^a-z0-9_]/g,"").replace(/\s/g,"")||
+  "ryzonuser";
+}
+
+function updateAvatar(photo){
  const avatar=$("avatar");
  avatar.replaceChildren();
-
- if(photoURL){
+ if(photo){
   const img=document.createElement("img");
-  img.src=photoURL;
-  img.alt="Profile photo";
+  img.src=photo;img.alt="Profile photo";
   avatar.appendChild(img);
  }else{
   const span=document.createElement("span");
-  span.textContent="👤";
-  avatar.appendChild(span);
+  span.textContent="👤";avatar.appendChild(span);
  }
+}
+
+function updateCover(photo){
+ const cover=$("cover");
+ cover.style.backgroundImage=photo?`url("${photo}")`:"";
+ cover.style.backgroundSize="cover";
+ cover.style.backgroundPosition="center";
 }
 
 function showUser(user){
  const name=user.displayName||"RYZON User";
+ const username=usernameFor(user);
  const email=user.email||"Phone login account";
  const phone=user.phoneNumber||"Not available";
 
  $("profileName").textContent=name;
+ $("profileUsername").textContent="@"+username;
  $("profileEmail").textContent=email;
- $("profileBio").textContent=
-  localStorage.getItem("ryzonBio_"+user.uid)||
-  "Welcome to my RYZON profile!";
+ $("profileBio").textContent=localStorage.getItem("ryzonBio_"+user.uid)||"Welcome to my RYZON profile!";
 
  $("infoName").textContent=name;
+ $("infoUsername").textContent="@"+username;
  $("infoEmail").textContent=email;
  $("infoPhone").textContent=phone;
+ $("createdDate").textContent=safeDate(user.metadata.creationTime);
+ $("lastLogin").textContent=safeDate(user.metadata.lastSignInTime);
 
- $("createdDate").textContent=
-  safeDate(user.metadata.creationTime);
-
- $("lastLogin").textContent=
-  safeDate(user.metadata.lastSignInTime);
-
- updateAvatar(user.photoURL);
-}
-
-function loadStats(){
- $("followersCount").textContent=
-  localStorage.getItem("ryzonFollowers")||"0";
-
- $("followingCount").textContent=
-  localStorage.getItem("ryzonFollowing")||"0";
-
- const posts=getPosts();
- $("postsCount").textContent=posts.length;
+ updateAvatar(user.photoURL||localStorage.getItem("ryzonPhoto_"+user.uid));
+ updateCover(localStorage.getItem("ryzonCover_"+user.uid));
 }
 
 function getPosts(){
- try{
-  return JSON.parse(
-   localStorage.getItem("ryzonPosts_"+currentUser.uid)||"[]"
-  );
- }catch(error){
-  return[];
- }
+ try{return JSON.parse(localStorage.getItem("ryzonPosts_"+currentUser.uid)||"[]")}
+ catch(e){return[]}
 }
-
 function savePosts(posts){
- localStorage.setItem(
-  "ryzonPosts_"+currentUser.uid,
-  JSON.stringify(posts)
- );
+ localStorage.setItem("ryzonPosts_"+currentUser.uid,JSON.stringify(posts));
 }
 
 function renderPosts(){
- const container=$("postsContainer");
+ const box=$("postsContainer");
  const posts=getPosts();
-
  $("postsCount").textContent=posts.length;
+ box.replaceChildren();
 
  if(!posts.length){
-  container.innerHTML=
-   '<div class="empty">You have no posts yet. Your posts will appear here.</div>';
-  return;
+  const empty=document.createElement("div");
+  empty.className="empty";
+  empty.textContent="You have no posts yet. Create your first post!";
+  box.appendChild(empty);return;
  }
 
- container.replaceChildren();
-
  posts.forEach(post=>{
-  const card=document.createElement("div");
-  card.className="item";
+  const card=document.createElement("article");
+  card.className="post-card";
 
-  const text=document.createElement("div");
-  text.textContent=post.text;
+  const head=document.createElement("div");
+  head.className="post-head";
+  const avatar=document.createElement("div");
+  avatar.className="mini-avatar";
+  avatar.textContent="👤";
 
+  const identity=document.createElement("div");
+  const name=document.createElement("strong");
+  name.textContent=currentUser.displayName||"RYZON User";
   const date=document.createElement("small");
-  date.textContent=post.date;
+  date.style.display="block";
+  date.style.color="var(--muted)";
+  date.textContent=post.date||"";
+  identity.append(name,date);
+  head.append(avatar,identity);
 
-  const remove=document.createElement("button");
-  remove.className="btn btn-danger";
-  remove.style.marginTop="10px";
-  remove.textContent="Delete Post";
+  const content=document.createElement("div");
+  content.className="post-content";
+  content.textContent=post.text||"";
 
-  remove.addEventListener("click",()=>{
-   if(!confirm("Delete this post?"))return;
-   const updated=getPosts().filter(item=>item.id!==post.id);
-   savePosts(updated);
-   renderPosts();
+  const actions=document.createElement("div");
+  actions.className="post-actions";
+
+  const like=document.createElement("button");
+  like.textContent="♡ Like ("+(post.likes||0)+")";
+  like.addEventListener("click",()=>{
+   const all=getPosts();
+   const found=all.find(p=>p.id===post.id);
+   if(!found)return;
+   found.likes=(found.likes||0)+1;
+   savePosts(all);renderPosts();
   });
 
-  card.append(text,date,remove);
-  container.appendChild(card);
+  const remove=document.createElement("button");
+  remove.textContent="🗑 Delete";
+  remove.addEventListener("click",()=>{
+   if(!confirm("Delete this post?"))return;
+   savePosts(getPosts().filter(p=>p.id!==post.id));
+   renderPosts();
+   showMessage("Post deleted on this device.",true);
+  });
+
+  actions.append(like,remove);
+  card.append(head,content,actions);
+  box.appendChild(card);
  });
+}
+
+function loadStats(){
+ $("followersCount").textContent=localStorage.getItem("ryzonFollowers_"+currentUser.uid)||"0";
+ $("followingCount").textContent=localStorage.getItem("ryzonFollowing_"+currentUser.uid)||"0";
+ renderPosts();
 }
 
 function loadActivity(){
- const container=$("activityContainer");
- let activities=[];
-
+ const box=$("activityContainer");
+ let items=[];
  try{
-  activities=JSON.parse(
-   localStorage.getItem("ryzonActivity")||"[]"
-  );
- }catch(error){
-  activities=[];
+  items=JSON.parse(localStorage.getItem("ryzonActivity_"+currentUser.uid)||"[]");
+  if(!items.length)items=JSON.parse(localStorage.getItem("ryzonActivity")||"[]");
+ }catch(e){items=[]}
+
+ box.replaceChildren();
+ if(!items.length){
+  const empty=document.createElement("div");
+  empty.className="empty";empty.textContent="No recent activity available.";
+  box.appendChild(empty);return;
  }
 
- if(!activities.length){
-  container.innerHTML=
-   '<div class="empty">No recent activity available.</div>';
-  return;
- }
-
- container.replaceChildren();
-
- activities.slice(0,10).forEach(activity=>{
+ items.slice(0,10).forEach(item=>{
   const row=document.createElement("div");
   row.className="item";
-
   const title=document.createElement("b");
-  title.textContent=activity.text||"Activity";
-
+  title.textContent=item.text||"Account activity";
   const date=document.createElement("small");
-  date.textContent=activity.time||"";
-
-  row.append(title,date);
-  container.appendChild(row);
+  date.textContent=item.time||"";
+  row.append(title,date);box.appendChild(row);
  });
 }
 
-window.openEditProfile=function(){
+function readImage(file,callback){
+ if(!file)return;
+ if(!file.type.startsWith("image/")){
+  showMessage("Please select a valid image.");return;
+ }
+ if(file.size>1024*1024){
+  showMessage("Image must be smaller than 1 MB.");return;
+ }
+ const reader=new FileReader();
+ reader.onload=()=>callback(reader.result);
+ reader.onerror=()=>showMessage("Could not read this image.");
+ reader.readAsDataURL(file);
+}
+
+window.openEditProfile=()=>{
  if(!currentUser)return;
-
  $("editName").value=currentUser.displayName||"";
- $("editBio").value=
-  localStorage.getItem("ryzonBio_"+currentUser.uid)||"";
-
- $("photoPreview").style.display="none";
+ $("editUsername").value=usernameFor(currentUser);
+ $("editBio").value=localStorage.getItem("ryzonBio_"+currentUser.uid)||"";
  $("photoInput").value="";
- selectedPhoto=null;
-
+ $("coverInput").value="";
+ $("photoPreview").style.display="none";
+ $("coverPreview").style.display="none";
+ selectedPhoto=null;selectedCover=null;
  $("editModal").classList.add("open");
 };
+window.closeEditProfile=()=>$("editModal").classList.remove("open");
 
-window.closeEditProfile=function(){
- $("editModal").classList.remove("open");
-};
-
-$("photoInput").addEventListener("change",event=>{
- const file=event.target.files[0];
- if(!file)return;
-
- if(!file.type.startsWith("image/")){
-  showMessage("Please select an image file.");
-  return;
- }
-
- if(file.size>1024*1024){
-  showMessage("Image must be smaller than 1 MB.");
-  event.target.value="";
-  return;
- }
-
- const reader=new FileReader();
-
- reader.onload=()=>{
-  selectedPhoto=reader.result;
-  $("photoPreview").src=selectedPhoto;
+$("photoInput").addEventListener("change",e=>{
+ readImage(e.target.files[0],data=>{
+  selectedPhoto=data;
+  $("photoPreview").src=data;
   $("photoPreview").style.display="block";
- };
-
- reader.readAsDataURL(file);
+ });
+});
+$("coverInput").addEventListener("change",e=>{
+ readImage(e.target.files[0],data=>{
+  selectedCover=data;
+  $("coverPreview").src=data;
+  $("coverPreview").style.display="block";
+ });
 });
 
-$("editForm").addEventListener("submit",async event=>{
- event.preventDefault();
-
+$("editForm").addEventListener("submit",async e=>{
+ e.preventDefault();
  if(!currentUser)return;
 
  const name=$("editName").value.trim();
+ const username=$("editUsername").value.trim().replace(/^@/,"").toLowerCase();
  const bio=$("editBio").value.trim();
 
- if(!name){
-  showMessage("Please enter your display name.");
-  return;
+ if(!name){showMessage("Please enter your display name.");return}
+ if(!/^[a-z0-9_]{3,25}$/.test(username)){
+  showMessage("Username must be 3–25 characters (letters, numbers or underscore).");return;
  }
 
  try{
-  const profileData={displayName:name};
-
-  /*
-   Profile photo is stored locally in this version.
-   Firebase Storage upload can be connected separately.
-  */
-
-  if(selectedPhoto){
-   localStorage.setItem(
-    "ryzonPhoto_"+currentUser.uid,
-    selectedPhoto
-   );
-  }
-
-  await updateProfile(currentUser,profileData);
-
+  await updateProfile(currentUser,{displayName:name});
+  localStorage.setItem("ryzonUsername_"+currentUser.uid,username);
   localStorage.setItem("ryzonBio_"+currentUser.uid,bio);
 
-  const savedPhoto=
-   localStorage.getItem("ryzonPhoto_"+currentUser.uid);
+  if(selectedPhoto)localStorage.setItem("ryzonPhoto_"+currentUser.uid,selectedPhoto);
+  if(selectedCover)localStorage.setItem("ryzonCover_"+currentUser.uid,selectedCover);
 
-  if(savedPhoto)updateAvatar(savedPhoto);
-
-  $("profileName").textContent=name;
-  $("infoName").textContent=name;
-  $("profileBio").textContent=bio||"Welcome to my RYZON profile!";
-
+  showUser(currentUser);
   closeEditProfile();
   showMessage("Profile updated successfully.",true);
-
  }catch(error){
   console.error(error);
   showMessage(error.message||"Unable to update profile.");
  }
 });
 
-window.createPost=function(){
+window.createPost=()=>{
  $("postText").value="";
  $("postModal").classList.add("open");
 };
+window.closePostModal=()=>$("postModal").classList.remove("open");
 
-window.closePostModal=function(){
- $("postModal").classList.remove("open");
-};
-
-$("postForm").addEventListener("submit",event=>{
- event.preventDefault();
-
+$("postForm").addEventListener("submit",e=>{
+ e.preventDefault();
  if(!currentUser)return;
-
  const text=$("postText").value.trim();
-
  if(!text)return;
 
  const posts=getPosts();
-
  posts.unshift({
   id:Date.now().toString(),
   text,
+  likes:0,
   date:new Date().toLocaleString()
  });
-
  savePosts(posts.slice(0,100));
  renderPosts();
  closePostModal();
  showMessage("Post saved on this device.",true);
 });
 
-window.shareProfile=async function(){
- const url=window.location.href;
- const shareData={
-  title:"RYZON Profile",
-  text:"Check out my RYZON profile!",
-  url
- };
-
+window.shareProfile=async()=>{
+ const username=usernameFor(currentUser);
+ const url=location.origin+location.pathname+"?user="+encodeURIComponent(username);
  try{
   if(navigator.share){
-   await navigator.share(shareData);
+   await navigator.share({title:"RYZON Profile",text:"Check out my RYZON profile!",url});
   }else if(navigator.clipboard){
    await navigator.clipboard.writeText(url);
    showMessage("Profile link copied.",true);
   }else{
-   showMessage("Sharing is not supported on this browser.");
+   showMessage("Sharing is not supported in this browser.");
   }
  }catch(error){
-  if(error.name!=="AbortError"){
-   showMessage("Unable to share profile.");
-  }
+  if(error.name!=="AbortError")showMessage("Unable to share profile.");
  }
 };
 
-window.goBack=function(){
- if(document.referrer&&
-    new URL(document.referrer).origin===location.origin){
+window.showSocialList=type=>{
+ $("socialTitle").textContent=type==="followers"?"👥 Followers":"➕ Following";
+ $("socialContent").textContent=
+  "The "+type+" list will appear here after Firebase social connection features are connected.";
+ $("socialModal").classList.add("open");
+};
+window.closeSocialList=()=>$("socialModal").classList.remove("open");
+
+window.goBack=()=>{
+ if(document.referrer&&new URL(document.referrer).origin===location.origin){
   history.back();
- }else{
-  location.href="home.html";
- }
+ }else location.href="home.html";
 };
 
-window.logoutUser=async function(){
+window.logoutUser=async()=>{
  try{
   await signOut(auth);
   sessionStorage.removeItem("ryzonNextAction");
   location.replace("otp.html");
- }catch(error){
-  showMessage("Logout failed. Please try again.");
- }
+ }catch(error){showMessage("Logout failed. Please try again.")}
 };
 
-onAuthStateChanged(auth,async user=>{
+onAuthStateChanged(auth,user=>{
  if(!user){
   location.replace("otp.html");
   return;
  }
-
- try{
-  await user.reload();
-  currentUser=auth.currentUser;
-
-  if(!currentUser){
-   location.replace("otp.html");
-   return;
-  }
-
-  showUser(currentUser);
-
-  const savedPhoto=
-   localStorage.getItem("ryzonPhoto_"+currentUser.uid);
-
-  if(savedPhoto)updateAvatar(savedPhoto);
-
-  loadStats();
-  renderPosts();
-  loadActivity();
-
-  document.documentElement.classList.add("auth-ready");
-
- }catch(error){
-  console.error("Profile loading error:",error);
-  showMessage("Unable to load profile. Please try again.");
-  document.documentElement.classList.add("auth-ready");
- }
+ currentUser=user;
+ showUser(user);
+ loadStats();
+ loadActivity();
+ document.documentElement.classList.add("auth-ready");
 });
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./service-worker.js").catch(error=>{
+   console.log("Service worker registration failed:",error);
+  });
+ });
+}
 </script>
 
 </body>
