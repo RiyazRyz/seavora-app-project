@@ -4,137 +4,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101c3a">
-
-<title>RYZON - Random Chat</title>
+<meta name="theme-color" content="#071426">
+<title>RYZON - Worldwide Random Chat</title>
 
 <style>
-* {
-  box-sizing: border-box;
+:root{
+  --bg:#071426;
+  --panel:#10243d;
+  --panel2:#173653;
+  --text:#f3f8ff;
+  --muted:#9db0c7;
+  --cyan:#55d7ff;
+  --border:#24415f;
+  --green:#31d69a;
+  --red:#ff647c;
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(145deg, #101c3a, #263f70);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  padding:15px;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(145deg,#071426,#102b4b);
+  color:var(--text);
 }
-
-.container {
-  width: 100%;
-  max-width: 430px;
-  text-align: center;
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.container{max-width:650px;margin:auto}
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0 18px;
 }
-
-.brand {
-  font-size: 34px;
-  font-weight: bold;
-  letter-spacing: 4px;
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  font-size:25px;font-weight:bold;
+  background:linear-gradient(135deg,#168cff,#31e0e5);
 }
-
-.card {
-  margin-top: 25px;
-  background: white;
-  color: #17345c;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 12px 35px #0004;
+.brand h2{margin:0;color:var(--cyan);letter-spacing:2px}
+.brand small{display:block;color:var(--muted);font-size:10px}
+.home-btn{
+  padding:10px 13px;border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--panel2);color:white;
 }
-
-.chat-status {
-  background: #eaf0ff;
-  color: #2348a0;
-  padding: 18px;
-  border-radius: 12px;
-  margin: 20px 0;
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:20px;border-radius:18px;
+  box-shadow:0 12px 35px #0004;
+  margin-bottom:15px;
 }
-
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #2457d6;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+h1{font-size:23px;margin:0 0 8px}
+h2{font-size:19px}
+.subtitle{color:var(--muted);font-size:13px;line-height:1.6}
+.free-label{
+  display:inline-block;background:#123f36;color:#65efbb;
+  padding:6px 11px;border-radius:20px;font-size:12px;
+  font-weight:bold;
 }
-
-.back {
-  background: #eaf0ff;
-  color: #2348a0;
+.status{
+  padding:15px;border-radius:13px;
+  background:#0b1b30;border:1px solid var(--border);
+  margin:17px 0;text-align:center;
+  color:var(--cyan);line-height:1.5;
 }
-
-.note {
-  font-size: 12px;
-  color: #68758b;
-  line-height: 1.6;
-  margin-top: 20px;
+.status-dot{
+  display:inline-block;width:9px;height:9px;
+  border-radius:50%;background:var(--green);
+  margin-right:7px;
+}
+.field{margin:15px 0;text-align:left}
+.field label{
+  display:block;font-size:13px;
+  color:var(--muted);margin-bottom:7px;
+}
+.field select,.field input,.field textarea{
+  width:100%;padding:12px;
+  border-radius:10px;border:1px solid var(--border);
+  background:#07182a;color:white;outline:none;
+}
+.primary,.secondary,.danger{
+  width:100%;padding:13px;border:0;
+  border-radius:11px;margin-top:10px;
+  font-weight:bold;font-size:15px;
+}
+.primary{
+  background:linear-gradient(135deg,#078cc5,#13b9c5);
+  color:white;
+}
+.secondary{
+  background:#1c3b5a;color:white;
+  border:1px solid var(--border);
+}
+.danger{background:#762a40;color:white}
+button:disabled{opacity:.5;cursor:not-allowed}
+.chat-area{
+  display:flex;flex-direction:column;
+  height:430px;background:#091a2d;
+  border:1px solid var(--border);
+  border-radius:15px;overflow:hidden;
+}
+.chat-header{
+  padding:13px;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;
+  background:#10243d;border-bottom:1px solid var(--border);
+}
+.chat-header strong{font-size:14px}
+.chat-header small{display:block;color:var(--muted);margin-top:4px}
+.chat-actions{display:flex;gap:5px}
+.icon-btn{
+  background:#193957;color:white;
+  border:1px solid var(--border);
+  border-radius:9px;padding:8px;
+}
+.messages{
+  flex:1;overflow:auto;padding:14px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.message{
+  max-width:85%;padding:10px 12px;
+  border-radius:12px;background:#1a3958;
+  align-self:flex-start;overflow-wrap:anywhere;
+  font-size:14px;line-height:1.5;
+}
+.message.mine{
+  align-self:flex-end;
+  background:#087c91;
+}
+.message small{
+  display:block;text-align:right;
+  opacity:.7;font-size:10px;margin-top:4px;
+}
+.chat-empty{
+  margin:auto;text-align:center;
+  color:var(--muted);line-height:1.7;
+  padding:20px;
+}
+.composer{
+  padding:10px;display:flex;gap:7px;
+  border-top:1px solid var(--border);
+}
+.composer input{
+  flex:1;min-width:0;padding:11px;
+  background:#07182a;color:white;
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+.send{
+  padding:10px 14px;border:0;
+  border-radius:10px;background:#078ebc;color:white;
+  font-weight:bold;
+}
+.note{
+  background:#142d49;border:1px solid var(--border);
+  border-radius:12px;padding:13px;
+  color:var(--muted);font-size:12px;line-height:1.7;
+  margin-top:15px;
+}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
+@media(max-width:480px){
+  body{padding:12px}
+  .card{padding:16px}
+  .chat-area{height:400px}
+  h1{font-size:21px}
 }
 </style>
 </head>
 
 <body>
-
 <main class="container">
 
-  <div class="brand">RYZON</div>
+<header>
+  <div class="brand">
+    <div class="logo">R</div>
+    <div>
+      <h2>RYZON</h2>
+      <small>One App, Endless Possibilities!</small>
+    </div>
+  </div>
+  <button class="home-btn" onclick="goHome()">⌂ Home</button>
+</header>
 
-  <p>One App, Endless Possibilities!</p>
+<section class="card" id="setupCard">
+  <span class="free-label">🌍 FREE FOR EVERYONE</span>
+  <h1>💬 Worldwide Random Chat</h1>
+  <p class="subtitle">
+    Meet new people from around the world.
+    Choose your preferred language and get ready to connect.
+  </p>
 
-  <section class="card">
+  <div class="field">
+    <label for="language">Preferred Language</label>
+    <select id="language">
+      <option value="Any Language">Any Language</option>
+      <option value="English">English</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Bengali">Bengali</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Arabic">Arabic</option>
+      <option value="French">French</option>
+      <option value="Spanish">Spanish</option>
+      <option value="German">German</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 
-    <h2>💬 Random Chat</h2>
+  <div class="status" id="status">
+    <span class="status-dot"></span>
+    Welcome to RYZON Random Chat!
+  </div>
 
-    <div class="chat-status" id="status">
-      Welcome to RYZON Random Chat!
+  <button class="primary" id="findBtn" onclick="findPartner()">
+    🔍 Find a Chat Partner
+  </button>
+
+  <p class="subtitle" style="text-align:center">
+    Worldwide Random Chat is free. No Premium membership required.
+  </p>
+</section>
+
+<section class="card hidden" id="chatCard">
+  <div class="chat-header">
+    <div>
+      <strong id="partnerName">Random Chat</strong>
+      <small id="partnerStatus">Waiting for connection</small>
+    </div>
+    <div class="chat-actions">
+      <button class="icon-btn" onclick="reportPartner()" title="Report">⚑</button>
+      <button class="icon-btn" onclick="blockPartner()" title="Block">🚫</button>
+    </div>
+  </div>
+
+  <div class="status" id="chatStatus">
+    Searching for a chat partner...
+  </div>
+
+  <div class="chat-area">
+    <div class="messages" id="messages">
+      <div class="chat-empty">
+        🌍<br>
+        Your conversation will appear here when a partner is connected.
+      </div>
     </div>
 
-    <p>
-      Meet new people and make friends
-      in your selected language.
-    </p>
-
-    <button onclick="findPartner()">
-      🔍 Find a Chat Partner
-    </button>
-
-    <button class="back" onclick="goHome()">
-      ← Back to Home
-    </button>
-
-    <div class="note">
-      This is currently a demonstration page.
-      Real-time chat, matching, moderation,
-      block and report services are not connected yet.
-
-      <br><br>
-
-      Never share your OTP, password,
-      bank details or personal information.
+    <div class="composer">
+      <input id="messageInput" placeholder="Type a message..." disabled>
+      <button class="send" onclick="sendMessage()" disabled id="sendBtn">Send</button>
     </div>
+  </div>
 
-  </section>
+  <button class="primary" onclick="findPartner()" id="nextBtn" disabled>
+    ➜ Next Partner
+  </button>
+
+  <button class="danger" onclick="endChat()">
+    ✕ End Chat
+  </button>
+
+  <p class="subtitle">
+    Chat messages in this demo are not delivered to another person.
+  </p>
+</section>
+
+<div class="note">
+  <strong>🔐 Safety Guidelines</strong><br>
+  • Never share your OTP or password.<br>
+  • Never share bank details or private information.<br>
+  • Block and report suspicious users.<br>
+  • Be respectful to everyone.<br>
+  • Do not send inappropriate content.
+</div>
+
+<footer>© 2026 RYZON · Worldwide Random Chat</footer>
 
 </main>
 
 <script>
-function findPartner() {
-  document.getElementById("status").textContent =
-    "No chat partners available in this demo yet.";
+let searching=false;
+let connected=false;
+let searchTimer=null;
+
+const $=id=>document.getElementById(id);
+
+function setStatus(message){
+  $("status").textContent=message;
 }
 
-function goHome() {
-  window.location.href = "home.html";
+function findPartner(){
+  clearTimeout(searchTimer);
+
+  $("setupCard").classList.add("hidden");
+  $("chatCard").classList.remove("hidden");
+
+  searching=true;
+  connected=false;
+
+  $("chatStatus").textContent=
+    "🔍 Searching for a worldwide chat partner...";
+
+  $("partnerName").textContent="Finding Partner";
+  $("partnerStatus").textContent="Searching";
+  $("messages").innerHTML=`
+    <div class="chat-empty">
+      🌍<br>
+      Looking for someone who speaks
+      ${escapeHTML($("language").value)}...
+    </div>`;
+
+  $("messageInput").disabled=true;
+  $("sendBtn").disabled=true;
+  $("nextBtn").disabled=true;
+
+  searchTimer=setTimeout(()=>{
+    if(!searching)return;
+
+    searching=false;
+
+    $("chatStatus").textContent=
+      "No partner available in this demo.";
+
+    $("partnerName").textContent="No Partner Connected";
+    $("partnerStatus").textContent="Offline";
+
+    $("messages").innerHTML=`
+      <div class="chat-empty">
+        <div style="font-size:35px">🌐</div>
+        <strong>No chat partner connected</strong><br>
+        Real-time worldwide matching is not connected yet.<br><br>
+        Please try again later.
+      </div>`;
+
+    $("nextBtn").disabled=false;
+  },2500);
 }
+
+function endChat(){
+  clearTimeout(searchTimer);
+  searching=false;
+  connected=false;
+
+  $("chatCard").classList.add("hidden");
+  $("setupCard").classList.remove("hidden");
+
+  setStatus("Chat ended. You can find another partner.");
+}
+
+function goHome(){
+  location.href="home.html";
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+function sendMessage(){
+  if(!connected){
+    alert("No partner is connected. Real-time chat is not available yet.");
+    return;
+  }
+
+  const input=$("messageInput");
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  const bubble=document.createElement("div");
+  bubble.className="message mine";
+  bubble.textContent=text;
+
+  $("messages").appendChild(bubble);
+  input.value="";
+  $("messages").scrollTop=$("messages").scrollHeight;
+}
+
+$("messageInput").addEventListener("keydown",event=>{
+  if(event.key==="Enter")sendMessage();
+});
+
+function blockPartner(){
+  if(!confirm("Block this chat partner?"))return;
+
+  alert("Block request is only a local demo. Server-side blocking will be enabled with Firebase integration.");
+  endChat();
+}
+
+function reportPartner(){
+  const reason=prompt("Enter the reason for reporting:");
+
+  if(!reason || !reason.trim())return;
+
+  alert("Report recorded for this demo only. It has not been sent to the RYZON Admin.");
+}
+
 </script>
-
 </body>
 </html>
