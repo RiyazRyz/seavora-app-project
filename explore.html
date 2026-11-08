@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>RYZON - Explore</title>
+
+<style>
+:root{
+  --bg:#071426;
+  --panel:#10243d;
+  --panel2:#173653;
+  --text:#f3f8ff;
+  --muted:#9db0c7;
+  --cyan:#55d7ff;
+  --border:#24415f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:linear-gradient(145deg,#06101f,#0b1e35);
+}
+button,input{font:inherit}
+button{cursor:pointer}
+header{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  background:#091a2d;
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;
+  font-size:24px;font-weight:bold;
+  background:linear-gradient(135deg,#168cff,#31e0e5);
+}
+.brand h2{margin:0;color:var(--cyan);font-size:20px}
+.brand small{display:block;color:var(--muted);font-size:10px}
+.home-btn{
+  background:var(--panel2);color:white;
+  border:1px solid var(--border);
+  border-radius:10px;padding:10px 13px;
+}
+.container{max-width:1000px;margin:auto;padding:17px}
+.hero{
+  padding:24px 20px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:linear-gradient(120deg,#123c60,#10243d 65%,#123c60);
+}
+.hero h1{font-size:27px;margin:0 0 8px}
+.hero p{color:#c0d3e7;line-height:1.6;margin:0 0 17px}
+.search-box{
+  display:flex;gap:8px;
+}
+.search-box input{
+  flex:1;min-width:0;padding:13px;
+  border:1px solid var(--border);
+  border-radius:11px;background:#07182a;
+  color:white;outline:none;
+}
+.search-box button,.primary{
+  border:0;border-radius:11px;padding:12px 16px;
+  color:white;font-weight:bold;
+  background:linear-gradient(135deg,#078cc5,#13b9c5);
+}
+.section{margin-top:25px}
+.section-heading{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:10px;
+  margin-bottom:12px;
+}
+.section-heading h2{font-size:19px;margin:0}
+.section-heading small{color:var(--muted)}
+.quick-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:11px;
+}
+.quick-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;padding:17px 10px;
+  text-align:center;cursor:pointer;
+}
+.quick-card:hover{border-color:var(--cyan)}
+.quick-card .emoji{font-size:29px;margin-bottom:9px}
+.quick-card strong{display:block;font-size:13px}
+.quick-card small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.card-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.content-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;padding:16px;
+}
+.content-card h3{font-size:15px;margin:0 0 8px}
+.content-card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+.tag{
+  display:inline-block;
+  color:var(--cyan);background:#123b59;
+  border-radius:20px;padding:5px 9px;
+  font-size:11px;margin:3px 3px 3px 0;
+}
+.card-btn{
+  border:1px solid var(--border);
+  background:var(--panel2);color:var(--cyan);
+  padding:9px 12px;border-radius:9px;
+  font-size:12px;
+}
+.community-icon{
+  width:45px;height:45px;
+  border-radius:13px;background:#1b3d5c;
+  display:grid;place-items:center;font-size:23px;
+  margin-bottom:12px;
+}
+.result-area{margin-top:15px}
+.result-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:12px;padding:13px;margin-bottom:9px;
+}
+.empty{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:25px 15px;
+  text-align:center;color:var(--muted);line-height:1.7;
+}
+.notice{
+  color:var(--muted);font-size:12px;line-height:1.6;
+  background:#142d49;border:1px solid var(--border);
+  border-radius:12px;padding:13px;margin-top:22px;
+}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+@media(max-width:600px){
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .card-grid{grid-template-columns:1fr}
+  .hero h1{font-size:23px}
+  .container{padding:13px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">R</div>
+    <div>
+      <h2>RYZON</h2>
+      <small>One App, Endless Possibilities!</small>
+    </div>
+  </div>
+  <button class="home-btn" onclick="location.href='home.html'">⌂ Home</button>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>🌍 Explore RYZON</h1>
+    <p>Discover people, explore communities, find interesting topics and connect with the world.</p>
+
+    <div class="search-box">
+      <input id="searchInput" type="search"
+        placeholder="Search people, posts or communities..."
+        autocomplete="off">
+      <button onclick="searchExplore()">Search</button>
+    </div>
+  </section>
+
+  <div id="searchResults" class="result-area"></div>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>⚡ Quick Explore</h2>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" onclick="location.href='random-chat.html'">
+        <div class="emoji">🌍</div>
+        <strong>Random Chat</strong>
+        <small>Meet worldwide</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='profile.html'">
+        <div class="emoji">👤</div>
+        <strong>My Profile</strong>
+        <small>View your profile</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='chat.html'">
+        <div class="emoji">💬</div>
+        <strong>Messages</strong>
+        <small>Chat with friends</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='notifications.html'">
+        <div class="emoji">🔔</div>
+        <strong>Notifications</strong>
+        <small>Latest activity</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>🔥 Trending Topics</h2>
+      <small>Explore popular interests</small>
+    </div>
+
+    <div class="card-grid">
+      <div class="content-card">
+        <h3>💻 Technology</h3>
+        <p>Explore technology, apps, gadgets and digital innovation.</p>
+        <span class="tag">Technology</span>
+        <span class="tag">Innovation</span>
+        <button class="card-btn" onclick="searchTopic('Technology')">Explore Topic</button>
+      </div>
+
+      <div class="content-card">
+        <h3>🎓 Education</h3>
+        <p>Discover learning resources, study tips and educational ideas.</p>
+        <span class="tag">Learning</span>
+        <span class="tag">Students</span>
+        <button class="card-btn" onclick="searchTopic('Education')">Explore Topic</button>
+      </div>
+
+      <div class="content-card">
+        <h3>🎮 Gaming</h3>
+        <p>Explore gaming interests, game discussions and communities.</p>
+        <span class="tag">Games</span>
+        <span class="tag">Players</span>
+        <button class="card-btn" onclick="searchTopic('Gaming')">Explore Topic</button>
+      </div>
+
+      <div class="content-card">
+        <h3>🎨 Creativity</h3>
+        <p>Discover art, photography, design and creative projects.</p>
+        <span class="tag">Art</span>
+        <span class="tag">Design</span>
+        <button class="card-btn" onclick="searchTopic('Creativity')">Explore Topic</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>👥 Discover Users</h2>
+    </div>
+    <div class="empty">
+      <div style="font-size:38px">👥</div>
+      <strong>Discover new people</strong><br>
+      User profiles will appear here when the RYZON user discovery database is connected.
+      <br><br>
+      <button class="primary" onclick="location.href='random-chat.html'">
+        Meet Someone Worldwide
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>🌐 Popular Communities</h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="content-card">
+        <div class="community-icon">💻</div>
+        <h3>Technology Community</h3>
+        <p>Discuss apps, software, coding and technology.</p>
+        <span class="tag">Technology</span>
+        <button class="card-btn" onclick="communityInfo('Technology Community')">View Community</button>
+      </div>
+
+      <div class="content-card">
+        <div class="community-icon">📚</div>
+        <h3>Education Community</h3>
+        <p>Share knowledge, learning tips and study ideas.</p>
+        <span class="tag">Education</span>
+        <button class="card-btn" onclick="communityInfo('Education Community')">View Community</button>
+      </div>
+
+      <div class="content-card">
+        <div class="community-icon">🎮</div>
+        <h3>Gaming Community</h3>
+        <p>Connect with people who enjoy gaming.</p>
+        <span class="tag">Gaming</span>
+        <button class="card-btn" onclick="communityInfo('Gaming Community')">View Community</button>
+      </div>
+
+      <div class="content-card">
+        <div class="community-icon">📸</div>
+        <h3>Photography Community</h3>
+        <p>Explore photography and creative inspiration.</p>
+        <span class="tag">Photography</span>
+        <button class="card-btn" onclick="communityInfo('Photography Community')">View Community</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>🚀 More RYZON Services</h2>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" onclick="location.href='premium.html'">
+        <div class="emoji">⭐</div>
+        <strong>Premium</strong>
+        <small>Explore paid features</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='ai-assistant.html'">
+        <div class="emoji">🤖</div>
+        <strong>AI Assistant</strong>
+        <small>Ask AI</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='stories.html'">
+        <div class="emoji">📖</div>
+        <strong>Stories</strong>
+        <small>View stories</small>
+      </div>
+
+      <div class="quick-card" onclick="location.href='help.html'">
+        <div class="emoji">🛟</div>
+        <strong>Help & Support</strong>
+        <small>Get assistance</small>
+      </div>
+    </div>
+  </section>
+
+  <div class="notice">
+    🔐 RYZON Explore currently displays topic and community previews.
+    Live user discovery, trending posts, community membership and search results
+    require Firebase database integration. No fake user accounts or activity are displayed.
+  </div>
+
+</main>
+
+<footer>
+  © 2026 RYZON ·
+  <a href="help.html" style="color:#55d7ff">Help & Support</a>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+let currentUser=null;
+
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    location.href="otp.html";
+    return;
+  }
+  currentUser=user;
+});
+
+const $=id=>document.getElementById(id);
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+window.searchExplore=function(){
+  const query=$("searchInput").value.trim();
+
+  if(!query){
+    $("searchResults").innerHTML="";
+    $("searchInput").focus();
+    return;
+  }
+
+  const safe=escapeHTML(query);
+
+  $("searchResults").innerHTML=`
+    <div class="section">
+      <div class="section-heading">
+        <h2>🔎 Search Results</h2>
+      </div>
+      <div class="empty">
+        <div style="font-size:35px">🔍</div>
+        <strong>Searching for "${safe}"</strong><br>
+        Live people, posts and community search will be available
+        after Firebase search integration.
+      </div>
+    </div>`;
+};
+
+window.searchTopic=function(topic){
+  $("searchInput").value=topic;
+  window.searchExplore();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+$("searchInput").addEventListener("keydown",event=>{
+  if(event.key==="Enter"){
+    window.searchExplore();
+  }
+});
+
+window.communityInfo=function(name){
+  alert(
+    name+
+    "\n\nCommunity discovery and joining will be enabled after the RYZON community database is connected."
+  );
+};
+</script>
+
+</body>
+</html>
