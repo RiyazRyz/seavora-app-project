@@ -1,100 +1,301 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101c3a">
-<title>RYZON - One App, Endless Possibilities</title>
+<meta name="theme-color" content="#17284d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="description" content="RYZON - One App, Endless Possibilities!">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<title>RYZON - Select Your Language</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;min-height:100vh;font-family:Arial,sans-serif;
-background:linear-gradient(145deg,#101c3a,#263f70);
-color:white;display:flex;justify-content:center;
-align-items:center;padding:20px
+* {
+  box-sizing: border-box;
 }
-.container{width:100%;max-width:430px;text-align:center}
-.brand{font-size:38px;font-weight:bold;letter-spacing:4px}
-.tagline{color:#cbd8f5;margin:8px 0 35px}
-.card{background:white;color:#172440;padding:25px;
-border-radius:22px;box-shadow:0 12px 35px #0004}
-select,button{width:100%;padding:15px;border-radius:12px;
-font-size:16px;margin-top:12px}
-select{border:1px solid #ccd3df;background:white}
-button{border:0;background:#2457d6;color:white;
-font-weight:bold;font-size:17px;cursor:pointer}
-.random{background:#eaf0ff;color:#2348a0;margin-top:18px}
-.note{font-size:12px;color:#68758b;margin-top:18px}
-footer{color:#cbd8f5;font-size:12px;margin-top:25px}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 18px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(145deg, #142343, #263f70);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+  text-align: center;
+}
+
+.brand {
+  font-size: clamp(42px, 9vw, 68px);
+  font-weight: bold;
+  letter-spacing: 5px;
+  margin-bottom: 16px;
+}
+
+.tagline {
+  color: #cbd8f5;
+  font-size: clamp(17px, 4vw, 28px);
+  margin-bottom: 62px;
+}
+
+.card {
+  width: 100%;
+  background: #ffffff;
+  color: #172440;
+  padding: 55px 45px 45px;
+  border-radius: 38px;
+  box-shadow: 0 15px 40px #0004;
+}
+
+.card h2 {
+  font-size: clamp(26px, 5vw, 42px);
+  margin: 15px 0 32px;
+  line-height: 1.25;
+}
+
+.card p {
+  font-size: clamp(19px, 4vw, 30px);
+  line-height: 1.4;
+  margin: 0 0 52px;
+}
+
+select,
+button {
+  width: 100%;
+  min-height: 92px;
+  padding: 18px 28px;
+  border-radius: 20px;
+  font-size: clamp(18px, 4vw, 27px);
+  margin-top: 0;
+}
+
+select {
+  border: 1px solid #cbd0d8;
+  background: white;
+  color: #111827;
+  appearance: auto;
+  margin-bottom: 22px;
+}
+
+button {
+  border: 0;
+  background: #2856d7;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid #5c91ff;
+  outline-offset: 3px;
+}
+
+.random {
+  background: #eaf0ff;
+  color: #294b91;
+  margin-top: 30px;
+}
+
+.note {
+  font-size: clamp(13px, 3vw, 20px);
+  color: #727b8a;
+  line-height: 1.5;
+  margin-top: 30px;
+}
+
+footer {
+  color: #cbd8f5;
+  font-size: clamp(13px, 3vw, 20px);
+  margin-top: 42px;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 25px 14px;
+  }
+
+  .tagline {
+    margin-bottom: 38px;
+  }
+
+  .card {
+    padding: 32px 22px 30px;
+    border-radius: 28px;
+  }
+
+  .card h2 {
+    margin: 12px 0 25px;
+  }
+
+  .card p {
+    margin-bottom: 32px;
+  }
+
+  select,
+  button {
+    min-height: 66px;
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+
+  .random {
+    margin-top: 18px;
+  }
+
+  .note {
+    margin-top: 25px;
+  }
+
+  footer {
+    margin-top: 30px;
+  }
+}
+
+@media (max-height: 700px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .tagline {
+    margin-bottom: 28px;
+  }
+
+  .card {
+    padding-top: 28px;
+    padding-bottom: 25px;
+  }
+
+  .card p {
+    margin-bottom: 25px;
+  }
+
+  select,
+  button {
+    min-height: 58px;
+  }
+}
 </style>
 </head>
 
 <body>
+
 <main class="container">
-<div class="brand">RYZON</div>
-<div class="tagline">One App, Endless Possibilities!</div>
 
-<section class="card">
-<h2>Select Your Language</h2>
-<p>உங்கள் மொழியைத் தேர்வு செய்யுங்கள்</p>
+  <div class="brand">RYZON</div>
 
-<select id="language">
-<option value="English">English</option>
-<option value="தமிழ்">தமிழ்</option>
-<option value="हिन्दी">हिन्दी</option>
-<option value="বাংলা">বাংলা</option>
-<option value="తెలుగు">తెలుగు</option>
-<option value="मराठी">मराठी</option>
-<option value="ગુજરાતી">ગુજરાતી</option>
-<option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
-<option value="മലയാളം">മലയാളം</option>
-<option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
-<option value="ଓଡ଼ିଆ">ଓଡ଼ିଆ</option>
-<option value="অসমীয়া">অসমীয়া</option>
-<option value="اردو">اردو</option>
-<option value="संस्कृतम्">संस्कृतम्</option>
-<option value="कोंकणी">कोंकणी</option>
-<option value="मैथिली">मैथिली</option>
-<option value="डोगरी">डोगरी</option>
-<option value="नेपाली">नेपाली</option>
-<option value="سنڌي">سنڌي</option>
-<option value="کٲشُر">کٲشُر</option>
-<option value="মৈতৈলোন্">মৈতৈলোন্</option>
-<option value="बड़ो">बड़ो</option>
-<option value="ᱥᱟᱱᱛᱟᱲᱤ">ᱥᱟᱱᱛᱟᱲᱤ</option>
-</select>
+  <div class="tagline">
+    One App, Endless Possibilities!
+  </div>
 
-<button onclick="continueApp()">Continue →</button>
-<button class="random" onclick="randomChat()">💬 Random Chat</button>
+  <section class="card">
 
-<div class="note">
-Random Chat requires mobile OTP verification.
-Actual OTP service will be connected during development.
-</div>
-</section>
+    <h2>Select Your Language</h2>
 
-<footer>© RYZON | One App, Endless Possibilities</footer>
+    <p>உங்கள் மொழியைத் தேர்வு செய்யுங்கள்</p>
+
+    <select id="language" aria-label="Select Your Language">
+      <option value="English">English</option>
+      <option value="தமிழ்">தமிழ்</option>
+      <option value="हिन्दी">हिन्दी</option>
+      <option value="বাংলা">বাংলা</option>
+      <option value="తెలుగు">తెలుగు</option>
+      <option value="मराठी">मराठी</option>
+      <option value="ગુજરાતી">ગુજરાતી</option>
+      <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
+      <option value="മലയാളം">മലയാളം</option>
+      <option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
+      <option value="ଓଡ଼ିଆ">ଓଡ଼ିଆ</option>
+      <option value="অসমীয়া">অসমীয়া</option>
+      <option value="اردو">اردو</option>
+      <option value="संस्कृतम्">संस्कृतम्</option>
+      <option value="कोंकणी">कोंकणी</option>
+      <option value="मैथिली">मैथिली</option>
+      <option value="डोगरी">डोगरी</option>
+      <option value="नेपाली">नेपाली</option>
+      <option value="سنڌي">سنڌي</option>
+      <option value="کٲشُر">کٲشُر</option>
+      <option value="মৈতৈলোন্">মৈতৈলোন্</option>
+      <option value="बड़ो">बड़ो</option>
+      <option value="ᱥᱟᱱᱛᱟᱲᱤ">ᱥᱟᱱᱛᱟᱲᱤ</option>
+    </select>
+
+    <button type="button" onclick="continueApp()">
+      Continue →
+    </button>
+
+    <button
+      type="button"
+      class="random"
+      onclick="randomChat()">
+      💬 Random Chat
+    </button>
+
+    <div class="note">
+      Random Chat requires mobile OTP verification.
+      Actual OTP service will be connected during development.
+    </div>
+
+  </section>
+
+  <footer>
+    © RYZON | One App, Endless Possibilities
+  </footer>
+
 </main>
 
-
 <script>
-function continueApp() {
+function saveLanguage() {
   const language = document.getElementById("language").value;
-
   localStorage.setItem("ryzonLanguage", language);
+}
+
+function continueApp() {
+  saveLanguage();
+
   sessionStorage.setItem("ryzonNextAction", "home");
 
   window.location.assign("./otp.html");
 }
 
 function randomChat() {
-  const language = document.getElementById("language").value;
+  saveLanguage();
 
-  localStorage.setItem("ryzonLanguage", language);
   sessionStorage.setItem("ryzonNextAction", "randomChat");
 
-  window.location.assign("./otp.html");
+  window.location.assign("./random-chat.html");
+}
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error => {
+        console.log("Service worker registration failed:", error);
+      });
+  });
 }
 </script>
 
