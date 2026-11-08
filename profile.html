@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b68">
+<meta name="description" content="RYZON User Profile">
+<title>RYZON - My Profile</title>
+
+<script src="language-system.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:#f1f5fb;color:#17345c;
+ padding-bottom:75px
+}
+html:not(.auth-ready) body{visibility:hidden}
+html:not(.auth-ready)::before{
+ content:"Checking secure login...";
+ position:fixed;inset:0;display:flex;align-items:center;
+ justify-content:center;background:#f1f5fb;color:#17345c;
+ font-weight:bold;z-index:9999;visibility:visible
+}
+header{
+ background:#123b68;color:white;padding:18px;
+ display:flex;align-items:center;justify-content:space-between
+}
+header h1{margin:0;letter-spacing:3px;font-size:23px}
+header button{
+ background:#ffffff20;color:white;border:1px solid #ffffff55;
+ padding:9px 13px;border-radius:9px;font-size:15px
+}
+main{max-width:600px;margin:auto;padding:16px}
+.card{
+ background:white;border-radius:15px;padding:18px;
+ margin-bottom:15px;box-shadow:0 2px 8px #0000000c
+}
+.profile-top{text-align:center}
+.avatar{
+ width:110px;height:110px;border-radius:50%;
+ background:#dbeafe;display:flex;align-items:center;
+ justify-content:center;margin:5px auto 12px;
+ overflow:hidden;border:4px solid #dce9ff;
+ font-size:45px;color:#2457d6
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+#profileName{margin:8px 0 5px;font-size:23px}
+#profileEmail{color:#718096;font-size:13px;overflow-wrap:anywhere}
+#profileBio{color:#52647a;line-height:1.5;margin:12px 0}
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:8px;margin-top:18px
+}
+.stat{
+ background:#f1f5fb;padding:13px 5px;
+ border-radius:11px;text-align:center
+}
+.stat strong{display:block;font-size:20px;color:#2457d6}
+.stat span{font-size:12px;color:#64748b}
+.btn{
+ border:0;border-radius:10px;padding:12px 16px;
+ background:#2457d6;color:white;font-weight:bold;
+ cursor:pointer
+}
+.btn-secondary{background:#edf2f8;color:#17345c}
+.btn-danger{background:#b42318}
+.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.section-title{
+ display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:12px
+}
+.section-title h2{font-size:18px;margin:0}
+.profile-field{margin:12px 0}
+.profile-field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.profile-field input,.profile-field textarea{
+ width:100%;padding:12px;border:1px solid #ccd7e5;
+ border-radius:9px;font-size:15px;color:#17345c;
+ background:white
+}
+.profile-field textarea{resize:vertical;min-height:85px}
+.empty{
+ text-align:center;padding:22px;background:#f4f7fb;
+ color:#718096;border-radius:11px;font-size:14px
+}
+.item{
+ padding:13px;background:#f4f7fb;border-radius:10px;
+ margin:8px 0;font-size:14px;overflow-wrap:anywhere
+}
+.item small{display:block;color:#718096;margin-top:5px}
+.bottom-nav{
+ position:fixed;bottom:0;left:0;right:0;background:white;
+ display:flex;justify-content:space-around;padding:9px 3px;
+ border-top:1px solid #dbe3ee;z-index:20
+}
+.bottom-nav a{
+ flex:1;text-align:center;text-decoration:none;
+ color:#52647a;font-size:11px
+}
+.bottom-nav span{display:block;font-size:21px;margin-bottom:3px}
+.bottom-nav a.active{color:#2457d6;font-weight:bold}
+.modal-backdrop{
+ display:none;position:fixed;inset:0;background:#071b35a8;
+ z-index:50;align-items:center;justify-content:center;padding:16px
+}
+.modal-backdrop.open{display:flex}
+.modal{
+ background:white;border-radius:16px;padding:20px;
+ width:100%;max-width:420px;max-height:90vh;overflow:auto
+}
+.modal-head{
+ display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:15px
+}
+.modal-head h2{margin:0;font-size:20px}
+.close{
+ border:0;border-radius:50%;width:34px;height:34px;
+ background:#edf2f8;font-size:20px;color:#17345c
+}
+#message{text-align:center;font-size:14px;font-weight:bold}
+#photoPreview{
+ width:85px;height:85px;object-fit:cover;
+ border-radius:50%;display:none;margin:10px auto
+}
+@media(min-width:700px){
+ body{padding-bottom:0}
+ .bottom-nav{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <button onclick="goBack()">← Back</button>
+ <h1>RYZON</h1>
+ <button onclick="window.location.href='home.html'">🏠 Home</button>
+</header>
+
+<main>
+
+ <!-- Profile Details -->
+ <section class="card profile-top">
+
+  <div class="avatar" id="avatar">
+   <span>👤</span>
+  </div>
+
+  <h2 id="profileName">Loading Profile...</h2>
+  <div id="profileEmail">Loading account...</div>
+  <p id="profileBio">Welcome to my RYZON profile!</p>
+
+  <div class="actions">
+   <button class="btn" onclick="openEditProfile()">✏️ Edit Profile</button>
+   <button class="btn btn-secondary" onclick="shareProfile()">📤 Share</button>
+  </div>
+
+  <div class="stats">
+   <div class="stat">
+    <strong id="followersCount">0</strong>
+    <span>Followers</span>
+   </div>
+   <div class="stat">
+    <strong id="followingCount">0</strong>
+    <span>Following</span>
+   </div>
+   <div class="stat">
+    <strong id="postsCount">0</strong>
+    <span>My Posts</span>
+   </div>
+  </div>
+
+ </section>
+
+ <!-- Account Information -->
+ <section class="card">
+  <div class="section-title">
+   <h2>👤 Account Information</h2>
+  </div>
+
+  <div class="item">
+   <b>Name</b>
+   <small id="infoName">Loading...</small>
+  </div>
+
+  <div class="item">
+   <b>Email</b>
+   <small id="infoEmail">Loading...</small>
+  </div>
+
+  <div class="item">
+   <b>Mobile Number</b>
+   <small id="infoPhone">Not available</small>
+  </div>
+
+  <div class="item">
+   <b>Account Created</b>
+   <small id="createdDate">Loading...</small>
+  </div>
+
+  <div class="item">
+   <b>Last Sign In</b>
+   <small id="lastLogin">Loading...</small>
+  </div>
+ </section>
+
+ <!-- Followers -->
+ <section class="card">
+  <div class="section-title">
+   <h2>👥 Followers</h2>
+  </div>
+  <div class="empty">
+   Followers list will appear here when the social connection service is connected.
+  </div>
+ </section>
+
+ <!-- Following -->
+ <section class="card">
+  <div class="section-title">
+   <h2>➕ Following</h2>
+  </div>
+  <div class="empty">
+   People you follow will appear here when the follow service is connected.
+  </div>
+ </section>
+
+ <!-- Posts -->
+ <section class="card">
+  <div class="section-title">
+   <h2>📝 My Posts</h2>
+   <button class="btn" onclick="createPost()">＋ Create</button>
+  </div>
+  <div id="postsContainer">
+   <div class="empty">
+    You have no posts yet. Your posts will appear here.
+   </div>
+  </div>
+ </section>
+
+ <!-- Account Activity -->
+ <section class="card">
+  <div class="section-title">
+   <h2>🕘 Account Activity</h2>
+   <button class="btn btn-secondary" onclick="loadActivity()">Refresh</button>
+  </div>
+  <div id="activityContainer">
+   <div class="empty">Loading activity...</div>
+  </div>
+ </section>
+
+ <!-- Profile Options -->
+ <section class="card">
+  <h2>⚙️ Profile Options</h2>
+  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
+   onclick="window.location.href='settings.html'">
+   Account Settings
+  </button>
+  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
+   onclick="window.location.href='premium.html'">
+   ⭐ RYZON Premium
+  </button>
+  <button class="btn btn-secondary" style="width:100%;margin:5px 0"
+   onclick="window.location.href='help.html'">
+   🎧 Help & Support
+  </button>
+  <button class="btn btn-danger" style="width:100%;margin:5px 0"
+   onclick="logoutUser()">
+   Logout
+  </button>
+ </section>
+
+ <p id="message"></p>
+
+ <footer style="text-align:center;color:#718096;font-size:12px;padding:15px">
+  RYZON © 2026
+ </footer>
+
+</main>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+ <a href="home.html"><span>🏠</span>Home</a>
+ <a href="chat.html"><span>💬</span>Chat</a>
+ <a href="explore.html"><span>🔎</span>Explore</a>
+ <a href="notifications.html"><span>🔔</span>Alerts</a>
+ <a href="profile.html" class="active"><span>👤</span>Profile</a>
+</nav>
+
+<!-- Edit Profile Modal -->
+<div class="modal-backdrop" id="editModal">
+ <section class="modal">
+
+  <div class="modal-head">
+   <h2>✏️ Edit Profile</h2>
+   <button class="close" onclick="closeEditProfile()">×</button>
+  </div>
+
+  <form id="editForm">
+
+   <div class="profile-field">
+    <label for="editName">Display Name</label>
+    <input id="editName" type="text" maxlength="50"
+     placeholder="Enter your name">
+   </div>
+
+   <div class="profile-field">
+    <label for="editBio">Bio</label>
+    <textarea id="editBio" maxlength="250"
+     placeholder="Tell people about yourself"></textarea>
+   </div>
+
+   <div class="profile-field">
+    <label for="photoInput">Profile Photo</label>
+    <input id="photoInput" type="file" accept="image/*">
+    <img id="photoPreview" alt="Profile photo preview">
+   </div>
+
+   <button class="btn" type="submit" style="width:100%">
+    Save Profile
+   </button>
+
+  </form>
+
+ </section>
+</div>
+
+<!-- Create Post Modal -->
+<div class="modal-backdrop" id="postModal">
+ <section class="modal">
+
+  <div class="modal-head">
+   <h2>📝 Create Post</h2>
+   <button class="close" onclick="closePostModal()">×</button>
+  </div>
+
+  <form id="postForm">
+   <div class="profile-field">
+    <label for="postText">What's on your mind?</label>
+    <textarea id="postText" maxlength="1000"
+     placeholder="Write something..." required></textarea>
+   </div>
+   <button class="btn" type="submit" style="width:100%">
+    Save Post
+   </button>
+  </form>
+
+ </section>
+</div>
+
+<script type="module">
+import{
+ initializeApp
+}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import{
+ getAuth,
+ onAuthStateChanged,
+ updateProfile,
+ signOut
+}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+let currentUser=null;
+let selectedPhoto=null;
+
+const $=id=>document.getElementById(id);
+
+function showMessage(text,success=false){
+ $("message").textContent=text;
+ $("message").style.color=success?"#16803c":"#b42318";
+}
+
+function safeDate(value){
+ if(!value)return"Not available";
+ const date=new Date(value);
+ return isNaN(date.getTime())?"Not available":date.toLocaleString();
+}
+
+function updateAvatar(photoURL){
+ const avatar=$("avatar");
+ avatar.replaceChildren();
+
+ if(photoURL){
+  const img=document.createElement("img");
+  img.src=photoURL;
+  img.alt="Profile photo";
+  avatar.appendChild(img);
+ }else{
+  const span=document.createElement("span");
+  span.textContent="👤";
+  avatar.appendChild(span);
+ }
+}
+
+function showUser(user){
+ const name=user.displayName||"RYZON User";
+ const email=user.email||"Phone login account";
+ const phone=user.phoneNumber||"Not available";
+
+ $("profileName").textContent=name;
+ $("profileEmail").textContent=email;
+ $("profileBio").textContent=
+  localStorage.getItem("ryzonBio_"+user.uid)||
+  "Welcome to my RYZON profile!";
+
+ $("infoName").textContent=name;
+ $("infoEmail").textContent=email;
+ $("infoPhone").textContent=phone;
+
+ $("createdDate").textContent=
+  safeDate(user.metadata.creationTime);
+
+ $("lastLogin").textContent=
+  safeDate(user.metadata.lastSignInTime);
+
+ updateAvatar(user.photoURL);
+}
+
+function loadStats(){
+ $("followersCount").textContent=
+  localStorage.getItem("ryzonFollowers")||"0";
+
+ $("followingCount").textContent=
+  localStorage.getItem("ryzonFollowing")||"0";
+
+ const posts=getPosts();
+ $("postsCount").textContent=posts.length;
+}
+
+function getPosts(){
+ try{
+  return JSON.parse(
+   localStorage.getItem("ryzonPosts_"+currentUser.uid)||"[]"
+  );
+ }catch(error){
+  return[];
+ }
+}
+
+function savePosts(posts){
+ localStorage.setItem(
+  "ryzonPosts_"+currentUser.uid,
+  JSON.stringify(posts)
+ );
+}
+
+function renderPosts(){
+ const container=$("postsContainer");
+ const posts=getPosts();
+
+ $("postsCount").textContent=posts.length;
+
+ if(!posts.length){
+  container.innerHTML=
+   '<div class="empty">You have no posts yet. Your posts will appear here.</div>';
+  return;
+ }
+
+ container.replaceChildren();
+
+ posts.forEach(post=>{
+  const card=document.createElement("div");
+  card.className="item";
+
+  const text=document.createElement("div");
+  text.textContent=post.text;
+
+  const date=document.createElement("small");
+  date.textContent=post.date;
+
+  const remove=document.createElement("button");
+  remove.className="btn btn-danger";
+  remove.style.marginTop="10px";
+  remove.textContent="Delete Post";
+
+  remove.addEventListener("click",()=>{
+   if(!confirm("Delete this post?"))return;
+   const updated=getPosts().filter(item=>item.id!==post.id);
+   savePosts(updated);
+   renderPosts();
+  });
+
+  card.append(text,date,remove);
+  container.appendChild(card);
+ });
+}
+
+function loadActivity(){
+ const container=$("activityContainer");
+ let activities=[];
+
+ try{
+  activities=JSON.parse(
+   localStorage.getItem("ryzonActivity")||"[]"
+  );
+ }catch(error){
+  activities=[];
+ }
+
+ if(!activities.length){
+  container.innerHTML=
+   '<div class="empty">No recent activity available.</div>';
+  return;
+ }
+
+ container.replaceChildren();
+
+ activities.slice(0,10).forEach(activity=>{
+  const row=document.createElement("div");
+  row.className="item";
+
+  const title=document.createElement("b");
+  title.textContent=activity.text||"Activity";
+
+  const date=document.createElement("small");
+  date.textContent=activity.time||"";
+
+  row.append(title,date);
+  container.appendChild(row);
+ });
+}
+
+window.openEditProfile=function(){
+ if(!currentUser)return;
+
+ $("editName").value=currentUser.displayName||"";
+ $("editBio").value=
+  localStorage.getItem("ryzonBio_"+currentUser.uid)||"";
+
+ $("photoPreview").style.display="none";
+ $("photoInput").value="";
+ selectedPhoto=null;
+
+ $("editModal").classList.add("open");
+};
+
+window.closeEditProfile=function(){
+ $("editModal").classList.remove("open");
+};
+
+$("photoInput").addEventListener("change",event=>{
+ const file=event.target.files[0];
+ if(!file)return;
+
+ if(!file.type.startsWith("image/")){
+  showMessage("Please select an image file.");
+  return;
+ }
+
+ if(file.size>1024*1024){
+  showMessage("Image must be smaller than 1 MB.");
+  event.target.value="";
+  return;
+ }
+
+ const reader=new FileReader();
+
+ reader.onload=()=>{
+  selectedPhoto=reader.result;
+  $("photoPreview").src=selectedPhoto;
+  $("photoPreview").style.display="block";
+ };
+
+ reader.readAsDataURL(file);
+});
+
+$("editForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ if(!currentUser)return;
+
+ const name=$("editName").value.trim();
+ const bio=$("editBio").value.trim();
+
+ if(!name){
+  showMessage("Please enter your display name.");
+  return;
+ }
+
+ try{
+  const profileData={displayName:name};
+
+  /*
+   Profile photo is stored locally in this version.
+   Firebase Storage upload can be connected separately.
+  */
+
+  if(selectedPhoto){
+   localStorage.setItem(
+    "ryzonPhoto_"+currentUser.uid,
+    selectedPhoto
+   );
+  }
+
+  await updateProfile(currentUser,profileData);
+
+  localStorage.setItem("ryzonBio_"+currentUser.uid,bio);
+
+  const savedPhoto=
+   localStorage.getItem("ryzonPhoto_"+currentUser.uid);
+
+  if(savedPhoto)updateAvatar(savedPhoto);
+
+  $("profileName").textContent=name;
+  $("infoName").textContent=name;
+  $("profileBio").textContent=bio||"Welcome to my RYZON profile!";
+
+  closeEditProfile();
+  showMessage("Profile updated successfully.",true);
+
+ }catch(error){
+  console.error(error);
+  showMessage(error.message||"Unable to update profile.");
+ }
+});
+
+window.createPost=function(){
+ $("postText").value="";
+ $("postModal").classList.add("open");
+};
+
+window.closePostModal=function(){
+ $("postModal").classList.remove("open");
+};
+
+$("postForm").addEventListener("submit",event=>{
+ event.preventDefault();
+
+ if(!currentUser)return;
+
+ const text=$("postText").value.trim();
+
+ if(!text)return;
+
+ const posts=getPosts();
+
+ posts.unshift({
+  id:Date.now().toString(),
+  text,
+  date:new Date().toLocaleString()
+ });
+
+ savePosts(posts.slice(0,100));
+ renderPosts();
+ closePostModal();
+ showMessage("Post saved on this device.",true);
+});
+
+window.shareProfile=async function(){
+ const url=window.location.href;
+ const shareData={
+  title:"RYZON Profile",
+  text:"Check out my RYZON profile!",
+  url
+ };
+
+ try{
+  if(navigator.share){
+   await navigator.share(shareData);
+  }else if(navigator.clipboard){
+   await navigator.clipboard.writeText(url);
+   showMessage("Profile link copied.",true);
+  }else{
+   showMessage("Sharing is not supported on this browser.");
+  }
+ }catch(error){
+  if(error.name!=="AbortError"){
+   showMessage("Unable to share profile.");
+  }
+ }
+};
+
+window.goBack=function(){
+ if(document.referrer&&
+    new URL(document.referrer).origin===location.origin){
+  history.back();
+ }else{
+  location.href="home.html";
+ }
+};
+
+window.logoutUser=async function(){
+ try{
+  await signOut(auth);
+  sessionStorage.removeItem("ryzonNextAction");
+  location.replace("otp.html");
+ }catch(error){
+  showMessage("Logout failed. Please try again.");
+ }
+};
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  location.replace("otp.html");
+  return;
+ }
+
+ try{
+  await user.reload();
+  currentUser=auth.currentUser;
+
+  if(!currentUser){
+   location.replace("otp.html");
+   return;
+  }
+
+  showUser(currentUser);
+
+  const savedPhoto=
+   localStorage.getItem("ryzonPhoto_"+currentUser.uid);
+
+  if(savedPhoto)updateAvatar(savedPhoto);
+
+  loadStats();
+  renderPosts();
+  loadActivity();
+
+  document.documentElement.classList.add("auth-ready");
+
+ }catch(error){
+  console.error("Profile loading error:",error);
+  showMessage("Unable to load profile. Please try again.");
+  document.documentElement.classList.add("auth-ready");
+ }
+});
+</script>
+
+</body>
+</html>
