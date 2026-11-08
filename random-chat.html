@@ -8,8 +8,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="description" content="Meet new people worldwide with RYZON Random Chat.">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon-192.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
 <title>RYZON - Worldwide Random Chat</title>
 
 <style>
@@ -27,7 +27,11 @@ body{
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
-.container{max-width:650px;margin:auto}
+.container{max-width:650px;margin:auto;display:none}
+#authLoading{
+  max-width:650px;margin:100px auto;padding:20px;
+  text-align:center;color:var(--cyan);font-size:16px;
+}
 header{
   display:flex;align-items:center;justify-content:space-between;
   padding:10px 0 18px;
@@ -142,7 +146,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 </head>
 
 <body>
-<main class="container">
+
+<div id="authLoading">
+  Checking your RYZON login...<br><br>
+  Please wait.
+</div>
+
+<main class="container" id="mainContent">
 <header>
   <div class="brand">
     <div class="logo">R</div>
@@ -255,11 +265,11 @@ const $=id=>document.getElementById(id);
 
 function openRandomChatLogin(){
   sessionStorage.setItem("ryzonNextAction","randomChat");
-  location.href="otp.html";
+  location.replace("./otp.html");
 }
 
 function goHome(){
-  location.href="home.html";
+  location.href="./home.html";
 }
 
 function findPartner(){
@@ -383,16 +393,24 @@ const auth=getAuth(app);
 onAuthStateChanged(auth,user=>{
   currentUser=user;
   authReady=true;
-  $("findBtn").disabled=false;
 
   if(!user){
-    showStatus("Login required to find a chat partner.");
-  }else{
-    showStatus("Welcome to RYZON Random Chat!");
+    // Random Chat requires login before the page can be used.
+    sessionStorage.setItem("ryzonNextAction","randomChat");
+    location.replace("./otp.html");
+    return;
   }
 
+  // User is authenticated: show Random Chat page.
+  $("authLoading").style.display="none";
+  $("mainContent").style.display="block";
+  $("findBtn").disabled=false;
+
+  showStatus("Welcome to RYZON Random Chat!");
+
   const nextAction=sessionStorage.getItem("ryzonNextAction");
-  if(user && nextAction==="randomChat"){
+
+  if(nextAction==="randomChat"){
     sessionStorage.removeItem("ryzonNextAction");
     $("setupCard").classList.remove("hidden");
   }
@@ -408,5 +426,6 @@ if("serviceWorker" in navigator){
   });
 }
 </script>
+
 </body>
 </html>
