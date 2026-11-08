@@ -177,29 +177,31 @@ footer {
     <p>Choose your preferred language</p>
 
     <select id="language" aria-label="Select Your Language">
-      <option value="English">English</option>
-      <option value="தமிழ்">தமிழ்</option>
-      <option value="हिन्दी">हिन्दी</option>
-      <option value="বাংলা">বাংলা</option>
-      <option value="తెలుగు">తెలుగు</option>
-      <option value="मराठी">मराठी</option>
-      <option value="ગુજરાતી">ગુજરાતી</option>
-      <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
-      <option value="മലയാളം">മലയാളം</option>
-      <option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
-      <option value="ଓଡ଼ିଆ">ଓଡ଼ିଆ</option>
-      <option value="অসমীয়া">অসমীয়া</option>
-      <option value="اردو">اردو</option>
-      <option value="संस्कृतम्">संस्कृतम्</option>
-      <option value="कोंकणी">कोंकणी</option>
-      <option value="मैथिली">मैथिली</option>
-      <option value="डोगरी">डोगरी</option>
-      <option value="नेपाली">नेपाली</option>
-      <option value="سنڌي">سنڌي</option>
-      <option value="کٲشُر">کٲشُر</option>
-      <option value="মৈতৈলোন্">মৈতৈলোন্</option>
-      <option value="बड़ो">बड़ो</option>
-      <option value="ᱥᱟᱱᱛᱟᱲᱤ">ᱥᱟᱱᱛᱟᱲᱤ</option>
+
+      <option value="en">English</option>
+      <option value="ta">தமிழ்</option>
+      <option value="hi">हिन्दी</option>
+      <option value="te">తెలుగు</option>
+      <option value="ml">മലയാളം</option>
+      <option value="kn">ಕನ್ನಡ</option>
+      <option value="bn">বাংলা</option>
+      <option value="mr">मराठी</option>
+      <option value="gu">ગુજરાતી</option>
+      <option value="pa">ਪੰਜਾਬੀ</option>
+      <option value="ur">اردو</option>
+      <option value="or">ଓଡ଼ିଆ</option>
+      <option value="as">অসমীয়া</option>
+      <option value="ne">नेपाली</option>
+      <option value="si">සිංහල</option>
+      <option value="ar">العربية</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+      <option value="zh">中文</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+
     </select>
 
     <button type="button" onclick="continueApp()">
@@ -224,10 +226,39 @@ footer {
 </main>
 
 <script>
-function saveLanguage() {
-  const language = document.getElementById("language").value;
+const LANGUAGE_KEY = "ryzonLanguage";
 
-  localStorage.setItem("ryzonLanguage", language);
+const oldLanguageValues = {
+  "English": "en",
+  "தமிழ்": "ta",
+  "हिन्दी": "hi",
+  "తెలుగు": "te",
+  "മലയാളം": "ml",
+  "ಕನ್ನಡ": "kn",
+  "বাংলা": "bn",
+  "मराठी": "mr",
+  "ગુજરાતી": "gu",
+  "ਪੰਜਾਬੀ": "pa",
+  "اردو": "ur",
+  "ଓଡ଼ିଆ": "or",
+  "অসমীয়া": "as",
+  "नेपाली": "ne"
+};
+
+function getSelectedLanguage() {
+  return document.getElementById("language").value;
+}
+
+function saveLanguage() {
+  const language = getSelectedLanguage();
+
+  // Save the standard language code.
+  localStorage.setItem(LANGUAGE_KEY, language);
+
+  // Set the browser language.
+  document.documentElement.lang = language;
+
+  return language;
 }
 
 function continueApp() {
@@ -247,15 +278,32 @@ function randomChat() {
 }
 
 // Restore previously selected language.
-const savedLanguage = localStorage.getItem("ryzonLanguage");
-
-if (savedLanguage) {
+(function restoreLanguage() {
   const selector = document.getElementById("language");
+  let savedLanguage = localStorage.getItem(LANGUAGE_KEY);
 
-  if ([...selector.options].some(option => option.value === savedLanguage)) {
-    selector.value = savedLanguage;
+  if (!savedLanguage) return;
+
+  // Convert old saved language names into standard codes.
+  if (oldLanguageValues[savedLanguage]) {
+    savedLanguage = oldLanguageValues[savedLanguage];
+    localStorage.setItem(LANGUAGE_KEY, savedLanguage);
   }
-}
+
+  const validLanguage = [...selector.options].some(
+    option => option.value === savedLanguage
+  );
+
+  if (validLanguage) {
+    selector.value = savedLanguage;
+    document.documentElement.lang = savedLanguage;
+  }
+})();
+
+// Update browser language when selection changes.
+document.getElementById("language").addEventListener("change", function() {
+  document.documentElement.lang = this.value;
+});
 </script>
 
 <script>
