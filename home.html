@@ -4,9 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#123b68">
+<meta name="theme-color" content="#071a30">
 <meta name="description" content="RYZON - One App, Endless Possibilities!">
+<meta name="application-name" content="RYZON">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <title>RYZON - Home</title>
+
+<link rel="manifest" href="./manifest.json">
 
 <script src="language-system.js"></script>
 
@@ -205,7 +211,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   ⚠️ You are offline. Some RYZON services may not work.
  </div>
 
- <!-- Welcome -->
  <section class="welcome">
   <h2 data-ryzon-text="welcome">Welcome to RYZON!</h2>
   <p id="welcomeUser">Hello! Welcome back.</p>
@@ -218,7 +223,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   </div>
  </section>
 
- <!-- Search -->
  <input class="search" id="serviceSearch" type="search"
   placeholder="🔍 Search RYZON..."
   data-ryzon-placeholder="search"
@@ -233,10 +237,10 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   </p>
  </div>
 
- <!-- Quick Access -->
  <div class="section-heading">
   <h2>⚡ Quick Access</h2>
  </div>
+
  <div class="grid">
   <a class="tile" href="profile.html"><span>👤</span>My Profile</a>
   <a class="tile" href="chat.html"><span>💬</span>Personal Chat</a>
@@ -244,7 +248,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   <a class="tile" href="notifications.html"><span>🔔</span>Notifications</a>
  </div>
 
- <!-- Main Services - all existing services retained -->
  <div class="section-heading">
   <h2 data-ryzon-text="mainServices">Main Services</h2>
  </div>
@@ -300,7 +303,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
    <span>🌐</span><span data-ryzon-text="language">Language</span>
   </a>
 
-  <!-- New RYZON features -->
   <a class="tile" href="group-chat.html">
    <span>👥</span>Group Chat
   </a>
@@ -327,7 +329,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
 
  </div>
 
- <!-- Featured Services -->
  <div class="section-heading">
   <h2>⭐ Featured Services</h2>
   <a class="section-link" href="explore.html">Explore all</a>
@@ -348,16 +349,15 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   <small>Explore paid features, membership and gift options.</small>
  </a>
 
- <!-- Recent Activities -->
  <div class="section-heading">
   <h2>🕘 Recent Activities</h2>
   <a class="section-link" href="#" onclick="openModal('activityModal');return false;">View all</a>
  </div>
+
  <div id="homeRecentActivity">
   <div class="empty-state">Your recent activities will appear here.</div>
  </div>
 
- <!-- New Updates -->
  <div class="section-heading">
   <h2>🆕 New Updates</h2>
  </div>
@@ -384,7 +384,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
  <footer>RYZON © 2026</footer>
 </main>
 
-<!-- Bottom navigation -->
 <nav class="bottom-nav" aria-label="App navigation">
  <button class="active" onclick="goHome()"><span>🏠</span>Home</button>
  <button onclick="openRandomChat()"><span>💬</span>Chat</button>
@@ -395,7 +394,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
 
 <button class="help" onclick="openModal('helpModal')" aria-label="Help Center">🎧</button>
 
-<!-- Profile Modal -->
 <div class="modal-backdrop" id="profileModal">
  <section class="modal">
   <div class="modal-header">
@@ -409,14 +407,13 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   </div>
   <button class="modal-item" onclick="window.location.href='profile.html'">👤 Open Full Profile</button>
   <button class="modal-item" onclick="openModal('settingsModal')">⚙️ Account Settings</button>
-  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy & Security</button>
+  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy &amp; Security</button>
   <button class="modal-item" onclick="openModal('activityModal')">🕘 Recent Activity</button>
   <button class="modal-primary" onclick="logoutUser()">Logout</button>
   <button class="modal-item" onclick="openModal('deleteModal')">⚠️ Delete Account</button>
  </section>
 </div>
 
-<!-- Notifications Modal -->
 <div class="modal-backdrop" id="notificationsModal">
  <section class="modal">
   <div class="modal-header">
@@ -436,7 +433,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
  </section>
 </div>
 
-<!-- Activity Modal -->
 <div class="modal-backdrop" id="activityModal">
  <section class="modal">
   <div class="modal-header">
@@ -448,7 +444,6 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
  </section>
 </div>
 
-<!-- Settings Modal -->
 <div class="modal-backdrop" id="settingsModal">
  <section class="modal">
   <div class="modal-header">
@@ -457,18 +452,17 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
   </div>
   <button class="modal-item" onclick="window.location.href='settings.html'">⚙️ Open Full Settings</button>
   <button class="modal-item" onclick="openProfile()">👤 My Profile</button>
-  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy & Security</button>
+  <button class="modal-item" onclick="openModal('securityModal')">🛡️ Privacy &amp; Security</button>
   <button class="modal-item" onclick="openModal('activityModal')">🕘 Recent Activity</button>
-  <button class="modal-item" onclick="openModal('helpModal')">🎧 Help & Feedback</button>
+  <button class="modal-item" onclick="openModal('helpModal')">🎧 Help &amp; Feedback</button>
   <button class="modal-primary" onclick="logoutUser()">Logout</button>
  </section>
 </div>
 
-<!-- Security Modal -->
 <div class="modal-backdrop" id="securityModal">
  <section class="modal">
   <div class="modal-header">
-   <h2>🛡️ Privacy & Security</h2>
+   <h2>🛡️ Privacy &amp; Security</h2>
    <button class="close-modal" onclick="closeModal('securityModal')">×</button>
   </div>
   <div class="modal-item">
@@ -484,18 +478,17 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
    <small><a href="./privacy.html">Read Privacy Policy</a></small>
   </div>
   <div class="modal-item">
-   <b>Terms & Conditions</b>
+   <b>Terms &amp; Conditions</b>
    <small><a href="./terms.html">Read Terms</a></small>
   </div>
   <p class="modal-note">Never share your password or OTP with anyone.</p>
  </section>
 </div>
 
-<!-- Help Modal -->
 <div class="modal-backdrop" id="helpModal">
  <section class="modal">
   <div class="modal-header">
-   <h2>🎧 Help & Feedback</h2>
+   <h2>🎧 Help &amp; Feedback</h2>
    <button class="close-modal" onclick="closeModal('helpModal')">×</button>
   </div>
   <div class="modal-item">
@@ -507,12 +500,11 @@ footer{text-align:center;padding:20px;color:#718096;font-size:12px}
    <small>Please use the support channel when it becomes available.</small>
   </div>
   <a class="modal-item" href="./help.html">Open Help Center</a>
-  <a class="modal-item" href="./terms.html">Terms & Conditions</a>
+  <a class="modal-item" href="./terms.html">Terms &amp; Conditions</a>
   <a class="modal-item" href="./privacy.html">Privacy Policy</a>
  </section>
 </div>
 
-<!-- Account Delete Confirmation -->
 <div class="modal-backdrop" id="deleteModal">
  <section class="modal">
   <div class="modal-header">
@@ -571,10 +563,17 @@ function goHome(){
  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+/* Random Chat: signed-in users go directly */
 function openRandomChat(){
  recordActivity("Opened Random Chat");
- sessionStorage.setItem("ryzonNextAction","randomChat");
- window.location.href="otp.html";
+
+ if(window.ryzonAuthenticated){
+  sessionStorage.removeItem("ryzonNextAction");
+  window.location.href="random-chat.html";
+ }else{
+  sessionStorage.setItem("ryzonNextAction","randomChat");
+  window.location.href="otp.html";
+ }
 }
 
 function openProfile(){
@@ -684,19 +683,35 @@ document.querySelectorAll(".tile").forEach(tile=>{
 });
 
 renderHomeRecentActivity();
+
+/* Register PWA Service Worker */
+if("serviceWorker" in navigator){
+ window.addEventListener("load",async()=>{
+  try{
+   const registration=await navigator.serviceWorker.register(
+    "./service-worker.js",
+    {scope:"./"}
+   );
+
+   console.log("RYZON Service Worker registered:",registration.scope);
+  }catch(error){
+   console.error("RYZON Service Worker registration failed:",error);
+  }
+ });
+}
 </script>
 
 <script type="module">
 import {
  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
  getAuth,
  onAuthStateChanged,
  signOut,
  deleteUser
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -746,6 +761,7 @@ function hasAcceptedLogin(user){
 
 onAuthStateChanged(auth,async user=>{
  if(!user){
+  window.ryzonAuthenticated=false;
   window.location.replace("otp.html");
   return;
  }
@@ -755,12 +771,15 @@ onAuthStateChanged(auth,async user=>{
   const freshUser=auth.currentUser;
 
   if(!freshUser||!hasAcceptedLogin(freshUser)){
+   window.ryzonAuthenticated=false;
    await signOut(auth);
    window.location.replace("otp.html");
    return;
   }
 
   currentUser=freshUser;
+  window.ryzonAuthenticated=true;
+
   showProfile(currentUser);
   recordActivity("Logged in to RYZON");
 
@@ -768,6 +787,7 @@ onAuthStateChanged(auth,async user=>{
 
  }catch(error){
   console.error("Authentication check failed:",error);
+  window.ryzonAuthenticated=false;
 
   try{
    await signOut(auth);
@@ -782,6 +802,7 @@ onAuthStateChanged(auth,async user=>{
 window.logoutUser=async function(){
  try{
   await signOut(auth);
+  window.ryzonAuthenticated=false;
   sessionStorage.removeItem("ryzonNextAction");
   window.location.replace("otp.html");
  }catch(error){
