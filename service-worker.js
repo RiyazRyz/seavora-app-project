@@ -1,8 +1,9 @@
 
-const CACHE_NAME = "ryzon-cache-v1";
+const CACHE_NAME = "ryzon-cache-v2";
 
 const APP_FILES = [
   "./",
+  "./index.html",
   "./otp.html",
   "./home.html",
   "./profile.html",
@@ -18,14 +19,12 @@ const APP_FILES = [
   "./manifest.json"
 ];
 
-// INSTALL: Cache essential app files
+// INSTALL: Cache the latest app files
 self.addEventListener("install", event => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
 
-      // Cache files individually so one missing file
-      // does not prevent all other files from caching.
       await Promise.all(
         APP_FILES.map(async file => {
           try {
@@ -70,10 +69,9 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  // Do not intercept Firebase or external requests
+  // Do not intercept external requests such as Firebase
   if (url.origin !== self.location.origin) return;
 
-  // Do not cache browser extension or unsupported schemes
   if (url.protocol !== "http:" && url.protocol !== "https:") {
     return;
   }
@@ -84,32 +82,27 @@ self.addEventListener("fetch", event => {
         const response = await fetch(request);
 
         if (response && response.ok) {
-          const copy = response.clone();
-
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(request, copy);
-          }).catch(error => {
-            console.warn("Cache update failed:", error);
-          });
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
         }
 
         return response;
 
       } catch (error) {
-        // Try exact cached request first
+        // First try the exact cached request
         const cached = await caches.match(request);
 
         if (cached) return cached;
 
         // Offline navigation fallback
         if (request.mode === "navigate") {
-          const homePage = await caches.match("./home.html");
+          const indexPage = await caches.match("./index.html");
 
-          if (homePage) return homePage;
+          if (indexPage) return indexPage;
 
-          const loginPage = await caches.match("./otp.html");
+          const randomPage = await caches.match("./random-chat.html");
 
-          if (loginPage) return loginPage;
+          if (randomPage) return randomPage;
         }
 
         return new Response(
