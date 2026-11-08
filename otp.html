@@ -23,426 +23,130 @@
 *{box-sizing:border-box}
 
 body{
- margin:0;
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- font-family:Arial,sans-serif;
- color:#fff;
- background:
- radial-gradient(circle at top,#174c78 0%,transparent 45%),
+ margin:0;min-height:100vh;display:flex;align-items:center;
+ justify-content:center;padding:20px;font-family:Arial,sans-serif;
+ color:#fff;background:radial-gradient(circle at top,#174c78 0%,transparent 45%),
  linear-gradient(135deg,#061629,#071a30 55%,#102e4d);
 }
-
 .container{
- width:100%;
- max-width:430px;
- padding:26px;
- border:1px solid #285174;
- border-radius:24px;
- background:linear-gradient(160deg,#123454,#0c2742);
+ width:100%;max-width:430px;padding:26px;border:1px solid #285174;
+ border-radius:24px;background:linear-gradient(160deg,#123454,#0c2742);
  box-shadow:0 18px 55px #0008;
 }
-
-.top{
- display:flex;
- justify-content:flex-end;
- margin-bottom:12px;
-}
-
-.top button{
- width:auto;
- margin:0;
- padding:9px 13px;
- border-radius:20px;
- background:#254664;
- font-size:13px;
-}
-
+.top{display:flex;justify-content:flex-end;margin-bottom:12px}
+.top button{width:auto;margin:0;padding:9px 13px;border-radius:20px;background:#254664;font-size:13px}
 .logo{
- width:76px;
- height:76px;
- margin:0 auto 10px;
- border-radius:23px;
- display:flex;
- align-items:center;
- justify-content:center;
+ width:76px;height:76px;margin:0 auto 10px;border-radius:23px;
+ display:flex;align-items:center;justify-content:center;
  background:linear-gradient(145deg,#55dcff,#078bd0);
- color:white;
- font-size:55px;
- font-weight:900;
- box-shadow:0 8px 25px #0799e566;
+ color:white;font-size:55px;font-weight:900;box-shadow:0 8px 25px #0799e566;
 }
-
-h1{
- text-align:center;
- margin:0;
- color:#55dcff;
- font-size:32px;
- letter-spacing:3px;
-}
-
-.tagline{
- text-align:center;
- color:#8bdfff;
- font-size:13px;
- margin:5px 0;
-}
-
-.subtitle{
- text-align:center;
- color:#d3e5f3;
- margin:17px 0 20px;
- font-size:15px;
-}
-
-.tabs,.method-tabs{
- display:flex;
- gap:9px;
- margin-bottom:17px;
-}
-
-.tabs button,.method-tabs button{
- flex:1;
- background:#254664;
- padding:12px 5px;
- font-size:14px;
- margin:0;
-}
-
+h1{text-align:center;margin:0;color:#55dcff;font-size:32px;letter-spacing:3px}
+.tagline{text-align:center;color:#8bdfff;font-size:13px;margin:5px 0}
+.subtitle{text-align:center;color:#d3e5f3;margin:17px 0 20px;font-size:15px}
+.tabs,.method-tabs{display:flex;gap:9px;margin-bottom:17px}
+.tabs button,.method-tabs button{flex:1;background:#254664;padding:12px 5px;font-size:14px;margin:0}
 .tabs button.active,.method-tabs button.active{
- background:linear-gradient(110deg,#078bd0,#16bde0);
- box-shadow:0 5px 15px #0799e544;
+ background:linear-gradient(110deg,#078bd0,#16bde0);box-shadow:0 5px 15px #0799e544;
 }
-
 input{
- width:100%;
- padding:14px;
- margin:8px 0;
- border:1px solid #54738e;
- border-radius:10px;
- background:#f7fbff;
- color:#102030;
- font-size:15px;
- outline:none;
+ width:100%;padding:14px;margin:8px 0;border:1px solid #54738e;
+ border-radius:10px;background:#f7fbff;color:#102030;font-size:15px;outline:none;
 }
-
 input:focus{border:2px solid #20c5ed}
-
-input.input-error{
- border:2px solid #ff4444!important;
- background:#fff0f0!important;
-}
-
-.iti{width:100%;margin:8px 0}
-.iti input{width:100%;margin:0}
+input.input-error{border:2px solid #ff4444!important;background:#fff0f0!important}
+.iti{width:100%;margin:8px 0}.iti input{width:100%;margin:0}
 .iti__country-list{color:#102030;max-width:300px}
-
 button{
- width:100%;
- padding:14px;
- margin-top:12px;
- border:0;
- border-radius:10px;
- background:linear-gradient(110deg,#078bd0,#16bde0);
- color:white;
- font-size:16px;
- font-weight:bold;
- cursor:pointer;
+ width:100%;padding:14px;margin-top:12px;border:0;border-radius:10px;
+ background:linear-gradient(110deg,#078bd0,#16bde0);color:white;
+ font-size:16px;font-weight:bold;cursor:pointer;
 }
-
 button:disabled{opacity:.55;cursor:not-allowed}
-
 .secondary{background:#31516e}
-
-.google-button{
- background:#fff;
- color:#24364b;
- border:1px solid #d8e1e9;
-}
-
+.google-button{background:#fff;color:#24364b;border:1px solid #d8e1e9}
 .google-button span{font-size:18px;margin-right:8px}
-
-.password-row{position:relative}
-.password-row input{padding-right:75px}
-
+.password-row{position:relative}.password-row input{padding-right:75px}
 .password-toggle{
- position:absolute;
- right:5px;
- top:8px;
- width:auto;
- height:43px;
- min-width:58px;
- padding:5px;
- margin:0;
- background:transparent;
- color:#087fbd;
- font-size:13px;
+ position:absolute;right:5px;top:8px;width:auto;height:43px;min-width:58px;
+ padding:5px;margin:0;background:transparent;color:#087fbd;font-size:13px;
 }
-
 .small-link{
- display:block;
- text-align:right;
- margin-top:12px;
- color:#65d0ff;
- cursor:pointer;
- text-decoration:underline;
- font-size:13px;
+ display:block;text-align:right;margin-top:12px;color:#65d0ff;
+ cursor:pointer;text-decoration:underline;font-size:13px;
 }
-
-.divider{
- display:flex;
- align-items:center;
- gap:10px;
- margin:18px 0;
- color:#a9bfd2;
- font-size:12px;
-}
-
-.divider:before,.divider:after{
- content:"";
- height:1px;
- background:#45617b;
- flex:1;
-}
-
-.note,.description{
- color:#c6d8e8;
- font-size:13px;
- line-height:1.5;
-}
-
+.divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:#a9bfd2;font-size:12px}
+.divider:before,.divider:after{content:"";height:1px;background:#45617b;flex:1}
+.note,.description{color:#c6d8e8;font-size:13px;line-height:1.5}
 .description{text-align:center}
-
-#phoneSection,#verifiedSection{
- display:none;
- margin-top:15px;
- padding-top:15px;
- border-top:1px solid #45617b;
-}
-
-#otpSection{
- display:none;
- margin-top:15px;
- padding-top:12px;
- border-top:1px solid #45617b;
-}
-
-#recaptcha-container{
- margin-top:12px;
- overflow:hidden;
-}
-
+#phoneSection,#verifiedSection{display:none;margin-top:15px;padding-top:15px;border-top:1px solid #45617b}
+#otpSection{display:none;margin-top:15px;padding-top:12px;border-top:1px solid #45617b}
+#recaptcha-container{margin-top:12px;overflow:hidden}
 #message{
- display:none;
- margin-top:15px;
- padding:12px;
- border-radius:9px;
- background:#203e5a;
- line-height:1.5;
- font-size:14px;
- overflow-wrap:anywhere;
+ display:none;margin-top:15px;padding:12px;border-radius:9px;
+ background:#203e5a;line-height:1.5;font-size:14px;overflow-wrap:anywhere;
 }
-
-.remember-row{
- display:flex;
- align-items:center;
- gap:9px;
- margin:12px 0;
- color:#c6d8e8;
- font-size:13px;
-}
-
-.remember-row input{
- width:17px;
- height:17px;
- margin:0;
- accent-color:#0799e5;
-}
-
-#lastLogin{
- color:#a9bfd2;
- font-size:12px;
- text-align:center;
- margin-top:12px;
-}
-
-.bottom-text{
- text-align:center;
- color:#c6d8e8;
- font-size:13px;
- margin-top:18px;
-}
-
+.remember-row{display:flex;align-items:center;gap:9px;margin:12px 0;color:#c6d8e8;font-size:13px}
+.remember-row input{width:17px;height:17px;margin:0;accent-color:#0799e5}
+#lastLogin{color:#a9bfd2;font-size:12px;text-align:center;margin-top:12px}
+.bottom-text{text-align:center;color:#c6d8e8;font-size:13px;margin-top:18px}
 .bottom-text a,.footer-links a{color:#65d0ff}
-
 .footer-links{
- display:flex;
- justify-content:center;
- gap:16px;
- flex-wrap:wrap;
- margin-top:22px;
- padding-top:15px;
- border-top:1px solid #45617b;
+ display:flex;justify-content:center;gap:16px;flex-wrap:wrap;
+ margin-top:22px;padding-top:15px;border-top:1px solid #45617b;
 }
-
 .footer-links a{font-size:12px}
-
-#otpTimer{
- color:#65d0ff;
- font-size:13px;
- text-align:center;
- margin:10px 0;
-}
-
+#otpTimer{color:#65d0ff;font-size:13px;text-align:center;margin:10px 0}
 .hidden{display:none!important}
 
 /* PREMIUM SECTION */
-
 .premium-box{
- margin-top:22px;
- padding:17px;
- border:1px solid #c99a32;
- border-radius:16px;
- background:linear-gradient(145deg,#172f48,#10243a);
+ margin-top:22px;padding:17px;border:1px solid #c99a32;
+ border-radius:16px;background:linear-gradient(145deg,#172f48,#10243a);
 }
-
-.premium-heading{
- text-align:center;
- color:#f5c85b;
- font-size:19px;
- font-weight:bold;
- margin-bottom:5px;
-}
-
-.premium-subtitle{
- text-align:center;
- color:#d8c28d;
- font-size:12px;
- margin-bottom:12px;
-}
-
+.premium-heading{text-align:center;color:#f5c85b;font-size:19px;font-weight:bold;margin-bottom:5px}
+.premium-subtitle{text-align:center;color:#d8c28d;font-size:12px;margin-bottom:12px}
 .premium-pin{
- background:#eaf5ff;
- border:2px solid #268bd0;
- color:#102030;
- text-align:center;
- letter-spacing:7px;
- font-size:20px;
- font-weight:bold;
+ background:#eaf5ff;border:2px solid #268bd0;color:#102030;
+ text-align:center;letter-spacing:7px;font-size:20px;font-weight:bold;
 }
-
-.premium-login{
- background:linear-gradient(110deg,#b88620,#f4d477);
- color:#17243a;
- font-weight:bold;
-}
-
-.premium-actions{
- display:flex;
- justify-content:space-between;
- align-items:stretch;
- gap:10px;
- margin-top:12px;
-}
-
+.premium-login{background:linear-gradient(110deg,#b88620,#f4d477);color:#17243a;font-weight:bold}
+.premium-actions{display:flex;justify-content:space-between;align-items:stretch;gap:10px;margin-top:12px}
 .premium-forgot,.premium-signup{
- flex:1;
- min-height:44px;
- border-radius:8px;
- display:flex;
- align-items:center;
- justify-content:center;
- text-align:center;
- font-size:12px;
- cursor:pointer;
- padding:8px;
+ flex:1;min-height:44px;border-radius:8px;display:flex;align-items:center;
+ justify-content:center;text-align:center;font-size:12px;cursor:pointer;padding:8px;
 }
-
-.premium-forgot{
- border:2px solid #e34c55;
- color:#ff777e;
-}
-
-.premium-signup{
- border:2px solid #9b69df;
- color:#c49aff;
-}
-
+.premium-forgot{border:2px solid #e34c55;color:#ff777e}
+.premium-signup{border:2px solid #9b69df;color:#c49aff}
 .premium-note{
- display:none;
- margin-top:12px;
- padding:10px;
- border-radius:8px;
- background:#203e5a;
- color:#ffe0a0;
- font-size:12px;
- line-height:1.5;
- overflow-wrap:anywhere;
+ display:none;margin-top:12px;padding:10px;border-radius:8px;
+ background:#203e5a;color:#ffe0a0;font-size:12px;line-height:1.5;overflow-wrap:anywhere;
 }
-
 #successOverlay{
- display:none;
- position:fixed;
- inset:0;
- z-index:9999;
- background:#071b35ed;
- align-items:center;
- justify-content:center;
- padding:20px;
- text-align:center;
+ display:none;position:fixed;inset:0;z-index:9999;background:#071b35ed;
+ align-items:center;justify-content:center;padding:20px;text-align:center;
 }
-
 .success-card{
- max-width:320px;
- width:100%;
- padding:35px 22px;
- background:#102b49;
- border:1px solid #285174;
- border-radius:22px;
- animation:pop .45s ease;
+ max-width:320px;width:100%;padding:35px 22px;background:#102b49;
+ border:1px solid #285174;border-radius:22px;animation:pop .45s ease;
 }
-
 .success-check{
- width:82px;
- height:82px;
- border-radius:50%;
- margin:0 auto 18px;
- background:#20c878;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:48px;
+ width:82px;height:82px;border-radius:50%;margin:0 auto 18px;
+ background:#20c878;display:flex;align-items:center;justify-content:center;font-size:48px;
 }
-
 .success-card h2{color:#65f0a5}
-
-@keyframes pop{
- from{opacity:0;transform:scale(.75)}
- to{opacity:1;transform:scale(1)}
-}
-
-@media(max-width:360px){
- .container{padding:18px}
- .tabs button,.method-tabs button{font-size:12px}
-}
-
-@media(max-height:720px){
- body{align-items:flex-start}
-}
+@keyframes pop{from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
+@media(max-width:360px){.container{padding:18px}.tabs button,.method-tabs button{font-size:12px}}
+@media(max-height:720px){body{align-items:flex-start}}
 </style>
 </head>
 
 <body>
-
 <main class="container">
 
  <div class="top">
-  <button type="button"
-   data-ryzon-language-toggle
-   onclick="if(typeof toggleRYZONLanguage==='function')toggleRYZONLanguage()">
+  <button type="button" data-ryzon-language-toggle
+   onclick="if(typeof toggleRYZONLanguage==='function'){toggleRYZONLanguage();window.dispatchEvent(new Event('ryzon-language-changed'))}">
    🌐 English
   </button>
  </div>
@@ -451,9 +155,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
  <h1>RYZON</h1>
  <div class="tagline">One App, Endless Possibilities!</div>
 
- <div class="subtitle" id="subtitle" data-ryzon-text="welcomeBack">
-  Welcome Back! Login to continue
- </div>
+ <div class="subtitle" id="subtitle" data-ryzon-text="welcomeBack">Welcome Back! Login to continue</div>
 
  <div class="tabs" id="accountTabs">
   <button id="loginTab" class="active" type="button" data-ryzon-text="login">Login</button>
@@ -466,40 +168,17 @@ button:disabled{opacity:.55;cursor:not-allowed}
  </div>
 
  <section id="emailSection">
-
   <div id="emailFields">
-
-   <input id="email"
-    type="email"
-    data-ryzon-placeholder="emailPlaceholder"
-    placeholder="Enter your email"
-    autocomplete="email">
+   <input id="email" type="email" data-ryzon-placeholder="emailPlaceholder" placeholder="Enter your email" autocomplete="email">
 
    <div class="password-row">
-    <input id="password"
-     type="password"
-     data-ryzon-placeholder="passwordPlaceholder"
-     placeholder="Enter password"
-     autocomplete="current-password">
-
-    <button class="password-toggle"
-     id="togglePassword"
-     type="button"
-     data-ryzon-text="show">Show</button>
+    <input id="password" type="password" data-ryzon-placeholder="passwordPlaceholder" placeholder="Enter password" autocomplete="current-password">
+    <button class="password-toggle" id="togglePassword" type="button" data-ryzon-text="show">Show</button>
    </div>
 
    <div id="signupFields" class="hidden">
-
-    <input id="confirmPassword"
-     type="password"
-     data-ryzon-placeholder="confirmPassword"
-     placeholder="Confirm Password"
-     autocomplete="new-password">
-
-    <p class="note" data-ryzon-text="passwordNote">
-     Create a separate account using your email. Verify your email using the verification link.
-    </p>
-
+    <input id="confirmPassword" type="password" data-ryzon-placeholder="confirmPassword" placeholder="Confirm Password" autocomplete="new-password">
+    <p class="note" data-ryzon-text="passwordNote">Create a separate account using your email. Verify your email using the verification link.</p>
    </div>
 
    <label class="remember-row" id="rememberRow">
@@ -507,90 +186,35 @@ button:disabled{opacity:.55;cursor:not-allowed}
     <span data-ryzon-text="rememberMe">Remember Me</span>
    </label>
 
-   <button id="mainButton"
-    type="button"
-    data-ryzon-text="loginEmail">Login with Email</button>
-
+   <button id="mainButton" type="button" data-ryzon-text="loginEmail">Login with Email</button>
   </div>
 
-  <span id="forgotLink"
-   class="small-link"
-   data-ryzon-text="forgotPassword">Forgot Password?</span>
-
+  <span id="forgotLink" class="small-link" data-ryzon-text="forgotPassword">Forgot Password?</span>
  </section>
 
  <section id="phoneSection">
-
   <p><b id="phoneTitle" data-ryzon-text="mobileLogin">Mobile OTP Login</b></p>
-
-  <p class="description"
-   id="phoneDescription"
-   data-ryzon-text="phoneDescription">
-   Enter your mobile number to receive an OTP.
-  </p>
-
-  <input id="loginPhone"
-   type="tel"
-   data-ryzon-placeholder="phonePlaceholder"
-   placeholder="Mobile Number"
-   autocomplete="tel">
-
-  <p class="note" data-ryzon-text="countryNote">
-   Select the flag to choose your country code.
-  </p>
-
+  <p class="description" id="phoneDescription" data-ryzon-text="phoneDescription">Enter your mobile number to receive an OTP.</p>
+  <input id="loginPhone" type="tel" data-ryzon-placeholder="phonePlaceholder" placeholder="Mobile Number" autocomplete="tel">
+  <p class="note" data-ryzon-text="countryNote">Select the flag to choose your country code.</p>
   <div id="recaptcha-container"></div>
-
-  <button id="sendOtpButton"
-   type="button"
-   data-ryzon-text="sendOtp">Send OTP</button>
+  <button id="sendOtpButton" type="button" data-ryzon-text="sendOtp">Send OTP</button>
 
   <div id="otpSection">
-
-   <input id="otpCode"
-    type="text"
-    inputmode="numeric"
-    maxlength="6"
-    data-ryzon-placeholder="otpPlaceholder"
-    placeholder="Enter 6-digit OTP">
-
+   <input id="otpCode" type="text" inputmode="numeric" maxlength="6" data-ryzon-placeholder="otpPlaceholder" placeholder="Enter 6-digit OTP">
    <p id="otpTimer"></p>
-
-   <button id="verifyOtpButton"
-    type="button"
-    data-ryzon-text="verifyOtp">Verify OTP</button>
-
-   <button id="resendOtpButton"
-    class="secondary"
-    type="button"
-    disabled
-    data-ryzon-text="resendOtp">Resend OTP</button>
-
+   <button id="verifyOtpButton" type="button" data-ryzon-text="verifyOtp">Verify OTP</button>
+   <button id="resendOtpButton" class="secondary" type="button" disabled data-ryzon-text="resendOtp">Resend OTP</button>
   </div>
  </section>
 
  <section id="verifiedSection">
-
-  <p id="verificationText"
-   class="description"
-   data-ryzon-text="verificationText">
-   Open your email and click the verification link.
-  </p>
-
-  <button id="checkEmailButton"
-   type="button"
-   data-ryzon-text="verifyEmail">
-   I Have Verified My Email
-  </button>
-
+  <p id="verificationText" class="description" data-ryzon-text="verificationText">Open your email and click the verification link.</p>
+  <button id="checkEmailButton" type="button" data-ryzon-text="verifyEmail">I Have Verified My Email</button>
  </section>
 
  <div class="divider" id="divider" data-ryzon-text="or">OR</div>
-
- <button id="googleButton" class="google-button" type="button">
-  <span>G</span>
-  <span data-ryzon-text="googleLogin">Continue with Google</span>
- </button>
+ <button id="googleButton" class="google-button" type="button"><span>G</span><span data-ryzon-text="googleLogin">Continue with Google</span></button>
 
  <div class="bottom-text" id="accountPrompt">
   <span data-ryzon-text="noAccount">Don't have an account?</span>
@@ -598,54 +222,21 @@ button:disabled{opacity:.55;cursor:not-allowed}
  </div>
 
  <!-- PREMIUM QUICK LOGIN -->
-
  <section class="premium-box" id="premiumSection">
+  <div class="premium-heading" id="premiumHeading">👑 PREMIUM QUICK LOGIN</div>
+  <div class="premium-subtitle" id="premiumSubtitle">Exclusive RYZON Premium Members</div>
 
-  <div class="premium-heading">👑 PREMIUM QUICK LOGIN</div>
+  <input id="premiumPin" class="premium-pin" type="password" inputmode="numeric"
+   maxlength="8" placeholder="ENTER PREMIUM PIN" autocomplete="off" aria-label="Premium PIN">
 
-  <div class="premium-subtitle">
-   Exclusive RYZON Premium Members
-  </div>
-
-  <input
-   id="premiumPin"
-   class="premium-pin"
-   type="password"
-   inputmode="numeric"
-   maxlength="8"
-   placeholder="ENTER PREMIUM PIN"
-   autocomplete="off"
-   aria-label="Premium PIN">
-
-  <button
-   type="button"
-   class="premium-login"
-   id="premiumLoginButton">
-   👑 LOGIN
-  </button>
+  <button type="button" class="premium-login" id="premiumLoginButton">👑 LOGIN</button>
 
   <div class="premium-actions">
-
-   <div
-    class="premium-forgot"
-    id="premiumForgot"
-    role="button"
-    tabindex="0">
-    Forget PIN?
-   </div>
-
-   <div
-    class="premium-signup"
-    id="premiumSignup"
-    role="button"
-    tabindex="0">
-    Premium Sign Up
-   </div>
-
+   <div class="premium-forgot" id="premiumForgot" role="button" tabindex="0">Forget PIN?</div>
+   <div class="premium-signup" id="premiumSignup" role="button" tabindex="0">Premium Sign Up</div>
   </div>
 
   <div class="premium-note" id="premiumNote" role="status"></div>
-
  </section>
 
  <div id="lastLogin"></div>
@@ -655,7 +246,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <a href="./terms.html" data-ryzon-text="terms">Terms & Conditions</a>
   <a href="./privacy.html" data-ryzon-text="privacy">Privacy Policy</a>
  </div>
-
 </main>
 
 <div id="successOverlay">
@@ -668,26 +258,13 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </div>
 
 <script type="module">
-
-import {initializeApp}
- from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
- getAuth,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- sendEmailVerification,
- sendPasswordResetEmail,
- reload,
- RecaptchaVerifier,
- signInWithPhoneNumber,
- GoogleAuthProvider,
- signInWithPopup,
- setPersistence,
- browserLocalPersistence,
- browserSessionPersistence
+ getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
+ sendEmailVerification,sendPasswordResetEmail,reload,RecaptchaVerifier,
+ signInWithPhoneNumber,GoogleAuthProvider,signInWithPopup,setPersistence,
+ browserLocalPersistence,browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -702,1238 +279,495 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const googleProvider=new GoogleAuthProvider();
-
 const $=id=>document.getElementById(id);
+const T=key=>typeof window.getRYZONText==="function"?window.getRYZONText(key):key;
 
-const T=key=>
- typeof window.getRYZONText==="function"
- ?window.getRYZONText(key)
- :key;
-
-let mode="login";
-let method="email";
-
-let confirmationResult=null;
-let recaptchaVerifier=null;
-
-let otpExpiryTime=0;
-let resendAvailableTime=0;
-let otpInterval=null;
-let otpExpired=false;
-let currentPhone="";
-
+let mode="login",method="email";
+let confirmationResult=null,recaptchaVerifier=null;
+let otpExpiryTime=0,resendAvailableTime=0,otpInterval=null,otpExpired=false,currentPhone="";
 let phonePicker=null;
 
+/* PREMIUM TRANSLATIONS: 23 LANGUAGES
+   Order: heading, members, PIN placeholder, login, forgot, signup,
+   invalid PIN, login pending, recovery pending, signup pending.
+*/
+const premiumTranslations={
+ en:["👑 PREMIUM QUICK LOGIN","Exclusive RYZON Premium Members","ENTER PREMIUM PIN","👑 LOGIN","Forget PIN?","Premium Sign Up","Please enter a valid 4–8 digit Premium PIN.","Premium PIN Login is not activated yet. Secure server verification must be connected first. Please use Email, Google or Mobile OTP Login.","Premium PIN recovery is not activated yet. Secure Premium account verification and recovery must be connected first.","Premium Sign Up is not activated yet. Secure PIN registration, membership verification and Premium activation must be connected first."],
+ ta:["👑 பிரீமியம் விரைவு உள்நுழைவு","RYZON பிரீமியம் உறுப்பினர்களுக்கு மட்டும்","பிரீமியம் PIN உள்ளிடவும்","👑 உள்நுழை","PIN மறந்துவிட்டதா?","பிரீமியம் பதிவு","சரியான 4–8 இலக்க பிரீமியம் PIN உள்ளிடவும்.","பிரீமியம் PIN உள்நுழைவு இன்னும் செயல்படுத்தப்படவில்லை. பாதுகாப்பான சர்வர் சரிபார்ப்பு தேவை. Email, Google அல்லது Mobile OTP மூலம் உள்நுழையவும்.","பிரீமியம் PIN மீட்பு இன்னும் செயல்படுத்தப்படவில்லை. பாதுகாப்பான கணக்கு சரிபார்ப்பு தேவை.","பிரீமியம் பதிவு இன்னும் செயல்படுத்தப்படவில்லை. பாதுகாப்பான PIN பதிவு மற்றும் உறுப்பினர் சரிபார்ப்பு தேவை."],
+ hi:["👑 प्रीमियम क्विक लॉगिन","केवल RYZON प्रीमियम सदस्यों के लिए","प्रीमियम PIN दर्ज करें","👑 लॉगिन","PIN भूल गए?","प्रीमियम साइन अप","कृपया 4–8 अंकों का सही PIN दर्ज करें।","प्रीमियम PIN लॉगिन अभी सक्रिय नहीं है। सुरक्षित सर्वर सत्यापन आवश्यक है। कृपया Email, Google या Mobile OTP से लॉगिन करें।","प्रीमियम PIN रिकवरी अभी सक्रिय नहीं है। सुरक्षित खाता सत्यापन आवश्यक है।","प्रीमियम साइन अप अभी सक्रिय नहीं है। सुरक्षित PIN पंजीकरण और सदस्यता सत्यापन आवश्यक है।"],
+ te:["👑 ప్రీమియం త్వరిత లాగిన్","RYZON ప్రీమియం సభ్యులకు మాత్రమే","ప్రీమియం PIN నమోదు చేయండి","👑 లాగిన్","PIN మర్చిపోయారా?","ప్రీమియం సైన్ అప్","దయచేసి సరైన 4–8 అంకెల PIN నమోదు చేయండి.","ప్రీమియం PIN లాగిన్ ఇంకా ప్రారంభించబడలేదు. సురక్షిత సర్వర్ ధృవీకరణ అవసరం. Email, Google లేదా Mobile OTP ఉపయోగించండి.","ప్రీమియం PIN రికవరీ ఇంకా ప్రారంభించబడలేదు. సురక్షిత ఖాతా ధృవీకరణ అవసరం.","ప్రీమియం సైన్ అప్ ఇంకా ప్రారంభించబడలేదు. సురక్షిత PIN నమోదు మరియు సభ్యత్వ ధృవీకరణ అవసరం."],
+ ml:["👑 പ്രീമിയം ക്വിക്ക് ലോഗിൻ","RYZON പ്രീമിയം അംഗങ്ങൾക്ക് മാത്രം","പ്രീമിയം PIN നൽകുക","👑 ലോഗിൻ","PIN മറന്നോ?","പ്രീമിയം സൈൻ അപ്പ്","ശരിയായ 4–8 അക്ക പ്രീമിയം PIN നൽകുക.","പ്രീമിയം PIN ലോഗിൻ ഇതുവരെ സജീവമാക്കിയിട്ടില്ല. സുരക്ഷിത സെർവർ പരിശോധന ആവശ്യമാണ്. Email, Google അല്ലെങ്കിൽ Mobile OTP ഉപയോഗിക്കുക.","പ്രീമിയം PIN വീണ്ടെടുക്കൽ ഇതുവരെ സജീവമാക്കിയിട്ടില്ല. സുരക്ഷിത അക്കൗണ്ട് പരിശോധന ആവശ്യമാണ്.","പ്രീമിയം സൈൻ അപ്പ് ഇതുവരെ സജീവമാക്കിയിട്ടില്ല. സുരക്ഷിത PIN രജിസ്ട്രേഷനും അംഗത്വ പരിശോധനയും ആവശ്യമാണ്."],
+ kn:["👑 ಪ್ರೀಮಿಯಂ ತ್ವರಿತ ಲಾಗಿನ್","RYZON ಪ್ರೀಮಿಯಂ ಸದಸ್ಯರಿಗೆ ಮಾತ್ರ","ಪ್ರೀಮಿಯಂ PIN ನಮೂದಿಸಿ","👑 ಲಾಗಿನ್","PIN ಮರೆತಿರಾ?","ಪ್ರೀಮಿಯಂ ಸೈನ್ ಅಪ್","ದಯವಿಟ್ಟು ಸರಿಯಾದ 4–8 ಅಂಕಿಯ PIN ನಮೂದಿಸಿ.","ಪ್ರೀಮಿಯಂ PIN ಲಾಗಿನ್ ಇನ್ನೂ ಸಕ್ರಿಯವಾಗಿಲ್ಲ. ಸುರಕ್ಷಿತ ಸರ್ವರ್ ಪರಿಶೀಲನೆ ಅಗತ್ಯ. Email, Google ಅಥವಾ Mobile OTP ಬಳಸಿ.","ಪ್ರೀಮಿಯಂ PIN ಮರುಪಡೆಯುವಿಕೆ ಇನ್ನೂ ಸಕ್ರಿಯವಾಗಿಲ್ಲ. ಸುರಕ್ಷಿತ ಖಾತೆ ಪರಿಶೀಲನೆ ಅಗತ್ಯ.","ಪ್ರೀಮಿಯಂ ಸೈನ್ ಅಪ್ ಇನ್ನೂ ಸಕ್ರಿಯವಾಗಿಲ್ಲ. ಸುರಕ್ಷಿತ PIN ನೋಂದಣಿ ಮತ್ತು ಸದಸ್ಯತ್ವ ಪರಿಶೀಲನೆ ಅಗತ್ಯ."],
+ bn:["👑 প্রিমিয়াম কুইক লগইন","শুধুমাত্র RYZON প্রিমিয়াম সদস্যদের জন্য","প্রিমিয়াম PIN লিখুন","👑 লগইন","PIN ভুলে গেছেন?","প্রিমিয়াম সাইন আপ","সঠিক ৪–৮ সংখ্যার প্রিমিয়াম PIN লিখুন।","প্রিমিয়াম PIN লগইন এখনও চালু হয়নি। নিরাপদ সার্ভার যাচাইকরণ প্রয়োজন। Email, Google বা Mobile OTP ব্যবহার করুন।","প্রিমিয়াম PIN পুনরুদ্ধার এখনও চালু হয়নি। নিরাপদ অ্যাকাউন্ট যাচাইকরণ প্রয়োজন।","প্রিমিয়াম সাইন আপ এখনও চালু হয়নি। নিরাপদ PIN নিবন্ধন ও সদস্যপদ যাচাইকরণ প্রয়োজন।"],
+ mr:["👑 प्रीमियम क्विक लॉगिन","फक्त RYZON प्रीमियम सदस्यांसाठी","प्रीमियम PIN टाका","👑 लॉगिन","PIN विसरलात?","प्रीमियम साइन अप","कृपया योग्य 4–8 अंकी PIN टाका.","प्रीमियम PIN लॉगिन अद्याप सुरू नाही. सुरक्षित सर्व्हर पडताळणी आवश्यक आहे. Email, Google किंवा Mobile OTP वापरा.","प्रीमियम PIN पुनर्प्राप्ती अद्याप सुरू नाही. सुरक्षित खाते पडताळणी आवश्यक आहे.","प्रीमियम साइन अप अद्याप सुरू नाही. सुरक्षित PIN नोंदणी आणि सदस्यत्व पडताळणी आवश्यक आहे."],
+ gu:["👑 પ્રીમિયમ ક્વિક લૉગિન","ફક્ત RYZON પ્રીમિયમ સભ્યો માટે","પ્રીમિયમ PIN દાખલ કરો","👑 લૉગિન","PIN ભૂલી ગયા?","પ્રીમિયમ સાઇન અપ","કૃપા કરીને યોગ્ય 4–8 અંકનો PIN દાખલ કરો.","પ્રીમિયમ PIN લૉગિન હજી સક્રિય નથી. સુરક્ષિત સર્વર ચકાસણી જરૂરી છે. Email, Google અથવા Mobile OTP વાપરો.","પ્રીમિયમ PIN પુનઃપ્રાપ્તિ હજી સક્રિય નથી. સુરક્ષિત એકાઉન્ટ ચકાસણી જરૂરી છે.","પ્રીમિયમ સાઇન અપ હજી સક્રિય નથી. સુરક્ષિત PIN નોંધણી અને સભ્યપદ ચકાસણી જરૂરી છે."],
+ pa:["👑 ਪ੍ਰੀਮੀਅਮ ਕਵਿੱਕ ਲੌਗਇਨ","ਸਿਰਫ਼ RYZON ਪ੍ਰੀਮੀਅਮ ਮੈਂਬਰਾਂ ਲਈ","ਪ੍ਰੀਮੀਅਮ PIN ਦਰਜ ਕਰੋ","👑 ਲੌਗਇਨ","PIN ਭੁੱਲ ਗਏ?","ਪ੍ਰੀਮੀਅਮ ਸਾਈਨ ਅੱਪ","ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ 4–8 ਅੰਕਾਂ ਦਾ PIN ਦਰਜ ਕਰੋ।","ਪ੍ਰੀਮੀਅਮ PIN ਲੌਗਇਨ ਹਾਲੇ ਚਾਲੂ ਨਹੀਂ ਹੈ। ਸੁਰੱਖਿਅਤ ਸਰਵਰ ਜਾਂਚ ਲੋੜੀਂਦੀ ਹੈ। Email, Google ਜਾਂ Mobile OTP ਵਰਤੋ।","ਪ੍ਰੀਮੀਅਮ PIN ਰਿਕਵਰੀ ਹਾਲੇ ਚਾਲੂ ਨਹੀਂ ਹੈ। ਸੁਰੱਖਿਅਤ ਖਾਤਾ ਜਾਂਚ ਲੋੜੀਂਦੀ ਹੈ।","ਪ੍ਰੀਮੀਅਮ ਸਾਈਨ ਅੱਪ ਹਾਲੇ ਚਾਲੂ ਨਹੀਂ ਹੈ। ਸੁਰੱਖਿਅਤ PIN ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਅਤੇ ਮੈਂਬਰਸ਼ਿਪ ਜਾਂਚ ਲੋੜੀਂਦੀ ਹੈ।"],
+ ur:["👑 پریمیم فوری لاگ اِن","صرف RYZON پریمیم اراکین کے لیے","پریمیم PIN درج کریں","👑 لاگ اِن","PIN بھول گئے؟","پریمیم سائن اَپ","براہِ کرم درست 4–8 ہندسوں کا PIN درج کریں۔","پریمیم PIN لاگ اِن ابھی فعال نہیں ہے۔ محفوظ سرور تصدیق ضروری ہے۔ Email، Google یا Mobile OTP استعمال کریں۔","پریمیم PIN کی بازیابی ابھی فعال نہیں ہے۔ محفوظ اکاؤنٹ تصدیق ضروری ہے۔","پریمیم سائن اَپ ابھی فعال نہیں ہے۔ محفوظ PIN رجسٹریشن اور رکنیت کی تصدیق ضروری ہے۔"],
+ or:["👑 ପ୍ରିମିୟମ୍ କ୍ୱିକ୍ ଲଗଇନ୍","କେବଳ RYZON ପ୍ରିମିୟମ୍ ସଦସ୍ୟଙ୍କ ପାଇଁ","ପ୍ରିମିୟମ୍ PIN ଦିଅନ୍ତୁ","👑 ଲଗଇନ୍","PIN ଭୁଲିଗଲେ?","ପ୍ରିମିୟମ୍ ସାଇନ୍ ଅପ୍","ଦୟାକରି ସଠିକ୍ 4–8 ଅଙ୍କର PIN ଦିଅନ୍ତୁ।","ପ୍ରିମିୟମ୍ PIN ଲଗଇନ୍ ଏପର୍ଯ୍ୟନ୍ତ ସକ୍ରିୟ ହୋଇନାହିଁ। ସୁରକ୍ଷିତ ସର୍ଭର ଯାଞ୍ଚ ଆବଶ୍ୟକ। Email, Google କିମ୍ବା Mobile OTP ବ୍ୟବହାର କରନ୍ତୁ।","ପ୍ରିମିୟମ୍ PIN ପୁନରୁଦ୍ଧାର ଏପର୍ଯ୍ୟନ୍ତ ସକ୍ରିୟ ହୋଇନାହିଁ। ସୁରକ୍ଷିତ ଆକାଉଣ୍ଟ ଯାଞ୍ଚ ଆବଶ୍ୟକ।","ପ୍ରିମିୟମ୍ ସାଇନ୍ ଅପ୍ ଏପର୍ଯ୍ୟନ୍ତ ସକ୍ରିୟ ହୋଇନାହିଁ। ସୁରକ୍ଷିତ PIN ପଞ୍ଜୀକରଣ ଓ ସଦସ୍ୟତା ଯାଞ୍ଚ ଆବଶ୍ୟକ।"],
+ as:["👑 প্ৰিমিয়াম কুইক লগইন","কেৱল RYZON প্ৰিমিয়াম সদস্যৰ বাবে","প্ৰিমিয়াম PIN দিয়ক","👑 লগইন","PIN পাহৰিলে নেকি?","প্ৰিমিয়াম ছাইন আপ","অনুগ্ৰহ কৰি সঠিক 4–8 সংখ্যাৰ PIN দিয়ক।","প্ৰিমিয়াম PIN লগইন এতিয়াও সক্ৰিয় হোৱা নাই। সুৰক্ষিত ছাৰ্ভাৰ পৰীক্ষা প্ৰয়োজন। Email, Google বা Mobile OTP ব্যৱহাৰ কৰক।","প্ৰিমিয়াম PIN পুনৰুদ্ধাৰ এতিয়াও সক্ৰিয় হোৱা নাই। সুৰক্ষিত একাউণ্ট পৰীক্ষা প্ৰয়োজন।","প্ৰিমিয়াম ছাইন আপ এতিয়াও সক্ৰিয় হোৱা নাই। সুৰক্ষিত PIN পঞ্জীয়ন আৰু সদস্যপদ পৰীক্ষা প্ৰয়োজন।"],
+ ne:["👑 प्रिमियम क्विक लगइन","RYZON प्रिमियम सदस्यहरूका लागि मात्र","प्रिमियम PIN राख्नुहोस्","👑 लगइन","PIN बिर्सनुभयो?","प्रिमियम साइन अप","कृपया सही 4–8 अंकको PIN राख्नुहोस्।","प्रिमियम PIN लगइन अझै सक्रिय छैन। सुरक्षित सर्भर प्रमाणीकरण आवश्यक छ। Email, Google वा Mobile OTP प्रयोग गर्नुहोस्।","प्रिमियम PIN पुनःप्राप्ति अझै सक्रिय छैन। सुरक्षित खाता प्रमाणीकरण आवश्यक छ।","प्रिमियम साइन अप अझै सक्रिय छैन। सुरक्षित PIN दर्ता र सदस्यता प्रमाणीकरण आवश्यक छ।"],
+ si:["👑 ප්‍රිමියම් ඉක්මන් පිවිසුම","RYZON ප්‍රිමියම් සාමාජිකයන්ට පමණයි","ප්‍රිමියම් PIN ඇතුළත් කරන්න","👑 පිවිසෙන්න","PIN අමතකද?","ප්‍රිමියම් ලියාපදිංචිය","කරුණාකර නිවැරදි ඉලක්කම් 4–8 PIN එකක් ඇතුළත් කරන්න.","ප්‍රිමියම් PIN පිවිසුම තවම සක්‍රිය කර නැත. ආරක්ෂිත සේවාදායක සත්‍යාපනය අවශ්‍යයි. Email, Google හෝ Mobile OTP භාවිතා කරන්න.","ප්‍රිමියම් PIN නැවත ලබාගැනීම තවම සක්‍රිය කර නැත. ආරක්ෂිත ගිණුම් සත්‍යාපනය අවශ්‍යයි.","ප්‍රිමියම් ලියාපදිංචිය තවම සක්‍රිය කර නැත. ආරක්ෂිත PIN ලියාපදිංචිය සහ සාමාජිකත්ව සත්‍යාපනය අවශ්‍යයි."],
+ ar:["👑 تسجيل دخول بريميوم سريع","لأعضاء RYZON بريميوم فقط","أدخل رمز PIN بريميوم","👑 تسجيل الدخول","هل نسيت PIN؟","التسجيل في بريميوم","يرجى إدخال PIN صحيح من 4 إلى 8 أرقام.","تسجيل الدخول برمز PIN بريميوم غير مفعل بعد. يلزم التحقق الآمن من الخادم. استخدم البريد الإلكتروني أو Google أو OTP للهاتف.","استعادة PIN بريميوم غير مفعلة بعد. يلزم التحقق الآمن من الحساب.","التسجيل في بريميوم غير مفعل بعد. يلزم تسجيل PIN والتحقق من العضوية بشكل آمن."],
+ fr:["👑 CONNEXION PREMIUM RAPIDE","Réservé aux membres RYZON Premium","SAISIR LE PIN PREMIUM","👑 CONNEXION","PIN oublié ?","Inscription Premium","Veuillez saisir un PIN Premium valide de 4 à 8 chiffres.","La connexion par PIN Premium n’est pas encore activée. Une vérification sécurisée du serveur est nécessaire. Utilisez Email, Google ou OTP mobile.","La récupération du PIN Premium n’est pas encore activée. Une vérification sécurisée du compte est nécessaire.","L’inscription Premium n’est pas encore activée. L’enregistrement sécurisé du PIN et la vérification de l’adhésion sont nécessaires."],
+ de:["👑 PREMIUM-SCHNELLANMELDUNG","Exklusiv für RYZON-Premium-Mitglieder","PREMIUM-PIN EINGEBEN","👑 ANMELDEN","PIN vergessen?","Premium anmelden","Bitte gib eine gültige Premium-PIN mit 4–8 Ziffern ein.","Die Premium-PIN-Anmeldung ist noch nicht aktiviert. Eine sichere Serverprüfung ist erforderlich. Bitte nutze E-Mail, Google oder Mobile OTP.","Die Wiederherstellung der Premium-PIN ist noch nicht aktiviert. Eine sichere Kontoprüfung ist erforderlich.","Die Premium-Anmeldung ist noch nicht aktiviert. Eine sichere PIN-Registrierung und Mitgliedschaftsprüfung sind erforderlich."],
+ es:["👑 INICIO RÁPIDO PREMIUM","Exclusivo para miembros RYZON Premium","INTRODUCE EL PIN PREMIUM","👑 INICIAR SESIÓN","¿Olvidaste tu PIN?","Registro Premium","Introduce un PIN Premium válido de 4 a 8 dígitos.","El acceso con PIN Premium aún no está activado. Se necesita una verificación segura del servidor. Usa Email, Google o Mobile OTP.","La recuperación del PIN Premium aún no está activada. Se necesita una verificación segura de la cuenta.","El registro Premium aún no está activado. Se necesita un registro seguro del PIN y una verificación de membresía."],
+ pt:["👑 LOGIN RÁPIDO PREMIUM","Exclusivo para membros RYZON Premium","DIGITE O PIN PREMIUM","👑 ENTRAR","Esqueceu o PIN?","Inscrição Premium","Digite um PIN Premium válido de 4 a 8 dígitos.","O login com PIN Premium ainda não está ativado. É necessária uma verificação segura no servidor. Use Email, Google ou Mobile OTP.","A recuperação do PIN Premium ainda não está ativada. É necessária uma verificação segura da conta.","A inscrição Premium ainda não está ativada. É necessário um registro seguro do PIN e uma verificação da assinatura."],
+ zh:["👑 高级会员快速登录","仅限 RYZON 高级会员","输入高级会员 PIN","👑 登录","忘记 PIN？","注册高级会员","请输入有效的 4–8 位高级 PIN。","高级 PIN 登录尚未启用，需要连接安全服务器进行验证。请使用电子邮件、Google 或手机 OTP 登录。","高级 PIN 找回功能尚未启用，需要安全的账户验证。","高级会员注册尚未启用，需要安全的 PIN 注册和会员资格验证。"],
+ ja:["👑 プレミアムクイックログイン","RYZONプレミアム会員限定","プレミアムPINを入力","👑 ログイン","PINを忘れましたか？","プレミアム登録","4～8桁の有効なプレミアムPINを入力してください。","プレミアムPINログインはまだ有効ではありません。安全なサーバー認証が必要です。メール、Google、またはモバイルOTPをご利用ください。","プレミアムPINの再設定はまだ有効ではありません。安全なアカウント認証が必要です。","プレミアム登録はまだ有効ではありません。安全なPIN登録と会員確認が必要です。"],
+ ko:["👑 프리미엄 빠른 로그인","RYZON 프리미엄 회원 전용","프리미엄 PIN 입력","👑 로그인","PIN을 잊으셨나요?","프리미엄 가입","올바른 4~8자리 프리미엄 PIN을 입력하세요.","프리미엄 PIN 로그인은 아직 활성화되지 않았습니다. 안전한 서버 인증이 필요합니다. 이메일, Google 또는 모바일 OTP를 이용하세요.","프리미엄 PIN 복구는 아직 활성화되지 않았습니다. 안전한 계정 인증이 필요합니다.","프리미엄 가입은 아직 활성화되지 않았습니다. 안전한 PIN 등록 및 회원 인증이 필요합니다."]
+};
+
+const premiumKeys=["heading","members","placeholder","login","forgot","signup","invalidPin","loginPending","recoveryPending","signupPending"];
+let premiumMessageKey="";
+
+function currentLanguage(){
+ const lang=typeof window.getRYZONLanguage==="function"
+  ?window.getRYZONLanguage()
+  :(localStorage.getItem("ryzonLanguage")||"en");
+ return premiumTranslations[lang]?lang:"en";
+}
+
+function PT(key){
+ const index=premiumKeys.indexOf(key);
+ return index<0?key:premiumTranslations[currentLanguage()][index];
+}
+
+function updatePremiumLanguage(){
+ $("premiumHeading").textContent=PT("heading");
+ $("premiumSubtitle").textContent=PT("members");
+ $("premiumPin").placeholder=PT("placeholder");
+ $("premiumPin").setAttribute("aria-label",PT("placeholder"));
+ $("premiumLoginButton").textContent=PT("login");
+ $("premiumForgot").textContent=PT("forgot");
+ $("premiumSignup").textContent=PT("signup");
+ if(premiumMessageKey){
+  premiumNote.textContent=PT(premiumMessageKey);
+ }
+}
 
 /* LANGUAGE */
-
 function applyLanguage(){
- if(typeof window.applyRYZONLanguage==="function"){
-  window.applyRYZONLanguage();
- }
+ if(typeof window.applyRYZONLanguage==="function")window.applyRYZONLanguage();
  updateModeLabels();
+ updatePremiumLanguage();
  updateLastLogin();
 }
-
 function updateModeLabels(){
-
- $("subtitle").textContent=
- mode==="signup"?T("createAccountTitle"):T("welcomeBack");
-
- $("mainButton").textContent=
- mode==="signup"?T("createAccount"):T("loginEmail");
-
- $("phoneTitle").textContent=
- mode==="signup"?T("mobileSignup"):T("mobileLogin");
-
- $("phoneDescription").textContent=
- mode==="signup"
- ?T("phoneSignupDescription")
- :T("phoneDescription");
-
- $("sendOtpButton").textContent=
- mode==="signup"
- ?T("sendOtp")+" & "+T("signUp")
- :T("sendOtp");
-
- $("togglePassword").textContent=
- $("password").type==="password"
- ?T("show")
- :T("hide");
-
- if($("otpSection").style.display==="block" && confirmationResult){
-  updateOtpTimer();
- }
+ $("subtitle").textContent=mode==="signup"?T("createAccountTitle"):T("welcomeBack");
+ $("mainButton").textContent=mode==="signup"?T("createAccount"):T("loginEmail");
+ $("phoneTitle").textContent=mode==="signup"?T("mobileSignup"):T("mobileLogin");
+ $("phoneDescription").textContent=mode==="signup"?T("phoneSignupDescription"):T("phoneDescription");
+ $("sendOtpButton").textContent=mode==="signup"?T("sendOtp")+" & "+T("signUp"):T("sendOtp");
+ $("togglePassword").textContent=$("password").type==="password"?T("show"):T("hide");
+ if($("otpSection").style.display==="block"&&confirmationResult)updateOtpTimer();
 }
-
 
 /* PHONE INPUT */
-
 try{
-
  if(typeof window.intlTelInput==="function"){
-
   phonePicker=window.intlTelInput($("loginPhone"),{
-
-   initialCountry:"auto",
-   separateDialCode:true,
-   nationalMode:true,
-
+   initialCountry:"auto",separateDialCode:true,nationalMode:true,
    geoIpLookup:callback=>{
-
-    fetch("https://ipapi.co/json/")
-     .then(r=>r.json())
+    fetch("https://ipapi.co/json/").then(r=>r.json())
      .then(d=>callback(d?.country_code?.toLowerCase()||"in"))
      .catch(()=>callback("in"));
-
    },
-
-   loadUtils:()=>import(
-    "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js"
-   )
-
+   loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
   });
-
  }
-
-}catch(e){
- console.warn("Phone input library unavailable:",e);
-}
-
+}catch(e){console.warn("Phone input library unavailable:",e)}
 
 /* MESSAGE */
-
 function message(text,success=false){
-
- $("message").textContent=text;
- $("message").style.display="block";
-
- $("message").style.color=
- success?"#75f0a5":"#ffb4b4";
-
+ $("message").textContent=text;$("message").style.display="block";
+ $("message").style.color=success?"#75f0a5":"#ffb4b4";
 }
-
-function hideMessage(){
- $("message").style.display="none";
-}
-
-function invalid(field){
- field.classList.add("input-error");
-}
-
-function valid(field){
- field.classList.remove("input-error");
-}
-
-["email","password","confirmPassword","loginPhone","otpCode"]
-.forEach(id=>{
- $(id).addEventListener("input",()=>{
-  valid($(id));
- });
+function hideMessage(){$("message").style.display="none"}
+function invalid(field){field.classList.add("input-error")}
+function valid(field){field.classList.remove("input-error")}
+["email","password","confirmPassword","loginPhone","otpCode"].forEach(id=>{
+ $(id).addEventListener("input",()=>valid($(id)));
 });
 
-
 /* BUTTON LOADING */
-
 function busy(button,on,text){
-
  if(on){
-
-  if(!button.dataset.oldText){
-   button.dataset.oldText=button.textContent;
-  }
-
-  button.disabled=true;
-  button.textContent=text||T("pleaseWait");
-
+  if(!button.dataset.oldText)button.dataset.oldText=button.textContent;
+  button.disabled=true;button.textContent=text||T("pleaseWait");
  }else{
-
   button.disabled=false;
-
-  if(button.dataset.oldText){
-   button.textContent=button.dataset.oldText;
-   delete button.dataset.oldText;
-  }
-
+  if(button.dataset.oldText){button.textContent=button.dataset.oldText;delete button.dataset.oldText}
   updateModeLabels();
-
+  updatePremiumLanguage();
  }
-
 }
-
 
 /* LOGIN PERSISTENCE */
-
 async function setLoginPersistence(){
-
- await setPersistence(
-  auth,
-  $("rememberMe").checked
-  ?browserLocalPersistence
-  :browserSessionPersistence
- );
-
+ await setPersistence(auth,$("rememberMe").checked?browserLocalPersistence:browserSessionPersistence);
 }
-
 
 /* PHONE VALIDATION */
-
 async function validPhone(){
-
  const raw=$("loginPhone").value.trim();
-
- if(!raw){
-  invalid($("loginPhone"));
-  throw new Error(T("mobileRequired"));
- }
-
+ if(!raw){invalid($("loginPhone"));throw new Error(T("mobileRequired"))}
  if(phonePicker){
-
   try{
-
    await phonePicker.promise;
-
-   if(!phonePicker.isValidNumber()){
-    invalid($("loginPhone"));
-    throw new Error(T("invalidPhone"));
-   }
-
-   valid($("loginPhone"));
-
-   return phonePicker.getNumber();
-
+   if(!phonePicker.isValidNumber()){invalid($("loginPhone"));throw new Error(T("invalidPhone"))}
+   valid($("loginPhone"));return phonePicker.getNumber();
   }catch(e){
-
    if(e.message===T("invalidPhone"))throw e;
-
    console.warn("Phone utility unavailable:",e);
-
   }
-
  }
-
  let cleaned=raw.replace(/[^\d+]/g,"");
-
- if(/^\d{10}$/.test(cleaned)){
-  cleaned="+91"+cleaned;
- }
- else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91")){
-  cleaned="+"+cleaned;
- }
- else if(/^\d{8,15}$/.test(cleaned)){
-  cleaned="+"+cleaned;
- }
-
- if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){
-  invalid($("loginPhone"));
-  throw new Error(T("invalidPhone"));
- }
-
- valid($("loginPhone"));
-
- return cleaned;
-
+ if(/^\d{10}$/.test(cleaned))cleaned="+91"+cleaned;
+ else if(/^\d{12}$/.test(cleaned)&&cleaned.startsWith("91"))cleaned="+"+cleaned;
+ else if(/^\d{8,15}$/.test(cleaned))cleaned="+"+cleaned;
+ if(!/^\+[1-9]\d{7,14}$/.test(cleaned)){invalid($("loginPhone"));throw new Error(T("invalidPhone"))}
+ valid($("loginPhone"));return cleaned;
 }
-
 
 /* LAST LOGIN */
-
 function updateLastLogin(){
-
  const last=localStorage.getItem("ryzonLastLogin");
-
- $("lastLogin").textContent=
- last?T("lastLogin")+" "+last:"";
-
+ $("lastLogin").textContent=last?T("lastLogin")+" "+last:"";
 }
-
 
 /* SUCCESS */
-
 function successLogin(){
-
- localStorage.setItem(
-  "ryzonLastLogin",
-  new Date().toLocaleString()
- );
-
+ localStorage.setItem("ryzonLastLogin",new Date().toLocaleString());
  updateLastLogin();
-
  $("successOverlay").style.display="flex";
-
  const action=sessionStorage.getItem("ryzonNextAction");
-
  setTimeout(()=>{
-
   sessionStorage.removeItem("ryzonNextAction");
-
-  location.replace(
-   action==="randomChat"
-   ?"random-chat.html"
-   :"home.html"
-  );
-
+  location.replace(action==="randomChat"?"random-chat.html":"home.html");
  },1600);
-
 }
 
-
-/* LOGIN ATTEMPT LOCKOUT
-   Client-side convenience only, not a security control.
-*/
-
-const MAX_ATTEMPTS=5;
-const LOCK_TIME=300000;
-
-function lockIdentity(){
-
- return method==="phone"
- ?(currentPhone||$("loginPhone").value.trim())
- :$("email").value.trim().toLowerCase();
-
-}
-
-function lockKey(){
-
- return "ryzonLoginLock_"+(lockIdentity()||"unknown");
-
-}
-
+/* LOGIN ATTEMPT LOCKOUT - CLIENT-SIDE CONVENIENCE ONLY */
+const MAX_ATTEMPTS=5,LOCK_TIME=300000;
+function lockIdentity(){return method==="phone"?(currentPhone||$("loginPhone").value.trim()):$("email").value.trim().toLowerCase()}
+function lockKey(){return "ryzonLoginLock_"+(lockIdentity()||"unknown")}
 function attempts(){
-
- try{
-  return JSON.parse(localStorage.getItem(lockKey()))||{
-   count:0,
-   until:0
-  };
- }catch(e){
-  return {count:0,until:0};
- }
-
+ try{return JSON.parse(localStorage.getItem(lockKey()))||{count:0,until:0}}
+ catch(e){return {count:0,until:0}}
 }
-
 function isLocked(){
-
  const data=attempts();
-
  if(data.until>Date.now()){
-
-  message(
-   "Login locked. Try again in "+
-   Math.ceil((data.until-Date.now())/1000)+
-   " seconds."
-  );
-
-  return true;
-
+  message("Login locked. Try again in "+Math.ceil((data.until-Date.now())/1000)+" seconds.");return true;
  }
-
- if(data.until){
-  localStorage.removeItem(lockKey());
- }
-
+ if(data.until)localStorage.removeItem(lockKey());
  return false;
-
 }
-
 function failedAttempt(){
-
- const data=attempts();
- data.count++;
-
+ const data=attempts();data.count++;
  if(data.count>=MAX_ATTEMPTS){
-
-  data.count=0;
-  data.until=Date.now()+LOCK_TIME;
-
+  data.count=0;data.until=Date.now()+LOCK_TIME;
   localStorage.setItem(lockKey(),JSON.stringify(data));
-
   message("5 failed attempts. Login locked for 5 minutes.");
-
  }else{
-
   localStorage.setItem(lockKey(),JSON.stringify(data));
-
-  message(
-   "Login details are incorrect. Remaining attempts: "+
-   (MAX_ATTEMPTS-data.count)
-  );
-
+  message("Login details are incorrect. Remaining attempts: "+(MAX_ATTEMPTS-data.count));
  }
-
 }
-
-function clearAttempts(){
- localStorage.removeItem(lockKey());
-}
-
+function clearAttempts(){localStorage.removeItem(lockKey())}
 
 /* FIREBASE ERROR MESSAGES */
-
 function showError(error){
-
  const code=error?.code||"";
-
  const errors={
-
-  "auth/email-already-in-use":"emailAlreadyUsed",
-  "auth/invalid-email":"invalidEmail",
-  "auth/weak-password":"weakPassword",
-  "auth/invalid-credential":"invalidCredentials",
-  "auth/user-not-found":"invalidCredentials",
-  "auth/wrong-password":"invalidCredentials",
-  "auth/too-many-requests":"tooManyRequests",
-  "auth/invalid-phone-number":"invalidPhone",
-  "auth/phone-number-already-exists":"phoneAlreadyUsed",
-  "auth/credential-already-in-use":"phoneAlreadyUsed",
-  "auth/code-expired":"expiredOtp",
-  "auth/session-expired":"expiredOtp",
-  "auth/invalid-verification-code":"wrongOtp",
-  "auth/operation-not-allowed":"operationNotAllowed",
-  "auth/captcha-check-failed":"captchaFailed",
-  "auth/popup-closed-by-user":"popupClosed",
-  "auth/popup-blocked":"popupBlocked",
-  "auth/unauthorized-domain":"unauthorizedDomain",
-  "auth/quota-exceeded":"quotaExceeded",
-  "auth/billing-not-enabled":"billingRequired",
-  "auth/network-request-failed":"networkError",
-  "auth/missing-phone-number":"mobileRequired"
-
+  "auth/email-already-in-use":"emailAlreadyUsed","auth/invalid-email":"invalidEmail",
+  "auth/weak-password":"weakPassword","auth/invalid-credential":"invalidCredentials",
+  "auth/user-not-found":"invalidCredentials","auth/wrong-password":"invalidCredentials",
+  "auth/too-many-requests":"tooManyRequests","auth/invalid-phone-number":"invalidPhone",
+  "auth/phone-number-already-exists":"phoneAlreadyUsed","auth/credential-already-in-use":"phoneAlreadyUsed",
+  "auth/code-expired":"expiredOtp","auth/session-expired":"expiredOtp",
+  "auth/invalid-verification-code":"wrongOtp","auth/operation-not-allowed":"operationNotAllowed",
+  "auth/captcha-check-failed":"captchaFailed","auth/popup-closed-by-user":"popupClosed",
+  "auth/popup-blocked":"popupBlocked","auth/unauthorized-domain":"unauthorizedDomain",
+  "auth/quota-exceeded":"quotaExceeded","auth/billing-not-enabled":"billingRequired",
+  "auth/network-request-failed":"networkError","auth/missing-phone-number":"mobileRequired"
  };
-
- if([
-  "auth/invalid-credential",
-  "auth/wrong-password",
-  "auth/user-not-found"
- ].includes(code)){
-
+ if(["auth/invalid-credential","auth/wrong-password","auth/user-not-found"].includes(code)){
   failedAttempt();
-
  }else{
-
-  message(
-   errors[code]
-   ?T(errors[code])
-   :(error?.message||"An error occurred.")
-  );
-
+  message(errors[code]?T(errors[code]):(error?.message||"An error occurred."));
  }
-
  console.error(error);
-
 }
 
-
 /* OTP TIMER */
-
 function clearOtpTimer(){
-
- if(otpInterval){
-  clearInterval(otpInterval);
-  otpInterval=null;
- }
-
- otpExpiryTime=0;
- resendAvailableTime=0;
- otpExpired=false;
-
+ if(otpInterval){clearInterval(otpInterval);otpInterval=null}
+ otpExpiryTime=0;resendAvailableTime=0;otpExpired=false;
  $("otpTimer").textContent="";
  $("resendOtpButton").disabled=true;
  $("resendOtpButton").textContent=T("resendOtp");
  $("verifyOtpButton").disabled=false;
-
 }
-
 function updateOtpTimer(){
-
  const now=Date.now();
-
- const expiry=Math.max(
-  0,
-  Math.ceil((otpExpiryTime-now)/1000)
- );
-
- const resend=Math.max(
-  0,
-  Math.ceil((resendAvailableTime-now)/1000)
- );
-
+ const expiry=Math.max(0,Math.ceil((otpExpiryTime-now)/1000));
+ const resend=Math.max(0,Math.ceil((resendAvailableTime-now)/1000));
  if(expiry<=0){
-
-  otpExpired=true;
-  $("verifyOtpButton").disabled=true;
-  $("otpTimer").textContent=T("otpExpired");
-
+  otpExpired=true;$("verifyOtpButton").disabled=true;$("otpTimer").textContent=T("otpExpired");
  }else{
-
-  $("verifyOtpButton").disabled=false;
-
-  $("otpTimer").textContent=
-   T("otpExpires")+" "+expiry+" seconds";
-
+  $("verifyOtpButton").disabled=false;$("otpTimer").textContent=T("otpExpires")+" "+expiry+" seconds";
  }
-
  if(resend<=0){
-
-  $("resendOtpButton").disabled=false;
-  $("resendOtpButton").textContent=T("resendOtp");
-
+  $("resendOtpButton").disabled=false;$("resendOtpButton").textContent=T("resendOtp");
  }else{
-
-  $("resendOtpButton").disabled=true;
-
-  $("resendOtpButton").textContent=
-   T("resendIn")+" "+resend+"s";
-
+  $("resendOtpButton").disabled=true;$("resendOtpButton").textContent=T("resendIn")+" "+resend+"s";
  }
-
- if(expiry<=0&&resend<=0){
-
-  clearInterval(otpInterval);
-  otpInterval=null;
-
- }
-
+ if(expiry<=0&&resend<=0){clearInterval(otpInterval);otpInterval=null}
 }
-
 function startOtpTimer(){
-
- clearOtpTimer();
-
- otpExpiryTime=Date.now()+60000;
- resendAvailableTime=Date.now()+30000;
-
- $("otpSection").style.display="block";
-
- updateOtpTimer();
-
+ clearOtpTimer();otpExpiryTime=Date.now()+60000;resendAvailableTime=Date.now()+30000;
+ $("otpSection").style.display="block";updateOtpTimer();
  otpInterval=setInterval(updateOtpTimer,1000);
-
 }
-
 
 /* LOGIN METHOD DISPLAY */
-
 function showMethod(){
-
- $("emailSection").style.display=
- method==="email"?"block":"none";
-
- $("phoneSection").style.display=
- method==="phone"?"block":"none";
-
- $("emailTab").classList.toggle(
-  "active",
-  method==="email"
- );
-
- $("mobileTab").classList.toggle(
-  "active",
-  method==="phone"
- );
-
- $("signupFields").classList.toggle(
-  "hidden",
-  !(mode==="signup"&&method==="email")
- );
-
- $("rememberRow").style.display=
- mode==="login"&&method==="email"
- ?"flex"
- :"none";
-
- $("forgotLink").style.display=
- mode==="login"&&method==="email"
- ?"block"
- :"none";
-
+ $("emailSection").style.display=method==="email"?"block":"none";
+ $("phoneSection").style.display=method==="phone"?"block":"none";
+ $("emailTab").classList.toggle("active",method==="email");
+ $("mobileTab").classList.toggle("active",method==="phone");
+ $("signupFields").classList.toggle("hidden",!(mode==="signup"&&method==="email"));
+ $("rememberRow").style.display=mode==="login"&&method==="email"?"flex":"none";
+ $("forgotLink").style.display=mode==="login"&&method==="email"?"block":"none";
  updateModeLabels();
-
 }
-
 function selectMethod(value){
-
- method=value;
-
- confirmationResult=null;
- currentPhone="";
-
- clearOtpTimer();
-
- $("otpSection").style.display="none";
- $("otpCode").value="";
-
- $("verifiedSection").style.display="none";
-
- hideMessage();
-
- showMethod();
-
+ method=value;confirmationResult=null;currentPhone="";
+ clearOtpTimer();$("otpSection").style.display="none";$("otpCode").value="";
+ $("verifiedSection").style.display="none";hideMessage();showMethod();
 }
-
 
 /* LOGIN MODE */
-
 function openLogin(){
-
  mode="login";
-
- $("loginTab").classList.add("active");
- $("signupTab").classList.remove("active");
-
- $("accountTabs").style.display="flex";
- $("methodTabs").style.display="flex";
- $("googleButton").style.display="block";
- $("accountPrompt").style.display="block";
-
- $("accountPrompt").innerHTML=
- '<span data-ryzon-text="noAccount">'+
- T("noAccount")+
- '</span> <a href="#" id="signupLink">'+
- T("signUp")+
- '</a>';
-
- $("signupLink").onclick=e=>{
-  e.preventDefault();
-  openSignup();
- };
-
+ $("loginTab").classList.add("active");$("signupTab").classList.remove("active");
+ $("accountTabs").style.display="flex";$("methodTabs").style.display="flex";
+ $("googleButton").style.display="block";$("accountPrompt").style.display="block";
+ $("accountPrompt").innerHTML='<span data-ryzon-text="noAccount">'+T("noAccount")+'</span> <a href="#" id="signupLink">'+T("signUp")+'</a>';
+ $("signupLink").onclick=e=>{e.preventDefault();openSignup()};
  selectMethod(method);
-
 }
-
 
 /* SIGNUP MODE */
-
 function openSignup(){
-
  mode="signup";
-
- $("loginTab").classList.remove("active");
- $("signupTab").classList.add("active");
-
- $("accountTabs").style.display="flex";
- $("methodTabs").style.display="flex";
- $("googleButton").style.display="block";
- $("accountPrompt").style.display="block";
-
- $("accountPrompt").innerHTML=
- '<span data-ryzon-text="alreadyAccount">'+
- T("alreadyAccount")+
- '</span> <a href="#" id="loginLink">'+
- T("login")+
- '</a>';
-
- $("loginLink").onclick=e=>{
-  e.preventDefault();
-  openLogin();
- };
-
+ $("loginTab").classList.remove("active");$("signupTab").classList.add("active");
+ $("accountTabs").style.display="flex";$("methodTabs").style.display="flex";
+ $("googleButton").style.display="block";$("accountPrompt").style.display="block";
+ $("accountPrompt").innerHTML='<span data-ryzon-text="alreadyAccount">'+T("alreadyAccount")+'</span> <a href="#" id="loginLink">'+T("login")+'</a>';
+ $("loginLink").onclick=e=>{e.preventDefault();openLogin()};
  selectMethod("email");
-
 }
-
 $("loginTab").onclick=openLogin;
 $("signupTab").onclick=openSignup;
-
 $("emailTab").onclick=()=>selectMethod("email");
 $("mobileTab").onclick=()=>selectMethod("phone");
-
-$("signupLink").onclick=e=>{
- e.preventDefault();
- openSignup();
-};
-
+$("signupLink").onclick=e=>{e.preventDefault();openSignup()};
 
 /* PASSWORD SHOW/HIDE */
-
 $("togglePassword").onclick=()=>{
-
  const field=$("password");
-
- field.type=
- field.type==="password"
- ?"text"
- :"password";
-
- $("togglePassword").textContent=
- field.type==="password"
- ?T("show")
- :T("hide");
-
+ field.type=field.type==="password"?"text":"password";
+ $("togglePassword").textContent=field.type==="password"?T("show"):T("hide");
 };
-
 
 /* EMAIL LOGIN / SIGNUP */
-
 $("mainButton").onclick=async()=>{
-
  const button=$("mainButton");
-
- const email=$("email").value.trim();
- const password=$("password").value;
-
- hideMessage();
-
- let ok=true;
-
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-
-  invalid($("email"));
-  ok=false;
-
- }else{
-
-  valid($("email"));
-
- }
-
- if(!password){
-
-  invalid($("password"));
-  ok=false;
-
- }else{
-
-  valid($("password"));
-
- }
-
- if(!ok){
-
-  message(T("invalidEmail")+" "+T("invalidPassword"));
-  return;
-
- }
-
+ const email=$("email").value.trim(),password=$("password").value;
+ hideMessage();let ok=true;
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){invalid($("email"));ok=false}else valid($("email"));
+ if(!password){invalid($("password"));ok=false}else valid($("password"));
+ if(!ok){message(T("invalidEmail")+" "+T("invalidPassword"));return}
  if(mode==="login"&&isLocked())return;
-
  if(mode==="signup"){
-
-  if(password!==$("confirmPassword").value){
-
-   invalid($("confirmPassword"));
-   message(T("passwordMismatch"));
-   return;
-
-  }
-
+  if(password!==$("confirmPassword").value){invalid($("confirmPassword"));message(T("passwordMismatch"));return}
   valid($("confirmPassword"));
-
-  if(password.length<6){
-
-   message(T("weakPassword"));
-   return;
-
-  }
-
+  if(password.length<6){message(T("weakPassword"));return}
  }
-
  busy(button,true);
-
  try{
-
   await setLoginPersistence();
-
   if(mode==="signup"){
-
-   const result=
-    await createUserWithEmailAndPassword(
-     auth,
-     email,
-     password
-    );
-
+   const result=await createUserWithEmailAndPassword(auth,email,password);
    await sendEmailVerification(result.user);
-
-   $("verificationText").textContent=
-    T("verificationText");
-
-   $("emailSection").style.display="none";
-   $("phoneSection").style.display="none";
-   $("accountTabs").style.display="none";
-   $("methodTabs").style.display="none";
-   $("verifiedSection").style.display="block";
-   $("googleButton").style.display="none";
-   $("accountPrompt").style.display="none";
-
-   message(T("emailCreated"),true);
-
+   $("verificationText").textContent=T("verificationText");
+   $("emailSection").style.display="none";$("phoneSection").style.display="none";
+   $("accountTabs").style.display="none";$("methodTabs").style.display="none";
+   $("verifiedSection").style.display="block";$("googleButton").style.display="none";
+   $("accountPrompt").style.display="none";message(T("emailCreated"),true);
   }else{
-
-   const result=
-    await signInWithEmailAndPassword(
-     auth,
-     email,
-     password
-    );
-
+   const result=await signInWithEmailAndPassword(auth,email,password);
    await reload(result.user);
-
    if(!result.user.emailVerified){
-
     await sendEmailVerification(result.user);
-
-    $("verificationText").textContent=
-     T("emailNotVerified");
-
-    $("emailSection").style.display="none";
-    $("phoneSection").style.display="none";
-    $("accountTabs").style.display="none";
-    $("methodTabs").style.display="none";
-    $("verifiedSection").style.display="block";
-    $("googleButton").style.display="none";
-    $("accountPrompt").style.display="none";
-
-    message(T("verificationSent"),true);
-
-    return;
-
+    $("verificationText").textContent=T("emailNotVerified");
+    $("emailSection").style.display="none";$("phoneSection").style.display="none";
+    $("accountTabs").style.display="none";$("methodTabs").style.display="none";
+    $("verifiedSection").style.display="block";$("googleButton").style.display="none";
+    $("accountPrompt").style.display="none";message(T("verificationSent"),true);return;
    }
-
-   clearAttempts();
-   successLogin();
-
+   clearAttempts();successLogin();
   }
-
- }catch(error){
-
-  showError(error);
-
- }finally{
-
-  busy(button,false);
-
- }
-
+ }catch(error){showError(error)}
+ finally{busy(button,false)}
 };
-
 
 /* EMAIL VERIFICATION */
-
 $("checkEmailButton").onclick=async()=>{
-
- const button=$("checkEmailButton");
-
- busy(button,true);
-
+ const button=$("checkEmailButton");busy(button,true);
  try{
-
-  if(!auth.currentUser){
-   throw new Error("Please login again.");
-  }
-
+  if(!auth.currentUser)throw new Error("Please login again.");
   await reload(auth.currentUser);
-
-  if(!auth.currentUser.emailVerified){
-   message(T("emailNotVerified"));
-   return;
-  }
-
+  if(!auth.currentUser.emailVerified){message(T("emailNotVerified"));return}
   successLogin();
-
- }catch(error){
-
-  showError(error);
-
- }finally{
-
-  busy(button,false);
-
- }
-
+ }catch(error){showError(error)}
+ finally{busy(button,false)}
 };
-
 
 /* GOOGLE LOGIN */
-
 $("googleButton").onclick=async()=>{
-
- const button=$("googleButton");
-
- busy(button,true,T("connectingGoogle"));
-
- try{
-
-  await setLoginPersistence();
-
-  await signInWithPopup(auth,googleProvider);
-
-  successLogin();
-
- }catch(error){
-
-  showError(error);
-
- }finally{
-
-  busy(button,false);
-
- }
-
+ const button=$("googleButton");busy(button,true,T("connectingGoogle"));
+ try{await setLoginPersistence();await signInWithPopup(auth,googleProvider);successLogin()}
+ catch(error){showError(error)}
+ finally{busy(button,false)}
 };
-
 
 /* RECAPTCHA */
-
 async function createRecaptcha(){
-
  if(recaptchaVerifier){
-
-  try{
-   recaptchaVerifier.clear();
-  }catch(e){
-   console.warn(e);
-  }
-
+  try{recaptchaVerifier.clear()}catch(e){console.warn(e)}
   recaptchaVerifier=null;
-
  }
-
  $("recaptcha-container").innerHTML="";
-
- recaptchaVerifier=new RecaptchaVerifier(
-  auth,
-  "recaptcha-container",
-  {size:"normal"}
- );
-
+ recaptchaVerifier=new RecaptchaVerifier(auth,"recaptcha-container",{size:"normal"});
  await recaptchaVerifier.render();
-
 }
-
 
 /* SEND OTP */
-
 async function sendOtp(){
-
- const button=$("sendOtpButton");
-
- hideMessage();
-
+ const button=$("sendOtpButton");hideMessage();
  let phone;
-
- try{
-
-  phone=await validPhone();
-  currentPhone=phone;
-
- }catch(error){
-
-  message(error.message);
-  return;
-
- }
-
+ try{phone=await validPhone();currentPhone=phone}
+ catch(error){message(error.message);return}
  if(mode==="login"&&isLocked())return;
-
  busy(button,true);
-
  try{
-
-  await setLoginPersistence();
-
-  await createRecaptcha();
-
-  confirmationResult=
-   await signInWithPhoneNumber(
-    auth,
-    phone,
-    recaptchaVerifier
-   );
-
-  $("otpCode").value="";
-
-  startOtpTimer();
-
-  message(T("otpSent"),true);
-
- }catch(error){
-
-  confirmationResult=null;
-  showError(error);
-
- }finally{
-
-  busy(button,false);
-
- }
-
+  await setLoginPersistence();await createRecaptcha();
+  confirmationResult=await signInWithPhoneNumber(auth,phone,recaptchaVerifier);
+  $("otpCode").value="";startOtpTimer();message(T("otpSent"),true);
+ }catch(error){confirmationResult=null;showError(error)}
+ finally{busy(button,false)}
 }
-
 $("sendOtpButton").onclick=sendOtp;
 
-
 /* RESEND OTP */
-
 $("resendOtpButton").onclick=async()=>{
-
  if(Date.now()<resendAvailableTime)return;
-
- confirmationResult=null;
-
- clearOtpTimer();
-
- $("otpCode").value="";
-
+ confirmationResult=null;clearOtpTimer();$("otpCode").value="";
  await sendOtp();
-
 };
-
 
 /* VERIFY OTP */
-
 $("verifyOtpButton").onclick=async()=>{
-
- const button=$("verifyOtpButton");
-
- const code=$("otpCode").value.trim();
-
- if(!confirmationResult){
-
-  invalid($("otpCode"));
-  message(T("enterOtpFirst"));
-  return;
-
- }
-
+ const button=$("verifyOtpButton"),code=$("otpCode").value.trim();
+ if(!confirmationResult){invalid($("otpCode"));message(T("enterOtpFirst"));return}
  if(otpExpired||Date.now()>=otpExpiryTime){
-
-  otpExpired=true;
-  button.disabled=true;
-
-  message(T("expiredOtp"));
-
-  return;
-
+  otpExpired=true;button.disabled=true;message(T("expiredOtp"));return;
  }
-
- if(!/^\d{6}$/.test(code)){
-
-  invalid($("otpCode"));
-  message(T("enterOtp"));
-
-  return;
-
- }
-
+ if(!/^\d{6}$/.test(code)){invalid($("otpCode"));message(T("enterOtp"));return}
  valid($("otpCode"));
-
  if(mode==="login"&&isLocked())return;
-
  busy(button,true);
-
  try{
-
   const result=await confirmationResult.confirm(code);
-
-  confirmationResult=null;
-
-  clearOtpTimer();
-
-  if(!result.user){
-   throw new Error("Mobile verification failed.");
-  }
-
-  clearAttempts();
-
-  successLogin();
-
+  confirmationResult=null;clearOtpTimer();
+  if(!result.user)throw new Error("Mobile verification failed.");
+  clearAttempts();successLogin();
  }catch(error){
-
-  if(error?.code==="auth/invalid-verification-code"){
-   failedAttempt();
-  }else{
-   showError(error);
-  }
-
+  if(error?.code==="auth/invalid-verification-code")failedAttempt();
+  else showError(error);
  }finally{
-
   busy(button,false);
-
-  if(otpExpired){
-   button.disabled=true;
-  }
-
+  if(otpExpired)button.disabled=true;
  }
-
 };
-
 
 /* FORGOT EMAIL PASSWORD */
-
 $("forgotLink").onclick=async()=>{
-
  const email=$("email").value.trim();
-
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-
-  invalid($("email"));
-  message(T("enterEmail"));
-  $("email").focus();
-
-  return;
-
+  invalid($("email"));message(T("enterEmail"));$("email").focus();return;
  }
-
  valid($("email"));
-
- try{
-
-  await sendPasswordResetEmail(auth,email);
-
-  message(T("resetSent"),true);
-
- }catch(error){
-
-  showError(error);
-
- }
-
+ try{await sendPasswordResetEmail(auth,email);message(T("resetSent"),true)}
+ catch(error){showError(error)}
 };
-
 
 /* PREMIUM QUICK LOGIN
-   UI demonstration only.
-   No PIN is stored or authenticated here.
+   UI demonstration only. PIN is not stored or authenticated.
 */
-
 const premiumNote=$("premiumNote");
-
-function showPremiumNote(text){
-
- premiumNote.textContent=text;
+function showPremiumNote(key){
+ premiumMessageKey=key;
+ premiumNote.textContent=PT(key);
  premiumNote.style.display="block";
-
 }
-
 $("premiumPin").addEventListener("input",function(){
-
- this.value=this.value
-  .replace(/\D/g,"")
-  .slice(0,8);
-
- valid(this);
-
- premiumNote.style.display="none";
-
+ this.value=this.value.replace(/\D/g,"").slice(0,8);
+ valid(this);premiumMessageKey="";premiumNote.style.display="none";
 });
-
 
 /* PREMIUM LOGIN */
-
 $("premiumLoginButton").onclick=()=>{
-
  const pin=$("premiumPin").value;
-
  if(!/^\d{4,8}$/.test(pin)){
-
-  invalid($("premiumPin"));
-
-  showPremiumNote(
-   "Please enter a valid 4–8 digit Premium PIN."
-  );
-
-  return;
-
+  invalid($("premiumPin"));showPremiumNote("invalidPin");return;
  }
-
- valid($("premiumPin"));
-
- showPremiumNote(
-  "Premium PIN Login is not activated yet. Secure server verification must be connected first. Please use Email, Google or Mobile OTP Login."
- );
-
+ valid($("premiumPin"));showPremiumNote("loginPending");
 };
-
 
 /* FORGET PREMIUM PIN */
-
-function premiumForgotAction(){
-
- showPremiumNote(
-  "Premium PIN recovery is not activated yet. Secure Premium account verification and recovery must be connected first."
- );
-
-}
-
+function premiumForgotAction(){showPremiumNote("recoveryPending")}
 $("premiumForgot").onclick=premiumForgotAction;
-
 $("premiumForgot").onkeydown=e=>{
-
- if(e.key==="Enter"||e.key===" "){
-  e.preventDefault();
-  premiumForgotAction();
- }
-
+ if(e.key==="Enter"||e.key===" "){e.preventDefault();premiumForgotAction()}
 };
-
 
 /* PREMIUM SIGNUP */
-
-function premiumSignupAction(){
-
- showPremiumNote(
-  "Premium Sign Up is not activated yet. Secure PIN registration, membership verification and Premium activation must be connected first."
- );
-
-}
-
+function premiumSignupAction(){showPremiumNote("signupPending")}
 $("premiumSignup").onclick=premiumSignupAction;
-
 $("premiumSignup").onkeydown=e=>{
-
- if(e.key==="Enter"||e.key===" "){
-  e.preventDefault();
-  premiumSignupAction();
- }
-
+ if(e.key==="Enter"||e.key===" "){e.preventDefault();premiumSignupAction()}
 };
 
-
 /* START */
-
 updateLastLogin();
-
 openLogin();
-
 applyLanguage();
-
-window.addEventListener("storage",()=>{
- applyLanguage();
-});
-
+window.addEventListener("storage",applyLanguage);
+window.addEventListener("ryzon-language-changed",applyLanguage);
 </script>
-
 
 <script>
-
 if("serviceWorker" in navigator){
-
  window.addEventListener("load",()=>{
-
-  navigator.serviceWorker.register(
-   "./service-worker.js",
-   {scope:"./"}
-  )
-  .then(registration=>
-   console.log(
-    "RYZON Service Worker registered:",
-    registration.scope
-   )
-  )
-  .catch(error=>
-   console.error(
-    "RYZON Service Worker registration failed:",
-    error
-   )
-  );
-
+  navigator.serviceWorker.register("./service-worker.js",{scope:"./"})
+   .then(registration=>console.log("RYZON Service Worker registered:",registration.scope))
+   .catch(error=>console.error("RYZON Service Worker registration failed:",error));
  });
-
 }
-
 </script>
-
 </body>
 </html>
