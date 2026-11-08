@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#071426">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="description" content="Meet new people worldwide with RYZON Random Chat.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon-192.png">
 <title>RYZON - Worldwide Random Chat</title>
@@ -128,6 +129,9 @@ button:disabled{opacity:.5;cursor:not-allowed}
 }
 .hidden{display:none!important}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:3px;
+}
 @media(max-width:480px){
   body{padding:12px}
   .card{padding:16px}
@@ -139,7 +143,6 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
 <body>
 <main class="container">
-
 <header>
   <div class="brand">
     <div class="logo">R</div>
@@ -184,7 +187,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
     Welcome to RYZON Random Chat!
   </div>
 
-  <button class="primary" id="findBtn" onclick="findPartner()">
+  <button class="primary" id="findBtn" onclick="findPartner()" disabled>
     🔍 Find a Chat Partner
   </button>
 
@@ -221,13 +224,12 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
     </div>
   </div>
 
-  <button class="primary" onclick="findPartner()" id="nextBtn" disabled>
-    ➜ Next Partner
-  </button>
+  <button class="secondary" onclick="cancelSearch()" id="cancelBtn">Cancel Search</button>
+  <button class="primary" onclick="findPartner()" id="nextBtn" disabled>➜ Next Partner</button>
   <button class="danger" onclick="endChat()">✕ End Chat</button>
 
   <p class="subtitle">
-    Chat messages in this demo are not delivered to another person.
+    Real-time worldwide matching and message delivery require a server connection.
   </p>
 </section>
 
@@ -245,13 +247,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
 <script>
 let searching=false;
-let connected=false;
 let searchTimer=null;
+let authReady=false;
+let currentUser=null;
 
 const $=id=>document.getElementById(id);
-
-/* Login state is checked using Firebase Auth.
-   Firebase SDK is loaded below. */
 
 function openRandomChatLogin(){
   sessionStorage.setItem("ryzonNextAction","randomChat");
@@ -263,17 +263,21 @@ function goHome(){
 }
 
 function findPartner(){
-  if(!window.ryzonAuth || !window.ryzonAuth.currentUser){
+  if(!authReady){
+    showStatus("Please wait. Checking your login...");
+    return;
+  }
+
+  if(!currentUser){
     openRandomChatLogin();
     return;
   }
 
   clearTimeout(searchTimer);
+  searching=true;
+
   $("setupCard").classList.add("hidden");
   $("chatCard").classList.remove("hidden");
-
-  searching=true;
-  connected=false;
 
   $("chatStatus").textContent="🔍 Searching for a worldwide chat partner...";
   $("partnerName").textContent="Finding Partner";
@@ -289,6 +293,7 @@ function findPartner(){
   $("messageInput").disabled=true;
   $("sendBtn").disabled=true;
   $("nextBtn").disabled=true;
+  $("cancelBtn").disabled=false;
 
   searchTimer=setTimeout(()=>{
     if(!searching)return;
@@ -306,14 +311,30 @@ function findPartner(){
         Please try again later.
       </div>`;
 
+    $("cancelBtn").disabled=true;
     $("nextBtn").disabled=false;
   },2500);
+}
+
+function showStatus(message){
+  $("status").textContent=message;
+}
+
+function cancelSearch(){
+  clearTimeout(searchTimer);
+  searching=false;
+  $("chatStatus").textContent="Search cancelled.";
+  $("partnerName").textContent="Random Chat";
+  $("partnerStatus").textContent="Not connected";
+  $("messages").innerHTML=`
+    <div class="chat-empty">Search cancelled. You can try again.</div>`;
+  $("cancelBtn").disabled=true;
+  $("nextBtn").disabled=false;
 }
 
 function endChat(){
   clearTimeout(searchTimer);
   searching=false;
-  connected=false;
   $("chatCard").classList.add("hidden");
   $("setupCard").classList.remove("hidden");
   $("status").textContent="Chat ended. You can find another partner.";
@@ -326,44 +347,25 @@ function escapeHTML(value){
 }
 
 function sendMessage(){
-  if(!connected){
-    alert("No partner is connected. Real-time chat is not available yet.");
-    return;
-  }
-
-  const input=$("messageInput");
-  const text=input.value.trim();
-  if(!text)return;
-
-  const bubble=document.createElement("div");
-  bubble.className="message mine";
-  bubble.textContent=text;
-  $("messages").appendChild(bubble);
-  input.value="";
-  $("messages").scrollTop=$("messages").scrollHeight;
+  alert("No partner is connected. Real-time chat is not available yet.");
 }
-
-$("messageInput").addEventListener("keydown",event=>{
-  if(event.key==="Enter")sendMessage();
-});
 
 function blockPartner(){
   if(!confirm("Block this chat partner?"))return;
-  alert("Block request is only a local demo. Server-side blocking is not connected.");
+  alert("Block management is not connected to the RYZON server yet.");
   endChat();
 }
 
 function reportPartner(){
   const reason=prompt("Enter the reason for reporting:");
-  if(!reason || !reason.trim())return;
-  alert("Report recorded for this demo only. It has not been sent to the RYZON Admin.");
+  if(!reason||!reason.trim())return;
+  alert("Report feature is a demo. This report has not been sent to RYZON Admin.");
 }
 </script>
 
-<!-- Firebase Authentication -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -378,18 +380,19 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
-window.ryzonAuth=auth;
-
 onAuthStateChanged(auth,user=>{
-  window.ryzonAuth=auth;
+  currentUser=user;
+  authReady=true;
+  $("findBtn").disabled=false;
 
   if(!user){
-    // Keep the page visible, but login is required before searching.
-    return;
+    showStatus("Login required to find a chat partner.");
+  }else{
+    showStatus("Welcome to RYZON Random Chat!");
   }
 
   const nextAction=sessionStorage.getItem("ryzonNextAction");
-  if(nextAction==="randomChat"){
+  if(user && nextAction==="randomChat"){
     sessionStorage.removeItem("ryzonNextAction");
     $("setupCard").classList.remove("hidden");
   }
@@ -405,6 +408,5 @@ if("serviceWorker" in navigator){
   });
 }
 </script>
-
 </body>
 </html>
