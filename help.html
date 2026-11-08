@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RYZON - Help & Support</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#061426,#102c4b,#071a30);
+  color:#fff;
+}
+header{
+  padding:22px 16px;
+  text-align:center;
+  background:#071a30;
+  border-bottom:1px solid #244866;
+}
+.logo{
+  font-size:34px;
+  font-weight:bold;
+  color:#27d9ee;
+}
+header p{color:#b9d8ed;margin:6px 0}
+main{
+  max-width:850px;
+  margin:auto;
+  padding:18px;
+}
+.card{
+  background:#102b48;
+  border:1px solid #244968;
+  border-radius:14px;
+  padding:20px;
+  margin:16px 0;
+}
+h2{color:#36d8ee;margin-top:0}
+h3{color:#bdeeff}
+p,.muted{line-height:1.6;color:#d0dfec}
+input,textarea,select{
+  width:100%;
+  padding:13px;
+  margin:7px 0 14px;
+  border-radius:8px;
+  border:1px solid #45617d;
+  background:#081d33;
+  color:white;
+  font-size:15px;
+}
+textarea{min-height:120px;resize:vertical}
+button,.link-button{
+  display:inline-block;
+  padding:12px 17px;
+  margin:5px 3px;
+  border:0;
+  border-radius:8px;
+  background:#14bcd4;
+  color:#061426;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+}
+.secondary{background:#244968;color:white}
+details{
+  background:#081d33;
+  padding:14px;
+  border-radius:9px;
+  margin:10px 0;
+  border:1px solid #244968;
+}
+summary{
+  cursor:pointer;
+  color:#42d9ee;
+  font-weight:bold;
+}
+footer{
+  text-align:center;
+  padding:22px;
+  color:#9ebbd2;
+  font-size:13px;
+}
+.hidden{display:none}
+.status{color:#63e5a5;line-height:1.5}
+.error{color:#ff9c9c}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+  margin-top:12px;
+}
+.nav a{
+  color:#bdeeff;
+  text-decoration:none;
+  padding:8px 11px;
+  border:1px solid #315572;
+  border-radius:20px;
+  font-size:13px;
+}
+@media(max-width:600px){
+  main{padding:10px}
+  .card{padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">RYZON</div>
+  <p>One App, Endless Possibilities!</p>
+
+  <div class="nav">
+    <a href="home.html">Home</a>
+    <a href="profile.html">My Profile</a>
+    <a href="settings.html">Settings</a>
+    <a href="premium.html">Premium</a>
+  </div>
+</header>
+
+<main>
+
+<section class="card">
+  <h2>Help & Support Center</h2>
+  <p>
+    Welcome to RYZON Support! Find answers, share feedback
+    and learn about our policies.
+  </p>
+  <p id="userStatus" class="muted">Checking account...</p>
+</section>
+
+<!-- FEEDBACK -->
+
+<section class="card" id="feedback">
+  <h2>Send Feedback</h2>
+  <p>Tell us about your experience or report a problem.</p>
+
+  <form id="feedbackForm">
+
+    <label for="feedbackType">Feedback Type</label>
+    <select id="feedbackType" required>
+      <option value="">Select a category</option>
+      <option value="Suggestion">Suggestion</option>
+      <option value="Bug Report">Bug Report</option>
+      <option value="Account Problem">Account Problem</option>
+      <option value="Payment Problem">Payment Problem</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="feedbackSubject">Subject</label>
+    <input id="feedbackSubject" type="text"
+      maxlength="100" placeholder="Enter subject" required>
+
+    <label for="feedbackMessage">Your Message</label>
+    <textarea id="feedbackMessage"
+      maxlength="2000"
+      placeholder="Describe your feedback or problem..."
+      required></textarea>
+
+    <button type="submit">Submit Feedback</button>
+    <p id="feedbackStatus" class="muted"></p>
+  </form>
+
+  <p class="muted">
+    Note: Feedback submission is not connected to a server yet.
+    This form currently provides a preview only; your message
+    will not be saved or sent.
+  </p>
+</section>
+
+<!-- SUPPORT -->
+
+<section class="card" id="support">
+  <h2>Customer Support</h2>
+
+  <h3>Need Help?</h3>
+  <p>
+    If you face a problem with login, account access, chat,
+    premium features or other RYZON services, use the
+    feedback form above to prepare your support request.
+  </p>
+
+  <h3>Common Support Topics</h3>
+  <ul>
+    <li>Login and account access</li>
+    <li>Email verification and OTP</li>
+    <li>Random Chat problems</li>
+    <li>Premium membership questions</li>
+    <li>Payments and gifts</li>
+    <li>Privacy and account security</li>
+  </ul>
+</section>
+
+<!-- FAQ -->
+
+<section class="card" id="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <details>
+    <summary>How do I create a RYZON account?</summary>
+    <p>
+      Open the login page and choose Email Sign Up or Mobile Sign Up.
+      Follow the verification steps for your selected method.
+    </p>
+  </details>
+
+  <details>
+    <summary>Is Worldwide Random Chat free?</summary>
+    <p>
+      Yes. RYZON Worldwide Random Chat is intended to be free
+      for everyone.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are photo and video sharing free?</summary>
+    <p>
+      Photo Sharing and Video Sharing are paid features.
+      Check the Premium page for feature information.
+    </p>
+  </details>
+
+  <details>
+    <summary>How many friend requests are free?</summary>
+    <p>
+      The first 10 friend requests are free.
+      Additional requests require a paid or premium feature.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I send gifts without Premium Membership?</summary>
+    <p>
+      Yes. Free gifts are available to free users.
+      Paid gifts can be purchased individually without
+      subscribing to Premium Membership.
+    </p>
+  </details>
+
+  <details>
+    <summary>How do I reset my password?</summary>
+    <p>
+      Use the Forgot Password option on the RYZON login page
+      and follow the instructions sent to your registered email.
+    </p>
+  </details>
+
+  <details>
+    <summary>How do I report a user?</summary>
+    <p>
+      Use the Block and Report options where available.
+      Actual report processing depends on the reporting
+      backend being connected.
+    </p>
+  </details>
+
+  <details>
+    <summary>How do I change my account settings?</summary>
+    <p>
+      Open the Settings page to manage available account,
+      privacy, language and notification preferences.
+    </p>
+  </details>
+</section>
+
+<!-- TERMS -->
+
+<section class="card" id="terms">
+  <h2>Terms & Conditions</h2>
+
+  <p><strong>Last updated: November 2026</strong></p>
+
+  <h3>1. Acceptance</h3>
+  <p>
+    By accessing or using RYZON, you agree to follow these
+    Terms & Conditions and applicable laws.
+  </p>
+
+  <h3>2. Account Responsibility</h3>
+  <p>
+    You are responsible for maintaining the security of your
+    account and for activities performed through it.
+    Provide accurate account information.
+  </p>
+
+  <h3>3. Acceptable Use</h3>
+  <p>
+    Do not use RYZON to harass, threaten, scam, impersonate,
+    exploit or harm other users. Illegal content and abusive
+    behaviour are not permitted.
+  </p>
+
+  <h3>4. Paid Features</h3>
+  <p>
+    Certain features may require payment. Feature availability,
+    pricing and payment conditions should be reviewed before
+    making a purchase.
+  </p>
+
+  <h3>5. User Content</h3>
+  <p>
+    You are responsible for content you upload, share or send.
+    Do not share content that violates another person's rights
+    or applicable laws.
+  </p>
+
+  <h3>6. Account Restrictions</h3>
+  <p>
+    Accounts may be restricted or suspended for violations
+    of applicable rules, subject to appropriate review.
+  </p>
+
+  <h3>7. Changes</h3>
+  <p>
+    RYZON may update these terms as the service develops.
+    Updated terms should be reviewed periodically.
+  </p>
+
+  <h3>8. Contact</h3>
+  <p>
+    For questions about these terms, use the feedback section
+    on this page.
+  </p>
+</section>
+
+<!-- PRIVACY -->
+
+<section class="card" id="privacy">
+  <h2>Privacy Policy</h2>
+
+  <p><strong>Last updated: November 2026</strong></p>
+
+  <h3>1. Information</h3>
+  <p>
+    RYZON may process account information such as email address,
+    phone number and profile information to provide its services.
+  </p>
+
+  <h3>2. Usage</h3>
+  <p>
+    Information may be used to authenticate accounts, operate
+    features, maintain security and improve the service.
+  </p>
+
+  <h3>3. User Content</h3>
+  <p>
+    Information and content you choose to share through RYZON
+    may be processed to provide the relevant features.
+  </p>
+
+  <h3>4. Security</h3>
+  <p>
+    Reasonable security measures should be used to protect
+    account information. No online service can guarantee
+    absolute security.
+  </p>
+
+  <h3>5. Third-Party Services</h3>
+  <p>
+    RYZON uses Firebase services for authentication and
+    related application functionality. Those services may
+    process information according to their own policies.
+  </p>
+
+  <h3>6. Data Retention</h3>
+  <p>
+    Information should be retained only as needed for
+    legitimate service purposes and applicable legal
+    requirements.
+  </p>
+
+  <h3>7. Your Choices</h3>
+  <p>
+    You can manage available account and privacy settings
+    through the application. Some data deletion requests
+    may require additional support.
+  </p>
+
+  <h3>8. Policy Updates</h3>
+  <p>
+    This policy may be updated when RYZON services or
+    applicable requirements change.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Back to RYZON</h2>
+  <p>Continue exploring RYZON services.</p>
+  <a class="link-button" href="home.html">Go to Home</a>
+  <a class="link-button secondary" href="settings.html">Settings</a>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 RYZON. All rights reserved.</p>
+  <p>One App, Endless Possibilities!</p>
+</footer>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+  authDomain:"seavora-5be21.firebaseapp.com",
+  projectId:"seavora-5be21",
+  storageBucket:"seavora-5be21.firebasestorage.app",
+  messagingSenderId:"41187328725",
+  appId:"1:41187328725:web:07ca55487383bc5798d85c",
+  measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+onAuthStateChanged(auth,user=>{
+  const status=document.getElementById("userStatus");
+
+  if(user){
+    status.textContent="Signed in as "+(user.email||user.phoneNumber||"RYZON user");
+  }else{
+    status.textContent="You are viewing RYZON Help & Support.";
+  }
+});
+
+document.getElementById("feedbackForm").addEventListener("submit",event=>{
+  event.preventDefault();
+
+  const type=document.getElementById("feedbackType").value;
+  const subject=document.getElementById("feedbackSubject").value.trim();
+  const message=document.getElementById("feedbackMessage").value.trim();
+  const status=document.getElementById("feedbackStatus");
+
+  if(!type||!subject||!message){
+    status.className="error";
+    status.textContent="Please complete all fields.";
+    return;
+  }
+
+  status.className="error";
+  status.textContent=
+    "Feedback backend is not connected yet. Your message has not been sent or saved.";
+});
+
+</script>
+
+</body>
+</html>
