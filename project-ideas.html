@@ -1,144 +1,403 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RYZON - Project Ideas</title>
+
+<meta name="theme-color" content="#071a30">
+<meta name="description" content="Explore school, college, science exhibition and working model project ideas with RYZON.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f1f5fb;
-  color: #17345c;
+  background: linear-gradient(145deg, #061426, #0c2c4c, #071a30);
+  color: #ffffff;
+  min-height: 100vh;
 }
+
 header {
-  background: #123b68;
-  color: white;
-  padding: 20px;
   text-align: center;
+  padding: 25px 15px;
+  background: rgba(3, 15, 30, 0.8);
+  border-bottom: 1px solid #1b5279;
 }
+
+.logo {
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #36d9ff;
+  margin: 0;
+}
+
+.tagline {
+  color: #b8d9ed;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
 main {
-  max-width: 650px;
-  margin: auto;
-  padding: 20px;
-}
-.card {
-  background: white;
-  padding: 16px;
-  margin: 12px 0;
-  border-radius: 12px;
-  box-shadow: 0 2px 7px #0001;
-}
-button {
-  background: #2457d6;
-  color: white;
-  border: 0;
-  padding: 12px;
-  border-radius: 8px;
   width: 100%;
-  font-size: 16px;
+  max-width: 850px;
+  margin: auto;
+  padding: 20px 15px 35px;
 }
+
+.intro {
+  text-align: center;
+  padding: 18px 5px;
+}
+
+.intro h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  color: #c3d8e8;
+  line-height: 1.6;
+}
+
+.card {
+  background: rgba(15, 43, 70, 0.95);
+  border: 1px solid #245477;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px #0003;
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  color: #c4d9e9;
+  line-height: 1.5;
+}
+
 input {
   width: 100%;
-  padding: 13px;
-  box-sizing: border-box;
-  border: 1px solid #ccd7e5;
-  border-radius: 9px;
+  padding: 15px;
+  border: 1px solid #416a8c;
+  border-radius: 10px;
   font-size: 16px;
+  background: #071a30;
+  color: white;
+  outline: none;
 }
-a { color: #2457d6; }
+
+input:focus {
+  border-color: #36d9ff;
+  box-shadow: 0 0 0 2px #36d9ff22;
+}
+
+input::placeholder {
+  color: #91aabd;
+}
+
+button {
+  background: linear-gradient(90deg, #176bd2, #168fc7);
+  color: white;
+  border: 0;
+  padding: 13px 15px;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:hover {
+  filter: brightness(1.12);
+}
+
+.search-button {
+  margin-top: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.category {
+  background: rgba(15, 43, 70, 0.95);
+  border: 1px solid #245477;
+  border-radius: 15px;
+  padding: 17px;
+  text-align: center;
+}
+
+.category .emoji {
+  font-size: 34px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.category h3 {
+  font-size: 16px;
+  margin: 5px 0 9px;
+}
+
+.category button {
+  margin-top: 8px;
+  font-size: 14px;
+  padding: 11px 8px;
+}
+
+.section-title {
+  margin: 28px 0 15px;
+  font-size: 20px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.topic {
+  width: auto;
+  background: #123b5d;
+  border: 1px solid #34749c;
+  border-radius: 25px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.navigation a {
+  text-decoration: none;
+}
+
+.navigation button {
+  background: #123b5d;
+  border: 1px solid #34749c;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 10px;
+  color: #9bbbd0;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intro h2 {
+    font-size: 22px;
+  }
+
+  main {
+    padding: 12px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>RYZON</h1>
-<p>School & College Project Ideas</p>
+  <h1 class="logo">RYZON</h1>
+  <p class="tagline">One App, Endless Possibilities!</p>
+  <p>School & College Project Ideas</p>
 </header>
 
 <main>
 
-<div class="card">
-<h2>Find Your Project</h2>
-<p>Search project ideas automatically using Google.</p>
+  <section class="intro">
+    <h2>💡 Discover Your Next Project</h2>
+    <p>
+      Find creative ideas for school assignments, college projects,
+      science exhibitions, handmade crafts and working models.
+    </p>
+  </section>
 
-<input id="project" placeholder="Enter project name or topic">
+  <section class="card">
+    <h2>🔍 Find Your Project</h2>
+    <p>Enter a project name, subject or topic to explore ideas.</p>
 
-<br><br>
+    <input
+      id="project"
+      type="search"
+      placeholder="Example: Solar energy project"
+      autocomplete="off"
+    >
 
-<button onclick="searchProject()">
-Search Project Ideas
-</button>
-</div>
+    <button class="search-button" onclick="searchProject()">
+      Search Project Ideas
+    </button>
+  </section>
 
-<div class="card">
-<h3>🏫 School Projects</h3>
-<button onclick="searchCategory('School science projects')">
-Explore School Projects
-</button>
-</div>
+  <h2 class="section-title">📚 Explore Project Categories</h2>
 
-<div class="card">
-<h3>🎓 College Projects</h3>
-<button onclick="searchCategory('College engineering projects')">
-Explore College Projects
-</button>
-</div>
+  <section class="grid">
 
-<div class="card">
-<h3>🔬 Science Exhibition</h3>
-<button onclick="searchCategory('Science exhibition working models')">
-Explore Science Projects
-</button>
-</div>
+    <div class="category">
+      <span class="emoji">🏫</span>
+      <h3>School Projects</h3>
+      <button onclick="searchCategory('School science projects')">
+        Explore Projects
+      </button>
+    </div>
 
-<div class="card">
-<h3>🎨 Handmade Projects</h3>
-<button onclick="searchCategory('Handmade school and college projects')">
-Explore Handmade Ideas
-</button>
-</div>
+    <div class="category">
+      <span class="emoji">🎓</span>
+      <h3>College Projects</h3>
+      <button onclick="searchCategory('College engineering projects')">
+        Explore Projects
+      </button>
+    </div>
 
-<div class="card">
-<h3>⚙️ Working Models</h3>
-<button onclick="searchCategory('School and college working models')">
-Explore Working Models
-</button>
-</div>
+    <div class="category">
+      <span class="emoji">🔬</span>
+      <h3>Science Exhibition</h3>
+      <button onclick="searchCategory('Science exhibition working models')">
+        Explore Projects
+      </button>
+    </div>
 
-<div class="card">
-<h3>🎉 Festival Projects</h3>
-<button onclick="searchCategory('School college festival decoration projects')">
-Explore Festival Ideas
-</button>
-</div>
+    <div class="category">
+      <span class="emoji">🎨</span>
+      <h3>Handmade Projects</h3>
+      <button onclick="searchCategory('Handmade school and college projects')">
+        Explore Ideas
+      </button>
+    </div>
 
-<p><a href="home.html">← Back to Home</a></p>
+    <div class="category">
+      <span class="emoji">⚙️</span>
+      <h3>Working Models</h3>
+      <button onclick="searchCategory('School and college working models')">
+        Explore Models
+      </button>
+    </div>
+
+    <div class="category">
+      <span class="emoji">🎉</span>
+      <h3>Festival Projects</h3>
+      <button onclick="searchCategory('School college festival decoration projects')">
+        Explore Ideas
+      </button>
+    </div>
+
+  </section>
+
+  <h2 class="section-title">✨ Popular Project Topics</h2>
+
+  <section class="card">
+    <div class="topics">
+      <button class="topic" onclick="searchCategory('Robotics projects')">🤖 Robotics</button>
+      <button class="topic" onclick="searchCategory('Artificial intelligence student projects')">🧠 Artificial Intelligence</button>
+      <button class="topic" onclick="searchCategory('Solar energy projects')">☀️ Solar Energy</button>
+      <button class="topic" onclick="searchCategory('Arduino projects')">⚡ Arduino</button>
+      <button class="topic" onclick="searchCategory('Environmental science projects')">🌱 Environment</button>
+      <button class="topic" onclick="searchCategory('Water purification projects')">💧 Water Purification</button>
+      <button class="topic" onclick="searchCategory('Computer science mini projects')">💻 Computer Science</button>
+      <button class="topic" onclick="searchCategory('Electronics mini projects')">🔌 Electronics</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🛍️ Need Project Materials?</h2>
+    <p>
+      Visit RYZON Project Market to explore project-related
+      materials and listings.
+    </p>
+    <button onclick="location.href='project-market.html'">
+      Open Project Market
+    </button>
+  </section>
+
+  <nav class="navigation">
+    <a href="home.html">
+      <button>← Back to Home</button>
+    </a>
+
+    <a href="project-market.html">
+      <button>Project Market →</button>
+    </a>
+  </nav>
 
 </main>
 
+<footer>
+  © 2026 RYZON. One App, Endless Possibilities!
+</footer>
+
 <script>
 function searchProject() {
-  const value = document.getElementById("project").value.trim();
+  const input = document.getElementById("project");
+  const value = input.value.trim();
 
   if (!value) {
-    alert("Please enter a project name.");
+    alert("Please enter a project name or topic.");
+    input.focus();
     return;
   }
 
+  const query = value + " project ideas";
+
   window.open(
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(value + " project ideas"),
-    "_blank"
+    "https://www.google.com/search?q=" + encodeURIComponent(query),
+    "_blank",
+    "noopener"
   );
 }
 
 function searchCategory(category) {
   window.open(
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(category),
-    "_blank"
+    "https://www.google.com/search?q=" + encodeURIComponent(category),
+    "_blank",
+    "noopener"
   );
+}
+
+document.getElementById("project").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    searchProject();
+  }
+});
+
+// Register RYZON Service Worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(function(error) {
+        console.log("Service Worker registration failed:", error);
+      });
+  });
 }
 </script>
 
