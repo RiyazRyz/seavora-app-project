@@ -2,107 +2,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RYZON - Premium</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f2f5f9;
-      color: #222;
-    }
-    header {
-      background: #172554;
-      color: white;
-      text-align: center;
-      padding: 25px;
-      border-radius: 12px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #00000015;
-    }
-    .price {
-      font-size: 28px;
-      font-weight: bold;
-      color: #172554;
-    }
-    button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 12px;
-      background: #172554;
-      color: white;
-      border: none;
-      border-radius: 7px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #666;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>RYZON - Premium</title>
+
+<style>
+:root {
+  --bg:#071426;
+  --card:#10243d;
+  --card2:#193451;
+  --text:#f2f7ff;
+  --muted:#a7bad0;
+  --accent:#00d9ff;
+  --gold:#ffca61;
+  --border:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  padding:16px;
+  background:var(--bg);
+  color:var(--text);
+}
+.container{max-width:650px;margin:auto}
+header{
+  background:linear-gradient(135deg,#172554,#123d62);
+  color:white;
+  text-align:center;
+  padding:27px 18px;
+  border-radius:16px;
+  border:1px solid var(--border);
+}
+header h1{color:var(--accent);letter-spacing:3px;margin:5px}
+header h2{margin:12px 0}
+header p{font-size:13px;color:#d5e7f5}
+.back{
+  display:block;
+  margin:0 0 14px;
+  padding:10px 15px;
+  background:var(--card2);
+  color:white;
+  border:0;
+  border-radius:9px;
+  cursor:pointer;
+}
+.card{
+  background:var(--card);
+  padding:19px;
+  margin:15px 0;
+  border-radius:14px;
+  border:1px solid var(--border);
+  box-shadow:0 3px 12px #0002;
+}
+.card h2{margin-top:0;font-size:20px}
+.card h3{font-size:16px}
+.price{
+  font-size:27px;
+  font-weight:bold;
+  color:var(--gold);
+  margin:12px 0;
+}
+p,li{line-height:1.65}
+li{font-size:13px;color:var(--muted);margin:5px 0}
+.description{font-size:13px;color:var(--muted)}
+button{
+  width:100%;
+  padding:13px;
+  margin-top:12px;
+  background:linear-gradient(110deg,#00c9ee,#087cf0);
+  color:white;
+  border:0;
+  border-radius:9px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button.gold{
+  background:linear-gradient(110deg,#d9a638,#f6cf72);
+  color:#241b09;
+}
+button.secondary{
+  background:var(--card2);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.badge{
+  display:inline-block;
+  padding:6px 11px;
+  background:#493b19;
+  color:var(--gold);
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+.feature-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.feature{
+  padding:14px;
+  background:var(--card2);
+  border-radius:11px;
+  min-height:110px;
+}
+.feature span{font-size:25px}
+.feature strong{display:block;font-size:13px;margin:8px 0}
+.feature small{color:var(--muted);font-size:11px;line-height:1.5}
+.gift{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+.gift:last-child{border-bottom:0}
+.gift-icon{font-size:29px}
+.gift-info{flex:1}
+.gift-info strong{font-size:13px}
+.gift-info small{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+.gift button{
+  width:auto;
+  margin:0;
+  padding:9px 12px;
+  font-size:12px;
+}
+.note{font-size:12px;color:var(--muted);line-height:1.7}
+.status{
+  padding:12px;
+  background:var(--card2);
+  border-radius:10px;
+  font-size:13px;
+  margin:10px 0;
+}
+#message{
+  color:var(--accent);
+  font-size:13px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+footer{
+  text-align:center;
+  margin-top:25px;
+  color:var(--muted);
+  font-size:12px;
+  padding-bottom:20px;
+}
+</style>
 </head>
+
 <body>
+<div class="container">
+
+<button class="back" onclick="goBack()">← Back</button>
 
 <header>
   <h1>RYZON</h1>
-  <h2>Premium Membership</h2>
-  <p>Explore more possibilities with RYZON</p>
+  <h2>👑 Premium Membership</h2>
+  <p>One App, Endless Possibilities!</p>
+  <p>Explore more possibilities with RYZON.</p>
 </header>
 
 <div class="card">
-  <h2>Free Plan</h2>
+  <h2>🆓 Free Plan</h2>
   <p class="price">₹0</p>
   <ul>
     <li>Access to available basic features</li>
     <li>Explore education and job resources</li>
     <li>Browse shopping links</li>
+    <li>Worldwide Random Chat - Free</li>
+    <li>First 10 Friend Requests - Free</li>
+    <li>Available Free Gifts</li>
   </ul>
-  <button onclick="showPlan('Free')">Current Plan</button>
+  <button class="secondary" onclick="showPlan('Free')">Current Free Plan</button>
 </div>
 
 <div class="card">
-  <h2>RYZON Premium</h2>
+  <span class="badge">👑 PREMIUM MEMBERSHIP</span>
+  <h2 style="margin-top:13px">RYZON Premium</h2>
   <p class="price">Coming Soon</p>
   <ul>
-    <li>Planned premium features</li>
+    <li>Premium membership benefits</li>
     <li>Enhanced app experience</li>
     <li>Additional tools and services</li>
+    <li>Eligible paid sharing benefits</li>
+    <li>Additional Friend Requests</li>
+    <li>Premium member gift options</li>
     <li>Future exclusive benefits</li>
   </ul>
-  <button onclick="showPlan('Premium')">Notify Me - Coming Soon</button>
+  <button class="gold" onclick="showPlan('Premium')">Notify Me - Coming Soon</button>
 </div>
 
 <div class="card">
-  <h2>Membership Information</h2>
-  <p>Premium plans, pricing and benefits will be announced after development.</p>
-  <p>No payment is collected on this page.</p>
-  <p id="message"></p>
+  <h2>✨ RYZON Feature Access</h2>
+  <div class="feature-grid">
+    <div class="feature">
+      <span>🌍</span>
+      <strong>Worldwide Random Chat</strong>
+      <small>Free for everyone.</small>
+    </div>
+    <div class="feature">
+      <span>📷</span>
+      <strong>Photo Sharing</strong>
+      <small>Paid feature.</small>
+    </div>
+    <div class="feature">
+      <span>🎥</span>
+      <strong>Video Sharing</strong>
+      <small>Paid feature.</small>
+    </div>
+    <div class="feature">
+      <span>👥</span>
+      <strong>Friend Requests</strong>
+      <small>First 10 are free. Additional requests require paid access.</small>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🎁 Gifts & Rewards</h2>
+  <p class="description">
+    Send gifts to friends on RYZON. Free users can send free gifts.
+    Paid gifts can be purchased individually without a Premium Membership.
+  </p>
+
+  <div class="gift">
+    <div class="gift-icon">🌹</div>
+    <div class="gift-info">
+      <strong>Free Rose</strong>
+      <small>Free gift option</small>
+    </div>
+    <button class="secondary" onclick="selectGift('Free Rose','Free')">Select</button>
+  </div>
+
+  <div class="gift">
+    <div class="gift-icon">❤️</div>
+    <div class="gift-info">
+      <strong>Free Heart</strong>
+      <small>Free gift option</small>
+    </div>
+    <button class="secondary" onclick="selectGift('Free Heart','Free')">Select</button>
+  </div>
+
+  <div class="gift">
+    <div class="gift-icon">💎</div>
+    <div class="gift-info">
+      <strong>Diamond Gift</strong>
+      <small>Paid gift - Individual purchase</small>
+    </div>
+    <button onclick="selectGift('Diamond Gift','Paid')">Select</button>
+  </div>
+
+  <div class="gift">
+    <div class="gift-icon">👑</div>
+    <div class="gift-info">
+      <strong>Golden Crown</strong>
+      <small>Paid gift - Individual purchase</small>
+    </div>
+    <button onclick="selectGift('Golden Crown','Paid')">Select</button>
+  </div>
+
+  <div class="gift">
+    <div class="gift-icon">🚀</div>
+    <div class="gift-info">
+      <strong>Super Rocket</strong>
+      <small>Paid gift - Individual purchase</small>
+    </div>
+    <button onclick="selectGift('Super Rocket','Paid')">Select</button>
+  </div>
+
+  <p class="note">
+    Gift selection is currently a preview. Actual gift sending and payment
+    will be enabled after the existing Firebase gift and payment integration
+    is connected.
+  </p>
+</div>
+
+<div class="card">
+  <h2>💳 Payment & Membership Status</h2>
+  <div class="status" id="membershipStatus">
+    Membership: Checking account...
+  </div>
+  <div class="status" id="paymentStatus">
+    Payment: No payment is collected on this page.
+  </div>
+  <p class="note">
+    Membership pricing, payment gateway and activation will be connected
+    using the existing RYZON payment setup.
+  </p>
+</div>
+
+<div class="card">
+  <h2>📋 Membership Information</h2>
+  <p class="description">
+    Premium plans, pricing and benefits will be announced after development.
+  </p>
+  <p class="description">
+    No payment is collected on this page.
+  </p>
+  <p class="note">
+    • Worldwide Random Chat is free for everyone.<br>
+    • Photo Sharing and Video Sharing are paid features.<br>
+    • First 10 Friend Requests are free.<br>
+    • Additional Friend Requests require paid access.<br>
+    • Free gifts are available to free users.<br>
+    • Individual paid gifts do not require membership.<br>
+    • Premium Membership and individual gift purchases are separate.
+  </p>
+  <p id="message" role="status" aria-live="polite"></p>
+</div>
+
+<div class="card">
+  <h2>🆘 Need Help?</h2>
+  <p class="description">Questions about Premium, gifts or payments?</p>
+  <button class="secondary" onclick="location.href='help.html'">Contact RYZON Support</button>
 </div>
 
 <footer>
-  RYZON © 2026
+  RYZON © 2026<br><br>
+  One App, Endless Possibilities!
 </footer>
+
+</div>
 
 <script>
 function showPlan(plan) {
   const message = document.getElementById("message");
 
   if (plan === "Free") {
-    message.textContent = "You are viewing the free plan.";
+    message.textContent = "You are viewing the RYZON Free Plan.";
   } else {
     message.textContent =
       "RYZON Premium is not available yet. Payment and subscription services are not connected.";
   }
 }
+
+function selectGift(name, type) {
+  const message = document.getElementById("message");
+
+  if (type === "Free") {
+    message.textContent =
+      name + " selected. Free gift sending will be connected to your RYZON account.";
+  } else {
+    message.textContent =
+      name + " selected. Individual gift purchase does not require Premium Membership. Payment is not connected yet.";
+  }
+}
+
+function goBack() {
+  if (document.referrer && new URL(document.referrer).origin === location.origin) {
+    history.back();
+  } else {
+    location.href = "home.html";
+  }
+}
+
+document.getElementById("membershipStatus").textContent =
+  "Membership: Premium activation is not connected yet.";
+
+document.getElementById("paymentStatus").textContent =
+  "Payment: No payment is collected on this page.";
 </script>
 
 </body>
