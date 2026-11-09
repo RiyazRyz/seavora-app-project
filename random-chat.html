@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +113,9 @@ button:disabled{opacity:.5;cursor:not-allowed}
  overflow-wrap:anywhere;font-size:14px;line-height:1.5
 }
 .message.mine{align-self:flex-end;background:#087c91}
+.message-time{
+ display:block;font-size:10px;opacity:.7;margin-top:4px
+}
 .chat-empty{
  margin:auto;text-align:center;color:var(--muted);
  line-height:1.7;padding:20px
@@ -252,7 +254,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 
   <div class="composer">
    <input id="messageInput" data-chat-placeholder="messagePlaceholder"
-    placeholder="Type a message..." disabled>
+    placeholder="Type a message..." disabled
+    maxlength="2000"
+    onkeydown="if(event.key==='Enter')sendMessage()">
    <button class="send" onclick="sendMessage()" disabled id="sendBtn"
     data-chat="send">Send</button>
   </div>
@@ -261,15 +265,15 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  <button class="secondary" onclick="cancelSearch()" id="cancelBtn"
   data-chat="cancel">Cancel Search</button>
 
- <button class="primary" onclick="findPartner()" id="nextBtn" disabled
+ <button class="primary" onclick="nextPartner()" id="nextBtn" disabled
   data-chat="nextPartner">➜ Next Partner</button>
 
- <button class="danger" onclick="endChat()" data-chat="endChat">
+ <button class="danger" onclick="endChat()" id="endBtn" data-chat="endChat">
   ✕ End Chat
  </button>
 
  <p class="subtitle" data-chat="serverNote">
-  Real-time worldwide matching and message delivery require a server connection.
+  Messages are delivered through the RYZON server.
  </p>
 </section>
 
@@ -286,10 +290,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 </main>
 
 <script>
-const chatTranslations={
- en:{
+const API_BASE = "https://ryzon-friends-api.riyazsahail.workers.dev";
+
+const chatTranslations = {
+ en: {
   checkingLogin:"Checking your RYZON login...",
-  pleaseWait:"Please wait.",home:"⌂ Home",
+  pleaseWait:"Please wait.",
+  home:"⌂ Home",
   free:"🌍 FREE FOR EVERYONE",
   title:"💬 Worldwide Random Chat",
   description:"Meet new people from around the world. Choose your preferred language and get ready to connect.",
@@ -298,40 +305,58 @@ const chatTranslations={
   welcome:"Welcome to RYZON Random Chat!",
   findPartner:"🔍 Find a Chat Partner",
   freeNote:"Worldwide Random Chat is free. No Premium membership required.",
-  randomChat:"Random Chat",waiting:"Waiting for connection",
+  randomChat:"Random Chat",
+  waiting:"Waiting for connection",
   searching:"🔍 Searching for a worldwide chat partner...",
   conversationHere:"Your conversation will appear here when a partner is connected.",
-  messagePlaceholder:"Type a message...",send:"Send",
-  cancel:"Cancel Search",nextPartner:"➜ Next Partner",
+  messagePlaceholder:"Type a message...",
+  send:"Send",
+  cancel:"Cancel Search",
+  nextPartner:"➜ Next Partner",
   endChat:"✕ End Chat",
-  serverNote:"Real-time worldwide matching and message delivery require a server connection.",
+  serverNote:"Messages are delivered through the RYZON server.",
   safetyTitle:"🔐 Safety Guidelines",
   safety1:"Never share your OTP or password.",
   safety2:"Never share bank details or private information.",
   safety3:"Block and report suspicious users.",
   safety4:"Be respectful to everyone.",
   safety5:"Do not send inappropriate content.",
-  noPartner:"No partner available in this demo.",
+  noPartner:"Searching for a partner...",
   noPartnerTitle:"No Partner Connected",
   offline:"Offline",
-  noConnection:"No chat partner connected",
-  notConnected:"Real-time worldwide matching is not connected yet.",
-  tryLater:"Please try again later.",
+  noConnection:"No chat partner connected yet.",
+  notConnected:"We are still looking for someone to connect.",
+  tryLater:"Please wait or try again later.",
   searchCancelled:"Search cancelled.",
   cancelledMessage:"Search cancelled. You can try again.",
   chatEnded:"Chat ended. You can find another partner.",
   loginWait:"Please wait. Checking your login...",
-  noPartnerMessage:"No partner is connected. Real-time chat is not available yet.",
+  noPartnerMessage:"No partner is connected.",
   confirmBlock:"Block this chat partner?",
-  blockDemo:"Block management is not connected to the RYZON server yet.",
+  blockDemo:"Block this partner?",
   reportReason:"Enter the reason for reporting:",
-  reportDemo:"Report feature is a demo. This report has not been sent to RYZON Admin.",
-  report:"Report",block:"Block",
+  reportDemo:"Report this chat partner?",
+  report:"Report",
+  block:"Block",
   lookingFor:"Looking for someone who speaks",
   languageSuffix:"...",
-  toggle:"🌐 English"
+  toggle:"🌐 English",
+  connected:"Connected",
+  waitingServer:"Waiting for a partner...",
+  connectionError:"Connection error. Please try again.",
+  messageFailed:"Message could not be sent. Please try again.",
+  blocked:"Partner blocked successfully.",
+  reported:"Report submitted successfully.",
+  reportFailed:"Could not submit report.",
+  blockFailed:"Could not block partner.",
+  confirmEnd:"End this chat?",
+  emptyMessage:"Please enter a message.",
+  chatUnavailable:"This chat is no longer available.",
+  sending:"Sending...",
+  connectionLost:"Connection lost. Please try again."
  },
- ta:{
+
+ ta: {
   checkingLogin:"உங்கள் RYZON Login சரிபார்க்கப்படுகிறது...",
   pleaseWait:"தயவுசெய்து காத்திருக்கவும்.",
   home:"⌂ முகப்பு",
@@ -352,33 +377,46 @@ const chatTranslations={
   cancel:"தேடலை நிறுத்து",
   nextPartner:"➜ அடுத்த நண்பர்",
   endChat:"✕ அரட்டையை முடி",
-  serverNote:"நேரடி உலகளாவிய நண்பர் தேடல் மற்றும் செய்திகளுக்கு Server இணைப்பு தேவை.",
+  serverNote:"செய்திகள் RYZON Server வழியாக அனுப்பப்படும்.",
   safetyTitle:"🔐 பாதுகாப்பு வழிகாட்டுதல்கள்",
   safety1:"உங்கள் OTP அல்லது Password-ஐ யாரிடமும் பகிர வேண்டாம்.",
   safety2:"வங்கி விவரங்கள் அல்லது தனிப்பட்ட தகவல்களைப் பகிர வேண்டாம்.",
   safety3:"சந்தேகத்திற்குரிய நபர்களை Block மற்றும் Report செய்யுங்கள்.",
   safety4:"அனைவரிடமும் மரியாதையுடன் பழகுங்கள்.",
   safety5:"பொருத்தமற்ற உள்ளடக்கங்களை அனுப்ப வேண்டாம்.",
-  noPartner:"இந்த Demo-வில் தற்போது நண்பர் கிடைக்கவில்லை.",
+  noPartner:"நண்பரைத் தேடுகிறது...",
   noPartnerTitle:"நண்பர் இணைக்கப்படவில்லை",
   offline:"இணைப்பில் இல்லை",
-  noConnection:"அரட்டை நண்பர் யாரும் இணைக்கப்படவில்லை",
-  notConnected:"நேரடி உலகளாவிய நண்பர் தேடல் இன்னும் இணைக்கப்படவில்லை.",
-  tryLater:"பிறகு மீண்டும் முயற்சிக்கவும்.",
+  noConnection:"இன்னும் அரட்டை நண்பர் இணைக்கப்படவில்லை.",
+  notConnected:"இணைவதற்கு ஒருவரைத் தேடிக்கொண்டிருக்கிறோம்.",
+  tryLater:"காத்திருக்கவும் அல்லது மீண்டும் முயற்சிக்கவும்.",
   searchCancelled:"தேடல் நிறுத்தப்பட்டது.",
   cancelledMessage:"தேடல் நிறுத்தப்பட்டது. மீண்டும் முயற்சிக்கலாம்.",
   chatEnded:"அரட்டை முடிந்தது. வேறொரு நண்பரைத் தேடலாம்.",
   loginWait:"உங்கள் Login சரிபார்க்கப்படுகிறது. காத்திருக்கவும்...",
-  noPartnerMessage:"நண்பர் இணைக்கப்படவில்லை. நேரடி அரட்டை இன்னும் செயல்படவில்லை.",
+  noPartnerMessage:"நண்பர் இணைக்கப்படவில்லை.",
   confirmBlock:"இந்த அரட்டை நண்பரை Block செய்ய வேண்டுமா?",
-  blockDemo:"Block வசதி RYZON Server-உடன் இன்னும் இணைக்கப்படவில்லை.",
+  blockDemo:"இந்த நண்பரை Block செய்ய வேண்டுமா?",
   reportReason:"Report செய்வதற்கான காரணத்தை உள்ளிடுங்கள்:",
-  reportDemo:"இது Demo வசதி. உங்கள் Report RYZON Admin-க்கு அனுப்பப்படவில்லை.",
+  reportDemo:"இந்த அரட்டை நண்பரை Report செய்ய வேண்டுமா?",
   report:"புகார்",
   block:"தடு",
   lookingFor:"இந்த மொழி பேசும் நபரைத் தேடுகிறது:",
   languageSuffix:"...",
-  toggle:"🌐 English"
+  toggle:"🌐 English",
+  connected:"இணைக்கப்பட்டது",
+  waitingServer:"நண்பருக்காகக் காத்திருக்கிறது...",
+  connectionError:"இணைப்பில் பிழை. மீண்டும் முயற்சிக்கவும்.",
+  messageFailed:"செய்தியை அனுப்ப முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+  blocked:"நண்பர் Block செய்யப்பட்டார்.",
+  reported:"Report வெற்றிகரமாக அனுப்பப்பட்டது.",
+  reportFailed:"Report அனுப்ப முடியவில்லை.",
+  blockFailed:"Block செய்ய முடியவில்லை.",
+  confirmEnd:"இந்த அரட்டையை முடிக்க வேண்டுமா?",
+  emptyMessage:"செய்தியை உள்ளிடுங்கள்.",
+  chatUnavailable:"இந்த அரட்டை இனி செயல்பாட்டில் இல்லை.",
+  sending:"அனுப்பப்படுகிறது...",
+  connectionLost:"இணைப்பு துண்டிக்கப்பட்டது. மீண்டும் முயற்சிக்கவும்."
  }
 };
 
@@ -388,10 +426,34 @@ function currentChatLanguage(){
  }
  return "en";
 }
+
 function chatText(key){
  const lang=currentChatLanguage();
- return chatTranslations[lang][key]||chatTranslations.en[key]||key;
+ return chatTranslations[lang][key] ||
+        chatTranslations.en[key] || key;
 }
+
+const $ = id => document.getElementById(id);
+
+let authReady = false;
+let currentUser = null;
+
+let searching = false;
+let connected = false;
+let busy = false;
+
+let currentRoomId = null;
+let partnerUid = null;
+
+let statusTimer = null;
+let messageTimer = null;
+
+let lastMessageIds = new Set();
+let pollingStatus = false;
+let pollingMessages = false;
+let sendingMessage = false;
+
+
 function applyChatLanguage(){
  const lang=currentChatLanguage();
  document.documentElement.lang=lang;
@@ -402,12 +464,15 @@ function applyChatLanguage(){
  });
 
  document.querySelectorAll("[data-chat-placeholder]").forEach(element=>{
-  element.placeholder=chatText(element.getAttribute("data-chat-placeholder"));
+  element.placeholder=chatText(
+   element.getAttribute("data-chat-placeholder")
+  );
  });
 
  document.querySelectorAll("[data-chat-title]").forEach(element=>{
-  const key=element.getAttribute("data-chat-title");
-  element.title=chatText(key);
+  element.title=chatText(
+   element.getAttribute("data-chat-title")
+  );
  });
 
  $("languageToggle").textContent=chatText("toggle");
@@ -422,135 +487,562 @@ function toggleChatLanguage(){
  applyChatLanguage();
 }
 
-let searching=false;
-let searchTimer=null;
-let authReady=false;
-let currentUser=null;
-
-const $=id=>document.getElementById(id);
+function updateDynamicText(){
+ if(searching){
+  $("chatStatus").textContent=chatText("searching");
+ }
+ if(connected){
+  $("partnerStatus").textContent=chatText("connected");
+ }
+}
 
 function openRandomChatLogin(){
  sessionStorage.setItem("ryzonNextAction","randomChat");
  location.replace("./otp.html");
 }
-function goHome(){location.href="./home.html";}
 
-function showStatus(text){
- $("status").textContent=text;
+function goHome(){
+ location.href="./home.html";
 }
 
-function updateDynamicText(){
- if(searching){
-  $("chatStatus").textContent=chatText("searching");
-  $("partnerName").textContent=chatText("randomChat");
-  $("partnerStatus").textContent=chatText("waiting");
+function showStatus(message){
+ $("status").textContent=message;
+}
+
+function setEmptyMessage(message){
+ $("messages").innerHTML=`
+  <div class="chat-empty">${escapeHTML(message)}</div>
+ `;
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+
+
+// Firebase token and Worker API connection
+
+async function apiRequest(path, options={}){
+ if(!currentUser){
+  throw new Error("Please login again.");
+ }
+
+ const token=await currentUser.getIdToken();
+
+ const headers={
+  "Authorization":"Bearer "+token,
+  ...(options.body?{"Content-Type":"application/json"}:{}),
+  ...(options.headers||{})
+ };
+
+ const response=await fetch(API_BASE+path,{
+  method:options.method||"GET",
+  headers,
+  body:options.body
+ });
+
+ let data={};
+
+ try{
+  data=await response.json();
+ }catch{
+  throw new Error("Invalid server response.");
+ }
+
+ if(!response.ok){
+  throw new Error(data.error||"Server request failed.");
+ }
+
+ return data;
+}
+
+function clearPolling(){
+ if(statusTimer){
+  clearInterval(statusTimer);
+  statusTimer=null;
+ }
+
+ if(messageTimer){
+  clearInterval(messageTimer);
+  messageTimer=null;
  }
 }
 
-function findPartner(){
- if(!authReady){
-  showStatus(chatText("loginWait"));
-  return;
- }
+function resetChatState(){
+ clearPolling();
+
+ searching=false;
+ connected=false;
+ busy=false;
+
+ currentRoomId=null;
+ partnerUid=null;
+
+ lastMessageIds.clear();
+
+ $("messageInput").disabled=true;
+ $("sendBtn").disabled=true;
+ $("cancelBtn").disabled=true;
+ $("nextBtn").disabled=true;
+ $("findBtn").disabled=false;
+}
+
+function showChatScreen(){
+ $("setupCard").classList.add("hidden");
+ $("chatCard").classList.remove("hidden");
+}
+
+function showSetupScreen(){
+ $("chatCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+}
+
+
+// Find a partner
+
+async function findPartner(){
+ if(!authReady || busy)return;
+
  if(!currentUser){
   openRandomChatLogin();
   return;
  }
 
- clearTimeout(searchTimer);
- searching=true;
+ busy=true;
+ $("findBtn").disabled=true;
+ $("nextBtn").disabled=true;
 
- $("setupCard").classList.add("hidden");
- $("chatCard").classList.remove("hidden");
+ try{
+  if(currentRoomId){
+   await apiRequest("/chat/end",{
+    method:"POST",
+    body:JSON.stringify({roomId:currentRoomId})
+   });
+  }
 
- $("chatStatus").textContent=chatText("searching");
+  if(searching || connected){
+   await apiRequest("/chat/end",{
+    method:"POST",
+    body:JSON.stringify({})
+   });
+  }
+
+  resetChatState();
+  showChatScreen();
+
+  searching=true;
+  busy=true;
+
+  $("partnerName").textContent=chatText("randomChat");
+  $("partnerStatus").textContent=chatText("waiting");
+  $("chatStatus").textContent=chatText("searching");
+
+  setEmptyMessage(
+   chatText("lookingFor")+" "+$("language").value
+  );
+
+  $("cancelBtn").disabled=false;
+  $("nextBtn").disabled=true;
+
+  const result=await apiRequest("/chat/find",{
+   method:"POST",
+   body:JSON.stringify({
+    preferredLanguage:$("language").value
+   })
+  });
+
+  if(result.status==="matched"){
+   await handleMatched(result);
+  }else{
+   busy=false;
+   startStatusPolling();
+  }
+
+ }catch(error){
+  busy=false;
+  resetChatState();
+  showSetupScreen();
+  showStatus(chatText("connectionError")+" "+error.message);
+ }
+}
+
+
+// Match result
+
+async function handleMatched(result){
+ if(!result.roomId || !result.partnerUid)return;
+
+ clearPolling();
+
+ currentRoomId=result.roomId;
+ partnerUid=result.partnerUid;
+
+ searching=false;
+ connected=true;
+ busy=false;
+
  $("partnerName").textContent=chatText("randomChat");
- $("partnerStatus").textContent=chatText("waiting");
+ $("partnerStatus").textContent=chatText("connected");
+ $("chatStatus").textContent=chatText("connected");
 
- $("messages").innerHTML=`
-  <div class="chat-empty">
-   🌍<br>${escapeHTML(chatText("lookingFor"))}
-   ${escapeHTML($("language").value)}${escapeHTML(chatText("languageSuffix"))}
-  </div>`;
+ $("messageInput").disabled=false;
+ $("sendBtn").disabled=false;
+ $("cancelBtn").disabled=true;
+ $("nextBtn").disabled=false;
+
+ $("messageInput").focus();
+
+ setEmptyMessage(chatText("conversationHere"));
+
+ lastMessageIds.clear();
+
+ await loadMessages();
+
+ messageTimer=setInterval(loadMessages,2500);
+}
+
+
+// Status polling
+
+function startStatusPolling(){
+ if(statusTimer)clearInterval(statusTimer);
+
+ statusTimer=setInterval(checkChatStatus,2500);
+}
+
+async function checkChatStatus(){
+ if(pollingStatus || (!searching && !connected))return;
+
+ pollingStatus=true;
+
+ try{
+  const result=await apiRequest("/chat/status");
+
+  if(result.status==="matched" && searching){
+   await handleMatched(result);
+  }
+
+  else if(result.status==="idle" && searching){
+   // Keep the search screen open. User can cancel or retry.
+  }
+
+  else if(result.status==="idle" && connected){
+   await handlePartnerEnded();
+  }
+
+ }catch(error){
+  console.log("Status polling:",error.message);
+ }finally{
+  pollingStatus=false;
+ }
+}
+
+async function handlePartnerEnded(){
+ clearPolling();
+
+ searching=false;
+ connected=false;
+ currentRoomId=null;
+ partnerUid=null;
+
+ $("partnerStatus").textContent=chatText("offline");
+ $("chatStatus").textContent=chatText("chatUnavailable");
 
  $("messageInput").disabled=true;
  $("sendBtn").disabled=true;
- $("nextBtn").disabled=true;
- $("cancelBtn").disabled=false;
+ $("cancelBtn").disabled=true;
+ $("nextBtn").disabled=false;
 
- searchTimer=setTimeout(()=>{
-  if(!searching)return;
+}
 
-  searching=false;
-  $("chatStatus").textContent=chatText("noPartner");
-  $("partnerName").textContent=chatText("noPartnerTitle");
+
+// Message loading
+
+async function loadMessages(){
+ if(pollingMessages || !connected || !currentRoomId)return;
+
+ pollingMessages=true;
+
+ try{
+  const result=await apiRequest(
+   "/chat/messages?roomId="+encodeURIComponent(currentRoomId)
+  );
+
+  if(!connected)return;
+
+  const messages=result.messages||[];
+
+  messages.forEach(message=>{
+   if(!message.message_id || lastMessageIds.has(message.message_id)){
+    return;
+   }
+
+   lastMessageIds.add(message.message_id);
+   appendMessage(message);
+  });
+
+ }catch(error){
+  console.log("Message polling:",error.message);
+
+  if(error.message.includes("no longer active")){
+   await handlePartnerEnded();
+  }
+
+ }finally{
+  pollingMessages=false;
+ }
+}
+
+function appendMessage(message){
+ const box=$("messages");
+
+ const empty=box.querySelector(".chat-empty");
+ if(empty)empty.remove();
+
+ const own=message.sender_uid===currentUser.uid;
+
+ const element=document.createElement("div");
+ element.className="message"+(own?" mine":"");
+
+ const text=document.createElement("div");
+ text.textContent=message.message||"";
+
+ const time=document.createElement("span");
+ time.className="message-time";
+
+ if(message.created_at){
+  const date=new Date(message.created_at);
+  time.textContent=isNaN(date.getTime())
+   ? ""
+   : date.toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+     });
+ }
+
+ element.appendChild(text);
+ element.appendChild(time);
+
+ box.appendChild(element);
+ box.scrollTop=box.scrollHeight;
+}
+
+
+// Send message
+
+async function sendMessage(){
+ if(!connected || !currentRoomId || sendingMessage)return;
+
+ const input=$("messageInput");
+ const message=input.value.trim();
+
+ if(!message){
+  alert(chatText("emptyMessage"));
+  return;
+ }
+
+ if(message.length>2000){
+  alert("Maximum message length is 2000 characters.");
+  return;
+ }
+
+ sendingMessage=true;
+ $("sendBtn").disabled=true;
+
+ try{
+  await apiRequest("/chat/send",{
+   method:"POST",
+   body:JSON.stringify({
+    roomId:currentRoomId,
+    message
+   })
+  });
+
+  input.value="";
+  await loadMessages();
+
+ }catch(error){
+  alert(chatText("messageFailed")+" "+error.message);
+ }finally{
+  sendingMessage=false;
+  $("sendBtn").disabled=!connected;
+  input.focus();
+ }
+}
+
+
+// Cancel search
+
+async function cancelSearch(){
+ if(!searching || busy)return;
+
+ busy=true;
+
+ try{
+  await apiRequest("/chat/end",{
+   method:"POST",
+   body:JSON.stringify({})
+  });
+
+  resetChatState();
+
+  $("partnerName").textContent=chatText("randomChat");
   $("partnerStatus").textContent=chatText("offline");
+  $("chatStatus").textContent=chatText("searchCancelled");
 
-  $("messages").innerHTML=`
-   <div class="chat-empty">
-    <div style="font-size:35px">🌐</div>
-    <strong>${escapeHTML(chatText("noConnection"))}</strong><br>
-    ${escapeHTML(chatText("notConnected"))}<br><br>
-    ${escapeHTML(chatText("tryLater"))}
-   </div>`;
+  setEmptyMessage(chatText("cancelledMessage"));
 
   $("cancelBtn").disabled=true;
   $("nextBtn").disabled=false;
- },2500);
+
+ }catch(error){
+  alert(chatText("connectionError")+" "+error.message);
+ }finally{
+  busy=false;
+ }
 }
 
-function cancelSearch(){
- clearTimeout(searchTimer);
- searching=false;
- $("chatStatus").textContent=chatText("searchCancelled");
- $("partnerName").textContent=chatText("randomChat");
- $("partnerStatus").textContent=chatText("offline");
- $("messages").innerHTML=`
-  <div class="chat-empty">${escapeHTML(chatText("cancelledMessage"))}</div>`;
- $("cancelBtn").disabled=true;
- $("nextBtn").disabled=false;
+
+// Next partner
+
+async function nextPartner(){
+ if(busy)return;
+
+ if(!connected && !searching)return;
+
+ await findPartner();
 }
 
-function endChat(){
- clearTimeout(searchTimer);
- searching=false;
- $("chatCard").classList.add("hidden");
- $("setupCard").classList.remove("hidden");
- showStatus(chatText("chatEnded"));
+
+// End chat
+
+async function endChat(){
+ if(busy)return;
+
+ if((connected || searching) && !confirm(chatText("confirmEnd"))){
+  return;
+ }
+
+ busy=true;
+
+ try{
+  if(currentRoomId){
+   await apiRequest("/chat/end",{
+    method:"POST",
+    body:JSON.stringify({roomId:currentRoomId})
+   });
+  }else if(searching){
+   await apiRequest("/chat/end",{
+    method:"POST",
+    body:JSON.stringify({})
+   });
+  }
+
+  resetChatState();
+  showSetupScreen();
+  showStatus(chatText("chatEnded"));
+
+ }catch(error){
+  alert(chatText("connectionError")+" "+error.message);
+ }finally{
+  busy=false;
+ }
 }
 
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
-}
 
-function sendMessage(){
- alert(chatText("noPartnerMessage"));
-}
-function blockPartner(){
+// Block partner
+
+async function blockPartner(){
+ if(!connected || !partnerUid || busy)return;
+
  if(!confirm(chatText("confirmBlock")))return;
- alert(chatText("blockDemo"));
- endChat();
+
+ busy=true;
+
+ try{
+  await apiRequest("/chat/block",{
+   method:"POST",
+   body:JSON.stringify({
+    partnerUid
+   })
+  });
+
+  resetChatState();
+  showSetupScreen();
+  showStatus(chatText("blocked"));
+
+  alert(chatText("blocked"));
+
+ }catch(error){
+  alert(chatText("blockFailed")+" "+error.message);
+ }finally{
+  busy=false;
+ }
 }
-function reportPartner(){
+
+
+// Report partner
+
+async function reportPartner(){
+ if(!connected || !partnerUid || busy)return;
+
  const reason=prompt(chatText("reportReason"));
- if(!reason||!reason.trim())return;
- alert(chatText("reportDemo"));
+
+ if(!reason || !reason.trim())return;
+
+ busy=true;
+
+ try{
+  await apiRequest("/chat/report",{
+   method:"POST",
+   body:JSON.stringify({
+    partnerUid,
+    reason:reason.trim(),
+    details:""
+   })
+  });
+
+  alert(chatText("reported"));
+
+ }catch(error){
+  alert(chatText("reportFailed")+" "+error.message);
+ }finally{
+  busy=false;
+ }
 }
+
+
+// Language system
 
 applyChatLanguage();
 
 window.addEventListener("storage",event=>{
- if(event.key==="ryzonLanguage"||event.key==="ryzonTemporaryEnglish"){
+ if(event.key==="ryzonLanguage" ||
+    event.key==="ryzonTemporaryEnglish"){
   applyChatLanguage();
  }
 });
+
+
+// Firebase Authentication
+
 </script>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+ initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+ getAuth,
+ onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -582,6 +1074,7 @@ onAuthStateChanged(auth,user=>{
  showStatus(chatText("welcome"));
 
  const nextAction=sessionStorage.getItem("ryzonNextAction");
+
  if(nextAction==="randomChat"){
   sessionStorage.removeItem("ryzonNextAction");
   $("setupCard").classList.remove("hidden");
