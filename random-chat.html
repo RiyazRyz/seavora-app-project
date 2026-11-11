@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,6 +104,41 @@ button:disabled{opacity:.5;cursor:not-allowed}
  background:#193957;color:white;border:1px solid var(--border);
  border-radius:9px;padding:8px
 }
+
+/* Partner profile and Add Friend */
+.partner-profile{
+ display:flex;align-items:center;gap:12px;
+ padding:12px;background:#0b1b30;
+ border-bottom:1px solid var(--border);
+ min-width:0
+}
+.partner-avatar{
+ width:49px;height:49px;flex:0 0 49px;
+ border-radius:50%;display:grid;place-items:center;
+ background:linear-gradient(135deg,#078cc5,#13b9c5);
+ color:white;font-size:21px;font-weight:bold;
+ overflow:hidden;border:2px solid #55d7ff
+}
+.partner-avatar img{
+ width:100%;height:100%;object-fit:cover
+}
+.partner-info{flex:1;min-width:0}
+.partner-info strong{
+ display:block;font-size:14px;overflow:hidden;
+ text-overflow:ellipsis;white-space:nowrap
+}
+.partner-info small{
+ display:block;color:var(--muted);font-size:11px;margin-top:5px
+}
+.friend-btn{
+ flex:0 0 auto;padding:10px 12px;border-radius:10px;
+ border:1px solid #168fc5;background:#103d59;
+ color:#70e4ff;font-weight:bold;font-size:12px
+}
+.friend-btn.sent{background:#243b50;color:#b8c8d8;border-color:#46617a}
+.friend-btn.friends{background:#123f36;color:#65efbb;border-color:#237b5e}
+.friend-btn:disabled{opacity:.8;cursor:default}
+
 .messages{
  flex:1;overflow:auto;padding:14px;
  display:flex;flex-direction:column;gap:10px
@@ -148,6 +184,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  h1{font-size:21px}
  .header-actions{gap:5px}
  .home-btn,.language-btn{padding:9px 8px;font-size:12px}
+ .partner-profile{gap:9px;padding:10px}
+ .partner-avatar{width:43px;height:43px;flex-basis:43px}
+ .friend-btn{padding:9px 10px;font-size:11px}
 }
 </style>
 </head>
@@ -179,11 +218,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 </header>
 
 <section class="card" id="setupCard">
-
  <span class="free-label" data-chat="free">🌍 FREE FOR EVERYONE</span>
-
  <h1 data-chat="title">💬 Worldwide Random Chat</h1>
-
  <p class="subtitle" data-chat="description">
   Meet new people from around the world.
   Choose your preferred language and get ready to connect.
@@ -238,6 +274,19 @@ button:focus-visible,input:focus-visible,select:focus-visible{
   </div>
  </div>
 
+ <!-- Partner profile -->
+ <div class="partner-profile hidden" id="partnerProfile">
+  <div class="partner-avatar" id="partnerAvatar">R</div>
+  <div class="partner-info">
+   <strong id="profileDisplayName">RYZON User</strong>
+   <small id="profileSubtitle">Connected partner</small>
+  </div>
+  <button class="friend-btn" id="addFriendBtn"
+   onclick="sendFriendRequest()" disabled data-chat="addFriend">
+   + Add Friend
+  </button>
+ </div>
+
  <div class="status" id="chatStatus" data-chat="searching">
   Searching for a chat partner...
  </div>
@@ -254,8 +303,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 
   <div class="composer">
    <input id="messageInput" data-chat-placeholder="messagePlaceholder"
-    placeholder="Type a message..." disabled
-    maxlength="2000"
+    placeholder="Type a message..." disabled maxlength="2000"
     onkeydown="if(event.key==='Enter')sendMessage()">
    <button class="send" onclick="sendMessage()" disabled id="sendBtn"
     data-chat="send">Send</button>
@@ -322,27 +370,17 @@ const chatTranslations = {
   safety4:"Be respectful to everyone.",
   safety5:"Do not send inappropriate content.",
   noPartner:"Searching for a partner...",
-  noPartnerTitle:"No Partner Connected",
   offline:"Offline",
-  noConnection:"No chat partner connected yet.",
-  notConnected:"We are still looking for someone to connect.",
-  tryLater:"Please wait or try again later.",
   searchCancelled:"Search cancelled.",
   cancelledMessage:"Search cancelled. You can try again.",
   chatEnded:"Chat ended. You can find another partner.",
-  loginWait:"Please wait. Checking your login...",
-  noPartnerMessage:"No partner is connected.",
   confirmBlock:"Block this chat partner?",
-  blockDemo:"Block this partner?",
   reportReason:"Enter the reason for reporting:",
-  reportDemo:"Report this chat partner?",
   report:"Report",
   block:"Block",
   lookingFor:"Looking for someone who speaks",
-  languageSuffix:"...",
   toggle:"🌐 English",
   connected:"Connected",
-  waitingServer:"Waiting for a partner...",
   connectionError:"Connection error. Please try again.",
   messageFailed:"Message could not be sent. Please try again.",
   blocked:"Partner blocked successfully.",
@@ -352,10 +390,16 @@ const chatTranslations = {
   confirmEnd:"End this chat?",
   emptyMessage:"Please enter a message.",
   chatUnavailable:"This chat is no longer available.",
-  sending:"Sending...",
-  connectionLost:"Connection lost. Please try again."
+  addFriend:"+ Add Friend",
+  requestSent:"Request Sent",
+  friends:"✓ Friends",
+  incomingRequest:"Request Received",
+  friendError:"Could not send friend request.",
+  profileUnavailable:"Profile unavailable",
+  connectedPartner:"Connected partner",
+  profileLoading:"Loading profile...",
+  friendStatusError:"Friend status unavailable"
  },
-
  ta: {
   checkingLogin:"உங்கள் RYZON Login சரிபார்க்கப்படுகிறது...",
   pleaseWait:"தயவுசெய்து காத்திருக்கவும்.",
@@ -384,28 +428,17 @@ const chatTranslations = {
   safety3:"சந்தேகத்திற்குரிய நபர்களை Block மற்றும் Report செய்யுங்கள்.",
   safety4:"அனைவரிடமும் மரியாதையுடன் பழகுங்கள்.",
   safety5:"பொருத்தமற்ற உள்ளடக்கங்களை அனுப்ப வேண்டாம்.",
-  noPartner:"நண்பரைத் தேடுகிறது...",
-  noPartnerTitle:"நண்பர் இணைக்கப்படவில்லை",
   offline:"இணைப்பில் இல்லை",
-  noConnection:"இன்னும் அரட்டை நண்பர் இணைக்கப்படவில்லை.",
-  notConnected:"இணைவதற்கு ஒருவரைத் தேடிக்கொண்டிருக்கிறோம்.",
-  tryLater:"காத்திருக்கவும் அல்லது மீண்டும் முயற்சிக்கவும்.",
   searchCancelled:"தேடல் நிறுத்தப்பட்டது.",
   cancelledMessage:"தேடல் நிறுத்தப்பட்டது. மீண்டும் முயற்சிக்கலாம்.",
   chatEnded:"அரட்டை முடிந்தது. வேறொரு நண்பரைத் தேடலாம்.",
-  loginWait:"உங்கள் Login சரிபார்க்கப்படுகிறது. காத்திருக்கவும்...",
-  noPartnerMessage:"நண்பர் இணைக்கப்படவில்லை.",
   confirmBlock:"இந்த அரட்டை நண்பரை Block செய்ய வேண்டுமா?",
-  blockDemo:"இந்த நண்பரை Block செய்ய வேண்டுமா?",
   reportReason:"Report செய்வதற்கான காரணத்தை உள்ளிடுங்கள்:",
-  reportDemo:"இந்த அரட்டை நண்பரை Report செய்ய வேண்டுமா?",
   report:"புகார்",
   block:"தடு",
   lookingFor:"இந்த மொழி பேசும் நபரைத் தேடுகிறது:",
-  languageSuffix:"...",
   toggle:"🌐 English",
   connected:"இணைக்கப்பட்டது",
-  waitingServer:"நண்பருக்காகக் காத்திருக்கிறது...",
   connectionError:"இணைப்பில் பிழை. மீண்டும் முயற்சிக்கவும்.",
   messageFailed:"செய்தியை அனுப்ப முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
   blocked:"நண்பர் Block செய்யப்பட்டார்.",
@@ -415,8 +448,15 @@ const chatTranslations = {
   confirmEnd:"இந்த அரட்டையை முடிக்க வேண்டுமா?",
   emptyMessage:"செய்தியை உள்ளிடுங்கள்.",
   chatUnavailable:"இந்த அரட்டை இனி செயல்பாட்டில் இல்லை.",
-  sending:"அனுப்பப்படுகிறது...",
-  connectionLost:"இணைப்பு துண்டிக்கப்பட்டது. மீண்டும் முயற்சிக்கவும்."
+  addFriend:"+ நண்பராகச் சேர்",
+  requestSent:"கோரிக்கை அனுப்பப்பட்டது",
+  friends:"✓ நண்பர்கள்",
+  incomingRequest:"கோரிக்கை வந்துள்ளது",
+  friendError:"நண்பர் கோரிக்கையை அனுப்ப முடியவில்லை.",
+  profileUnavailable:"சுயவிவரம் கிடைக்கவில்லை",
+  connectedPartner:"இணைந்துள்ள நண்பர்",
+  profileLoading:"சுயவிவரம் ஏற்றப்படுகிறது...",
+  friendStatusError:"நண்பர் நிலை கிடைக்கவில்லை"
  }
 };
 
@@ -426,194 +466,127 @@ function currentChatLanguage(){
  }
  return "en";
 }
-
 function chatText(key){
  const lang=currentChatLanguage();
- return chatTranslations[lang][key] ||
-        chatTranslations.en[key] || key;
+ return chatTranslations[lang][key]||chatTranslations.en[key]||key;
 }
-
 const $ = id => document.getElementById(id);
 
-let authReady = false;
-let currentUser = null;
-
-let searching = false;
-let connected = false;
-let busy = false;
-
-let currentRoomId = null;
-let partnerUid = null;
-
-let statusTimer = null;
-let messageTimer = null;
-
-let lastMessageIds = new Set();
-let pollingStatus = false;
-let pollingMessages = false;
-let sendingMessage = false;
-
+let authReady=false;
+let currentUser=null;
+let searching=false;
+let connected=false;
+let busy=false;
+let currentRoomId=null;
+let partnerUid=null;
+let statusTimer=null;
+let messageTimer=null;
+let lastMessageIds=new Set();
+let pollingStatus=false;
+let pollingMessages=false;
+let sendingMessage=false;
+let friendRequestBusy=false;
+let partnerFriendState="unknown";
 
 function applyChatLanguage(){
  const lang=currentChatLanguage();
  document.documentElement.lang=lang;
 
  document.querySelectorAll("[data-chat]").forEach(element=>{
-  const key=element.getAttribute("data-chat");
-  element.textContent=chatText(key);
+  element.textContent=chatText(element.getAttribute("data-chat"));
  });
-
  document.querySelectorAll("[data-chat-placeholder]").forEach(element=>{
-  element.placeholder=chatText(
-   element.getAttribute("data-chat-placeholder")
-  );
+  element.placeholder=chatText(element.getAttribute("data-chat-placeholder"));
  });
-
  document.querySelectorAll("[data-chat-title]").forEach(element=>{
-  element.title=chatText(
-   element.getAttribute("data-chat-title")
-  );
+  element.title=chatText(element.getAttribute("data-chat-title"));
  });
-
  $("languageToggle").textContent=chatText("toggle");
-
  updateDynamicText();
+ updateFriendButton();
 }
-
 function toggleChatLanguage(){
  if(typeof window.toggleRYZONLanguage==="function"){
   window.toggleRYZONLanguage();
  }
  applyChatLanguage();
 }
-
 function updateDynamicText(){
- if(searching){
-  $("chatStatus").textContent=chatText("searching");
- }
- if(connected){
-  $("partnerStatus").textContent=chatText("connected");
- }
+ if(searching)$("chatStatus").textContent=chatText("searching");
+ if(connected)$("partnerStatus").textContent=chatText("connected");
 }
-
 function openRandomChatLogin(){
  sessionStorage.setItem("ryzonNextAction","randomChat");
  location.replace("./otp.html");
 }
-
-function goHome(){
- location.href="./home.html";
-}
-
-function showStatus(message){
- $("status").textContent=message;
-}
-
+function goHome(){location.href="./home.html";}
+function showStatus(message){$("status").textContent=message;}
 function setEmptyMessage(message){
- $("messages").innerHTML=`
-  <div class="chat-empty">${escapeHTML(message)}</div>
- `;
+ $("messages").innerHTML=`<div class="chat-empty">${escapeHTML(message)}</div>`;
 }
-
 function escapeHTML(value){
  return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
 
-
-// Firebase token and Worker API connection
-
-async function apiRequest(path, options={}){
- if(!currentUser){
-  throw new Error("Please login again.");
- }
-
+// Firebase token and Worker API
+async function apiRequest(path,options={}){
+ if(!currentUser)throw new Error("Please login again.");
  const token=await currentUser.getIdToken();
-
  const headers={
   "Authorization":"Bearer "+token,
   ...(options.body?{"Content-Type":"application/json"}:{}),
   ...(options.headers||{})
  };
-
  const response=await fetch(API_BASE+path,{
-  method:options.method||"GET",
-  headers,
-  body:options.body
+  method:options.method||"GET",headers,body:options.body
  });
-
  let data={};
-
- try{
-  data=await response.json();
- }catch{
-  throw new Error("Invalid server response.");
- }
-
- if(!response.ok){
-  throw new Error(data.error||"Server request failed.");
- }
-
+ try{data=await response.json();}
+ catch{throw new Error("Invalid server response.");}
+ if(!response.ok)throw new Error(data.error||"Server request failed.");
  return data;
 }
-
 function clearPolling(){
- if(statusTimer){
-  clearInterval(statusTimer);
-  statusTimer=null;
- }
-
- if(messageTimer){
-  clearInterval(messageTimer);
-  messageTimer=null;
- }
+ if(statusTimer){clearInterval(statusTimer);statusTimer=null;}
+ if(messageTimer){clearInterval(messageTimer);messageTimer=null;}
 }
-
+function resetPartnerProfile(){
+ $("partnerProfile").classList.add("hidden");
+ $("partnerAvatar").textContent="R";
+ $("partnerAvatar").innerHTML="R";
+ $("profileDisplayName").textContent="RYZON User";
+ $("profileSubtitle").textContent=chatText("connectedPartner");
+ $("addFriendBtn").disabled=true;
+ $("addFriendBtn").className="friend-btn";
+ partnerFriendState="unknown";
+}
 function resetChatState(){
  clearPolling();
-
- searching=false;
- connected=false;
- busy=false;
-
- currentRoomId=null;
- partnerUid=null;
-
+ searching=false;connected=false;busy=false;
+ currentRoomId=null;partnerUid=null;
  lastMessageIds.clear();
-
+ resetPartnerProfile();
  $("messageInput").disabled=true;
  $("sendBtn").disabled=true;
  $("cancelBtn").disabled=true;
  $("nextBtn").disabled=true;
  $("findBtn").disabled=false;
 }
-
 function showChatScreen(){
  $("setupCard").classList.add("hidden");
  $("chatCard").classList.remove("hidden");
 }
-
 function showSetupScreen(){
  $("chatCard").classList.add("hidden");
  $("setupCard").classList.remove("hidden");
 }
 
-
-// Find a partner
-
+// Find partner
 async function findPartner(){
- if(!authReady || busy)return;
-
- if(!currentUser){
-  openRandomChatLogin();
-  return;
- }
-
+ if(!authReady||busy)return;
+ if(!currentUser){openRandomChatLogin();return;}
  busy=true;
  $("findBtn").disabled=true;
  $("nextBtn").disabled=true;
@@ -621,255 +594,296 @@ async function findPartner(){
  try{
   if(currentRoomId){
    await apiRequest("/chat/end",{
-    method:"POST",
-    body:JSON.stringify({roomId:currentRoomId})
+    method:"POST",body:JSON.stringify({roomId:currentRoomId})
    });
   }
-
-  if(searching || connected){
+  if(searching||connected){
    await apiRequest("/chat/end",{
-    method:"POST",
-    body:JSON.stringify({})
+    method:"POST",body:JSON.stringify({})
    });
   }
-
   resetChatState();
   showChatScreen();
-
-  searching=true;
-  busy=true;
-
+  searching=true;busy=true;
   $("partnerName").textContent=chatText("randomChat");
   $("partnerStatus").textContent=chatText("waiting");
   $("chatStatus").textContent=chatText("searching");
-
-  setEmptyMessage(
-   chatText("lookingFor")+" "+$("language").value
-  );
-
+  setEmptyMessage(chatText("lookingFor")+" "+$("language").value);
   $("cancelBtn").disabled=false;
   $("nextBtn").disabled=true;
 
   const result=await apiRequest("/chat/find",{
    method:"POST",
-   body:JSON.stringify({
-    preferredLanguage:$("language").value
-   })
+   body:JSON.stringify({preferredLanguage:$("language").value})
   });
-
   if(result.status==="matched"){
    await handleMatched(result);
   }else{
    busy=false;
    startStatusPolling();
   }
-
  }catch(error){
-  busy=false;
-  resetChatState();
-  showSetupScreen();
+  busy=false;resetChatState();showSetupScreen();
   showStatus(chatText("connectionError")+" "+error.message);
  }
 }
 
-
 // Match result
-
 async function handleMatched(result){
- if(!result.roomId || !result.partnerUid)return;
-
+ if(!result.roomId||!result.partnerUid)return;
  clearPolling();
-
  currentRoomId=result.roomId;
  partnerUid=result.partnerUid;
-
- searching=false;
- connected=true;
- busy=false;
+ searching=false;connected=true;busy=false;
 
  $("partnerName").textContent=chatText("randomChat");
  $("partnerStatus").textContent=chatText("connected");
  $("chatStatus").textContent=chatText("connected");
-
  $("messageInput").disabled=false;
  $("sendBtn").disabled=false;
  $("cancelBtn").disabled=true;
  $("nextBtn").disabled=false;
-
  $("messageInput").focus();
-
  setEmptyMessage(chatText("conversationHere"));
-
  lastMessageIds.clear();
 
- await loadMessages();
+ // Profile and friend status are loaded after a successful match.
+ loadPartnerDetails();
 
+ await loadMessages();
  messageTimer=setInterval(loadMessages,2500);
 }
 
-
-// Status polling
-
-function startStatusPolling(){
- if(statusTimer)clearInterval(statusTimer);
-
- statusTimer=setInterval(checkChatStatus,2500);
-}
-
-async function checkChatStatus(){
- // Do not process a polling result while another action is running.
- if(busy || pollingStatus || (!searching && !connected))return;
-
- pollingStatus=true;
+// Partner profile
+async function loadPartnerDetails(){
+ if(!connected||!partnerUid)return;
+ const uid=partnerUid;
+ $("partnerProfile").classList.remove("hidden");
+ $("profileDisplayName").textContent=chatText("profileLoading");
+ $("profileSubtitle").textContent=chatText("connectedPartner");
+ $("partnerAvatar").innerHTML="R";
+ $("partnerAvatar").textContent="R";
+ $("addFriendBtn").disabled=true;
 
  try{
+  const result=await apiRequest(
+   "/chat/partner-profile?partnerUid="+encodeURIComponent(uid)
+  );
+  if(!connected||partnerUid!==uid)return;
+
+  const profile=result.profile||result;
+  const displayName=profile.display_name||profile.displayName||"RYZON User";
+  const photoUrl=profile.photo_url||profile.photoUrl||"";
+
+  $("profileDisplayName").textContent=displayName;
+  $("partnerName").textContent=displayName;
+
+  if(photoUrl){
+   const img=document.createElement("img");
+   img.src=photoUrl;
+   img.alt="Partner profile";
+   img.referrerPolicy="no-referrer";
+   img.onerror=()=>{$("partnerAvatar").textContent="R";};
+   $("partnerAvatar").innerHTML="";
+   $("partnerAvatar").appendChild(img);
+  }else{
+   $("partnerAvatar").textContent=
+    displayName.trim().charAt(0).toUpperCase()||"R";
+  }
+ }catch(error){
+  console.log("Partner profile:",error.message);
+  $("profileDisplayName").textContent="RYZON User";
+  $("partnerName").textContent="RYZON User";
+  $("profileSubtitle").textContent=chatText("profileUnavailable");
+ }
+
+ await loadFriendStatus(uid);
+}
+
+// Friend status
+async function loadFriendStatus(uid){
+ if(!uid||!connected||partnerUid!==uid)return;
+ try{
+  const result=await apiRequest(
+   "/friends/status?friendUid="+encodeURIComponent(uid)
+  );
+  if(!connected||partnerUid!==uid)return;
+  partnerFriendState=result.status||"not_friends";
+  updateFriendButton();
+ }catch(error){
+  console.log("Friend status:",error.message);
+  // The Add Friend action can still be attempted if status lookup fails.
+  partnerFriendState="not_friends";
+  updateFriendButton();
+ }
+}
+function updateFriendButton(){
+ const button=$("addFriendBtn");
+ if(!button)return;
+ button.className="friend-btn";
+
+ if(!connected||!partnerUid){
+  button.disabled=true;
+  button.textContent=chatText("addFriend");
+  return;
+ }
+
+ if(partnerFriendState==="friends"){
+  button.textContent=chatText("friends");
+  button.classList.add("friends");
+  button.disabled=true;
+ }else if(partnerFriendState==="outgoing_pending"||
+          partnerFriendState==="pending"){
+  button.textContent=chatText("requestSent");
+  button.classList.add("sent");
+  button.disabled=true;
+ }else if(partnerFriendState==="incoming_pending"){
+  button.textContent=chatText("incomingRequest");
+  button.classList.add("sent");
+  button.disabled=true;
+ }else if(partnerFriendState==="blocked"){
+  button.textContent=chatText("block");
+  button.disabled=true;
+ }else{
+  button.textContent=chatText("addFriend");
+  button.disabled=friendRequestBusy;
+ }
+}
+
+// Send friend request
+async function sendFriendRequest(){
+ if(!connected||!partnerUid||friendRequestBusy)return;
+ if(partnerUid===currentUser.uid)return;
+
+ friendRequestBusy=true;
+ $("addFriendBtn").disabled=true;
+
+ try{
+  const result=await apiRequest("/friends/request",{
+   method:"POST",
+   body:JSON.stringify({friendUid:partnerUid})
+  });
+
+  partnerFriendState=result.status||"outgoing_pending";
+  updateFriendButton();
+
+  if(partnerFriendState==="friends"){
+   alert(chatText("friends"));
+  }else{
+   alert(chatText("requestSent"));
+  }
+ }catch(error){
+  const message=(error.message||"").toLowerCase();
+
+  if(message.includes("already")&&message.includes("friend")){
+   partnerFriendState="friends";
+   updateFriendButton();
+  }else if(message.includes("pending")||message.includes("duplicate")){
+   partnerFriendState="outgoing_pending";
+   updateFriendButton();
+  }else{
+   alert(chatText("friendError")+" "+error.message);
+   $("addFriendBtn").disabled=false;
+  }
+ }finally{
+  friendRequestBusy=false;
+  updateFriendButton();
+ }
+}
+
+// Status polling
+function startStatusPolling(){
+ if(statusTimer)clearInterval(statusTimer);
+ statusTimer=setInterval(checkChatStatus,2500);
+}
+async function checkChatStatus(){
+ if(busy||pollingStatus||(!searching&&!connected))return;
+ pollingStatus=true;
+ try{
   const result=await apiRequest("/chat/status");
-
-  // Cancel/end/find may have started while the request was pending.
   if(busy)return;
-
-  if(result.status==="matched" && searching){
+  if(result.status==="matched"&&searching){
    await handleMatched(result);
-  }
-
-  else if(result.status==="idle" && searching){
-   // Keep the search screen open. User can cancel or retry.
-  }
-
-  else if(result.status==="idle" && connected){
+  }else if(result.status==="idle"&&connected){
    await handlePartnerEnded();
   }
-
  }catch(error){
   console.log("Status polling:",error.message);
  }finally{
   pollingStatus=false;
  }
 }
-
 async function handlePartnerEnded(){
  clearPolling();
-
- searching=false;
- connected=false;
- currentRoomId=null;
- partnerUid=null;
-
+ searching=false;connected=false;
+ currentRoomId=null;partnerUid=null;
+ resetPartnerProfile();
  $("partnerStatus").textContent=chatText("offline");
  $("chatStatus").textContent=chatText("chatUnavailable");
-
  $("messageInput").disabled=true;
  $("sendBtn").disabled=true;
  $("cancelBtn").disabled=true;
  $("nextBtn").disabled=false;
 }
 
-
 // Message loading
-
 async function loadMessages(){
- if(pollingMessages || !connected || !currentRoomId)return;
-
+ if(pollingMessages||!connected||!currentRoomId)return;
  pollingMessages=true;
-
  try{
   const result=await apiRequest(
    "/chat/messages?roomId="+encodeURIComponent(currentRoomId)
   );
-
   if(!connected)return;
-
-  const messages=result.messages||[];
-
-  messages.forEach(message=>{
-   if(!message.message_id || lastMessageIds.has(message.message_id)){
-    return;
-   }
-
+  (result.messages||[]).forEach(message=>{
+   if(!message.message_id||lastMessageIds.has(message.message_id))return;
    lastMessageIds.add(message.message_id);
    appendMessage(message);
   });
-
  }catch(error){
   console.log("Message polling:",error.message);
-
-  if(error.message.includes("no longer active")){
-   await handlePartnerEnded();
-  }
-
+  if(error.message.includes("no longer active"))await handlePartnerEnded();
  }finally{
   pollingMessages=false;
  }
 }
-
 function appendMessage(message){
  const box=$("messages");
-
  const empty=box.querySelector(".chat-empty");
  if(empty)empty.remove();
-
  const own=message.sender_uid===currentUser.uid;
-
  const element=document.createElement("div");
  element.className="message"+(own?" mine":"");
-
  const text=document.createElement("div");
  text.textContent=message.message||"";
-
  const time=document.createElement("span");
  time.className="message-time";
-
  if(message.created_at){
   const date=new Date(message.created_at);
-  time.textContent=isNaN(date.getTime())
-   ? ""
-   : date.toLocaleTimeString([],{
-      hour:"2-digit",
-      minute:"2-digit"
-     });
+  time.textContent=isNaN(date.getTime())?"":date.toLocaleTimeString([],{
+   hour:"2-digit",minute:"2-digit"
+  });
  }
-
- element.appendChild(text);
- element.appendChild(time);
-
- box.appendChild(element);
- box.scrollTop=box.scrollHeight;
+ element.appendChild(text);element.appendChild(time);
+ box.appendChild(element);box.scrollTop=box.scrollHeight;
 }
 
-
 // Send message
-
 async function sendMessage(){
- if(!connected || !currentRoomId || sendingMessage)return;
-
+ if(!connected||!currentRoomId||sendingMessage)return;
  const input=$("messageInput");
  const message=input.value.trim();
-
- if(!message){
-  alert(chatText("emptyMessage"));
-  return;
- }
-
+ if(!message){alert(chatText("emptyMessage"));return;}
  if(message.length>2000){
-  alert("Maximum message length is 2000 characters.");
-  return;
+  alert("Maximum message length is 2000 characters.");return;
  }
-
- sendingMessage=true;
- $("sendBtn").disabled=true;
-
+ sendingMessage=true;$("sendBtn").disabled=true;
  try{
   await apiRequest("/chat/send",{
-   method:"POST",
-   body:JSON.stringify({
-    roomId:currentRoomId,
-    message
-   })
+   method:"POST",body:JSON.stringify({roomId:currentRoomId,message})
   });
-
   input.value="";
   await loadMessages();
-
  }catch(error){
   alert(chatText("messageFailed")+" "+error.message);
  }finally{
@@ -879,230 +893,119 @@ async function sendMessage(){
  }
 }
 
-
-// Cancel search - race condition protection
-
+// Cancel search
 async function endMatchedRoomIfPresent(statusResult){
- if(
-  statusResult &&
-  statusResult.status==="matched" &&
-  statusResult.roomId
- ){
+ if(statusResult&&statusResult.status==="matched"&&statusResult.roomId){
   await apiRequest("/chat/end",{
-   method:"POST",
-   body:JSON.stringify({
-    roomId:statusResult.roomId
-   })
+   method:"POST",body:JSON.stringify({roomId:statusResult.roomId})
   });
-
   return true;
  }
-
  return false;
 }
-
 async function cancelSearch(){
- if(!searching || busy)return;
-
+ if(!searching||busy)return;
  busy=true;
-
- // Stop polling so it cannot process a match while cancellation runs.
- if(statusTimer){
-  clearInterval(statusTimer);
-  statusTimer=null;
- }
-
+ if(statusTimer){clearInterval(statusTimer);statusTimer=null;}
  $("cancelBtn").disabled=true;
-
  try{
-  // First check: matching may have completed just before Cancel was tapped.
   let statusResult=await apiRequest("/chat/status");
-
   await endMatchedRoomIfPresent(statusResult);
-
-  // Remove the user's waiting queue entry.
-  await apiRequest("/chat/end",{
-   method:"POST",
-   body:JSON.stringify({})
-  });
-
-  // Second check: catch a match that completed during cancellation.
+  await apiRequest("/chat/end",{method:"POST",body:JSON.stringify({})});
   statusResult=await apiRequest("/chat/status");
-
   await endMatchedRoomIfPresent(statusResult);
-
-  // Clear any remaining queue entry after the second check.
-  await apiRequest("/chat/end",{
-   method:"POST",
-   body:JSON.stringify({})
-  });
-
-  // Final verification for a late match.
+  await apiRequest("/chat/end",{method:"POST",body:JSON.stringify({})});
   statusResult=await apiRequest("/chat/status");
-
   await endMatchedRoomIfPresent(statusResult);
 
   resetChatState();
-
   $("partnerName").textContent=chatText("randomChat");
   $("partnerStatus").textContent=chatText("offline");
   $("chatStatus").textContent=chatText("searchCancelled");
-
   setEmptyMessage(chatText("cancelledMessage"));
-
   $("cancelBtn").disabled=true;
   $("nextBtn").disabled=false;
-
  }catch(error){
-  // Keep the search state available so the user can retry safely.
   $("cancelBtn").disabled=false;
-
-  if(searching && !statusTimer){
-   startStatusPolling();
-  }
-
+  if(searching&&!statusTimer)startStatusPolling();
   alert(chatText("connectionError")+" "+error.message);
-
- }finally{
-  busy=false;
- }
+ }finally{busy=false;}
 }
 
-
 // Next partner
-
 async function nextPartner(){
- if(busy)return;
-
- if(!connected && !searching)return;
-
+ if(busy||(!connected&&!searching))return;
  await findPartner();
 }
 
-
 // End chat
-
 async function endChat(){
  if(busy)return;
-
- if((connected || searching) && !confirm(chatText("confirmEnd"))){
-  return;
- }
-
+ if((connected||searching)&&!confirm(chatText("confirmEnd")))return;
  busy=true;
-
  try{
   if(currentRoomId){
    await apiRequest("/chat/end",{
-    method:"POST",
-    body:JSON.stringify({roomId:currentRoomId})
+    method:"POST",body:JSON.stringify({roomId:currentRoomId})
    });
   }else if(searching){
-   await apiRequest("/chat/end",{
-    method:"POST",
-    body:JSON.stringify({})
-   });
+   await apiRequest("/chat/end",{method:"POST",body:JSON.stringify({})});
   }
-
   resetChatState();
   showSetupScreen();
   showStatus(chatText("chatEnded"));
-
  }catch(error){
   alert(chatText("connectionError")+" "+error.message);
- }finally{
-  busy=false;
- }
+ }finally{busy=false;}
 }
 
-
 // Block partner
-
 async function blockPartner(){
- if(!connected || !partnerUid || busy)return;
-
+ if(!connected||!partnerUid||busy)return;
  if(!confirm(chatText("confirmBlock")))return;
-
  busy=true;
-
  try{
   await apiRequest("/chat/block",{
-   method:"POST",
-   body:JSON.stringify({
-    partnerUid
-   })
+   method:"POST",body:JSON.stringify({partnerUid})
   });
-
   resetChatState();
   showSetupScreen();
   showStatus(chatText("blocked"));
-
   alert(chatText("blocked"));
-
  }catch(error){
   alert(chatText("blockFailed")+" "+error.message);
- }finally{
-  busy=false;
- }
+ }finally{busy=false;}
 }
 
-
 // Report partner
-
 async function reportPartner(){
- if(!connected || !partnerUid || busy)return;
-
+ if(!connected||!partnerUid||busy)return;
  const reason=prompt(chatText("reportReason"));
-
- if(!reason || !reason.trim())return;
-
+ if(!reason||!reason.trim())return;
  busy=true;
-
  try{
   await apiRequest("/chat/report",{
    method:"POST",
-   body:JSON.stringify({
-    partnerUid,
-    reason:reason.trim(),
-    details:""
-   })
+   body:JSON.stringify({partnerUid,reason:reason.trim(),details:""})
   });
-
   alert(chatText("reported"));
-
  }catch(error){
   alert(chatText("reportFailed")+" "+error.message);
- }finally{
-  busy=false;
- }
+ }finally{busy=false;}
 }
 
-
 // Language system
-
 applyChatLanguage();
-
 window.addEventListener("storage",event=>{
- if(event.key==="ryzonLanguage" ||
-    event.key==="ryzonTemporaryEnglish"){
+ if(event.key==="ryzonLanguage"||event.key==="ryzonTemporaryEnglish"){
   applyChatLanguage();
  }
 });
-
-
-// Firebase Authentication
-
 </script>
 
 <script type="module">
-import {
- initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
- getAuth,
- onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -1130,16 +1033,13 @@ onAuthStateChanged(auth,user=>{
  $("authLoading").style.display="none";
  $("mainContent").style.display="block";
  $("findBtn").disabled=false;
-
  showStatus(chatText("welcome"));
 
  const nextAction=sessionStorage.getItem("ryzonNextAction");
-
  if(nextAction==="randomChat"){
   sessionStorage.removeItem("ryzonNextAction");
   $("setupCard").classList.remove("hidden");
  }
-
  applyChatLanguage();
 });
 </script>
