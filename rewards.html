@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071a30">
+<meta name="description" content="RYZON Rewards - Explore planned rewards and Free Coins.">
+<meta name="application-name" content="RYZON">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>RYZON Rewards</title>
+<link rel="manifest" href="./manifest.json">
+<script src="./language-system.js"></script>
+<style>
+:root{--navy:#071a30;--panel:#102943;--panel2:#143653;--cyan:#55dcff;--text:#f1f5fb;--muted:#a9bdd2;--line:#294966;--gold:#ffd76a;--green:#63dda0}
+*{box-sizing:border-box}
+html:not(.auth-ready) body{visibility:hidden}
+html:not(.auth-ready)::before{content:"Checking secure login...";position:fixed;inset:0;display:grid;place-items:center;background:#071a30;color:#f1f5fb;font:700 15px Arial;z-index:9999}
+body{margin:0;background:radial-gradient(ellipse at 80% 0%,#17466a 0,transparent 35%),var(--navy);color:var(--text);font-family:Arial,sans-serif;padding-bottom:28px}
+button,a{font:inherit}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;background:#071a30ed;border-bottom:1px solid #24445f;backdrop-filter:blur(12px)}
+.header-left{display:flex;align-items:center;gap:10px;min-width:0}
+.back,.language{width:42px;height:42px;display:grid;place-items:center;border:1px solid #31516e;border-radius:13px;background:#102b46;color:white;text-decoration:none;font-size:20px}
+.brand{font-weight:900;letter-spacing:3px;font-size:21px}
+.page-label{font-size:11px;color:var(--muted);margin-top:3px}
+main{max-width:760px;margin:auto;padding:16px}
+.hero{position:relative;overflow:hidden;padding:22px 19px;border:1px solid #78602d;border-radius:22px;background:linear-gradient(135deg,#4a3b1c,#242b35 62%,#102943);box-shadow:0 12px 28px #0004}
+.hero:after{content:"🎁";position:absolute;right:14px;top:13px;font-size:58px;opacity:.2}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:#ffe49a}
+.hero h1{font-size:27px;margin:9px 0 7px;max-width:75%}
+.hero p{font-size:13px;line-height:1.6;color:#f0dfb7;max-width:85%;margin:0}
+.status{display:inline-flex;align-items:center;gap:7px;margin-top:15px;padding:7px 11px;border:1px solid #9b7b38;border-radius:20px;background:#1d1c17;color:#ffe49a;font-size:11px;font-weight:800}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#ffc95c}
+.section{margin-top:21px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 11px}
+.section-title h2{font-size:17px;margin:0}
+.section-title small{color:var(--muted);font-size:11px}
+.balance-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.balance{padding:15px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#163a58,#10263e)}
+.balance.purchased{border-color:#76602d;background:linear-gradient(145deg,#3c351f,#182b40)}
+.balance-label{font-size:11px;color:#c2d3e3}
+.balance-value{font-size:20px;font-weight:900;margin:9px 0 4px}
+.balance-note{font-size:10px;color:var(--muted);line-height:1.45}
+.notice{padding:13px;border:1px solid #3c6684;border-radius:14px;background:#102943;color:#c5d9e9;font-size:12px;line-height:1.6}
+.notice strong{color:#fff}
+.task-list{display:grid;gap:10px}
+.task{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:15px;background:#102943}
+.task-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:13px;background:#1c4666;font-size:22px}
+.task-info{min-width:0;flex:1}
+.task-info b{display:block;font-size:13px}
+.task-info small{display:block;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.45}
+.planned{padding:6px 8px;border:1px solid #59728a;border-radius:20px;color:#b8c9d9;font-size:9px;font-weight:800;white-space:nowrap}
+.rules{display:grid;gap:9px}
+.rule{padding:13px;border:1px solid var(--line);border-radius:14px;background:#0d263e}
+.rule b{display:block;font-size:12px;margin-bottom:5px}
+.rule p{margin:0;color:#b8cadd;font-size:11px;line-height:1.55}
+.rule.good b{color:#8be3b2}
+.rule.warn b{color:#ffe08a}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.action{min-height:46px;display:grid;place-items:center;padding:11px;border:1px solid #3d7191;border-radius:12px;background:#123e60;color:white;text-decoration:none;text-align:center;font-size:12px;font-weight:800}
+.action.secondary{background:#102943;border-color:#31516e}
+.footer-note{text-align:center;padding:21px 5px 8px;color:#829bb2;font-size:10px;line-height:1.6}
+#authError{display:none;margin:18px;padding:15px;border:1px solid #a74750;border-radius:13px;background:#49252b;color:#ffd2d2;line-height:1.5}
+@media(max-width:380px){.hero h1{font-size:23px}.balance{padding:12px}.balance-value{font-size:17px}.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+ <div class="header-left">
+  <a class="back" href="./home.html" aria-label="Back to Home">‹</a>
+  <div><div class="brand">RYZON</div><div class="page-label">REWARDS CENTRE</div></div>
+ </div>
+ <a class="language" href="./language.html" aria-label="Change language" title="Change language">🌐</a>
+</header>
+
+<main>
+ <section class="hero">
+  <div class="eyebrow">RYZON REWARDS</div>
+  <h1>Small actions. Meaningful rewards.</h1>
+  <p>Explore planned ways to earn Free Coins through eligible activities, events and referrals.</p>
+  <div class="status"><span class="status-dot"></span> REWARDS PREVIEW · NOT ACTIVE YET</div>
+ </section>
+
+ <section class="section">
+  <div class="section-title"><h2>🪙 Your Coin Types</h2><small>Separate balances</small></div>
+  <div class="balance-grid">
+   <article class="balance">
+    <div class="balance-label">🟢 Free Coins</div>
+    <div class="balance-value">Not connected</div>
+    <div class="balance-note">Balance and earning history will appear after the secure wallet is ready.</div>
+   </article>
+   <article class="balance purchased">
+    <div class="balance-label">🟡 Purchased Coins</div>
+    <div class="balance-value">Not connected</div>
+    <div class="balance-note">Purchase balance and transaction history are managed separately.</div>
+   </article>
+  </div>
+  <div class="notice" style="margin-top:10px"><strong>Important:</strong> This is a design preview. No reward is being issued, no balance is being changed and no payment is being taken on this page.</div>
+ </section>
+
+ <section class="section">
+  <div class="section-title"><h2>🎯 Planned Ways to Earn</h2><small>Eligibility rules will apply</small></div>
+  <div class="task-list">
+   <article class="task"><div class="task-icon">📅</div><div class="task-info"><b>Daily Check-in</b><small>A possible reward for eligible daily app visits.</small></div><span class="planned">PLANNED</span></article>
+   <article class="task"><div class="task-icon">📚</div><div class="task-info"><b>Learning &amp; App Activities</b><small>Possible rewards for approved learning activities and useful participation.</small></div><span class="planned">PLANNED</span></article>
+   <article class="task"><div class="task-icon">👥</div><div class="task-info"><b>Eligible Referrals</b><small>Rewards may require a genuine new account and server-side verification. Self-referrals and abuse will not qualify.</small></div><span class="planned">PLANNED</span></article>
+   <article class="task"><div class="task-icon">🏆</div><div class="task-info"><b>Official Events &amp; Challenges</b><small>Occasional rewards for eligible RYZON events, subject to published rules.</small></div><span class="planned">PLANNED</span></article>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-title"><h2>📜 Coin Usage Rules</h2></div>
+  <div class="rules">
+   <article class="rule good"><b>🟢 Free Coins</b><p>Free Coins can be used only to send RYZON gifts. They cannot be used for Premium, other app features, transfers, shopping, vouchers, recharge or bill payments.</p></article>
+   <article class="rule"><b>🟡 Purchased Coins</b><p>Purchased Coins may be used for gifts, Premium and eligible app features, and transfers to accepted friends. They are separate from Free Coins and cannot be withdrawn as cash.</p></article>
+   <article class="rule warn"><b>🛍️ Future shopping rewards</b><p>Shopping vouchers, recharge and bill-payment options are not active. Any future launch depends on approved providers, legal and accounting review, settlement and refund support.</p></article>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-title"><h2>🚀 Continue Exploring</h2></div>
+  <div class="actions">
+   <a class="action" href="./gifts.html">🎁 Explore Gifts</a>
+   <a class="action secondary" href="./home.html">⌂ Back to Home</a>
+  </div>
+ </section>
+
+ <div class="footer-note">RYZON © 2026 · One App, Endless Possibilities!<br>Rewards will become available only after secure server-side validation and wallet integration.</div>
+</main>
+
+<div id="authError" role="alert"></div>
+<script type="module">
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
+};
+function hasAcceptedLogin(user){
+ const providers=user.providerData||[];
+ return Boolean((user.email&&user.emailVerified)||providers.some(p=>p.providerId==="google.com"||p.providerId==="phone"));
+}
+async function startAuth(){
+ try{
+  const [appModule,authModule]=await Promise.all([
+   import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+   import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js")
+  ]);
+  const app=appModule.initializeApp(firebaseConfig);
+  const auth=authModule.getAuth(app);
+  authModule.onAuthStateChanged(auth,async user=>{
+   if(!user){window.location.replace("./otp.html");return;}
+   try{
+    await user.reload();
+    const fresh=auth.currentUser;
+    if(!fresh||!hasAcceptedLogin(fresh)){
+     await authModule.signOut(auth);
+     window.location.replace("./otp.html");
+     return;
+    }
+    document.documentElement.classList.add("auth-ready");
+   }catch(error){
+    console.error("RYZON Rewards auth check failed:",error);
+    const panel=document.getElementById("authError");
+    panel.textContent="We couldn't verify your login. Check your connection and reload this page. Your saved login session has not been deliberately signed out.";
+    panel.style.display="block";
+    document.documentElement.classList.add("auth-ready");
+   }
+  });
+ }catch(error){
+  console.error("RYZON Rewards could not load Firebase:",error);
+  const panel=document.getElementById("authError");
+  panel.textContent="RYZON could not load its secure login service. Check your connection and reload this page.";
+  panel.style.display="block";
+  document.documentElement.classList.add("auth-ready");
+ }
+}
+startAuth();
+</script>
+<script>
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js",{scope:"./"}).catch(error=>console.warn("RYZON service worker:",error)));
+}
+</script>
+</body>
+</html>
