@@ -343,6 +343,31 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
   </div>
  </section>
 
+ <section class="section" id="futureServices">
+  <div class="section-heading">
+   <h2>🚀 RYZON Future Services</h2>
+   <span class="section-link">15 planned ideas</span>
+  </div>
+  <p class="modal-note" style="margin:0 0 12px">Explore the next features planned for the RYZON Super App. These are roadmap previews; they are not active services yet.</p>
+  <div class="service-grid" id="futureServiceGrid">
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('live')"><span>📡</span>RYZON Live<small>Live streams and community Q&amp;A</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('ai-studio')"><span>✨</span>AI Studio<small>Creative and productivity tools</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('wallet-plus')"><span>🪙</span>Wallet Plus<small>Secure coins and rewards</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('academy')"><span>🎓</span>Academy<small>Courses and learning challenges</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('work')"><span>💼</span>Work<small>Skills, portfolios and opportunities</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('market')"><span>🛍️</span>Market<small>Seller stores and order tracking</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('events')"><span>🎟️</span>Events<small>Workshops and competitions</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('communities')"><span>🌍</span>Communities Plus<small>Interest-based spaces</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('planner')"><span>🗓️</span>Planner<small>Tasks, notes and reminders</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('translate')"><span>🌐</span>Translate<small>Text and supported voice translation</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('id')"><span>🪪</span>RYZON ID<small>Shareable profile and QR card</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('sos')"><span>🛡️</span>SOS Safety<small>Trusted-contact safety tools</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('audio')"><span>🎧</span>Audio<small>Podcasts and learning audio</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('drive')"><span>☁️</span>Drive<small>Secure RYZON app-file storage</small></button>
+   <button class="tile future-tile" type="button" onclick="showFutureFeature('creator')"><span>📊</span>Creator Hub<small>Content and audience insights</small></button>
+  </div>
+ </section>
+
  <section class="section">
   <div class="section-heading">
    <h2>⭐ Featured Services</h2>
@@ -404,6 +429,22 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
 </nav>
 
 <button class="help" onclick="openModal('helpModal')" aria-label="Help Center">🎧</button>
+
+<!-- Future service roadmap details -->
+<div class="modal-backdrop" id="futureFeatureModal">
+ <section class="modal">
+  <div class="modal-header">
+   <h2 id="futureFeatureTitle">🚀 Future Service</h2>
+   <button class="close-modal" onclick="closeModal('futureFeatureModal')" aria-label="Close">×</button>
+  </div>
+  <p id="futureFeatureDescription" class="modal-note"></p>
+  <div class="modal-item">
+   <b>Roadmap preview</b>
+   <small>This feature is planned, but it is not connected or available yet. Opening this preview does not create an account, spend coins or send data.</small>
+  </div>
+  <button class="modal-primary" onclick="closeModal('futureFeatureModal')">Got it</button>
+ </section>
+</div>
 
 <!-- Coin options -->
 <div class="modal-backdrop" id="coinModal">
@@ -601,6 +642,32 @@ async function shareRYZON(){
  }catch(error){
   if(error.name!=="AbortError")feedNotice("Unable to share right now.");
  }
+}
+
+const futureFeatureDetails={
+ live:["📡 RYZON Live","Planned live-streaming spaces, moderated audience comments and community Q&A. Safety controls and age-appropriate access will be required."],
+ "ai-studio":["✨ RYZON AI Studio","Planned creative tools for writing, learning, idea development and image creation, with clear AI-generated content labels."],
+ "wallet-plus":["🪙 RYZON Wallet Plus","Planned wallet dashboard for coin balances, secure transaction history, rewards and spending controls. Coin balances will only appear after the secure wallet backend is ready."],
+ academy:["🎓 RYZON Academy","Planned learning courses, quizzes, practice activities and completion certificates."],
+ work:["💼 RYZON Work","Planned skill profiles, portfolios, project listings and age-appropriate work opportunities."],
+ market:["🛍️ RYZON Market","Planned marketplace with seller pages, product information, reviews and order tracking."],
+ events:["🎟️ RYZON Events","Planned workshops, learning events, competitions and registration tools."],
+ communities:["🌍 RYZON Communities Plus","Planned moderated interest-based communities with privacy, reporting and member controls."],
+ planner:["🗓️ RYZON Planner","Planned tasks, study timetables, notes, calendar and reminders."],
+ translate:["🌐 RYZON Translate","Planned text and supported voice translation to help people communicate across languages."],
+ id:["🪪 RYZON ID","Planned shareable profile card and QR code. It will not expose private account details."],
+ sos:["🛡️ RYZON SOS Safety","Planned trusted-contact alerts and safety guidance. It will not replace local emergency services."],
+ audio:["🎧 RYZON Audio","Planned podcasts, educational audio and creator audio channels."],
+ drive:["☁️ RYZON Drive","Planned secure storage for files created or saved within RYZON, with clear storage limits and privacy controls."],
+ creator:["📊 RYZON Creator Hub","Planned creator tools for managing posts and viewing content performance and audience insights."]
+};
+
+function showFutureFeature(key){
+ const feature=futureFeatureDetails[key];
+ if(!feature)return;
+ $("futureFeatureTitle").textContent=feature[0];
+ $("futureFeatureDescription").textContent=feature[1];
+ openModal("futureFeatureModal");
 }
 
 function searchTiles(value){
