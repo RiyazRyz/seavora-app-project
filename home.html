@@ -21,6 +21,8 @@
 }
 *{box-sizing:border-box}
 html:not(.auth-ready) body{visibility:hidden}
+html.auth-error body{visibility:visible}
+html.auth-error::before{display:none}
 html:not(.auth-ready)::before{
  content:"Checking secure login...";
  position:fixed;inset:0;display:flex;align-items:center;
@@ -750,11 +752,6 @@ if("serviceWorker" in navigator){
 </script>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
- getAuth,onAuthStateChanged,signOut,deleteUser
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
  authDomain:"seavora-5be21.firebaseapp.com",
@@ -765,13 +762,30 @@ const firebaseConfig={
  measurementId:"G-PDY0RZRDDH"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
 let currentUser=null;
+let auth=null;
+let signOut=null;
+let deleteUser=null;
 const byId=id=>document.getElementById(id);
+
+function showAuthError(message){
+ document.documentElement.classList.add("auth-error");
+ let panel=byId("authErrorPanel");
+ if(!panel){
+  panel=document.createElement("section");
+  panel.id="authErrorPanel";
+  panel.setAttribute("role","alert");
+  panel.style.cssText="position:fixed;z-index:10001;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#071a30;color:#f1f5fb;text-align:center;font-family:Arial,sans-serif";
+  panel.innerHTML='<h2 style="color:#55dcff">RYZON connection issue</h2><p id="authErrorText" style="max-width:420px;line-height:1.6"></p><button id="authRetryButton" type="button" style="margin-top:14px;padding:12px 24px;border:0;border-radius:12px;background:#078bd0;color:white;font-weight:bold">Retry</button>';
+  document.body.appendChild(panel);
+  byId("authRetryButton").addEventListener("click",()=>window.location.reload());
+ }
+ byId("authErrorText").textContent=message;
+}
 
 function showHomeMessage(text,success=false){
  const message=byId("message");
+ if(!message)return;
  message.textContent=text;
  message.style.color=success?"#22c55e":"#ff8d8d";
 }
@@ -780,7 +794,6 @@ function showProfile(user){
  byId("profileName").textContent=user.displayName||"RYZON User";
  byId("profileEmail").textContent=user.email||"Phone login account";
  byId("profilePhone").textContent=user.phoneNumber||"";
- byId("welcomeUser")?.textContent;
 }
 
 function hasAcceptedLogin(user){
@@ -791,48 +804,70 @@ function hasAcceptedLogin(user){
  return hasVerifiedEmail||hasGoogle||hasPhone;
 }
 
-onAuthStateChanged(auth,async user=>{
- if(!user){
-  window.ryzonAuthenticated=false;
-  window.location.replace("otp.html");
-  return;
- }
-
+async function startHomeAuth(){
  try{
-  await user.reload();
-  const freshUser=auth.currentUser;
+  const [appModule,authModule]=await Promise.all([
+   import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+   import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js")
+  ]);
+  const app=appModule.initializeApp(firebaseConfig);
+  auth=authModule.getAuth(app);
+  signOut=authModule.signOut;
+  deleteUser=authModule.deleteUser;
 
-  if(!freshUser||!hasAcceptedLogin(freshUser)){
-   window.ryzonAuthenticated=false;
-   await signOut(auth);
-   window.location.replace("otp.html");
-   return;
-  }
+  authModule.onAuthStateChanged(auth,async user=>{
+   if(!user){
+    window.ryzonAuthenticated=false;
+    window.location.replace("otp.html");
+    return;
+   }
 
-  currentUser=freshUser;
-  window.ryzonAuthenticated=true;
-  showProfile(currentUser);
+   try{
+    await user.reload();
+    const freshUser=auth.currentUser;
+    if(!freshUser||!hasAcceptedLogin(freshUser)){
+     window.ryzonAuthenticated=false;
+     await signOut(auth);
+     window.location.replace("otp.html");
+     return;
+    }
 
-  const displayName=currentUser.displayName||currentUser.email||"RYZON User";
-  const welcome=byId("welcomeUser");
-  if(welcome)welcome.textContent="Hello, "+displayName+"! Welcome back.";
+    currentUser=freshUser;
+    window.ryzonAuthenticated=true;
+    showProfile(currentUser);
 
-  recordActivity("Logged in to RYZON");
-  document.documentElement.classList.add("auth-ready");
+    const displayName=currentUser.displayName||currentUser.email||"RYZON User";
+    const welcome=byId("welcomeUser");
+    if(welcome)welcome.textContent="Hello, "+displayName+"! Welcome back.";
 
+    const activityKey="ryzonHomeLoginActivityUid";
+    if(sessionStorage.getItem(activityKey)!==currentUser.uid){
+     recordActivity("Logged in to RYZON");
+     sessionStorage.setItem(activityKey,currentUser.uid);
+    }
+    document.documentElement.classList.add("auth-ready");
+   }catch(error){
+    console.error("Authentication check failed:",error);
+    window.ryzonAuthenticated=false;
+    showAuthError("We couldn't verify your login because the connection may be unavailable. Your saved login session has not been signed out. Check your internet connection and tap Retry.");
+   }
+  });
  }catch(error){
-  console.error("Authentication check failed:",error);
+  console.error("Firebase could not be loaded:",error);
   window.ryzonAuthenticated=false;
-  try{await signOut(auth)}catch(signOutError){console.error(signOutError)}
-  window.location.replace("otp.html");
+  showAuthError("RYZON couldn't load its secure login service. Check your internet connection and tap Retry. Your existing login session has not been deliberately cleared.");
  }
-});
+}
+
+startHomeAuth();
 
 window.logoutUser=async function(){
  try{
+  if(!auth||!signOut)throw new Error("Login service is not ready.");
   await signOut(auth);
   window.ryzonAuthenticated=false;
   sessionStorage.removeItem("ryzonNextAction");
+  sessionStorage.removeItem("ryzonHomeLoginActivityUid");
   window.location.replace("otp.html");
  }catch(error){
   console.error(error);
@@ -846,7 +881,7 @@ window.confirmDeleteAccount=async function(){
   showHomeMessage("Please type DELETE to confirm.");
   return;
  }
- if(!currentUser){
+ if(!currentUser||!deleteUser){
   showHomeMessage("Please login again.");
   return;
  }
