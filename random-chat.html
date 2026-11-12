@@ -188,6 +188,37 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  .partner-avatar{width:43px;height:43px;flex-basis:43px}
  .friend-btn{padding:9px 10px;font-size:11px}
 }
+
+/* RYZON social home */
+.social-home{display:block}
+.social-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 14px}
+.social-title{font-size:20px;font-weight:800;letter-spacing:.3px}
+.social-search{border:1px solid var(--border);background:#10243d;color:#dcecff;border-radius:12px;padding:10px 13px}
+.story-strip{display:flex;gap:12px;overflow-x:auto;padding:5px 2px 15px;scrollbar-width:thin}
+.story{flex:0 0 67px;text-align:center;font-size:11px;color:var(--muted)}
+.story-ring{width:59px;height:59px;margin:0 auto 6px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#18c8e8,#7b5cff,#ff7a9b)}
+.story-inner{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:#10243d;border:2px solid #071426;color:#7de6ff;font-size:21px;font-weight:bold}
+.feed-tabs{display:flex;gap:8px;margin:4px 0 13px}
+.feed-tab{flex:1;padding:10px 6px;border:1px solid var(--border);border-radius:11px;background:#10243d;color:#a9bfd5;font-weight:bold}
+.feed-tab.active{background:#124c70;border-color:#28bce2;color:#fff}
+.post-card{background:#10243d;border:1px solid var(--border);border-radius:17px;overflow:hidden;margin-bottom:14px}
+.post-head{display:flex;align-items:center;gap:10px;padding:13px}
+.post-avatar{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#078cc5,#13b9c5);font-weight:bold}
+.post-user{flex:1;min-width:0}
+.post-user strong{display:block;font-size:13px}
+.post-user small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.demo-tag{font-size:10px;color:#8bdfff;border:1px solid #28617d;border-radius:20px;padding:5px 7px}
+.post-art{min-height:185px;padding:22px;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 20% 15%,#1a6680,#102b4b 55%,#091a2d);font-size:17px;font-weight:bold;line-height:1.6}
+.post-actions{display:flex;gap:8px;padding:11px 13px 5px}
+.post-action{border:1px solid var(--border);background:#173653;color:#d8e9f8;border-radius:9px;padding:8px 11px;font-size:12px}
+.post-caption{padding:7px 13px 14px;color:#d6e5f4;font-size:13px;line-height:1.6}
+.feed-notice{color:var(--muted);font-size:12px;line-height:1.6;padding:12px 14px}
+.bottom-nav{position:sticky;bottom:8px;z-index:5;display:flex;justify-content:space-around;gap:4px;padding:9px 5px;margin:12px 0 4px;background:#091a2deF;border:1px solid #31506d;border-radius:16px;box-shadow:0 8px 24px #0006}
+.nav-item{flex:1;border:0;background:transparent;color:#a9bfd5;padding:7px 2px;border-radius:10px;font-size:10px}
+.nav-item span{display:block;font-size:19px;margin-bottom:3px}
+.nav-item.active{background:#124c70;color:#fff}
+@media(max-width:480px){.post-art{min-height:165px}.bottom-nav{bottom:5px}.social-title{font-size:18px}}
+
 </style>
 </head>
 
@@ -217,7 +248,45 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  </div>
 </header>
 
-<section class="card" id="setupCard">
+
+<section class="card social-home" id="socialHome">
+ <div class="social-top">
+  <div class="social-title">RYZON <span style="color:var(--cyan)">Feed</span></div>
+  <button class="social-search" type="button" onclick="showFeedMessage('Search is being prepared for RYZON.')">⌕ Search</button>
+ </div>
+ <div class="story-strip" aria-label="Stories">
+  <div class="story"><div class="story-ring"><div class="story-inner">＋</div></div>Your story</div>
+  <div class="story"><div class="story-ring"><div class="story-inner">R</div></div>RYZON</div>
+  <div class="story"><div class="story-ring"><div class="story-inner">✦</div></div>Discover</div>
+  <div class="story"><div class="story-ring"><div class="story-inner">🌍</div></div>World</div>
+ </div>
+ <div class="feed-tabs" role="tablist" aria-label="Feed">
+  <button class="feed-tab active" id="forYouTab" type="button" onclick="selectFeedTab('forYou')">For You</button>
+  <button class="feed-tab" id="followingTab" type="button" onclick="selectFeedTab('following')">Following</button>
+  <button class="feed-tab" id="trendingTab" type="button" onclick="selectFeedTab('trending')">Trending</button>
+ </div>
+ <article class="post-card">
+  <div class="post-head">
+   <div class="post-avatar">R</div>
+   <div class="post-user"><strong>RYZON Community</strong><small>Welcome post · Official</small></div>
+   <span class="demo-tag">WELCOME</span>
+  </div>
+  <div class="post-art">One App,<br>Endless Possibilities!<br><span style="color:#8beaff">Connect · Create · Discover</span></div>
+  <div class="post-actions">
+   <button class="post-action" type="button" disabled title="Likes will be enabled after feed backend setup">♡ Like</button>
+   <button class="post-action" type="button" disabled title="Comments will be enabled after feed backend setup">▢ Comment</button>
+   <button class="post-action" type="button" disabled title="Sharing will be enabled after feed backend setup">↗ Share</button>
+  </div>
+  <div class="post-caption"><strong>RYZON</strong> — Welcome to your social space. Discover updates and connect safely.</div>
+ </article>
+ <div class="post-card">
+  <div class="post-head"><div class="post-avatar">✦</div><div class="post-user"><strong>Community updates</strong><small>Feed setup notice</small></div><span class="demo-tag">INFO</span></div>
+  <div class="feed-notice">Your real posts, photos, videos, likes, comments and follow activity will appear here after the secure Social Feed backend is connected. This screen currently uses clearly marked sample content only.</div>
+ </div>
+ <div class="feed-notice" id="feedMessage" role="status">You are viewing the RYZON social home.</div>
+</section>
+
+<section class="card hidden" id="setupCard">
  <span class="free-label" data-chat="free">🌍 FREE FOR EVERYONE</span>
  <h1 data-chat="title">💬 Worldwide Random Chat</h1>
  <p class="subtitle" data-chat="description">
@@ -334,7 +403,16 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  • <span data-chat="safety5">Do not send inappropriate content.</span>
 </div>
 
-<footer>© 2026 RYZON · Worldwide Random Chat</footer>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+ <button class="nav-item active" id="navHome" type="button" onclick="showSocialHome()"><span>⌂</span>Home</button>
+ <button class="nav-item" id="navExplore" type="button" onclick="showFeedMessage('Explore is coming after the discovery service is connected.')"><span>⌕</span>Explore</button>
+ <button class="nav-item" type="button" onclick="showFeedMessage('Post creation will be enabled after secure media upload is ready.')"><span>＋</span>Create</button>
+ <button class="nav-item" id="navRandom" type="button" onclick="showRandomChatPanel()"><span>💬</span>Random Chat</button>
+ <button class="nav-item" type="button" onclick="showFeedMessage('Your profile page will be connected here.')"><span>◉</span>Profile</button>
+</nav>
+
+<footer>© 2026 RYZON · Social & Random Chat</footer>
 </main>
 
 <script>
@@ -994,6 +1072,35 @@ async function reportPartner(){
  }finally{busy=false;}
 }
 
+
+function setActiveNav(id){
+ document.querySelectorAll(".nav-item").forEach(item=>item.classList.remove("active"));
+ if($(id))$(id).classList.add("active");
+}
+function showSocialHome(){
+ $("socialHome").classList.remove("hidden");
+ $("setupCard").classList.add("hidden");
+ $("chatCard").classList.add("hidden");
+ setActiveNav("navHome");
+}
+function showRandomChatPanel(){
+ $("socialHome").classList.add("hidden");
+ $("chatCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+ setActiveNav("navRandom");
+}
+function showFeedMessage(message){
+ const target=$("feedMessage");
+ if(target)target.textContent=message;
+}
+function selectFeedTab(tab){
+ ["forYouTab","followingTab","trendingTab"].forEach(id=>$(id).classList.remove("active"));
+ const selected={forYou:"forYouTab",following:"followingTab",trending:"trendingTab"}[tab];
+ $(selected).classList.add("active");
+ const labels={forYou:"For You feed selected. Live feed content will appear after backend setup.",following:"Following feed will show posts from accepted follows after backend setup.",trending:"Trending feed will show verified popular posts after backend setup."};
+ showFeedMessage(labels[tab]);
+}
+
 // Language system
 applyChatLanguage();
 window.addEventListener("storage",event=>{
@@ -1034,11 +1141,12 @@ onAuthStateChanged(auth,user=>{
  $("mainContent").style.display="block";
  $("findBtn").disabled=false;
  showStatus(chatText("welcome"));
+ showSocialHome();
 
  const nextAction=sessionStorage.getItem("ryzonNextAction");
  if(nextAction==="randomChat"){
   sessionStorage.removeItem("ryzonNextAction");
-  $("setupCard").classList.remove("hidden");
+  showRandomChatPanel();
  }
  applyChatLanguage();
 });
