@@ -1,131 +1,256 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071a30">
   <title>RYZON - Shopping</title>
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #061629;
+      --panel: #0c2340;
+      --panel-2: #102e4d;
+      --line: rgba(151, 197, 231, .17);
+      --text: #f1f5fb;
+      --muted: #a9bfd3;
+      --cyan: #55dcff;
+      --blue: #078bd0;
+    }
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      background: #f2f5f9;
-      color: #222;
+      min-height: 100vh;
+      padding: 18px 14px 34px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(7,139,208,.2), transparent 38%),
+        radial-gradient(ellipse at 100% 22%, rgba(85,220,255,.09), transparent 32%),
+        var(--bg);
     }
-    header {
-      background: #172554;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      border-radius: 12px;
+    .page { width: min(100%, 760px); margin: 0 auto; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin: 2px 2px 18px;
     }
-    .card {
-      background: white;
-      padding: 18px;
-      margin: 15px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #00000015;
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border-radius: 14px; color: #041525; font-weight: 950; font-size: 22px;
+      background: linear-gradient(145deg, #8cecff, #078bd0);
+      box-shadow: 0 8px 24px rgba(7,139,208,.25);
     }
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      box-sizing: border-box;
-      border-radius: 7px;
-      border: 1px solid #bbb;
-      font-size: 16px;
+    .brand-name { font-size: 17px; font-weight: 900; letter-spacing: 1.5px; }
+    .brand-tag { color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .back {
+      color: var(--text); text-decoration: none; border: 1px solid var(--line);
+      background: rgba(12,35,64,.8); border-radius: 12px; padding: 10px 13px;
+      font-size: 13px; font-weight: 700;
     }
-    button {
-      background: #172554;
-      color: white;
-      border: none;
-      cursor: pointer;
+    .hero {
+      position: relative; overflow: hidden; padding: 25px 21px;
+      border: 1px solid rgba(85,220,255,.2); border-radius: 23px;
+      background: linear-gradient(130deg, #123b68, #0b2949 58%, #09213b);
+      box-shadow: 0 16px 38px rgba(0,0,0,.2);
     }
-    a {
-      display: inline-block;
-      margin-top: 8px;
-      color: #0759c7;
-      font-weight: bold;
+    .hero:after {
+      content: "R"; position: absolute; right: 14px; bottom: -52px;
+      font-size: 190px; line-height: 1; font-weight: 950;
+      color: rgba(130,220,255,.055); pointer-events: none;
     }
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #666;
+    .eyebrow {
+      color: var(--cyan); font-size: 10px; letter-spacing: 2px;
+      font-weight: 900; text-transform: uppercase;
+    }
+    h1 { margin: 8px 0 7px; font-size: clamp(27px, 7vw, 38px); letter-spacing: -.8px; }
+    .hero p { margin: 0; max-width: 470px; color: #d0e0ee; line-height: 1.55; font-size: 14px; }
+    .section { margin-top: 20px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 10px; margin: 0 2px 11px; }
+    h2 { margin: 0; font-size: 17px; }
+    .sub { color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .panel {
+      padding: 17px; border-radius: 19px; border: 1px solid var(--line);
+      background: linear-gradient(150deg, rgba(16,46,77,.96), rgba(9,30,53,.98));
+      box-shadow: 0 10px 26px rgba(0,0,0,.13);
+    }
+    .search-row { display: flex; gap: 9px; }
+    input, select {
+      min-width: 0; width: 100%; padding: 13px 12px; border-radius: 12px;
+      border: 1px solid rgba(169,191,211,.25); background: #071a30;
+      color: var(--text); font: inherit; font-size: 14px; outline: none;
+    }
+    input:focus, select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(85,220,255,.1); }
+    input::placeholder { color: #7892aa; }
+    .primary {
+      width: 100%; margin-top: 10px; padding: 13px; border: 0; border-radius: 12px;
+      background: linear-gradient(100deg, #078bd0, #28bde8); color: #031727;
+      font-size: 14px; font-weight: 900; cursor: pointer;
+      box-shadow: 0 7px 18px rgba(7,139,208,.2);
+    }
+    .primary:active, .store:active { transform: scale(.985); }
+    .stores { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .store {
+      min-height: 84px; display: flex; align-items: center; gap: 12px;
+      padding: 13px; border-radius: 16px; border: 1px solid var(--line);
+      background: rgba(12,35,64,.9); color: var(--text); text-decoration: none;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+    .store:hover { transform: translateY(-2px); border-color: rgba(85,220,255,.45); }
+    .mark {
+      width: 43px; height: 43px; flex: 0 0 43px; display: grid; place-items: center;
+      border-radius: 13px; background: #f5f8fc; color: #172554;
+      font-size: 22px; font-weight: 950; letter-spacing: -1px;
+    }
+    .mark.amazon { color: #172554; border-bottom: 3px solid #f3a847; }
+    .mark.flipkart { color: #1769c2; }
+    .mark.myntra { color: #e23b75; }
+    .mark.meesho { color: #c13c89; }
+    .mark.ajio { color: #172554; letter-spacing: 1px; font-size: 16px; }
+    .mark.ryzon { color: #087eb7; background: linear-gradient(145deg,#dffaff,#9eeaff); }
+    .store strong { display: block; font-size: 13px; }
+    .store small { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
+    .categories { display: flex; flex-wrap: wrap; gap: 8px; }
+    .category {
+      padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px;
+      background: #0a2039; color: #d8e8f5; font-size: 12px; cursor: pointer;
+    }
+    .category[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); background: rgba(7,139,208,.13); }
+    .coin-card {
+      display: flex; align-items: center; gap: 13px; padding: 16px;
+      border-radius: 18px; border: 1px solid rgba(243,190,84,.25);
+      background: linear-gradient(120deg, rgba(83,59,25,.35), rgba(12,35,64,.95));
+    }
+    .coin-icon {
+      width: 46px; height: 46px; flex: 0 0 46px; display: grid; place-items: center;
+      border-radius: 15px; background: linear-gradient(145deg,#ffe5a3,#d99a31);
+      color: #50320a; font-size: 23px; font-weight: 900;
+    }
+    .coin-card strong { font-size: 14px; }
+    .coin-card p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .status { margin-top: 11px; padding: 12px; border-radius: 12px; background: rgba(3,15,28,.55); color: #c3d7e8; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+    footer { text-align: center; color: #7892aa; font-size: 11px; margin: 25px 0 5px; }
+    @media (max-width: 430px) {
+      .search-row { flex-direction: column; }
+      .stores { gap: 8px; }
+      .store { padding: 10px; gap: 9px; }
+      .mark { width: 38px; height: 38px; flex-basis: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after { scroll-behavior: auto !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
+  <main class="page">
+    <nav class="topbar" aria-label="Shopping navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">R</div>
+        <div><div class="brand-name">RYZON</div><div class="brand-tag">One App, Endless Possibilities!</div></div>
+      </div>
+      <a class="back" href="home.html">← Home</a>
+    </nav>
 
-<header>
-  <h1>RYZON</h1>
-  <h2>Shopping</h2>
-  <p>Explore products and online shopping</p>
-</header>
+    <header class="hero">
+      <div class="eyebrow">Discover • Compare • Explore</div>
+      <h1>RYZON Shopping</h1>
+      <p>Explore products across shopping destinations and discover what fits your needs — all from one place.</p>
+    </header>
 
-<div class="card">
-  <h2>Search Products</h2>
-  <input type="text" id="productSearch"
-    placeholder="Enter product name">
-  <select id="category">
-    <option value="">All Categories</option>
-    <option value="Mobiles">Mobiles</option>
-    <option value="Electronics">Electronics</option>
-    <option value="Fashion">Fashion</option>
-    <option value="Home Appliances">Home Appliances</option>
-    <option value="Books">Books</option>
-    <option value="Beauty">Beauty</option>
-  </select>
-  <button onclick="searchProduct()">Search Products</button>
-</div>
+    <section class="section" aria-labelledby="searchTitle">
+      <div class="section-head"><div><h2 id="searchTitle">Find what you need</h2><div class="sub">Search products across the web</div></div></div>
+      <div class="panel">
+        <div class="search-row">
+          <input type="search" id="productSearch" placeholder="Search mobiles, books, shoes..." aria-label="Product name" autocomplete="off">
+          <select id="category" aria-label="Product category">
+            <option value="">All Categories</option>
+            <option value="Mobiles">Mobiles</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Home Appliances">Home Appliances</option>
+            <option value="Books">Books</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Sports">Sports</option>
+            <option value="Education">Education</option>
+          </select>
+        </div>
+        <button class="primary" type="button" onclick="searchProduct()">Search Products ↗</button>
+        <div class="status" id="result" role="status" aria-live="polite">Enter a product name or choose a category to start exploring.</div>
+      </div>
+    </section>
 
-<div class="card">
-  <h2>Popular Shopping Websites</h2>
-  <p>Visit these shopping platforms to explore products.</p>
-  <a href="https://www.amazon.in/" target="_blank">Amazon India</a><br>
-  <a href="https://www.flipkart.com/" target="_blank">Flipkart</a><br>
-  <a href="https://www.myntra.com/" target="_blank">Myntra</a><br>
-  <a href="https://www.meesho.com/" target="_blank">Meesho</a><br>
-  <a href="https://www.ajio.com/" target="_blank">AJIO</a>
-</div>
+    <section class="section" aria-labelledby="storesTitle">
+      <div class="section-head"><div><h2 id="storesTitle">Shopping destinations</h2><div class="sub">Choose a platform to explore its catalogue</div></div></div>
+      <div class="stores">
+        <a class="store" href="https://www.amazon.in/" target="_blank" rel="noopener noreferrer"><span class="mark amazon" aria-hidden="true">a</span><span><strong>Amazon India</strong><small>Explore products</small></span></a>
+        <a class="store" href="https://www.flipkart.com/" target="_blank" rel="noopener noreferrer"><span class="mark flipkart" aria-hidden="true">f</span><span><strong>Flipkart</strong><small>Explore products</small></span></a>
+        <a class="store" href="https://www.myntra.com/" target="_blank" rel="noopener noreferrer"><span class="mark myntra" aria-hidden="true">M</span><span><strong>Myntra</strong><small>Fashion & lifestyle</small></span></a>
+        <a class="store" href="https://www.meesho.com/" target="_blank" rel="noopener noreferrer"><span class="mark meesho" aria-hidden="true">m</span><span><strong>Meesho</strong><small>Explore collections</small></span></a>
+        <a class="store" href="https://www.ajio.com/" target="_blank" rel="noopener noreferrer"><span class="mark ajio" aria-hidden="true">AJ</span><span><strong>AJIO</strong><small>Fashion & more</small></span></a>
+        <a class="store" href="#" onclick="showRyzonMarket(event)"><span class="mark ryzon" aria-hidden="true">R</span><span><strong>RYZON Market</strong><small>Our own marketplace · Planned</small></span></a>
+      </div>
+    </section>
 
-<div class="card">
-  <h2>Shopping Categories</h2>
-  <p>Mobiles • Electronics • Fashion • Home • Books • Beauty</p>
-</div>
+    <section class="section" aria-labelledby="categoryTitle">
+      <div class="section-head"><div><h2 id="categoryTitle">Explore categories</h2><div class="sub">Choose a category to prepare a search</div></div></div>
+      <div class="panel">
+        <div class="categories">
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Mobiles',this)">Mobiles</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Electronics',this)">Electronics</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Fashion',this)">Fashion</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Home Appliances',this)">Home</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Books',this)">Books</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Beauty',this)">Beauty</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Sports',this)">Sports</button>
+          <button class="category" type="button" aria-pressed="false" onclick="chooseCategory('Education',this)">Education</button>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-  <h2>Search Result</h2>
-  <p id="result">Enter a product name to begin.</p>
-</div>
+    <section class="section" aria-labelledby="coinTitle">
+      <div class="section-head"><div><h2 id="coinTitle">RYZON Coin Shopping</h2><div class="sub">A future way to use your Purchased Coins</div></div></div>
+      <div class="coin-card">
+        <div class="coin-icon" aria-hidden="true">◈</div>
+        <div><strong>Purchased Coins at checkout</strong><p>Planned for eligible RYZON Market products and approved shopping partners. Coin checkout is not active yet; Free Coins remain gift-only.</p></div>
+      </div>
+    </section>
 
-<footer>
-  RYZON © 2026
-</footer>
+    <footer>RYZON © 2026 · Explore responsibly and check seller details before purchasing.</footer>
+  </main>
 
-<script>
-function searchProduct() {
-  const product = document.getElementById("productSearch").value.trim();
-  const category = document.getElementById("category").value;
+  <script>
+    function searchProduct() {
+      const product = document.getElementById("productSearch").value.trim();
+      const category = document.getElementById("category").value;
+      const result = document.getElementById("result");
 
-  if (!product && !category) {
-    document.getElementById("result").textContent =
-      "Please enter a product name or select a category.";
-    return;
-  }
+      if (!product && !category) {
+        result.textContent = "Please enter a product name or select a category.";
+        document.getElementById("productSearch").focus();
+        return;
+      }
 
-  const query = (product + " " + category).trim();
+      const query = [product, category].filter(Boolean).join(" ");
+      result.textContent = "Opening shopping search for: " + query;
+      const url = "https://www.google.com/search?tbm=shop&q=" + encodeURIComponent(query);
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
 
-  document.getElementById("result").textContent =
-    "Searching for: " + query;
+    function chooseCategory(category, button) {
+      document.getElementById("category").value = category;
+      document.querySelectorAll(".category").forEach(item => item.setAttribute("aria-pressed", "false"));
+      button.setAttribute("aria-pressed", "true");
+      document.getElementById("result").textContent = category + " selected. Add a product name or tap Search Products.";
+    }
 
-  window.open(
-    "https://www.google.com/search?tbm=shop&q=" +
-    encodeURIComponent(query),
-    "_blank"
-  );
-}
-</script>
+    function showRyzonMarket(event) {
+      event.preventDefault();
+      document.getElementById("result").textContent = "RYZON Market is planned. Product listings and Purchased Coin checkout will be added after the marketplace and payment integrations are ready.";
+    }
 
+    document.getElementById("productSearch").addEventListener("keydown", event => {
+      if (event.key === "Enter") searchProduct();
+    });
+  </script>
 </body>
 </html>
