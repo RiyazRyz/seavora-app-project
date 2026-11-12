@@ -1,11 +1,12 @@
 
-const CACHE_NAME = "ryzon-cache-v2";
+const CACHE_NAME = "ryzon-cache-v3";
 
 const APP_FILES = [
   "./",
   "./index.html",
   "./otp.html",
   "./home.html",
+  "./rewards.html",
   "./profile.html",
   "./chat.html",
   "./notifications.html",
