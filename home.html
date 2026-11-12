@@ -188,8 +188,13 @@ main{max-width:760px;margin:auto}
 }
 .scam{
  margin:10px 15px;padding:12px;border-radius:10px;
- background:#352d1b;color:#ffdf7e;font-size:12px;line-height:1.5
+ background:#352d1b;color:#ffdf7e;font-size:12px;line-height:1.5;
+ overflow:hidden;white-space:nowrap;border:1px solid #725a25
 }
+.scam-track{display:inline-block;width:max-content;white-space:nowrap;will-change:transform;animation:scam-marquee 19s linear infinite}
+@keyframes scam-marquee{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
+.scam:hover .scam-track{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.scam-track{animation:none;white-space:normal;width:auto}}
 .bottom-nav{
  position:fixed;bottom:0;left:0;right:0;z-index:50;
  display:flex;justify-content:space-around;align-items:center;
@@ -316,8 +321,8 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
   ℹ️ Video feed is a visual preview. Real video playback, uploads, likes and comments need the RYZON video backend.
  </div>
 
- <div class="scam">
-  ⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.
+ <div class="scam" role="status" aria-label="Safety alert">
+  <div class="scam-track">⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.</div>
  </div>
 
  <section class="section">
