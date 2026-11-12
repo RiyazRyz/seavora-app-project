@@ -653,11 +653,15 @@ function resetChatState(){
  $("findBtn").disabled=false;
 }
 function showChatScreen(){
+ $("socialHome").classList.add("hidden");
  $("setupCard").classList.add("hidden");
+ setActiveNav("navRandom");
  $("chatCard").classList.remove("hidden");
 }
 function showSetupScreen(){
+ $("socialHome").classList.add("hidden");
  $("chatCard").classList.add("hidden");
+ setActiveNav("navRandom");
  $("setupCard").classList.remove("hidden");
 }
 
