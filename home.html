@@ -671,14 +671,16 @@ function showFutureFeature(key){
 }
 
 function searchTiles(value){
- const tiles=document.querySelectorAll("#serviceGrid .tile");
+ const grids=["#serviceGrid .tile","#futureServiceGrid .tile"];
  let visibleCount=0;
  const query=value.toLowerCase().trim();
 
- tiles.forEach(tile=>{
-  const match=tile.textContent.toLowerCase().includes(query);
-  tile.style.display=match?"":"none";
-  if(match)visibleCount++;
+ grids.forEach(selector=>{
+  document.querySelectorAll(selector).forEach(tile=>{
+   const match=tile.textContent.toLowerCase().includes(query);
+   tile.style.display=match?"":"none";
+   if(match)visibleCount++;
+  });
  });
  $("noResults").style.display=visibleCount===0?"block":"none";
 }
