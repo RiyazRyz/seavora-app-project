@@ -146,12 +146,32 @@ main{max-width:760px;margin:auto}
 #noResults{display:none;text-align:center;color:#a9bdd2;padding:15px}
 .service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .tile{
- display:block;padding:15px 9px;text-align:center;border-radius:14px;
- border:1px solid #294966;background:#102943;color:white;
- text-decoration:none;font-size:13px;font-weight:bold;
+ position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ min-height:116px;padding:15px 9px;text-align:center;border-radius:19px;
+ border:1px solid #315879;
+ background:linear-gradient(145deg,#173b5b 0%,#102943 58%,#0b2037 100%);
+ color:white;text-decoration:none;font-size:13px;font-weight:800;
+ box-shadow:0 7px 18px #0003,inset 0 1px #ffffff12;
+ overflow:hidden;isolation:isolate;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
 }
-.tile>span:first-child{display:block;font-size:27px;margin-bottom:8px}
-.tile small{display:block;color:#9eb4c9;font-weight:normal;font-size:10px;margin-top:5px}
+.tile:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 0%,#55dcff20,transparent 65%);pointer-events:none}
+.tile:active{transform:scale(.97)}
+.tile>span:first-child{
+ display:grid;place-items:center;width:54px;height:54px;margin:0 auto 10px;
+ border:1px solid #8bdfff55;border-radius:17px;
+ background:linear-gradient(145deg,#23618a,#123451);
+ box-shadow:0 5px 15px #0004,inset 0 1px #ffffff30;
+ font-size:28px;line-height:1;
+}
+.tile small{display:block;color:#b5c9dc;font-weight:500;font-size:10px;line-height:1.4;margin-top:6px}
+.future-tile{border-color:#456184;background:linear-gradient(145deg,#273d64,#172b49 60%,#10233b)}
+.future-tile>span:first-child{background:linear-gradient(145deg,#6553a7,#284d7b);border-color:#b7a5ff66}
+.marketplace-icons{display:flex!important;flex-direction:row;align-items:center;justify-content:center;gap:7px;width:auto!important;height:auto!important;margin:0 auto 10px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+.marketplace-icons b{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;font-size:25px;font-weight:900;line-height:1;box-shadow:0 5px 12px #0005;border:1px solid #ffffff38}
+.marketplace-icons .amazon-mark{background:linear-gradient(145deg,#26384b,#172332);color:#ffb14a;font-family:Arial,sans-serif}
+.marketplace-icons .flipkart-mark{background:linear-gradient(145deg,#2877d7,#1550a0);color:#ffe34f;font-style:italic}
+.marketplace-icons .ryzon-mark{background:linear-gradient(145deg,#16a8d4,#07548d);color:#fff;font-size:22px;letter-spacing:-2px}
+@media(hover:hover){.tile:hover{transform:translateY(-3px);border-color:#66dfff;box-shadow:0 11px 24px #0005,0 0 0 1px #55dcff20}}
 .feature-card,.update-card,.activity-row{
  background:#102943;border:1px solid #294966;border-radius:12px;
  padding:13px;margin:9px 0;color:#edf6ff;font-size:13px;line-height:1.5
@@ -326,7 +346,7 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
    <a class="tile" href="my-safe.html"><span>🔐</span>My Safe</a>
    <a class="tile" href="project-ideas.html"><span>🎓</span>Education / Project Ideas</a>
    <a class="tile" href="jobs.html"><span>💼</span>Jobs</a>
-   <a class="tile" href="shopping.html"><span>🛍️</span>Shopping</a>
+   <a class="tile shopping-tile" href="shopping.html"><span class="marketplace-icons" aria-label="Amazon, Flipkart and RYZON Market"><b class="amazon-mark" aria-label="Amazon">a</b><b class="flipkart-mark" aria-label="Flipkart">f</b><b class="ryzon-mark" aria-label="RYZON Market">R</b></span>Shopping<small>Amazon · Flipkart · RYZON Market</small></a>
    <a class="tile" href="ai-assistant.html"><span>🤖</span>AI Assistant</a>
    <a class="tile" href="browser.html"><span>🌐</span>Browser</a>
    <a class="tile" href="parcel-safety.html"><span>📦</span>Parcel Safety</a>
