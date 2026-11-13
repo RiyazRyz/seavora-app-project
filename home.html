@@ -164,9 +164,35 @@ main{max-width:760px;margin:auto}
  padding:18px;text-align:center;color:#9eb4c9;
  background:#102943;border-radius:12px;font-size:13px
 }
-.scam{
- margin:10px 15px;padding:12px;border-radius:10px;
- background:#352d1b;color:#ffdf7e;font-size:12px;line-height:1.5
+.scam-ticker{
+ margin:10px 15px;
+ overflow:hidden;
+ white-space:nowrap;
+ border-radius:10px;
+ background:#641515;
+ color:#fff;
+ padding:11px 0;
+ border:1px solid #a74750;
+}
+.scam-ticker-track{
+ display:flex;
+ width:max-content;
+ animation:ryzonScamScroll 20s linear infinite;
+ will-change:transform;
+}
+.scam-ticker-track span{
+ flex:0 0 auto;
+ padding-right:56px;
+ font-size:12px;
+ line-height:1.5;
+ font-weight:700;
+}
+@keyframes ryzonScamScroll{
+ from{transform:translateX(0)}
+ to{transform:translateX(-50%)}
+}
+@media(prefers-reduced-motion:reduce){
+ .scam-ticker-track{animation:none}
 }
 .bottom-nav{
  position:fixed;bottom:0;left:0;right:0;z-index:50;
@@ -294,8 +320,11 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
   ℹ️ Video feed is a visual preview. Real video playback, uploads, likes and comments need the RYZON video backend.
  </div>
 
- <div class="scam">
-  ⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.
+ <div class="scam-ticker" role="status" aria-label="Scam safety alert">
+  <div class="scam-ticker-track">
+   <span>⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.</span>
+   <span aria-hidden="true">⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.</span>
+  </div>
  </div>
 
  <section class="section">
