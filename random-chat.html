@@ -367,6 +367,7 @@ body{padding:0!important}
   <div class="shorts-brand"><span class="shorts-brand-mark">R</span><span>RYZON</span></div>
   <div class="shorts-top-actions">
    <button class="shorts-top-btn" type="button" onclick="showCoinInfo('Your secure RYZON Coin balance will appear here after wallet connection.')" aria-label="Coins">🪙</button>
+   <button class="shorts-top-btn" type="button" onclick="openRYZONSearch()" aria-label="Search">⌕</button>
    <button class="shorts-top-btn" type="button" onclick="location.href='./notifications.html'" aria-label="Notifications">🔔</button>
   </div>
  </div>
@@ -392,7 +393,7 @@ body{padding:0!important}
   <button type="button" class="active" onclick="showShortsHome(event)"><b>⌂</b>Home</button>
   <button type="button" onclick="showExploreInfo()"><b>⌕</b>Explore</button>
   <button type="button" onclick="showVideoUploadInfo()"><b>＋</b>Upload</button>
-  <button type="button" onclick="showRandomSetup(event)"><b>◎</b>Random Chat</button>
+  <button type="button" onclick="openMyProfile()"><b>◉</b>Profile</button>
  </nav>
 </section>
 
@@ -779,6 +780,11 @@ async function saveMyProfile(){
  finally{btn.disabled=false;}
 }
 
+function openRYZONSearch(){
+ const query=prompt("Search RYZON");
+ if(!query||!query.trim())return;
+ location.href="./explore.html?q="+encodeURIComponent(query.trim());
+}
 function showFeedActionInfo(message){alert(message);}
 function showExploreInfo(){alert("Explore will show reviewed RYZON community videos after the secure feed is connected.");}
 function showVideoUploadInfo(){alert("Video upload is not active yet. It will open here after secure storage, creator permissions and moderation are ready.");}
