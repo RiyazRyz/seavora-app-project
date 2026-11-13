@@ -17,7 +17,8 @@ const APP_FILES = [
   "./ai-assistant.html",
   "./admin-dashboard.html",
   "./help.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./responsive-system.css"
 ];
 
 // INSTALL: Cache the latest app files
