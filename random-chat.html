@@ -1266,7 +1266,7 @@ onAuthStateChanged(auth,user=>{
  const nextAction=sessionStorage.getItem("ryzonNextAction");
  if(nextAction==="randomChat"){
   sessionStorage.removeItem("ryzonNextAction");
-  $("setupCard").classList.remove("hidden");
+  showRandomSetup();
  }
  applyChatLanguage();
 });
