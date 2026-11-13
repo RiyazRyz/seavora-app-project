@@ -1,0 +1,47 @@
+/* RYZON All-Device Responsive System
+   Shared layout layer for phones, tablets, laptops and desktops.
+   Existing page-specific styles remain in place; this file only adds
+   responsive safety and shared layout behavior. */
+:root{
+  --ryzon-safe-gutter:clamp(12px,2.2vw,28px);
+  --ryzon-content-width:1440px;
+  --ryzon-focus:#55dcff;
+}
+html{width:100%;min-width:320px;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;min-width:320px;max-width:none;overflow-x:hidden}
+img,video,canvas,svg,iframe{max-width:100%}
+img,video{height:auto}
+button,input,select,textarea{max-width:100%;font:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+:where(button,a,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--ryzon-focus);outline-offset:3px}
+:where(.container,.main-container,.app-container,.page-container,.content,.content-wrapper){width:min(100% - (var(--ryzon-safe-gutter) * 2),var(--ryzon-content-width));margin-inline:auto}
+:where(.grid,.tiles,.tile-grid,.service-grid,.hub-grid,.cards-grid){grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+:where(.card,.panel,.section-card){min-width:0;overflow-wrap:anywhere}
+:where(table){width:100%;max-width:100%;border-collapse:collapse}
+:where(.table-wrap,.table-responsive){max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+:where(input,select,textarea){min-width:0}
+:where(textarea){resize:vertical}
+@media (min-width:700px){
+  body{padding-inline:clamp(18px,3vw,42px)}
+  :where(.container,.main-container,.app-container,.page-container,.content,.content-wrapper){width:min(100% - 24px,var(--ryzon-content-width))}
+  :where(.card,.panel,.section-card){border-radius:18px}
+  :where(.grid,.tiles,.tile-grid,.service-grid,.hub-grid,.cards-grid){gap:clamp(12px,1.4vw,22px)}
+}
+@media (min-width:1100px){
+  :where(.container,.main-container,.app-container,.page-container,.content,.content-wrapper){width:min(100% - 48px,var(--ryzon-content-width))}
+  :where(.sidebar-layout,.app-layout){display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);align-items:start}
+  :where(.main-content,.page-content){min-width:0}
+}
+@media (max-width:699px){
+  body{padding-inline:var(--ryzon-safe-gutter)}
+  :where(.container,.main-container,.app-container,.page-container,.content,.content-wrapper){width:100%;max-width:100%}
+  :where(.grid,.tiles,.tile-grid,.service-grid,.hub-grid,.cards-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
+  :where(.wide-only,.desktop-only){display:none!important}
+  :where(.table-wrap table,.table-responsive table){min-width:560px}
+}
+@media (max-width:380px){
+  :where(.grid,.tiles,.tile-grid,.service-grid,.hub-grid,.cards-grid){grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
