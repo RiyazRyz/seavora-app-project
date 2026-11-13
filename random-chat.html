@@ -236,6 +236,31 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 .social-bottom a.active{color:#63e4ff}
 @media(max-width:480px){.social-feature{min-height:280px;padding:17px}.feature-title{font-size:25px}.social-top{padding-top:4px}}
 
+
+/* RYZON Shorts-first landing experience */
+.shorts-first-shell{max-width:650px;margin:0 auto 18px;padding-bottom:4px}
+.shorts-topbar{display:flex;align-items:center;justify-content:space-between;padding:5px 2px 12px}
+.shorts-brand{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:900;letter-spacing:2px;color:#f5f9ff}
+.shorts-brand-mark{display:grid;place-items:center;width:35px;height:35px;border-radius:11px;background:linear-gradient(145deg,#55dcff,#078bd0);color:#061629;font-size:22px;letter-spacing:0}
+.shorts-brand small{font-size:9px;letter-spacing:2px;color:#64dfff;margin-left:1px;align-self:flex-end;padding-bottom:3px}
+.shorts-top-actions{display:flex;gap:8px}
+.shorts-top-btn{width:39px;height:39px;border-radius:13px;border:1px solid #315573;background:#102d49;color:#fff;font-size:18px}
+.shorts-feed-tabs{display:flex;justify-content:center;gap:27px;padding:8px 0 13px;border-bottom:1px solid #24415f;margin-bottom:12px}
+.feed-tab{position:relative;color:#9fb5cb;text-decoration:none;font-size:13px;font-weight:700;padding:3px 0}
+.feed-tab.active{color:#f4f9ff}.feed-tab.active:after{content:"";position:absolute;left:25%;right:25%;bottom:-14px;height:3px;border-radius:3px;background:#55d7ff}
+.shorts-stage{position:relative;isolation:isolate;overflow:hidden;min-height:min(690px,calc(100svh - 205px));border-radius:23px;border:1px solid #315a79;background:linear-gradient(155deg,#123c5d 0%,#0a213b 47%,#061426 100%);box-shadow:0 18px 48px #0006}
+.stage-art{position:absolute;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 76% 28%,#0b9fc455,transparent 36%),radial-gradient(ellipse at 20% 70%,#1b74aa55,transparent 40%)}
+.stage-glow{position:absolute;width:310px;height:310px;right:-70px;top:80px;border-radius:50%;background:radial-gradient(circle,#42d9ff35 0%,#168ac322 38%,transparent 70%);filter:blur(3px)}
+.stage-orbit{position:absolute;border:1px solid #7de9ff35;border-radius:50%;transform:rotate(-28deg)}.orbit-one{width:390px;height:170px;right:-70px;top:145px}.orbit-two{width:320px;height:130px;right:-20px;top:165px;transform:rotate(32deg)}
+.stage-center-mark{position:absolute;right:13%;top:22%;width:145px;height:145px;border-radius:38px;display:grid;place-items:center;transform:rotate(-9deg);background:linear-gradient(145deg,#55dcff22,#078bd044);border:1px solid #8aeaff66;box-shadow:0 0 70px #16bde533,inset 0 0 35px #7ceaff18}
+.stage-center-mark span{font-size:88px;font-weight:900;letter-spacing:-8px;color:#dffaff;text-shadow:0 0 32px #55dcff88}.stage-center-mark i{position:absolute;right:14px;top:12px;color:#55dcff;font-size:24px;font-style:normal}
+.stage-wave{position:absolute;right:8%;top:52%;height:45px;display:flex;align-items:center;gap:5px;opacity:.65}.stage-wave i{display:block;width:4px;border-radius:5px;background:#68e4ff;height:var(--h,18px)}.stage-wave i:nth-child(3n){height:36px}.stage-wave i:nth-child(3n + 1){height:25px}.stage-wave i:nth-child(4n){height:12px}
+.stage-topline{position:absolute;left:18px;right:18px;top:17px;display:flex;align-items:center;gap:8px;color:#b9eaf7;font-size:9px;letter-spacing:1.5px;font-weight:800}.stage-live-dot{width:7px;height:7px;border-radius:50%;background:#62e6bb;box-shadow:0 0 12px #62e6bb}.stage-preview-tag{margin-left:auto;border:1px solid #7bdcf566;border-radius:20px;padding:5px 8px;color:#9beeff;font-size:8px}
+.stage-copy{position:absolute;left:22px;right:64px;bottom:48px;max-width:390px}.stage-eyebrow{font-size:9px;letter-spacing:2px;color:#65dfff;font-weight:900}.stage-copy h1{font-size:clamp(36px,8vw,54px);line-height:.99;letter-spacing:-1.8px;margin:12px 0;color:#f4f9ff}.stage-copy h1 em{font-style:normal;color:#62dfff}.stage-copy p{max-width:300px;color:#c2d8e9;font-size:13px;line-height:1.55;margin:0 0 17px}.stage-cta{display:inline-flex;align-items:center;gap:17px;padding:12px 16px;border-radius:13px;background:linear-gradient(110deg,#0a91c4,#16b9c7);color:white;text-decoration:none;font-size:12px;font-weight:800;box-shadow:0 8px 24px #079ac344}.stage-cta span{font-size:17px}.stage-disclaimer{max-width:290px;margin-top:12px;color:#9db8ce;font-size:9px;line-height:1.5}.stage-side-rail{position:absolute;right:15px;bottom:95px;display:flex;flex-direction:column;gap:19px;color:#bdefff;font-size:20px;opacity:.72}.stage-bottom-mark{position:absolute;left:20px;right:20px;bottom:15px;display:flex;justify-content:space-between;color:#7597b2;font-size:8px;letter-spacing:1.4px;font-weight:800}
+.shorts-home-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.shorts-home-link{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:12px 10px;border:1px solid #294a67;border-radius:14px;background:#102a45;color:#f1f7ff;text-decoration:none;text-align:left}.shorts-home-link span{font-size:19px}.shorts-home-link b{font-size:11px}.shorts-home-link small{font-size:9px;color:#9fb6cc;line-height:1.35}.shorts-bottom-nav{margin-top:10px}
+@media(max-width:480px){.shorts-stage{min-height:calc(100svh - 210px);border-radius:19px}.stage-center-mark{width:120px;height:120px;right:11%;top:23%}.stage-center-mark span{font-size:74px}.stage-copy{left:18px;bottom:45px;right:55px}.stage-copy h1{font-size:39px}.stage-side-rail{right:12px;bottom:92px}.shorts-home-link{padding:10px 8px}.shorts-feed-tabs{gap:24px}}
+@media(min-width:700px){.shorts-stage{min-height:650px}.shorts-copy{left:28px}}
+
 </style>
 <script src="./ryzon-branding.js" defer></script>
 <link rel="stylesheet" href="./responsive-system.css">
@@ -268,42 +293,46 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  </div>
 </header>
 
-<section class="social-shell" id="randomHub" aria-label="RYZON social home">
- <div class="social-top">
-  <div class="social-wordmark">RYZON <span style="color:#55d7ff">✦</span></div>
-  <div class="social-tools">
-   <button class="social-tool" type="button" onclick="showCoinInfo('Your secure coin balance will appear after wallet connection.') " aria-label="Coins">🪙</button>
-   <button class="social-tool" type="button" onclick="openMyProfile()" aria-label="Profile">♡</button>
+<section class="social-shell shorts-first-shell" id="randomHub" aria-label="RYZON Shorts home">
+ <div class="shorts-topbar">
+  <div class="shorts-brand"><span class="shorts-brand-mark">R</span><span>RYZON</span><small>SHORTS</small></div>
+  <div class="shorts-top-actions">
+   <button class="shorts-top-btn" type="button" onclick="showCoinInfo('Your secure coin balance will appear after wallet connection.')" aria-label="RYZON Coins">🪙</button>
+   <button class="shorts-top-btn" type="button" onclick="openMyProfile()" aria-label="My Profile">♙</button>
   </div>
  </div>
- <div class="story-rail" aria-label="Quick links">
-  <a class="story you" href="./profile.html" style="text-decoration:none"><div class="story-ring"><span>＋</span></div>Your profile</a>
-  <a class="story" href="./shorts.html" style="text-decoration:none"><div class="story-ring"><span>▶</span></div>Shorts</a>
-  <a class="story" href="./chat.html" style="text-decoration:none"><div class="story-ring"><span>💬</span></div>Friends</a>
-  <a class="story" href="#setupCard" style="text-decoration:none"><div class="story-ring"><span>🌍</span></div>Discover</a>
+ <div class="shorts-feed-tabs" aria-label="Shorts feed categories">
+  <span class="feed-tab active">For You</span>
+  <a class="feed-tab" href="./shorts.html">Following</a>
+  <a class="feed-tab" href="./shorts.html">Trending</a>
  </div>
- <div class="social-feature">
-  <div>
-   <div class="feature-kicker">RYZON · SHORTS</div>
-   <div class="feature-title">Your world.<br>One scroll away.</div>
-   <div class="feature-desc">Watch short videos, discover creators and connect with the RYZON community.</div>
+ <article class="shorts-stage" aria-label="RYZON Shorts launch preview">
+  <div class="stage-art" aria-hidden="true">
+   <div class="stage-orbit orbit-one"></div><div class="stage-orbit orbit-two"></div>
+   <div class="stage-glow"></div>
+   <div class="stage-center-mark"><span>R</span><i>✦</i></div>
+   <div class="stage-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
-  <div class="feature-actions">
-   <a class="feature-link" href="./shorts.html">▶ Open Shorts</a>
-   <a class="feature-link alt" href="./profile.html">Your Profile</a>
+  <div class="stage-topline"><span class="stage-live-dot"></span> RYZON CREATOR SPOTLIGHT <span class="stage-preview-tag">PREVIEW</span></div>
+  <div class="stage-copy">
+   <div class="stage-eyebrow">A NEW WORLD TO DISCOVER</div>
+   <h1>Your next<br><em>discovery</em><br>starts here.</h1>
+   <p>Short videos, fresh ideas and positive moments — all in one RYZON feed.</p>
+   <a class="stage-cta" href="./shorts.html">Explore RYZON Shorts <span>↗</span></a>
+   <div class="stage-disclaimer">Community video feed is being prepared. Only reviewed videos will appear here.</div>
   </div>
+  <div class="stage-side-rail" aria-hidden="true"><span>✦</span><span>♡</span><span>◌</span></div>
+  <div class="stage-bottom-mark"><span>RYZON</span><span>ONE APP · ENDLESS POSSIBILITIES</span></div>
+ </article>
+ <div class="shorts-home-links">
+  <button type="button" onclick="showRandomSetup()" class="shorts-home-link"><span>🌍</span><b>Random Chat</b><small>Meet someone new</small></button>
+  <a href="./chat.html" class="shorts-home-link"><span>✉</span><b>Friends</b><small>Chat with accepted friends</small></a>
+  <a href="./profile.html" class="shorts-home-link"><span>♙</span><b>Profile</b><small>Your RYZON space</small></a>
  </div>
- <div class="social-section-title"><strong>Connect with people</strong><small>Choose how to connect</small></div>
- <div class="social-quick-grid">
-  <a class="social-quick" href="#setupCard"><span class="emoji">🌍</span><strong>Random Chat</strong><small>Meet a new chat partner</small></a>
-  <a class="social-quick" href="./chat.html"><span class="emoji">💬</span><strong>Friends Chat</strong><small>Message accepted friends</small></a>
-  <a class="social-quick" href="./shorts.html"><span class="emoji">🎬</span><strong>Short Videos</strong><small>For You · Following · Trending</small></a>
-  <a class="social-quick" href="./profile.html"><span class="emoji">👤</span><strong>Social Profile</strong><small>View and manage your profile</small></a>
- </div>
- <nav class="social-bottom" aria-label="Random Chat navigation">
+ <nav class="social-bottom shorts-bottom-nav" aria-label="RYZON navigation">
   <a href="./home.html"><b>⌂</b>Home</a>
-  <a href="./shorts.html"><b>▶</b>Shorts</a>
-  <a href="#setupCard" class="active"><b>◎</b>Random</a>
+  <a href="#randomHub" class="active" onclick="showShortsHome(event)"><b>▶</b>Shorts</a>
+  <a href="#setupCard" onclick="showRandomSetup(event)"><b>◎</b>Random</a>
   <a href="./chat.html"><b>✉</b>Friends</a>
   <a href="./profile.html"><b>♙</b>Profile</a>
  </nav>
@@ -320,7 +349,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  <p class="wallet-policy">Coin purchase and transfer are not active yet; no payment or transfer will be made from this screen.</p>
 </section>
 
-<section class="card" id="setupCard">
+<section class="card hidden" id="setupCard">
  <span class="free-label" data-chat="free">🌍 FREE FOR EVERYONE</span>
  <h1 data-chat="title">💬 Worldwide Random Chat</h1>
  <p class="subtitle" data-chat="description">
@@ -746,11 +775,27 @@ function resetChatState(){
  $("nextBtn").disabled=true;
  $("findBtn").disabled=false;
 }
+function showShortsHome(event){
+ if(event)event.preventDefault();
+ $("randomHub").classList.remove("hidden");
+ $("setupCard").classList.add("hidden");
+ $("chatCard").classList.add("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function showRandomSetup(event){
+ if(event)event.preventDefault();
+ $("randomHub").classList.add("hidden");
+ $("chatCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 function showChatScreen(){
+ $("randomHub").classList.add("hidden");
  $("setupCard").classList.add("hidden");
  $("chatCard").classList.remove("hidden");
 }
 function showSetupScreen(){
+ $("randomHub").classList.add("hidden");
  $("chatCard").classList.add("hidden");
  $("setupCard").classList.remove("hidden");
 }
@@ -1221,7 +1266,7 @@ onAuthStateChanged(auth,user=>{
  const nextAction=sessionStorage.getItem("ryzonNextAction");
  if(nextAction==="randomChat"){
   sessionStorage.removeItem("ryzonNextAction");
-  $("setupCard").classList.remove("hidden");
+  showRandomSetup();
  }
  applyChatLanguage();
 });
