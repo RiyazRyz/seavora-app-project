@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071a30">
+<meta name="description" content="RYZON Shorts - share creativity and positive moments.">
+<title>RYZON Shorts</title>
+<script src="./language-system.js"></script>
+<script src="./ryzon-branding.js" defer></script>
+<style>
+:root{--navy:#071a30;--panel:#102943;--line:#294966;--cyan:#55dcff;--text:#f1f5fb;--muted:#a9bdd2}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--text);font-family:Arial,sans-serif;padding-bottom:82px}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#071a30;border-bottom:1px solid #1c3b58}
+.brand{font-weight:900;letter-spacing:3px;font-size:22px}.brand span{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:8px;border-radius:10px;background:linear-gradient(145deg,#55dcff,#078bd0);letter-spacing:0}
+header a{color:var(--cyan);text-decoration:none;font-size:13px}
+main{max-width:720px;margin:auto;padding:16px}
+h1{font-size:23px;margin:4px 0 6px}.sub{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 16px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
+.tab{padding:11px 5px;border:1px solid var(--line);border-radius:12px;background:#102943;color:#b7c9d9;font-weight:bold}
+.tab.active{border-color:var(--cyan);color:white;background:#123b58}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin:12px 0}
+.empty{min-height:310px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:linear-gradient(150deg,#123653,#091b30);border-radius:14px}
+.play{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:1px solid #75dfff80;background:#ffffff12;font-size:27px;margin-bottom:14px}
+.empty h2{font-size:18px;margin:0 0 8px}.empty p{font-size:12px;color:#c1d4e5;line-height:1.6;max-width:310px;margin:0}
+button,.button{font:inherit;cursor:pointer}.primary{display:inline-block;margin-top:15px;padding:12px 18px;border:0;border-radius:12px;background:#087fb5;color:white;font-weight:bold}
+.secondary{padding:11px 14px;border:1px solid #47708f;border-radius:11px;background:#173651;color:white;font-weight:bold}
+.field{width:100%;padding:12px;border-radius:11px;border:1px solid #355976;background:#091f35;color:white;margin:8px 0 12px}
+label{font-size:13px;font-weight:bold}.hint{font-size:11px;color:var(--muted);line-height:1.6}
+#videoPreview{display:none;width:100%;max-height:430px;background:#000;border-radius:13px;margin:12px 0}
+#status{min-height:22px;color:#8bdfff;font-size:12px;line-height:1.5}
+.rules{font-size:12px;color:#c4d5e4;line-height:1.7;padding-left:18px}
+.nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#091d32;border-top:1px solid #29435b;padding:9px 3px calc(9px + env(safe-area-inset-bottom));z-index:8}
+.nav a{color:#9db2c7;text-decoration:none;text-align:center;font-size:10px;flex:1}.nav a b{display:block;font-size:20px;margin-bottom:3px}.nav a.active{color:var(--cyan);font-weight:bold}
+@media(min-width:700px){body{padding-bottom:0}.nav{display:none}}
+</style>
+</head>
+<body>
+<header><div class="brand"><span>R</span>RYZON</div><a href="./home.html">← Home</a></header>
+<main>
+<h1>🎬 RYZON Shorts</h1>
+<p class="sub">Short videos, fresh ideas and positive moments from the RYZON community.</p>
+<div class="tabs" role="tablist" aria-label="Shorts feeds">
+<button class="tab active" data-feed="for-you">For You</button><button class="tab" data-feed="following">Following</button><button class="tab" data-feed="trending">Trending</button>
+</div>
+<section class="panel">
+<div class="empty"><div class="play">▶</div><h2 id="feedTitle">Your Shorts Feed</h2><p id="feedText">Community videos will appear here after secure video storage, moderation and feed services are connected.</p><button class="primary" id="createJump">＋ Create a Short</button></div>
+<p class="hint" style="margin:12px 2px 0">Feed preview: public video playback is not enabled yet. This page will not display unreviewed uploads.</p>
+</section>
+<section class="panel" id="createPanel">
+<h2 style="margin:0 0 8px;font-size:18px">＋ Create a Short</h2>
+<p class="hint">Choose a video from your phone to preview it here. Selecting a file does not upload or publish it.</p>
+<input id="videoFile" class="field" type="file" accept="video/mp4,video/webm,video/quicktime">
+<video id="videoPreview" controls playsinline></video>
+<label for="caption">Caption</label>
+<textarea id="caption" class="field" rows="3" maxlength="180" placeholder="Write a positive caption..."></textarea>
+<div class="hint"><span id="count">0</span>/180 characters · Maximum video length: 60 seconds · Maximum file size: 50 MB</div>
+<div id="status" role="status" aria-live="polite">Upload and moderation services are not connected yet. Your video stays on this device for preview only.</div>
+<button class="secondary" id="clearBtn" type="button">Clear preview</button>
+</section>
+<section class="panel">
+<h2 style="font-size:17px;margin:0 0 8px">🛡️ Community Safety</h2>
+<ul class="rules">
+<li>Only upload videos you own or have permission to share.</li>
+<li>Do not post private contact details, school details or live location.</li>
+<li>No bullying, harassment, sexual content or dangerous challenges.</li>
+<li>Report and block controls will be available before public launch.</li>
+<li>Uploads must pass moderation before appearing in the public feed.</li>
+</ul>
+</section>
+</main>
+<nav class="nav" aria-label="App navigation">
+<a href="./home.html"><b>🏠</b>Home</a><a class="active" href="./shorts.html"><b>🎬</b>Shorts</a><a href="./explore.html"><b>🔎</b>Explore</a><a href="./chat.html"><b>💬</b>Chat</a><a href="./profile.html"><b>👤</b>Profile</a>
+</nav>
+<script>
+const fileInput=document.getElementById("videoFile"),preview=document.getElementById("videoPreview"),statusBox=document.getElementById("status"),caption=document.getElementById("caption");
+let objectUrl="";
+document.getElementById("createJump").addEventListener("click",()=>document.getElementById("createPanel").scrollIntoView({behavior:"smooth"}));
+document.getElementById("count").textContent="0";
+caption.addEventListener("input",()=>document.getElementById("count").textContent=caption.value.length);
+fileInput.addEventListener("change",()=>{
+ const file=fileInput.files&&fileInput.files[0];
+ if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl="";}
+ preview.removeAttribute("src");preview.load();preview.style.display="none";
+ if(!file){statusBox.textContent="No video selected.";return;}
+ if(!["video/mp4","video/webm","video/quicktime"].includes(file.type)){fileInput.value="";statusBox.textContent="Please choose an MP4, WebM or MOV video.";return;}
+ if(file.size>50*1024*1024){fileInput.value="";statusBox.textContent="Video must be 50 MB or smaller.";return;}
+ objectUrl=URL.createObjectURL(file);preview.src=objectUrl;preview.style.display="block";
+ preview.onloadedmetadata=()=>{
+  if(preview.duration>60){fileInput.value="";preview.pause();preview.removeAttribute("src");preview.load();preview.style.display="none";URL.revokeObjectURL(objectUrl);objectUrl="";statusBox.textContent="This first version supports videos up to 60 seconds.";return;}
+  statusBox.textContent="Preview ready. This video is not uploaded or published. Secure upload and moderation must be connected first.";
+ };
+ preview.onerror=()=>{statusBox.textContent="Unable to preview this video. Try another file.";};
+});
+document.getElementById("clearBtn").addEventListener("click",()=>{
+ fileInput.value="";caption.value="";document.getElementById("count").textContent="0";
+ if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl="";
+ preview.pause();preview.removeAttribute("src");preview.load();preview.style.display="none";
+ statusBox.textContent="Preview cleared. No video was uploaded.";
+});
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));tab.classList.add("active");
+ const labels={ "for-you":["Your Shorts Feed","Community videos will appear here after secure video storage, moderation and feed services are connected."],"following":["Following Feed","Videos from accounts you follow will appear here when the follow and feed services are connected."],"trending":["Trending Shorts","Trending videos will appear here after moderation and ranking services are connected."]};
+ document.getElementById("feedTitle").textContent=labels[tab.dataset.feed][0];document.getElementById("feedText").textContent=labels[tab.dataset.feed][1];
+}));
+window.addEventListener("beforeunload",()=>{if(objectUrl)URL.revokeObjectURL(objectUrl);});
+</script>
+</body>
+</html>
