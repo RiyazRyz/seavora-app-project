@@ -6,6 +6,7 @@ const APP_FILES = [
   "./index.html",
   "./otp.html",
   "./home.html",
+  "./shorts.html",
   "./profile.html",
   "./chat.html",
   "./notifications.html",
