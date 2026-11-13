@@ -284,45 +284,6 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
   <div id="offlineBanner">⚠️ You are offline. Some RYZON services may not work.</div>
  </div>
 
- <div class="feed-heading">
-  <h2>🎬 Discover Videos</h2>
-  <span style="font-size:11px;color:#9eb4c9">RYZON Feed</span>
- </div>
-
- <div class="feed-tabs">
-  <button class="feed-tab active" data-feed="for-you" onclick="changeFeed('for-you',this)">For You</button>
-  <button class="feed-tab" data-feed="following" onclick="changeFeed('following',this)">Following</button>
-  <button class="feed-tab" data-feed="trending" onclick="changeFeed('trending',this)">Trending</button>
- </div>
-
- <section class="feed-stage" aria-label="Short video feed">
-  <div class="feed-placeholder">
-   <div class="play-symbol">▶</div>
-   <h2 id="feedTitle">Your RYZON Feed</h2>
-   <p id="feedDescription">
-    Short videos from the RYZON community will appear here when the video-feed service is connected.
-   </p>
-   <button onclick="goTo('explore.html','Opened Explore from video feed')">Explore RYZON</button>
-  </div>
-
-  <div class="feed-caption">
-   <div class="creator">🌟 RYZON Community <button class="follow-btn" onclick="feedNotice('Creator profiles will be available when the feed is connected.')">Follow +</button></div>
-   <div class="caption-text">Discover ideas, creativity and positive moments from the community.</div>
-   <div class="audio-line">♫ RYZON Community Feed</div>
-  </div>
-
-  <div class="feed-actions">
-   <button class="feed-action" onclick="feedNotice('Likes will be saved when the video-feed service is connected.')">♡<small>Like</small></button>
-   <button class="feed-action" onclick="feedNotice('Comments will be available when the video-feed service is connected.')">💬<small>Comment</small></button>
-   <button class="feed-action" onclick="shareRYZON()">↗<small>Share</small></button>
-   <button class="feed-action" onclick="feedNotice('Remix will be available after video creation is connected.')">✂️<small>Remix</small></button>
-  </div>
- </section>
-
- <div class="feed-note">
-  ℹ️ Video feed is a visual preview. Real video playback, uploads, likes and comments need the RYZON video backend.
- </div>
-
  <div class="scam-ticker" role="status" aria-label="Scam safety alert">
   <div class="scam-ticker-track">
    <span>⚠️ SCAM ALERT: Never share OTP, UPI PIN or bank details. Verify before you pay.</span>
@@ -352,12 +313,13 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
   <div id="noResults">No services found. Try another search.</div>
 
   <div class="service-grid" id="serviceGrid">
-   <a class="tile" href="random-chat.html"><span>💬</span>Random Chat<small>Worldwide free random chat</small></a>
-   <a class="tile" href="shorts.html"><span>🎬</span>RYZON Shorts<small>Watch and create short videos</small></a>
-   <a class="tile" href="my-safe.html"><span>🔐</span>My Safe</a>
-   <a class="tile" href="project-ideas.html"><span>🎓</span>Education / Project Ideas</a>
-   <a class="tile" href="jobs.html"><span>💼</span>Jobs</a>
+   <a class="tile" href="random-chat.html"><span>💬</span>Random Chat<small>Shorts, time pass and chat inside</small></a>
+   <a class="tile" href="seller-dashboard.html"><span>🏪</span>Business<small>Seller and business workspace</small></a>
    <a class="tile" href="shopping.html"><span>🛍️</span>Shopping</a>
+   <a class="tile" href="educational.html"><span>🎓</span>Education</a>
+   <a class="tile" href="project-ideas.html"><span>💡</span>Project Ideas</a>
+   <a class="tile" href="my-safe.html"><span>🔐</span>Personal Data Safe Locker</a>
+   <a class="tile" href="jobs.html"><span>💼</span>Jobs</a>
    <a class="tile" href="ai-assistant.html"><span>🤖</span>AI Assistant</a>
    <a class="tile" href="browser.html"><span>🌐</span>Browser</a>
    <a class="tile" href="parcel-safety.html"><span>📦</span>Parcel Safety</a>
@@ -365,11 +327,6 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
    <a class="tile" href="safety-help.html"><span>🛡️</span>Safety &amp; Help</a>
    <a class="tile" href="premium.html"><span>⭐</span>Premium</a>
    <a class="tile" href="language.html"><span>🌐</span>Language</a>
-   <a class="tile" href="group-chat.html"><span>👥</span>Group Chat</a>
-   <a class="tile" href="stories.html"><span>📸</span>Stories / Status</a>
-   <a class="tile" href="saved-posts.html"><span>🔖</span>Saved Posts</a>
-   <a class="tile" href="communities.html"><span>🌍</span>Communities</a>
-   <a class="tile" href="gifts.html"><span>🎁</span>Send Gifts</a>
    <a class="tile" href="settings.html"><span>⚙️</span>Settings</a>
   </div>
  </section>
@@ -429,7 +386,7 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
 <nav class="bottom-nav" aria-label="App navigation">
  <button class="active" onclick="goHome()"><span>🏠</span>Home</button>
  <button onclick="goTo('explore.html','Opened Explore')"><span>🔎</span>Explore</button>
- <button onclick="goTo('stories.html','Opened Create')"><span>➕</span>Create</button>
+ <button onclick="goTo('educational.html','Opened Education')"><span>🎓</span>Learn</button>
  <button onclick="openRandomChat()"><span>💬</span>Random Chat</button>
  <button onclick="openProfile()"><span>👤</span>Profile</button>
 </nav>
@@ -604,7 +561,7 @@ function changeFeed(type,button){
  button.classList.add("active");
 
  const titles={
-  "for-you":"Your RYZON Feed",
+  "for-you":"Your RYZON Services",
   "following":"Following Feed",
   "trending":"Trending on RYZON"
  };
