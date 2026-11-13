@@ -201,6 +201,41 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  .partner-avatar{width:43px;height:43px;flex-basis:43px}
  .friend-btn{padding:9px 10px;font-size:11px}
 }
+
+/* Instagram-inspired RYZON Random Chat landing UI */
+.social-shell{max-width:650px;margin:0 auto 16px}
+.social-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px}
+.social-wordmark{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#f4f8ff}
+.social-tools{display:flex;gap:8px}
+.social-tool{border:1px solid var(--border);background:#142d49;color:#fff;border-radius:50%;width:40px;height:40px;font-size:17px}
+.story-rail{display:flex;gap:13px;overflow-x:auto;padding:12px 4px 16px;scrollbar-width:none}
+.story-rail::-webkit-scrollbar{display:none}
+.story{flex:0 0 66px;text-align:center;color:var(--muted);font-size:10px}
+.story-ring{width:58px;height:58px;margin:0 auto 6px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#ffb347,#ff4f91,#7c5cff)}
+.story-ring span{height:100%;width:100%;display:grid;place-items:center;border:2px solid #071426;border-radius:50%;background:#173653;color:white;font-size:21px}
+.story.you .story-ring{background:#31506d}
+.social-feature{position:relative;overflow:hidden;border:1px solid #2b5575;border-radius:20px;background:linear-gradient(145deg,#153e61,#081a2e);min-height:300px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+.social-feature:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-70px;top:28px;background:radial-gradient(circle,#20b9d966,transparent 68%)}
+.feature-kicker{position:relative;color:#73e7ff;font-size:11px;font-weight:800;letter-spacing:1.4px}
+.feature-title{position:relative;font-size:28px;line-height:1.12;font-weight:900;max-width:300px;margin:12px 0}
+.feature-desc{position:relative;color:#c2d5e8;font-size:13px;line-height:1.55;max-width:300px}
+.feature-actions{position:relative;display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.feature-link{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:800;background:#13a9ca;color:white;border:1px solid #42d4ed}
+.feature-link.alt{background:#173a59;color:#e8f7ff;border-color:#42617f}
+.social-section-title{display:flex;align-items:center;justify-content:space-between;margin:18px 2px 10px}
+.social-section-title strong{font-size:15px}
+.social-section-title small{font-size:11px;color:var(--muted)}
+.social-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.social-quick{min-height:112px;padding:14px;border-radius:16px;border:1px solid var(--border);background:#102a45;color:white;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between}
+.social-quick .emoji{font-size:23px}
+.social-quick strong{font-size:13px}
+.social-quick small{font-size:10px;color:var(--muted);line-height:1.4}
+.social-bottom{position:sticky;bottom:8px;z-index:20;display:flex;justify-content:space-around;gap:4px;margin:14px -3px 0;padding:9px 4px calc(9px + env(safe-area-inset-bottom));border:1px solid #31506d;border-radius:17px;background:#071426f2;backdrop-filter:blur(12px)}
+.social-bottom a{flex:1;text-align:center;text-decoration:none;color:#b9cce0;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.social-bottom a b{font-size:18px;font-weight:500}
+.social-bottom a.active{color:#63e4ff}
+@media(max-width:480px){.social-feature{min-height:280px;padding:17px}.feature-title{font-size:25px}.social-top{padding-top:4px}}
+
 </style>
 <script src="./ryzon-branding.js" defer></script>
 <link rel="stylesheet" href="./responsive-system.css">
@@ -233,15 +268,45 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  </div>
 </header>
 
-<section class="card" id="randomHub" aria-label="Random Chat entertainment and wallet">
- <h1>🎬 Random Chat Time Pass</h1>
- <p class="subtitle">Short videos, social connections and chat are grouped inside Random Chat.</p>
- <div class="hub-grid">
-  <a class="hub-action" href="./shorts.html"><strong>▶️ Shorts Videos</strong><small>For You · Following · Trending</small></a>
-  <a class="hub-action" href="./chat.html"><strong>💬 Friends Chat</strong><small>Continue conversations with accepted friends</small></a>
-  <a class="hub-action" href="#setupCard"><strong>🌍 Find Random Chat</strong><small>Meet a new chat partner</small></a>
-  <a class="hub-action" href="./profile.html"><strong>👤 Social Profile</strong><small>Profile and connections</small></a>
+<section class="social-shell" id="randomHub" aria-label="RYZON social home">
+ <div class="social-top">
+  <div class="social-wordmark">RYZON <span style="color:#55d7ff">✦</span></div>
+  <div class="social-tools">
+   <button class="social-tool" type="button" onclick="showCoinInfo('Your secure coin balance will appear after wallet connection.') " aria-label="Coins">🪙</button>
+   <button class="social-tool" type="button" onclick="openMyProfile()" aria-label="Profile">♡</button>
+  </div>
  </div>
+ <div class="story-rail" aria-label="Quick links">
+  <a class="story you" href="./profile.html" style="text-decoration:none"><div class="story-ring"><span>＋</span></div>Your profile</a>
+  <a class="story" href="./shorts.html" style="text-decoration:none"><div class="story-ring"><span>▶</span></div>Shorts</a>
+  <a class="story" href="./chat.html" style="text-decoration:none"><div class="story-ring"><span>💬</span></div>Friends</a>
+  <a class="story" href="#setupCard" style="text-decoration:none"><div class="story-ring"><span>🌍</span></div>Discover</a>
+ </div>
+ <div class="social-feature">
+  <div>
+   <div class="feature-kicker">RYZON · SHORTS</div>
+   <div class="feature-title">Your world.<br>One scroll away.</div>
+   <div class="feature-desc">Watch short videos, discover creators and connect with the RYZON community.</div>
+  </div>
+  <div class="feature-actions">
+   <a class="feature-link" href="./shorts.html">▶ Open Shorts</a>
+   <a class="feature-link alt" href="./profile.html">Your Profile</a>
+  </div>
+ </div>
+ <div class="social-section-title"><strong>Connect with people</strong><small>Choose how to connect</small></div>
+ <div class="social-quick-grid">
+  <a class="social-quick" href="#setupCard"><span class="emoji">🌍</span><strong>Random Chat</strong><small>Meet a new chat partner</small></a>
+  <a class="social-quick" href="./chat.html"><span class="emoji">💬</span><strong>Friends Chat</strong><small>Message accepted friends</small></a>
+  <a class="social-quick" href="./shorts.html"><span class="emoji">🎬</span><strong>Short Videos</strong><small>For You · Following · Trending</small></a>
+  <a class="social-quick" href="./profile.html"><span class="emoji">👤</span><strong>Social Profile</strong><small>View and manage your profile</small></a>
+ </div>
+ <nav class="social-bottom" aria-label="Random Chat navigation">
+  <a href="./home.html"><b>⌂</b>Home</a>
+  <a href="./shorts.html"><b>▶</b>Shorts</a>
+  <a href="#setupCard" class="active"><b>◎</b>Random</a>
+  <a href="./chat.html"><b>✉</b>Friends</a>
+  <a href="./profile.html"><b>♙</b>Profile</a>
+ </nav>
 </section>
 
 <section class="card" id="randomCoinWallet" aria-label="RYZON Coin Wallet">
