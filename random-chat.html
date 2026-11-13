@@ -105,6 +105,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
  border-radius:9px;padding:8px
 }
 
+.hub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.hub-action{display:block;width:100%;min-width:0;padding:14px 12px;text-align:left;text-decoration:none;color:var(--text);background:#123452;border:1px solid #2b5b7c;border-radius:13px;font-weight:bold}
+.hub-action strong{display:block;font-size:13px}
+.hub-action small{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:6px;font-weight:normal}
+button.hub-action{font:inherit;cursor:pointer}
+.wallet-policy{color:var(--muted);font-size:11px;line-height:1.55;margin:10px 0 0}
 /* Partner profile and Add Friend */
 .partner-profile{
  display:flex;align-items:center;gap:12px;
@@ -225,6 +231,28 @@ button:focus-visible,input:focus-visible,select:focus-visible{
   <button class="home-btn" onclick="goHome()" data-chat="home">⌂ Home</button>
  </div>
 </header>
+
+<section class="card" id="randomHub" aria-label="Random Chat entertainment and wallet">
+ <h1>🎬 Random Chat Time Pass</h1>
+ <p class="subtitle">Short videos, social connections and chat are grouped inside Random Chat.</p>
+ <div class="hub-grid">
+  <a class="hub-action" href="./shorts.html"><strong>▶️ Shorts Videos</strong><small>For You · Following · Trending</small></a>
+  <a class="hub-action" href="./chat.html"><strong>💬 Friends Chat</strong><small>Continue conversations with accepted friends</small></a>
+  <a class="hub-action" href="#setupCard"><strong>🌍 Find Random Chat</strong><small>Meet a new chat partner</small></a>
+  <a class="hub-action" href="./profile.html"><strong>👤 Social Profile</strong><small>Profile and connections</small></a>
+ </div>
+</section>
+
+<section class="card" id="randomCoinWallet" aria-label="RYZON Coin Wallet">
+ <h2 style="margin:0 0 8px">🪙 RYZON Coins</h2>
+ <p class="subtitle">Your secure coin balance will appear here after the wallet service is connected.</p>
+ <div class="hub-grid">
+  <button class="hub-action" type="button" onclick="showCoinInfo('Coin purchases will be enabled after secure payment and wallet verification are connected.')"><strong>＋ Buy Coins</strong><small>Purchase Coins securely</small></button>
+  <button class="hub-action" type="button" onclick="showCoinInfo('Coin sharing will be enabled only for accepted friends after secure server-side transfer checks are connected. Coins cannot be sent to random chat partners.')"><strong>↗ Share Coins</strong><small>Accepted friends only</small></button>
+ </div>
+ <p class="wallet-policy">Free Coins: gifts only. Purchased Coins: gifts, eligible Premium/features and transfers to accepted friends. No cash or UPI transfers.</p>
+ <p class="wallet-policy">Coin purchase and transfer are not active yet; no payment or transfer will be made from this screen.</p>
+</section>
 
 <section class="card" id="setupCard">
  <span class="free-label" data-chat="free">🌍 FREE FOR EVERYONE</span>
@@ -498,6 +526,7 @@ function chatText(key){
  return chatTranslations[lang][key]||chatTranslations.en[key]||key;
 }
 const $ = id => document.getElementById(id);
+function showCoinInfo(message){alert(message);}
 
 let authReady=false;
 let currentUser=null;
