@@ -348,7 +348,7 @@ body>.help{bottom:calc(92px + env(safe-area-inset-bottom))}
   <div id="noResults">No services found. Try another search.</div>
 
   <div class="service-grid" id="serviceGrid">
-   <a class="tile" href="random-chat.html"><span>💬</span>Random Chat<small>Shorts, time pass and chat inside</small></a>
+   <a class="tile" href="random-chat.html"><span>🎬</span>RYZON Reels<small>Shorts, time pass and chat inside</small></a>
    <a class="tile" href="seller-dashboard.html"><span>🏪</span>Business<small>Seller and business workspace</small></a>
    <a class="tile" href="shopping.html"><span>🛍️</span>Shopping</a>
    <a class="tile" href="educational.html"><span>🎓</span>Education</a>
@@ -372,8 +372,8 @@ body>.help{bottom:calc(92px + env(safe-area-inset-bottom))}
    <a class="section-link" href="explore.html">Explore all</a>
   </div>
   <a class="feature-card" href="random-chat.html">
-   <b>🌎 Worldwide Random Chat</b>
-   <small>Connect with people around the world for free.</small>
+   <b>🎬 RYZON Reels</b>
+   <small>Explore the RYZON short-video experience.</small>
   </a>
   <a class="feature-card" href="ai-assistant.html">
    <b>🤖 AI Chat Assistant</b>
@@ -408,8 +408,8 @@ body>.help{bottom:calc(92px + env(safe-area-inset-bottom))}
    <small>RYZON Updates</small>
   </div>
   <div class="update-card">
-   <b>🌎 Worldwide Random Chat</b>
-   <div>Worldwide Random Chat is free for everyone.</div>
+   <b>🎬 RYZON Reels</b>
+   <div>The RYZON short-video experience and community features.</div>
    <small>RYZON Services</small>
   </div>
  </section>
@@ -422,7 +422,7 @@ body>.help{bottom:calc(92px + env(safe-area-inset-bottom))}
  <button class="active" onclick="goHome()"><span>🏠</span>Home</button>
  <button onclick="goTo('explore.html','Opened Explore')"><span>🔎</span>Explore</button>
  <button onclick="goTo('educational.html','Opened Education')"><span>🎓</span>Learn</button>
- <button onclick="openRandomChat()"><span>💬</span>Random Chat</button>
+ <button onclick="openRandomChat()"><span>🎬</span>Reels</button>
  <button onclick="openProfile()"><span>👤</span>Profile</button>
 </nav>
 
@@ -668,7 +668,7 @@ function goHome(){
 }
 
 function openRandomChat(){
- recordActivity("Opened Random Chat");
+ recordActivity("Opened RYZON Reels");
  if(window.ryzonAuthenticated){
   sessionStorage.removeItem("ryzonNextAction");
   window.location.href="random-chat.html";
