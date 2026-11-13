@@ -22,12 +22,44 @@ body {
 }
 
 header {
-  background: #172554;
+  background: #071a30;
   color: white;
   text-align: center;
   padding: 22px;
-  border-radius: 12px;
+  border: 1px solid #245174;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px #071a3040;
 }
+
+.ryzon-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  margin-bottom: 10px;
+}
+
+.ryzon-mark {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(145deg,#55dcff,#078bd0);
+  color: #fff;
+  font-size: 31px;
+  font-weight: 900;
+  box-shadow: 0 6px 18px #078bd044;
+}
+
+.ryzon-brand h1 {
+  margin: 0;
+  color: #fff;
+  letter-spacing: 3px;
+}
+
+header h1 { letter-spacing: 3px; }
 
 header h1 {
   letter-spacing: 4px;
@@ -96,7 +128,10 @@ footer {
 <body>
 
 <header>
-  <h1>RYZON</h1>
+  <div class="ryzon-brand">
+    <span class="ryzon-mark" aria-label="RYZON logo">R</span>
+    <h1>RYZON</h1>
+  </div>
   <h2>Select Your Language</h2>
   <p>Choose your preferred language to continue</p>
 </header>
