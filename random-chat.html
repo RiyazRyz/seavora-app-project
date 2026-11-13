@@ -167,6 +167,13 @@ button:disabled{opacity:.5;cursor:not-allowed}
  padding:10px 14px;border:0;border-radius:10px;
  background:#078ebc;color:white;font-weight:bold
 }
+.profile-modal{position:fixed;inset:0;z-index:9999;background:#020914d9;display:flex;align-items:center;justify-content:center;padding:16px}
+.profile-box{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:#10243d;border:1px solid #24415f;border-radius:18px;padding:20px;box-shadow:0 20px 60px #0009}
+.profile-box h2{margin:0 0 8px;color:var(--cyan)}
+.profile-box .field input,.profile-box .field textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:#07182a;color:white}
+.profile-box .field textarea{min-height:90px;resize:vertical}
+.profile-actions{display:flex;gap:8px}.profile-actions button{flex:1}
+.profile-preview{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);background:#193957}
 .note{
  background:#142d49;border:1px solid var(--border);
  border-radius:12px;padding:13px;color:var(--muted);
@@ -214,6 +221,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  <div class="header-actions">
   <button class="language-btn" id="languageToggle" type="button"
    onclick="toggleChatLanguage()">🌐 English</button>
+  <button class="home-btn" onclick="openMyProfile()" data-chat="myProfile">👤 My Profile</button>
   <button class="home-btn" onclick="goHome()" data-chat="home">⌂ Home</button>
  </div>
 </header>
@@ -335,6 +343,22 @@ button:focus-visible,input:focus-visible,select:focus-visible{
  • <span data-chat="safety5">Do not send inappropriate content.</span>
 </div>
 
+<div class="profile-modal hidden" id="myProfileModal" role="dialog" aria-modal="true" aria-labelledby="myProfileTitle">
+ <div class="profile-box">
+  <h2 id="myProfileTitle" data-chat="myProfile">👤 My Profile</h2>
+  <p class="subtitle" data-chat="profileHelp">Your public profile is visible to your connected chat partner.</p>
+  <div style="display:flex;align-items:center;gap:12px;margin:14px 0">
+   <img class="profile-preview" id="myProfilePreview" alt="Profile preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='100%25' height='100%25' fill='%23193957'/%3E%3Ctext x='50%25' y='58%25' font-size='30' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E">
+   <span class="subtitle" data-chat="photoHint">Use a public HTTPS image link for your profile photo.</span>
+  </div>
+  <div class="field"><label for="myDisplayName" data-chat="displayName">Display Name</label><input id="myDisplayName" maxlength="40" autocomplete="nickname" placeholder="Your display name"></div>
+  <div class="field"><label for="myBio" data-chat="bio">Bio</label><textarea id="myBio" maxlength="160" placeholder="A short introduction"></textarea></div>
+  <div class="field"><label for="myPhotoUrl" data-chat="photoUrl">Profile Photo HTTPS URL</label><input id="myPhotoUrl" type="url" inputmode="url" maxlength="500" placeholder="https://..."></div>
+  <p class="subtitle" id="profileSaveStatus" aria-live="polite"></p>
+  <div class="profile-actions"><button class="secondary" type="button" onclick="closeMyProfile()" data-chat="close">Close</button><button class="primary" type="button" id="saveMyProfileBtn" onclick="saveMyProfile()" data-chat="saveProfile">Save Profile</button></div>
+ </div>
+</div>
+
 <footer>© 2026 RYZON · Worldwide Random Chat</footer>
 </main>
 
@@ -346,6 +370,7 @@ const chatTranslations = {
   checkingLogin:"Checking your RYZON login...",
   pleaseWait:"Please wait.",
   home:"⌂ Home",
+  myProfile:"👤 My Profile",profileHelp:"Your public profile is visible to your connected chat partner.",displayName:"Display Name",bio:"Bio",photoUrl:"Profile Photo HTTPS URL",photoHint:"Use a public HTTPS image link for your profile photo.",close:"Close",saveProfile:"Save Profile",profileSaved:"Profile saved successfully.",profileSaveFailed:"Could not save profile.",profileLoadingMine:"Loading your profile...",
   free:"🌍 FREE FOR EVERYONE",
   title:"💬 Worldwide Random Chat",
   description:"Meet new people from around the world. Choose your preferred language and get ready to connect.",
@@ -405,6 +430,7 @@ const chatTranslations = {
   checkingLogin:"உங்கள் RYZON Login சரிபார்க்கப்படுகிறது...",
   pleaseWait:"தயவுசெய்து காத்திருக்கவும்.",
   home:"⌂ முகப்பு",
+  myProfile:"👤 எனது சுயவிவரம்",profileHelp:"இணைந்துள்ள அரட்டை நண்பருக்கு உங்கள் பொது சுயவிவரம் தெரியும்.",displayName:"காட்சிப் பெயர்",bio:"என்னைப் பற்றி",photoUrl:"சுயவிவரப் பட HTTPS இணைப்பு",photoHint:"பொது HTTPS பட இணைப்பைப் பயன்படுத்துங்கள்.",close:"மூடு",saveProfile:"சுயவிவரத்தைச் சேமி",profileSaved:"சுயவிவரம் சேமிக்கப்பட்டது.",profileSaveFailed:"சுயவிவரத்தைச் சேமிக்க முடியவில்லை.",profileLoadingMine:"உங்கள் சுயவிவரம் ஏற்றப்படுகிறது...",
   free:"🌍 அனைவருக்கும் இலவசம்",
   title:"💬 உலகளாவிய சீரற்ற அரட்டை",
   description:"உலகம் முழுவதும் புதிய நபர்களைச் சந்தியுங்கள். விரும்பும் மொழியைத் தேர்ந்தெடுத்து இணையுங்கள்.",
@@ -521,6 +547,33 @@ function openRandomChatLogin(){
  location.replace("./otp.html");
 }
 function goHome(){location.href="./home.html";}
+function openMyProfile(){
+ $("myProfileModal").classList.remove("hidden");
+ $("profileSaveStatus").textContent=chatText("profileLoadingMine");
+ apiRequest("/profile/me").then(result=>{
+  const p=result.profile||result;
+  $("myDisplayName").value=p.display_name||p.displayName||"";
+  $("myBio").value=p.bio||"";
+  $("myPhotoUrl").value=p.photo_url||p.photoUrl||"";
+  updateMyProfilePreview();$("profileSaveStatus").textContent="";
+ }).catch(error=>{$("profileSaveStatus").textContent=chatText("profileSaveFailed")+" "+error.message;});
+}
+function closeMyProfile(){$("myProfileModal").classList.add("hidden");}
+function updateMyProfilePreview(){
+ const url=$("myPhotoUrl").value.trim(),preview=$("myProfilePreview");
+ try{if(url&&new URL(url).protocol==="https:"){preview.src=url;return;}}catch(e){}
+ preview.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='100%25' height='100%25' fill='%23193957'/%3E%3Ctext x='50%25' y='58%25' font-size='30' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E";
+}
+async function saveMyProfile(){
+ const displayName=$("myDisplayName").value.trim(),bio=$("myBio").value.trim(),photoUrl=$("myPhotoUrl").value.trim();
+ if(!displayName){$("profileSaveStatus").textContent="Please enter a display name.";return;}
+ if(photoUrl){try{if(new URL(photoUrl).protocol!=="https:")throw new Error();}catch(e){$("profileSaveStatus").textContent="Please enter a valid HTTPS photo URL.";return;}}
+ const btn=$("saveMyProfileBtn");btn.disabled=true;$("profileSaveStatus").textContent=chatText("profileLoadingMine");
+ try{await apiRequest("/profile/update",{method:"POST",body:JSON.stringify({displayName,bio,photoUrl})});$("profileSaveStatus").textContent=chatText("profileSaved");}
+ catch(error){$("profileSaveStatus").textContent=chatText("profileSaveFailed")+" "+error.message;}
+ finally{btn.disabled=false;}
+}
+
 function showStatus(message){$("status").textContent=message;}
 function setEmptyMessage(message){
  $("messages").innerHTML=`<div class="chat-empty">${escapeHTML(message)}</div>`;
@@ -677,6 +730,7 @@ async function loadPartnerDetails(){
   const photoUrl=profile.photo_url||profile.photoUrl||"";
 
   $("profileDisplayName").textContent=displayName;
+  $("profileSubtitle").textContent=bio||chatText("connectedPartner");
   $("partnerName").textContent=displayName;
 
   if(photoUrl){
