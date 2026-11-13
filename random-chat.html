@@ -349,11 +349,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{
   <p class="subtitle" data-chat="profileHelp">Your public profile is visible to your connected chat partner.</p>
   <div style="display:flex;align-items:center;gap:12px;margin:14px 0">
    <img class="profile-preview" id="myProfilePreview" alt="Profile preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='100%25' height='100%25' fill='%23193957'/%3E%3Ctext x='50%25' y='58%25' font-size='30' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E">
-   <span class="subtitle" data-chat="photoHint">Use a public HTTPS image link for your profile photo.</span>
+   <div style="flex:1;min-width:0"><span class="subtitle" data-chat="photoHint">Choose a photo from your phone gallery.</span><br><input id="myPhotoFile" type="file" accept="image/*" hidden onchange="handleProfilePhotoSelected(event)"><button class="secondary" type="button" style="width:auto;margin-top:8px" onclick="document.getElementById('myPhotoFile').click()" data-chat="choosePhoto">🖼️ Choose from Gallery</button></div>
   </div>
   <div class="field"><label for="myDisplayName" data-chat="displayName">Display Name</label><input id="myDisplayName" maxlength="40" autocomplete="nickname" placeholder="Your display name"></div>
   <div class="field"><label for="myBio" data-chat="bio">Bio</label><textarea id="myBio" maxlength="160" placeholder="A short introduction"></textarea></div>
-  <div class="field"><label for="myPhotoUrl" data-chat="photoUrl">Profile Photo HTTPS URL</label><input id="myPhotoUrl" type="url" inputmode="url" maxlength="500" placeholder="https://..."></div>
+  <div class="field hidden"><label for="myPhotoUrl" data-chat="photoUrl">Profile Photo HTTPS URL</label><input id="myPhotoUrl" type="url" inputmode="url" maxlength="500" placeholder="https://..."></div>
   <p class="subtitle" id="profileSaveStatus" aria-live="polite"></p>
   <div class="profile-actions"><button class="secondary" type="button" onclick="closeMyProfile()" data-chat="close">Close</button><button class="primary" type="button" id="saveMyProfileBtn" onclick="saveMyProfile()" data-chat="saveProfile">Save Profile</button></div>
  </div>
@@ -370,7 +370,7 @@ const chatTranslations = {
   checkingLogin:"Checking your RYZON login...",
   pleaseWait:"Please wait.",
   home:"⌂ Home",
-  myProfile:"👤 My Profile",profileHelp:"Your public profile is visible to your connected chat partner.",displayName:"Display Name",bio:"Bio",photoUrl:"Profile Photo HTTPS URL",photoHint:"Use a public HTTPS image link for your profile photo.",close:"Close",saveProfile:"Save Profile",profileSaved:"Profile saved successfully.",profileSaveFailed:"Could not save profile.",profileLoadingMine:"Loading your profile...",
+  myProfile:"👤 My Profile",profileHelp:"Your public profile is visible to your connected chat partner.",choosePhoto:"🖼️ Choose from Gallery",photoUploading:"Uploading photo...",photoTooLarge:"Choose an image smaller than 5 MB.",photoInvalid:"Please choose an image file.",photoUploadFailed:"Photo upload failed. Check Firebase Storage setup.",displayName:"Display Name",bio:"Bio",photoUrl:"Profile Photo HTTPS URL",photoHint:"Use a public HTTPS image link for your profile photo.",close:"Close",saveProfile:"Save Profile",profileSaved:"Profile saved successfully.",profileSaveFailed:"Could not save profile.",profileLoadingMine:"Loading your profile...",
   free:"🌍 FREE FOR EVERYONE",
   title:"💬 Worldwide Random Chat",
   description:"Meet new people from around the world. Choose your preferred language and get ready to connect.",
@@ -430,7 +430,7 @@ const chatTranslations = {
   checkingLogin:"உங்கள் RYZON Login சரிபார்க்கப்படுகிறது...",
   pleaseWait:"தயவுசெய்து காத்திருக்கவும்.",
   home:"⌂ முகப்பு",
-  myProfile:"👤 எனது சுயவிவரம்",profileHelp:"இணைந்துள்ள அரட்டை நண்பருக்கு உங்கள் பொது சுயவிவரம் தெரியும்.",displayName:"காட்சிப் பெயர்",bio:"என்னைப் பற்றி",photoUrl:"சுயவிவரப் பட HTTPS இணைப்பு",photoHint:"பொது HTTPS பட இணைப்பைப் பயன்படுத்துங்கள்.",close:"மூடு",saveProfile:"சுயவிவரத்தைச் சேமி",profileSaved:"சுயவிவரம் சேமிக்கப்பட்டது.",profileSaveFailed:"சுயவிவரத்தைச் சேமிக்க முடியவில்லை.",profileLoadingMine:"உங்கள் சுயவிவரம் ஏற்றப்படுகிறது...",
+  myProfile:"👤 எனது சுயவிவரம்",profileHelp:"இணைந்துள்ள அரட்டை நண்பருக்கு உங்கள் பொது சுயவிவரம் தெரியும்.",choosePhoto:"🖼️ Gallery-யிலிருந்து படத்தைத் தேர்வு செய்",photoUploading:"படம் பதிவேற்றப்படுகிறது...",photoTooLarge:"5 MB-க்குக் குறைவான படத்தைத் தேர்வு செய்யுங்கள்.",photoInvalid:"சரியான படக் கோப்பைத் தேர்வு செய்யுங்கள்.",photoUploadFailed:"படத்தைப் பதிவேற்ற முடியவில்லை. Firebase Storage அமைப்பைச் சரிபார்க்கவும்.",displayName:"காட்சிப் பெயர்",bio:"என்னைப் பற்றி",photoUrl:"சுயவிவரப் பட HTTPS இணைப்பு",photoHint:"பொது HTTPS பட இணைப்பைப் பயன்படுத்துங்கள்.",close:"மூடு",saveProfile:"சுயவிவரத்தைச் சேமி",profileSaved:"சுயவிவரம் சேமிக்கப்பட்டது.",profileSaveFailed:"சுயவிவரத்தைச் சேமிக்க முடியவில்லை.",profileLoadingMine:"உங்கள் சுயவிவரம் ஏற்றப்படுகிறது...",
   free:"🌍 அனைவருக்கும் இலவசம்",
   title:"💬 உலகளாவிய சீரற்ற அரட்டை",
   description:"உலகம் முழுவதும் புதிய நபர்களைச் சந்தியுங்கள். விரும்பும் மொழியைத் தேர்ந்தெடுத்து இணையுங்கள்.",
@@ -514,6 +514,7 @@ let pollingMessages=false;
 let sendingMessage=false;
 let friendRequestBusy=false;
 let partnerFriendState="unknown";
+let selectedProfilePhoto=null;
 
 function applyChatLanguage(){
  const lang=currentChatLanguage();
@@ -547,6 +548,18 @@ function openRandomChatLogin(){
  location.replace("./otp.html");
 }
 function goHome(){location.href="./home.html";}
+function handleProfilePhotoSelected(event){
+ const file=event.target.files&&event.target.files[0];
+ if(!file)return;
+ if(!file.type||!file.type.startsWith("image/")){
+  alert(chatText("photoInvalid"));event.target.value="";return;
+ }
+ if(file.size>5*1024*1024){
+  alert(chatText("photoTooLarge"));event.target.value="";return;
+ }
+ selectedProfilePhoto=file;
+ $("myProfilePreview").src=URL.createObjectURL(file);
+}
 function openMyProfile(){
  $("myProfileModal").classList.remove("hidden");
  $("profileSaveStatus").textContent=chatText("profileLoadingMine");
@@ -565,11 +578,21 @@ function updateMyProfilePreview(){
  preview.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='100%25' height='100%25' fill='%23193957'/%3E%3Ctext x='50%25' y='58%25' font-size='30' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E";
 }
 async function saveMyProfile(){
- const displayName=$("myDisplayName").value.trim(),bio=$("myBio").value.trim(),photoUrl=$("myPhotoUrl").value.trim();
+ const displayName=$("myDisplayName").value.trim(),bio=$("myBio").value.trim();
+ let photoUrl=$("myPhotoUrl").value.trim();
  if(!displayName){$("profileSaveStatus").textContent="Please enter a display name.";return;}
  if(photoUrl){try{if(new URL(photoUrl).protocol!=="https:")throw new Error();}catch(e){$("profileSaveStatus").textContent="Please enter a valid HTTPS photo URL.";return;}}
  const btn=$("saveMyProfileBtn");btn.disabled=true;$("profileSaveStatus").textContent=chatText("profileLoadingMine");
- try{await apiRequest("/profile/update",{method:"POST",body:JSON.stringify({displayName,bio,photoUrl})});$("profileSaveStatus").textContent=chatText("profileSaved");}
+ try{
+  if(selectedProfilePhoto){
+   if(typeof window.uploadRYZONProfilePhoto!=="function")throw new Error(chatText("photoUploadFailed"));
+   $("profileSaveStatus").textContent=chatText("photoUploading");
+   photoUrl=await window.uploadRYZONProfilePhoto(selectedProfilePhoto);
+  }
+  await apiRequest("/profile/update",{method:"POST",body:JSON.stringify({displayName,bio,photoUrl})});
+  selectedProfilePhoto=null;$("myPhotoFile").value="";$("myPhotoUrl").value=photoUrl;
+  $("profileSaveStatus").textContent=chatText("profileSaved");
+ }
  catch(error){$("profileSaveStatus").textContent=chatText("profileSaveFailed")+" "+error.message;}
  finally{btn.disabled=false;}
 }
@@ -1061,6 +1084,7 @@ window.addEventListener("storage",event=>{
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getStorage,ref as storageRef,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
@@ -1074,6 +1098,15 @@ const firebaseConfig={
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
+const storage=getStorage(app);
+window.uploadRYZONProfilePhoto=async function(file){
+ if(!auth.currentUser)throw new Error("Please login again.");
+ const safeName=String(file.name||"profile-image").replace(/[^a-zA-Z0-9._-]/g,"_").slice(-80);
+ const path="profile-photos/"+auth.currentUser.uid+"/"+Date.now()+"-"+safeName;
+ const target=storageRef(storage,path);
+ await uploadBytes(target,file,{contentType:file.type||"image/jpeg"});
+ return await getDownloadURL(target);
+};
 
 onAuthStateChanged(auth,user=>{
  currentUser=user;
