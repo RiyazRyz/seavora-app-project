@@ -16,7 +16,8 @@
       .filter(el => /One App, Endless Possibilities!?/i.test((el.textContent || "").trim()));
     oldTaglines.forEach(el => el.remove());
 
-    const label = (target.textContent || "").replace(/^R\s*/i, "").trim() || "RYZON";
+    const targetText = (target.textContent || "").trim();
+    const label = (mark && target.contains(mark) ? targetText.replace(/^R\s*/i, "").trim() : targetText) || "RYZON";
     const parent = target.parentElement;
     const lockup = document.createElement("div");
     lockup.className = "ryzon-unified-brand";
