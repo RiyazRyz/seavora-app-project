@@ -39,7 +39,8 @@ header{
  padding:13px 17px;background:#071a30;
  border-bottom:1px solid #1c3b58;
 }
-.brand{font-size:25px;font-weight:900;letter-spacing:4px;color:white}
+.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;letter-spacing:4px;color:white}
+.brand-mark{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#55dcff,#078bd0);color:#fff;font-size:27px;font-weight:900;letter-spacing:0;box-shadow:0 5px 16px #078bd044}
 .header-actions{display:flex;gap:9px}
 .icon-btn{
  width:42px;height:42px;border:1px solid #31516e;border-radius:14px;
@@ -251,6 +252,7 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
 }
 @media(max-width:360px){
  .brand{font-size:22px}
+.brand-mark{width:36px;height:36px;flex-basis:36px;font-size:24px}
  .feed-stage{min-height:420px}
  .tile{padding:13px 6px}
 }
@@ -260,7 +262,7 @@ footer{text-align:center;padding:22px;color:#8198ae;font-size:11px}
 <body>
 
 <header>
- <div class="brand">RYZON</div>
+ <div class="brand"><span class="brand-mark" aria-label="RYZON logo">R</span><span>RYZON</span></div>
  <div class="header-actions">
   <button class="icon-btn" onclick="focusSearch()" aria-label="Search">🔍</button>
   <button class="icon-btn" onclick="openModal('notificationsModal')" aria-label="Notifications">🔔</button>
