@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<meta name="description" content="RYZON Notifications">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>RYZON - Notifications</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+<style>
+:root{
+  --bg:#071426;--panel:#10243d;--panel2:#173653;
+  --text:#f3f8ff;--muted:#9db0c7;--cyan:#55d7ff;
+  --border:#24415f;--danger:#ff647c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;font-family:Arial,sans-serif;
+  color:var(--text);background:linear-gradient(145deg,#06101f,#0b1e35);
+}
+html:not(.auth-ready) body{visibility:hidden}
+html:not(.auth-ready)::before{
+  content:"Checking secure login...";
+  position:fixed;inset:0;display:flex;align-items:center;
+  justify-content:center;background:#071426;color:#55d7ff;
+  font-weight:bold;z-index:9999;visibility:visible;
+}
+button{font:inherit;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+header{
+  position:sticky;top:0;z-index:5;display:flex;
+  align-items:center;justify-content:space-between;
+  padding:15px;background:#091a2d;border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;font-size:24px;font-weight:bold;
+  background:linear-gradient(135deg,#168cff,#31e0e5);
+}
+.brand h2{margin:0;color:var(--cyan);font-size:20px}
+.brand small{display:block;color:var(--muted);font-size:10px}
+.home-btn,.action-btn{
+  border:1px solid var(--border);background:var(--panel2);
+  color:white;border-radius:10px;padding:10px 13px;
+}
+.container{max-width:850px;margin:auto;padding:18px}
+.page-title{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;flex-wrap:wrap;
+}
+.page-title h1{font-size:25px;margin:8px 0}
+.page-title p{color:var(--muted);font-size:13px}
+.count{
+  color:var(--cyan);background:#123b59;
+  padding:7px 12px;border-radius:20px;font-size:13px;
+}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.filter{
+  border:1px solid var(--border);background:var(--panel);
+  color:var(--muted);padding:9px 13px;border-radius:20px;
+}
+.filter.active{
+  background:#123b59;color:var(--cyan);border-color:var(--cyan);
+}
+.section-title{
+  color:var(--muted);font-size:12px;text-transform:uppercase;
+  letter-spacing:1px;margin:20px 0 10px;
+}
+.notification{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--panel);border:1px solid var(--border);
+  padding:14px;border-radius:14px;margin-bottom:10px;
+}
+.notification.unread{
+  border-left:3px solid var(--cyan);background:#122b45;
+}
+.notify-icon{
+  width:43px;height:43px;flex-shrink:0;display:grid;
+  place-items:center;border-radius:13px;background:#1b3d5c;font-size:21px;
+}
+.notify-body{flex:1;min-width:0}
+.notify-body strong{font-size:14px}
+.notify-body p{
+  color:#c0ccda;font-size:13px;line-height:1.5;
+  margin:5px 0;overflow-wrap:anywhere;
+}
+.notify-time{color:var(--muted);font-size:11px}
+.notify-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.small-btn{
+  border:1px solid var(--border);background:#193957;
+  color:var(--cyan);border-radius:8px;padding:7px 10px;font-size:11px;
+}
+.small-btn.danger{color:#ff8295}
+.empty{
+  text-align:center;padding:55px 15px;background:var(--panel);
+  border:1px solid var(--border);border-radius:15px;
+  color:var(--muted);line-height:1.8;
+}
+.empty .emoji{font-size:45px}
+.settings{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:15px;padding:16px;margin-top:22px;
+}
+.settings h3{margin-top:0}
+.setting-row{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:13px 0;border-bottom:1px solid var(--border);
+}
+.setting-row:last-child{border:0}
+.setting-row strong{font-size:13px}
+.setting-row small{display:block;color:var(--muted);margin-top:4px}
+.toggle{
+  width:45px;height:25px;appearance:none;border-radius:20px;
+  background:#46586c;position:relative;flex-shrink:0;cursor:pointer;
+}
+.toggle:checked{background:#078ebc}
+.toggle:before{
+  content:"";position:absolute;left:3px;top:3px;
+  width:19px;height:19px;border-radius:50%;
+  background:white;transition:.2s;
+}
+.toggle:checked:before{left:23px}
+.notice{
+  color:var(--muted);font-size:12px;line-height:1.6;
+  background:#142d49;border:1px solid var(--border);
+  border-radius:12px;padding:13px;margin-top:18px;
+}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+footer a{color:#55d7ff}
+.hidden{display:none!important}
+@media(max-width:500px){
+  .container{padding:13px}
+  .page-title h1{font-size:22px}
+  .notification{padding:11px}
+  .notify-icon{width:38px;height:38px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">R</div>
+    <div>
+      <h2>RYZON</h2>
+      <small>One App, Endless Possibilities!</small>
+    </div>
+  </div>
+  <button class="home-btn" onclick="location.href='home.html'">⌂ Home</button>
+</header>
+
+<main class="container">
+
+  <div class="page-title">
+    <div>
+      <h1>🔔 Notifications</h1>
+      <p>Stay updated with your RYZON activity.</p>
+    </div>
+    <span class="count" id="unreadCount">0 Unread</span>
+  </div>
+
+  <div class="toolbar">
+    <button class="action-btn" onclick="markAllRead()">✓ Mark All Read</button>
+    <button class="action-btn" onclick="clearAll()">🗑 Clear All</button>
+    <button class="action-btn" onclick="toggleSettings()">⚙ Settings</button>
+  </div>
+
+  <div class="toolbar" id="filters">
+    <button class="filter active" data-filter="all" onclick="setFilter('all')">All</button>
+    <button class="filter" data-filter="message" onclick="setFilter('message')">Messages</button>
+    <button class="filter" data-filter="social" onclick="setFilter('social')">Likes & Comments</button>
+    <button class="filter" data-filter="request" onclick="setFilter('request')">Requests</button>
+    <button class="filter" data-filter="system" onclick="setFilter('system')">Updates</button>
+  </div>
+
+  <div class="section-title">Recent Activity</div>
+
+  <div id="notificationList">
+    <div class="empty">
+      <div class="emoji">🔔</div>
+      Loading notifications...
+    </div>
+  </div>
+
+  <section class="settings hidden" id="settingsPanel">
+    <h3>⚙ Notification Settings</h3>
+
+    <div class="setting-row">
+      <div>
+        <strong>Message Notifications</strong>
+        <small>Get alerts for new messages.</small>
+      </div>
+      <input class="toggle" type="checkbox" id="messageSetting" checked>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Likes & Comments</strong>
+        <small>Get alerts for post activity.</small>
+      </div>
+      <input class="toggle" type="checkbox" id="socialSetting" checked>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Friend Requests</strong>
+        <small>Get alerts for new requests.</small>
+      </div>
+      <input class="toggle" type="checkbox" id="requestSetting" checked>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>System Updates</strong>
+        <small>Important RYZON announcements.</small>
+      </div>
+      <input class="toggle" type="checkbox" id="systemSetting" checked>
+    </div>
+
+    <div class="setting-row">
+      <div>
+        <strong>Browser Notifications</strong>
+        <small>Allow browser notification permission.</small>
+      </div>
+      <button class="small-btn" onclick="enableBrowserNotifications()">Enable</button>
+    </div>
+
+    <p style="font-size:11px;color:#9db0c7">
+      Preferences are saved in this browser. Browser permission alone does not create server-side push notifications.
+    </p>
+  </section>
+
+  <div class="notice">
+    🔐 Your notification preferences are stored locally in this browser for now.
+    Live notifications from other users require Firebase notification integration.
+  </div>
+
+</main>
+
+<footer>
+  © 2026 RYZON · <a href="help.html">Help & Support</a>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyCpMeChXryE3KXE7-xUk_iKZGqRaknYcsw",
+ authDomain:"seavora-5be21.firebaseapp.com",
+ projectId:"seavora-5be21",
+ storageBucket:"seavora-5be21.firebasestorage.app",
+ messagingSenderId:"41187328725",
+ appId:"1:41187328725:web:07ca55487383bc5798d85c",
+ measurementId:"G-PDY0RZRDDH"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+let currentUser=null;
+let activeFilter="all";
+let settingsConnected=false;
+
+const $=id=>document.getElementById(id);
+
+const defaultSettings={
+  message:true,
+  social:true,
+  request:true,
+  system:true
+};
+
+function notificationKey(){
+  return "ryzonNotifications_"+currentUser.uid;
+}
+
+function settingsKey(){
+  return "ryzonNotificationSettings_"+currentUser.uid;
+}
+
+function getNotifications(){
+  try{
+    const value=JSON.parse(localStorage.getItem(notificationKey())||"[]");
+    return Array.isArray(value)?value:[];
+  }catch{
+    return [];
+  }
+}
+
+function saveNotifications(items){
+  localStorage.setItem(notificationKey(),JSON.stringify(items));
+}
+
+function getSettings(){
+  try{
+    return {
+      ...defaultSettings,
+      ...JSON.parse(localStorage.getItem(settingsKey())||"{}")
+    };
+  }catch{
+    return {...defaultSettings};
+  }
+}
+
+function saveSettings(settings){
+  localStorage.setItem(settingsKey(),JSON.stringify(settings));
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+function formatTime(timestamp){
+  const date=new Date(timestamp);
+  if(Number.isNaN(date.getTime()))return "";
+  return date.toLocaleString([],{
+    day:"numeric",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+function render(){
+  const all=getNotifications();
+  const unread=all.filter(n=>!n.read).length;
+
+  $("unreadCount").textContent=unread+" Unread";
+
+  const filtered=all.filter(n=>
+    activeFilter==="all"||n.type===activeFilter
+  ).sort((a,b)=>(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
+
+  const list=$("notificationList");
+  list.replaceChildren();
+
+  if(!filtered.length){
+    list.innerHTML=`
+      <div class="empty">
+        <div class="emoji">📭</div>
+        <strong>No notifications</strong><br>
+        You're all caught up!
+      </div>`;
+    return;
+  }
+
+  filtered.forEach(n=>{
+    const el=document.createElement("div");
+    el.className="notification"+(!n.read?" unread":"");
+
+    el.innerHTML=`
+      <div class="notify-icon">${escapeHTML(n.icon||"🔔")}</div>
+      <div class="notify-body">
+        <strong>${escapeHTML(n.title||"Notification")}</strong>
+        <p>${escapeHTML(n.message||"")}</p>
+        <span class="notify-time">${escapeHTML(formatTime(n.createdAt))}</span>
+        <div class="notify-actions">
+          ${!n.read?'<button class="small-btn read-btn">Mark Read</button>':''}
+          <button class="small-btn danger delete-btn">Delete</button>
+        </div>
+      </div>`;
+
+    const readButton=el.querySelector(".read-btn");
+    if(readButton){
+      readButton.onclick=()=>markRead(n.id);
+    }
+
+    el.querySelector(".delete-btn").onclick=()=>deleteNotification(n.id);
+    list.appendChild(el);
+  });
+}
+
+function markRead(id){
+  const items=getNotifications().map(n=>
+    n.id===id?{...n,read:true}:n
+  );
+  saveNotifications(items);
+  render();
+}
+
+window.markAllRead=function(){
+  saveNotifications(getNotifications().map(n=>({...n,read:true})));
+  render();
+};
+
+window.deleteNotification=function(id){
+  saveNotifications(getNotifications().filter(n=>n.id!==id));
+  render();
+};
+
+window.clearAll=function(){
+  if(!confirm("Delete all notifications?"))return;
+  saveNotifications([]);
+  render();
+};
+
+window.setFilter=function(filter){
+  activeFilter=filter;
+
+  document.querySelectorAll(".filter").forEach(button=>{
+    button.classList.toggle("active",button.dataset.filter===filter);
+  });
+
+  render();
+};
+
+window.toggleSettings=function(){
+  $("settingsPanel").classList.toggle("hidden");
+};
+
+function loadSettings(){
+  const settings=getSettings();
+
+  $("messageSetting").checked=settings.message;
+  $("socialSetting").checked=settings.social;
+  $("requestSetting").checked=settings.request;
+  $("systemSetting").checked=settings.system;
+}
+
+function connectSettings(){
+  if(settingsConnected)return;
+  settingsConnected=true;
+
+  const map={
+    messageSetting:"message",
+    socialSetting:"social",
+    requestSetting:"request",
+    systemSetting:"system"
+  };
+
+  Object.entries(map).forEach(([elementId,key])=>{
+    $(elementId).addEventListener("change",()=>{
+      const settings=getSettings();
+      settings[key]=$(elementId).checked;
+      saveSettings(settings);
+    });
+  });
+}
+
+window.enableBrowserNotifications=async function(){
+  if(!("Notification" in window)){
+    alert("Browser notifications are not supported.");
+    return;
+  }
+
+  if(Notification.permission==="granted"){
+    alert("Browser notifications are already enabled.");
+    return;
+  }
+
+  if(Notification.permission==="denied"){
+    alert("Notifications are blocked in browser settings. Please allow them there.");
+    return;
+  }
+
+  try{
+    const permission=await Notification.requestPermission();
+
+    if(permission==="granted"){
+      alert("Browser notification permission enabled.");
+    }else{
+      alert("Notification permission was not granted.");
+    }
+  }catch(error){
+    alert("Unable to request notification permission.");
+  }
+};
+
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    location.replace("otp.html");
+    return;
+  }
+
+  currentUser=user;
+  loadSettings();
+  connectSettings();
+  render();
+
+  document.documentElement.classList.add("auth-ready");
+});
+</script>
+
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error=>console.log("Service Worker:",error));
+  });
+}
+</script>
+
+</body>
+</html>
